@@ -1,0 +1,35 @@
+{
+  "name": "catena-x-web",
+  "version": "0.0.1",
+  "description": "front end for catena-x test net",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "eslint -c .eslintrc.js --ext .ts src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/catenax/esc-backbone"
+  },
+  "author": "",
+  "license": "ISC ",
+  "devDependencies": {
+    "@keplr-wallet/types": "^0.10.1",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsdoc": "^39.2.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react": "^7.29.4",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3",
+    "vite": "^2.7.6",
+    "vite-plugin-dynamic-import": "^0.1.1",
+    "vite-plugin-env-compatible": "^1.1.1"
+  }
+}

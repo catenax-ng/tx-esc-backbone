@@ -43,3 +43,5 @@ genesis:
     staking:
       params:
         bond_denom: acax
+build:
+  main: "cmd/esc-backboned"
