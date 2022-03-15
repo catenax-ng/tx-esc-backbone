@@ -15,6 +15,13 @@ accounts:
   coins:
   - 100000000000000000000acax
   - 10000cvoucher
+- name: test-wallet
+  mnemonic: "old square lecture frog curtain habit bunker casino awesome defy
+    fashion cry wife rain outer scene fork leaf raven twin hen hurt calm
+    bulb"
+  coins:
+  - 10000000000000000000acax
+  - 100000000cvoucher
 
 validators:
 - name: alice
