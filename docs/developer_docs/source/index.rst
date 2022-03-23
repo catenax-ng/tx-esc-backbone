@@ -13,6 +13,8 @@ Table of contents
 .. toctree::
    :maxdepth: 1
 
+   wallet_tutorial/index
+
 
 
 
