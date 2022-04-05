@@ -96,6 +96,10 @@ Clicking now on the icon should show an account similiar to the image below for 
 
 Clicking on `Cosmos Hub` shows the default chains, which Keplr knows. Our test chain is not contained in it yet.
 
+.. image:: images/5_test_net_not_available_yet.png
+   :alt: test_net_not_available_yet
+   :align: center
+
 Importing the chain into Keplr
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
