@@ -4,10 +4,10 @@ Wallet tutorial
 Prerequisites
 -------------
 
-Install starport
-^^^^^^^^^^^^^^^^
+Build and launch the chain and frontend
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Follow  `these instructions <https://docs.starport.com/guide/install.html>`_
+See :ref:`dev_env_setup`
 
 Install Keplr extension
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -17,37 +17,6 @@ Install the `keplr extension <https://chrome.google.com/webstore/search/keplr>`_
 .. image:: images/0_install_keplr_extension.png
    :alt: install keplr extension
    :align: center
-
-Install nodejs with npm
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Suggestion is to use `Node Version Manager <https://github.com/nvm-sh/nvm#installing-and-updating>`_ for installing nodejs
-
-Serve the development chain
----------------------------
-
-Clone the repository
-^^^^^^^^^^^^^^^^^^^^
-
-.. code-block::
-
-   $ git clone git@github.com:catenax/esc-backbone.git
-
-Serve the development chain
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block::
-
-   $ cd esc-backbone && starport chain serve
-
-Serve the vue web app
-^^^^^^^^^^^^^^^^^^^^^
-
-Open a new terminal
-
-.. code-block::
-
-   $ cd esc-backbone/vue && npm install && npm run build && npm run serve
 
 
 Use the wallet browser extension
@@ -95,6 +64,10 @@ Clicking now on the icon should show an account similiar to the image below for 
    :align: center
 
 Clicking on `Cosmos Hub` shows the default chains, which Keplr knows. Our test chain is not contained in it yet.
+
+.. image:: images/5_test_net_not_available_yet.png
+   :alt: test_net_not_available_yet
+   :align: center
 
 Importing the chain into Keplr
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
