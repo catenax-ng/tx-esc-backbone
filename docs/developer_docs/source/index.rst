@@ -5,7 +5,7 @@
 ESC Backbone
 ============
 
-TODO: Add a brief introduction to esc backbone.
+The ESC Backbone is a distributed ledger for economic transaction and smart contracts in the scope of Catena-X.
 
 Table of contents
 -----------------
@@ -13,6 +13,7 @@ Table of contents
 .. toctree::
    :maxdepth: 1
 
+   dev_env_setup/index
    wallet_tutorial/index
 
 
