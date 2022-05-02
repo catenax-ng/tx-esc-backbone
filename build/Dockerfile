@@ -18,19 +18,22 @@ RUN --mount=type=secret,id=ssh_key ssh-agent ssh-agent sh -c 'ssh-add /run/secre
 WORKDIR /build/esc-backbone
 
 RUN /build/starport chain build -v
+RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
+RUN chmod u+x keplr-suggestion && mkdir -p ./web/src/
 
 RUN which esc-backboned
 #RUN /build/starport chain build --help
 
-FROM debian:10.11-slim as faucet
-# TODO implement command for the faucet
+FROM node:17.9 as web-chain-suggestion-build
 
-FROM debian:10.11-slim as vue
-WORKDIR /vue
-COPY --from=build /build/esc-backbone/vue /vue
-# TODO serve the vue app
+WORKDIR /build
+COPY --from=build /build/esc-backbone /build
+WORKDIR /build/web
+RUN npm install && npm run build
 
-ENTRYPOINT ["npm","run","serve"]
+FROM nginx:1.21 as web-chain-suggestion
+
+COPY --from=web-chain-suggestion-build /build/web/dist /usr/share/nginx/html
 
 FROM debian:10.11-slim as faucet
 # TODO implement command for the faucet
