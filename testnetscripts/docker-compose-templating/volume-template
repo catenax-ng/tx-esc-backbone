@@ -1,0 +1,6 @@
+  {volume-prefix}{node-index}:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '{volume-location}'

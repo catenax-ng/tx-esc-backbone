@@ -1,0 +1,10 @@
+  esc-backbone-{node-index}:
+    image: esc-backbone
+    volumes:
+      - {volume-prefix}{node-index}:/validator/chain
+    ports:
+      - "{api-port}:1317"
+      - "{tendermint-ports}:26656-26658"
+    networks:
+      {network-name}:
+        ipv{ipv}_address: {address}
