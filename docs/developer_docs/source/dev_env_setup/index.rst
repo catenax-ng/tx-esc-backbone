@@ -6,10 +6,10 @@ Development environment setup
 Prerequisites
 -------------
 
-Install starport
-^^^^^^^^^^^^^^^^
+Install Ignite-cli
+^^^^^^^^^^^^^^^^^^
 
-Follow  `these instructions <https://docs.starport.com/guide/install.html>`_
+Follow  `these instructions <https://docs.ignite.com/guide/install.html>`_
 
 
 Install nodejs with npm
@@ -32,7 +32,7 @@ Serve the development chain
 
 .. code-block::
 
-   $ cd esc-backbone && starport chain serve
+   $ cd esc-backbone && ignite chain serve
 
 Serve the vue web app
 ^^^^^^^^^^^^^^^^^^^^^
