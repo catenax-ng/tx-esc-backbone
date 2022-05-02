@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  esc-backbone-1:
+    image: esc-backbone
+    secrets:
+      - source: mnemonic
+        target: /run/secrets/mnemonic
+    volumes:
+      - chain:/validator/chain
+    ports:
+      - "1317:1317"
+      - "26656-26658:26656-26658"
+secrets:
+  mnemonic:
+    file: ./mnemonic
+volumes:
+  chain:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${HOME}/.esc-backbone'
