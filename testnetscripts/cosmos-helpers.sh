@@ -22,6 +22,11 @@ function each_init_home(){
   $CHAIN_BINARY --home $HOME_DIR init $MONIKER &> /dev/null
 }
 
+function reset_validator_dir() {
+  local HOME_DIR=${1:?"Home folder required"}
+  $CHAIN_BINARY --home $HOME_DIR tendermint unsafe-reset-all
+  rm $HOME_DIR/config/write-file-atomic-*
+}
 function add_funds_to_addr(){
   local HOME_DIR=${1:?"Home folder required"}
   local PUB_ADDR=${2:?"Public address required"}
