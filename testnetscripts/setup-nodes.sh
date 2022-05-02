@@ -14,6 +14,12 @@ FAUCET_INITIAL_BALANCE="1000000000000000000000"
 
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
 source $SCRIPT_LOCATION/cosmos-helpers.sh
+
+ensure_command_exists mktemp
+ensure_command_exists cat
+ensure_command_exists basename
+ensure_command_exists git
+
 NODES="${1:-work}"
 if [ -e "$NODES" ]; then
   echo "$NODES already exists. Aborting" >&2
@@ -82,7 +88,6 @@ function add_initial_accounts() {
   echo "add_faucet_account at $SYNC_HOME"
   pull_git "$SYNC_HOME"
   local PUB_ADDRS=($SYNC_HOME/pub_addr/*)
-  ls $SYNC_HOME/pub_addr/*
   apply_on_each add_funds_for_initial_account ${PUB_ADDRS[@]}
   add_faucet_account
   tag_genesis_file "$SYNC_HOME" "genesis_with_funds" "add funds to genesis file"
@@ -121,8 +126,11 @@ function fetch_genesis_file_with_funds(){
 }
 
 function fetch_genesis_file_with_txs(){
-  echo "fetch_genesis_file_with_transactions for $1"
+  echo "fetch_genesis_file_with_txs for $1"
   each_fetch_genesis_file_for_node_from_tag $1 "genesis_with_txs"
+  adapt_app_toml $1
+  adapt_client_toml $1
+  adapt_config_toml $1
 }
 
 function write_docker_compose_file() {
@@ -159,7 +167,7 @@ main() {
   apply_on_each delegate_stake ${NODE_HOMES[@]}
   # sync apply gentxs and add tag
   sync_apply_gentxs $SYNC_HOME
-  # each load genesis file
+  # each load genesis file and adapt *.toml files
   apply_on_each fetch_genesis_file_with_txs ${NODE_HOMES[@]}
   # write docker-compose.yaml
   write_docker_compose_file ${NODE_HOMES[@]}

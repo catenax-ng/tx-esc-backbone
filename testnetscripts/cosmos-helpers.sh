@@ -2,6 +2,9 @@
 GIT_QUIET=" -q "
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}")
 source $SCRIPT_LOCATION/helpers.sh
+source $SCRIPT_LOCATION/update-app-toml.sh
+source $SCRIPT_LOCATION/update-client-toml.sh
+source $SCRIPT_LOCATION/update-config-toml.sh
 
 CHAIN_BINARY=esc-backboned
 
@@ -9,6 +12,9 @@ ensure_command_exists $CHAIN_BINARY
 ensure_command_exists pwd
 ensure_command_exists grep
 ensure_command_exists tail
+ensure_command_exists sed
+ensure_command_exists cat
+ensure_command_exists touch
 
 function each_init_home(){
   local HOME_DIR=${1:?"Home folder required"}
@@ -49,7 +55,6 @@ function each_add_key(){
   if [ -z "$MNEMONIC" ]; then
     $CHAIN_BINARY --home $HOME_DIR keys add $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR  |& grep -A 3 "It is the only way to recover your account if you ever forget your password." | tail -n +3 - > "$HOME_DIR"mnemonic-$KEY_NAME
   else
-    echo "recover"
     cat $MNEMONIC | $CHAIN_BINARY --home $HOME_DIR keys add $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR --recover
   fi
 }
@@ -140,6 +145,15 @@ function tag_genesis_file(){
   local TAG_NAME="${2:?'Tag name required'}"
   local COMMIT_MESSAGE="${3:?'Commit message required'}"
   cd $REPO
+  if [ -f config/app.toml ]; then
+    git add config/app.toml
+  fi
+  if [ -f config/client.toml ]; then
+    git add config/client.toml
+  fi
+  if [ -f config/config.toml ]; then
+    git add config/config.toml
+  fi
   git add config/genesis.json
   git commit $GIT_QUIET -s -m "$COMMIT_MESSAGE"
   git tag -a $TAG_NAME -m "$COMMIT_MESSAGE"
@@ -161,4 +175,17 @@ function pull_git() {
   cd - > /dev/null
 }
 
+function adapt_app_toml(){
+  echo "adapt_app_toml for $1"
+  update_app_toml "${1%/}/sync" $1
+}
 
+function adapt_client_toml(){
+  echo "adapt_client_toml for $1"
+  update_client_toml "${1%/}/sync" $1
+}
+
+function adapt_config_toml(){
+  echo "adapt_config_toml for $1"
+  update_config_toml "${1%/}/sync" $1
+}

@@ -7,6 +7,9 @@ ensure_command_exists () {
   fi
 } 
 
+ensure_command_exists git
+ensure_command_exists basename
+
 is_unsigned_int () {
   case $1 in 
     ''|*[!0-9]*) echo "$1 not an unsigned integer" >&2; return 1;;
