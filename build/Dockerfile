@@ -1,11 +1,11 @@
-FROM golang:1.17.8-buster as build
+FROM golang:1.18.1-bullseye as build
 
 ENV PACKAGES git openssh-client bash curl
 
 WORKDIR /build
 RUN apt update
 RUN apt install $PACKAGES
-RUN curl https://get.starport.network/starport | bash && chown root:root starport
+RUN curl https://get.ignite.com/cli | bash && chown root:root ignite
 RUN mkdir -p -m 0700 ~/.ssh \
     #    ssh-keyscan github.com >> ~/.ssh/known_hosts # Did not work. \
     && echo "|1|XGM2kbi/MRZnS54PMAWDoGNMpy4=|ZA+nLvP/UQ19SnwZjlnP8rjY364= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=" >> ~/.ssh/known_hosts
@@ -17,7 +17,7 @@ RUN --mount=type=secret,id=ssh_key ssh-agent ssh-agent sh -c 'ssh-add /run/secre
 
 WORKDIR /build/esc-backbone
 
-RUN /build/starport chain build -v
+RUN /build/ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/src/
 
