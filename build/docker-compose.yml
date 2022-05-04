@@ -1,6 +1,10 @@
 version: '3.8'
 
 services:
+  esc-chain-web:
+    image: esc-web
+    ports:
+      - "80:80"
   esc-backbone-1:
     image: esc-backbone
     secrets:
