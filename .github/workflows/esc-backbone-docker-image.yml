@@ -1,0 +1,78 @@
+name: ESC-Backbone Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+
+  build-esc-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Github Packages
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: ESC-Web Docker Metadata
+        id: esc_backbone_web_meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/catenax/esc-backbone-web
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{raw}}
+            type=match,pattern=\d.\d.\d
+            type=sha
+      - name: Build the ESC-Web Docker image and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: build/Dockerfile
+          target: esc-backbone-web
+          push: true
+          tags: ${{ steps.esc_backbone_web_meta.outputs.tags }}
+          labels: ${{ steps.esc_backbone_web_meta.outputs.labels }}
+  build-esc-backbone-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Github Packages
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: ESC-Backbone Docker Metadata
+        id: esc_backbone_node_meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/catenax/esc-backbone-node
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{raw}}
+            type=match,pattern=\d.\d.\d
+            type=sha
+      - name: Build the ESC-Backbone Docker image and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: build/Dockerfile
+          target: esc-backbone-node
+          push: true
+          tags: ${{ steps.esc_backbone_node_meta.outputs.tags }}
+          labels: ${{ steps.esc_backbone_node_meta.outputs.labels }}

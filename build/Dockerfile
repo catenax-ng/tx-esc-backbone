@@ -1,28 +1,26 @@
 FROM golang:1.18.1-bullseye as build
 
-ENV PACKAGES git openssh-client bash curl
+ENV PACKAGES openssh-client bash curl
 
 WORKDIR /build
+
 RUN apt update
 RUN apt install $PACKAGES
 RUN curl https://get.ignite.com/cli | bash && chown root:root ignite
-RUN mkdir -p -m 0700 ~/.ssh \
-    #    ssh-keyscan github.com >> ~/.ssh/known_hosts # Did not work. \
-    && echo "|1|XGM2kbi/MRZnS54PMAWDoGNMpy4=|ZA+nLvP/UQ19SnwZjlnP8rjY364= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=" >> ~/.ssh/known_hosts
-
-
-ARG BRANCH=main
-RUN --mount=type=secret,id=ssh_key ssh-agent ssh-agent sh -c 'ssh-add /run/secrets/ssh_key && git clone -b $BRANCH git@github.com:catenax/esc-backbone.git'
-#RUN --mount=type=ssh git clone git@github.com:catenax/esc-backbone.git
 
 WORKDIR /build/esc-backbone
+
+COPY cmd ./cmd
+COPY app ./app
+COPY web ./web
+COPY docs ./docs
+COPY go.mod go.sum config.yml ./
 
 RUN /build/ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/src/
-
-RUN which esc-backboned
-#RUN /build/starport chain build --help
+# COPY prepared test net homes.
+COPY testnet /home/testnet
 
 FROM node:17.9 as web-chain-suggestion-build
 
@@ -31,7 +29,7 @@ COPY --from=build /build/esc-backbone /build
 WORKDIR /build/web
 RUN npm install && npm run build
 
-FROM nginx:1.21 as web-chain-suggestion
+FROM nginx:1.21 as esc-backbone-web
 
 COPY --from=web-chain-suggestion-build /build/web/dist /usr/share/nginx/html
 
@@ -40,17 +38,20 @@ FROM debian:10.11-slim as faucet
 
 FROM debian:10.11-slim as blockexpl
 
-FROM debian:10.11-slim as node
+FROM debian:10.11-slim as esc-backbone-node
 ARG BRANCH=main
 LABEL branch="$BRANCH" repository="github.com/catenax/esc-backbone"
 EXPOSE 1317 26656 26657 26658
-RUN useradd --help
+ENV NODE_HOME=/validator/chain
 RUN useradd -U -s /bin/bash -d /validator validator
 WORKDIR /validator
 COPY --from=build /go/bin/esc-backboned /validator/
-VOLUME /validator/chain/
 RUN chown -R validator:validator /validator
+COPY --from=build /home/testnet /home/testnet
+RUN chown -R validator:validator /home/testnet
+
+VOLUME /validator/chain/
 USER validator
 # TODO REQUEST funds from faucet
 # TODO specify validator key using the /run/secret/mnemonic file
-ENTRYPOINT ["/validator/esc-backboned","start","--home","/validator/chain"]
+ENTRYPOINT ["sh", "-c","/validator/esc-backboned start --home $NODE_HOME"]
