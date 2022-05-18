@@ -3,7 +3,7 @@
 REPO_BRANCH=main
 NODE_NAME_PREFIX=n
 KEEP_LOCAL_REPO=0
-NETWORK_ADDRESS_TEMPLATE="172.16.0.{host}"
+NETWORK_ADDRESS_TEMPLATE="testnet-esc-backbone-{host}-service"
 NETWORK_ADDRESS="172.16.0.0/24"
 NETWORK_GATEWAY_ADDRESS="172.16.0.1"
 DOCKER_COMPOSE_YAML_LOCATION=
@@ -58,7 +58,7 @@ function generate_home_folders_for_nodes() {
     echo "Generating $NODE_NAME_PREFIX$i"
     local NODE_HOME=$NODES/$NODE_NAME_PREFIX$i
     mkdir -p "$NODE_HOME"
-    let ip=$i+1
+    let ip=$i
     echo $NETWORK_ADDRESS_TEMPLATE | sed "s/{host}/$ip/g" > "$NODE_HOME/ip_address"
     echo $i > "$NODE_HOME/node_index"
   done
