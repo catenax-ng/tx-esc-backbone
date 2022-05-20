@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/catenax/esc-backbone-web
+            ghcr.io/catenax-ng/esc-backbone-web
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -60,7 +60,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/catenax/esc-backbone-node
+            ghcr.io/catenax-ng/esc-backbone-node
           tags: |
             type=ref,event=branch
             type=ref,event=pr
