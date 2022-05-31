@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM golang:1.18.1-bullseye as build
 
 ENV PACKAGES openssh-client bash curl
@@ -6,7 +7,8 @@ WORKDIR /build
 
 RUN apt update
 RUN apt install $PACKAGES
-RUN curl https://get.ignite.com/cli | bash && chown root:root ignite
+
+RUN curl https://get.ignite.com/cli?type=script | bash && chown root:root ignite
 
 WORKDIR /build/esc-backbone
 
@@ -19,7 +21,6 @@ COPY go.mod go.sum config.yml ./
 RUN /build/ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
-
 
 # COPY prepared test net homes.
 COPY testnet /home/testnet
@@ -67,15 +68,21 @@ ARG GID=102
 
 LABEL branch="$BRANCH" repository="github.com/catenax/esc-backbone"
 EXPOSE 1317 9090 9091 26656 26657 26658
-ENV NODE_HOME=/validator/chain
+# NODE_HOME specifies the folder name, which the validator will use as home folder below /validator/data
+ENV NODE_HOME="chain"
+# TEMPLATE_HOME can point to a home folder for the validator.
+# The folder is copied into /validator/data/$NODE_HOME, if /validator/data/$NODE_HOME does not exist.
+ENV TEMPLATE_HOME=""
 RUN groupadd -g $GID validator
 RUN useradd -g $GID -u $UID -s /bin/bash -d /validator validator
 WORKDIR /validator
+COPY --chown=$UID:$GID build/validator-node-entrypoint.sh /validator/
+RUN chmod u+x /validator/validator-node-entrypoint.sh
 COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
 COPY --from=build --chown=$UID:$GID /home/testnet /home/testnet
 
-VOLUME /validator/chain/
+VOLUME /validator/data/
 USER $UID
 # TODO REQUEST funds from faucet
 # TODO specify validator key using the /run/secret/mnemonic file
-ENTRYPOINT ["sh", "-c","id; /validator/esc-backboned start --home $NODE_HOME"]
+ENTRYPOINT ["sh", "-c","/validator/validator-node-entrypoint.sh /validator/data $NODE_HOME $TEMPLATE_HOME"]
