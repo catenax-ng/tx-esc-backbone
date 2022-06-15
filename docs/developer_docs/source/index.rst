@@ -15,6 +15,7 @@ Table of contents
 
    dev_env_setup/index
    wallet_tutorial/index
+   configuring_cosmos_sdk/index
 
 
 
