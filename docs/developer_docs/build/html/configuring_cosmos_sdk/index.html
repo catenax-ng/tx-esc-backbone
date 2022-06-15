@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuring the cosmos sdk &mdash; ESC Backbone  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Wallet tutorial" href="../wallet_tutorial/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> ESC Backbone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../dev_env_setup/index.html">Development environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wallet_tutorial/index.html">Wallet tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuring the cosmos sdk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-files">Configuration files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#different-endpoints-exposed-by-a-running-node">Different endpoints exposed by a running node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keys">Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ESC Backbone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Configuring the cosmos sdk</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/configuring_cosmos_sdk/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuring-the-cosmos-sdk">
+<span id="configuring-comos-sdk"></span><h1>Configuring the cosmos sdk<a class="headerlink" href="#configuring-the-cosmos-sdk" title="Permalink to this headline"></a></h1>
+<p>This section provides an overview what aspects of the node can be configured,
+how and where to do it. It is intended as a starting point for new developers
+joining the team and as a quick reference for all developers.</p>
+<section id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this headline"></a></h2>
+<p>The configuration files are stored in the <cite>config</cite> directory in the node’s home
+folder. This directory consists of 3 configuration files:</p>
+<ol class="arabic simple">
+<li><p><cite>app.toml</cite>: Configures the aspects related to application such as REST API,
+gRPC API, Rosetta, Telemetry etc.,.</p></li>
+<li><p><cite>config.toml</cite>: Configures the aspects related to tendermint node, such as
+genesis file, validator and node key files, state db, tendermint RPC, P2P,
+mempool, state sync, consensus and some other aspects.</p></li>
+<li><p><cite>genesis.json</cite>: Configures the initial parameters of the blockchain. It
+includes allowed pub key types and parameters for each included modules.</p></li>
+</ol>
+</section>
+<section id="different-endpoints-exposed-by-a-running-node">
+<h2>Different endpoints exposed by a running node<a class="headerlink" href="#different-endpoints-exposed-by-a-running-node" title="Permalink to this headline"></a></h2>
+<p>There are 3 different set of APIs, that are relevant for the user of the node.
+These are</p>
+<ol class="arabic simple">
+<li><p>gRPC API</p>
+<ul class="simple">
+<li><p>This is exposed by blockchain application and default port is 9090.</p></li>
+<li><p>This is configured in <cite>app.toml</cite>.</p></li>
+<li><p>The services for querying a module and for broadcasting signed
+transactions can be accessed via this interface.</p></li>
+<li><p>See <a class="reference external" href="https://docs.cosmos.network/main/core/grpc_rest.html">this section</a>
+of cosmos sdk docs for further info.</p></li>
+</ul>
+</li>
+<li><p>REST API</p>
+<ul class="simple">
+<li><p>This is exposed by blockchain application and default port is 1317.</p></li>
+<li><p>This is configured in <cite>app.toml</cite>.</p></li>
+<li><p>The gRPC endpoints can be accessed as REST via this interface.</p></li>
+<li><p>Internally, it is implemented using a gRPC gateway.</p></li>
+<li><p>See <a class="reference external" href="https://docs.cosmos.network/main/core/grpc_rest.html">this section</a>
+of cosmos sdk docs for further info.</p></li>
+</ul>
+</li>
+<li><p>Tendermint RPC API (default port: 26657)</p>
+<ul class="simple">
+<li><p>This is exposed directly by the tendermint node and default port is 26657.</p></li>
+<li><p>This is configured in <cite>config.toml</cite>.</p></li>
+<li><p>All the endpoints of tendermint RPC are published as OpenAPI specification
+<a class="reference external" href="https://docs.tendermint.com/master/rpc/">here</a>.</p></li>
+<li><p>Other APIs (gRPC and REST), use the tendermint API under the hood for
+broadcasting transactions.</p></li>
+<li><p>See <a class="reference external" href="https://docs.cosmos.network/main/core/grpc_rest.html">this section</a>
+of cosmos sdk docs for further info.</p></li>
+</ul>
+</li>
+</ol>
+<p>Additionally, there are two other endpoints. These are</p>
+<ol class="arabic simple">
+<li><p>Tendermint P2P</p>
+<ul class="simple">
+<li><p>This is exposed directly by the tendermint and default port is 26656.</p></li>
+<li><p>This is configured in <cite>config.toml</cite>.</p></li>
+<li><p>It is used for peer to peer interaction with other nodes in the blockchain
+network.</p></li>
+<li><p>See <a class="reference external" href="https://docs.tendermint.com/v0.33/tendermint-core/secure-p2p.html">this section</a> of
+tendermint docs for further info.</p></li>
+</ul>
+</li>
+<li><p>Prometheus</p>
+<ul class="simple">
+<li><p>This is exposed directly by the tendermint node and default port is 26660.</p></li>
+<li><p>This is configured in <cite>config.toml</cite>.</p></li>
+<li><p>It reports and serves prometheus metrics.</p></li>
+<li><p>See <a class="reference external" href="https://docs.tendermint.com/master/nodes/metrics.html#metrics">this section</a> of
+tendermint docs for further info.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="keys">
+<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this headline"></a></h2>
+<p>In the cosmos SDk, two types of keys are used:</p>
+<ol class="arabic simple">
+<li><p>Application keys: Used for signing transactions created by the user of this
+node.</p></li>
+<li><p>Tendermint keys: Used for signing votes, as a part of the validation
+process.</p></li>
+</ol>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline"></a></h2>
+<p>The architecture of the node consists of the two components:</p>
+<ol class="arabic simple">
+<li><p>Blockchain application: It interprets, validates and maintains the state;
+implements proof of stake consensus over tendermint consensus.</p></li>
+<li><p>Tendermint node: It syncs the state across all the nodes in a bynzatine
+fault tolerant manner, using the tendermint consensus mechanism.</p></li>
+</ol>
+<p>The blockchain application is composed of many modules, each of which provides
+certain functionalities. These modules can be existing ones created by the core
+team, community or the ones developed specifically for our application. These
+modules are configured by modifying their parameters in the genesis file.</p>
+<p>Below is a set of modules included in the esc-backbone blockchain node, a brief
+description of their functionality and their parameters. See <a class="reference external" href="https://docs.cosmos.network/main/modules/">this page</a> for more information on any of
+these modules.</p>
+<ol class="arabic">
+<li><p>auth: accounts, signatures, transactions and gas.</p>
+<p>Note: one aspect of gas cost “constant_fee” is configured in the crisis
+module.</p>
+</li>
+<li><p>genutil: genesis utility for use within the application.</p>
+<p>It has no configurable parameters.</p>
+</li>
+<li><p>bank module: supply and minting/burning of tokens.</p></li>
+<li><p>capability: implements object capability, as described in <a class="reference external" href="https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-003-dynamic-capability-store.md">ADR 3</a>.</p></li>
+<li><p>staking: staking and proof-of-stake (PoS) consensus.</p></li>
+<li><p>mint: implements inflation</p></li>
+<li><p>distribution: passive mechanism to manage rewards and community tax.</p></li>
+<li><p>governance: on-chain governance proposals for modifying parameters, software
+upgrades and general purpose concerns.</p></li>
+<li><p>params: global aware parameter store used by all other modules.</p></li>
+<li><p>crisis: ensures chain is halted when invariants are broken.</p>
+<p>It has a configurable parameter call “constant fee” which is the constant
+fee charged for checking the invariants.</p>
+</li>
+<li><p>feegrant: allow accounts to grant fee allowances and use fees from their
+accounts.</p></li>
+<li><p>IBC: implements inter-blockchain communication protocol.</p></li>
+<li><p>upgrade: for smooth upgrade of live chain to breaking software version.</p></li>
+<li><p>evidence: allow submission of arbitrary evidence of misbehavior.</p></li>
+<li><p>transfer: transfer of tokens across networks via IBC.</p></li>
+<li><p>vesting: vesting of tokens.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../wallet_tutorial/index.html" class="btn btn-neutral float-left" title="Wallet tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ESC Backbone Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
