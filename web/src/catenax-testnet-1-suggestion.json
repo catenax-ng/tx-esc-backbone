@@ -1,1 +1,50 @@
-{"chainId":"catenax-testnet-1","chainName":"Catena-X Testnet","rpc":"http://0.0.0.0:26657/","rest":"http://0.0.0.0:1317/","stakeCurrency":{"coinDenom":"CAX-DEMO","coinMinimalDenom":"ncax-demo","coinDecimals":9},"bip44":{"coinType":118},"bech32Config":{"bech32PrefixAccAddr":"catenax","bech32PrefixAccPub":"catenaxpub","bech32PrefixValAddr":"catenaxvaloper","bech32PrefixValPub":"catenaxvaloperpub","bech32PrefixConsAddr":"catenaxvalcons","bech32PrefixConsPub":"catenaxvalconspub"},"currencies":[{"coinDenom":"CAX-DEMO","coinMinimalDenom":"ncax-demo","coinDecimals":9},{"coinDenom":"VOUCHER","coinMinimalDenom":"cvoucher","coinDecimals":2}],"feeCurrencies":[{"coinDenom":"CAX-DEMO","coinMinimalDenom":"ncax-demo","coinDecimals":9}],"coinType":118,"gasPriceStep":{"low":0.01,"average":0.025,"high":0.04},"features":["stargate"]}
+{
+  "chainId": "catenax-testnet-1",
+  "chainName": "Catena-X Testnet",
+  "rpc": "http://0.0.0.0:26657/",
+  "rest": "http://0.0.0.0:1317/",
+  "stakeCurrency": {
+    "coinDenom": "CAX-DEMO",
+    "coinMinimalDenom": "ncax-demo",
+    "coinDecimals": 9
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "catenax",
+    "bech32PrefixAccPub": "catenaxpub",
+    "bech32PrefixValAddr": "catenaxvaloper",
+    "bech32PrefixValPub": "catenaxvaloperpub",
+    "bech32PrefixConsAddr": "catenaxvalcons",
+    "bech32PrefixConsPub": "catenaxvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "CAX-DEMO",
+      "coinMinimalDenom": "ncax-demo",
+      "coinDecimals": 9
+    },
+    {
+      "coinDenom": "VOUCHER",
+      "coinMinimalDenom": "cvoucher",
+      "coinDecimals": 2
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "CAX-DEMO",
+      "coinMinimalDenom": "ncax-demo",
+      "coinDecimals": 9
+    }
+  ],
+  "coinType": 118,
+  "gasPriceStep": {
+    "low": 0.01,
+    "average": 0.025,
+    "high": 0.04
+  },
+  "features": [
+    "stargate"
+  ]
+}

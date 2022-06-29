@@ -41,7 +41,7 @@ FROM debian:10.11-slim as blockexpl
 FROM debian:10.11-slim as esc-backbone-node
 ARG BRANCH=main
 LABEL branch="$BRANCH" repository="github.com/catenax/esc-backbone"
-EXPOSE 1317 26656 26657 26658
+EXPOSE 1317 9090 9091 26656 26657 26658
 ENV NODE_HOME=/validator/chain
 RUN useradd -U -s /bin/bash -d /validator validator
 WORKDIR /validator
@@ -54,4 +54,4 @@ VOLUME /validator/chain/
 USER validator
 # TODO REQUEST funds from faucet
 # TODO specify validator key using the /run/secret/mnemonic file
-ENTRYPOINT ["sh", "-c","/validator/esc-backboned start --home $NODE_HOME"]
+ENTRYPOINT ["sh", "-c","id; /validator/esc-backboned start --home $NODE_HOME"]
