@@ -147,7 +147,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	err = os.WriteFile("./web/src/"+chainId+"-suggestion.json", bytes, 0644)
+	err = os.WriteFile("./web/public/chain/"+chainId+"-suggestion.json", bytes, 0644)
 	if err != nil {
 		fmt.Println(err)
 		return
