@@ -1,4 +1,5 @@
 #!/bin/bash
+id
 MOUNT_FOLDER=${1:?"Mount folder required"}
 MOUNT_FOLDER=${MOUNT_FOLDER%/}
 if [ ! -w $MOUNT_FOLDER ]; then
