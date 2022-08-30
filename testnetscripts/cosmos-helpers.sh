@@ -131,7 +131,7 @@ function sync_generate_genesis_file() {
   $CHAIN_BINARY --home $TEMP_HOME init git-moniker --chain-id ${CHAIN_ID:?"CHAIN_ID required"} &> /dev/null
   local HOME_DIR=${1:?"Git repo folder required"}
   mkdir -p $HOME_DIR/config
-  mv $TEMP_HOME/config/genesis.json $HOME_DIR/config/
+  mv $TEMP_HOME/* $HOME_DIR/
   sed -i "s/\\\"stake\\\"/\"$CURRENCY\"/g" $HOME_DIR/config/genesis.json
   rm -r $TEMP_HOME
   tag_genesis_file $HOME_DIR "init_genesis" "initial genesis file"

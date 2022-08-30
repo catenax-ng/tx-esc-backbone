@@ -71,11 +71,11 @@ function create_home_and_key() {
   local REPO="${NODE_HOME%/}/sync"
   echo "Processing $MONIKER"
   clone_sync_repo "$REPO" "$GIT_REPO"
-  each_fetch_genesis_file_for_node_from_tag "$NODE_HOME" "init_genesis"
   echo "each_init_home "$NODE_HOME" "$MONIKER""
   each_init_home "$NODE_HOME" "$MONIKER"
   each_add_key "$NODE_HOME" "$MONIKER"
   rm "$NODE_HOME/config/genesis.json"
+  each_fetch_genesis_file_for_node_from_tag "$NODE_HOME" "init_genesis"
 }
 
 function publish_initial_genesis_file() {
