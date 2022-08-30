@@ -122,7 +122,7 @@ func main() {
 	bip44 := uint(118)
 	rest := "http://0.0.0.0:1317/"
 	rpc := "http://0.0.0.0:26657/"
-	caxCurrency := newCurrency("cax-demo", 9)
+	caxCurrency := newCurrency("caxdemo", 9)
 	voucherCurrency := newCurrency("voucher", 2)
 	suggestion := KeplrSuggestion{
 		ChainId:       chainId,
