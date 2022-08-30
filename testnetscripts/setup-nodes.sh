@@ -116,6 +116,7 @@ function add_faucet_account(){
     git commit -m "Add faucet account"
     cd - > /dev/null
     local PUB_ADDR=$(get_pub_addr $FAUCET_DIR $MONIKER)
+    sed -i "s/\s\{0,\}\#\{0,\}\s\{0,\}moniker\s\{0,\}=.\{0,\}/moniker = faucet/" "${FAUCET_DIR%/}/config/config.toml"
     add_funds_to_addr "$SYNC_HOME" $PUB_ADDR $FAUCET_INITIAL_BALANCE $CURRENCY
   fi
 }
