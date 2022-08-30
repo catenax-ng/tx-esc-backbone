@@ -15,7 +15,7 @@
 proxy_app = "tcp://127.0.0.1:26658"
 
 # A custom human readable name for this node
-moniker = "work"
+moniker = "git-moniker"
 
 # If this node is many blocks behind the tip of the chain, FastSync
 # allows them to catchup quickly by downloading blocks in parallel
@@ -212,7 +212,7 @@ external_address = ""
 seeds = ""
 
 # Comma separated list of nodes to keep persistent connections to
-persistent_peers = "485720225d2b05dc22bfde519ecdb286b45f905f@testnet-esc-backbone-2-service:26656,4ae2a7197924753e8d588404fd9e5232d50195e1@testnet-esc-backbone-1-service:26656,c6a17cc815c87336abafa8f98b5526017abf211f@testnet-esc-backbone-3-service:26656,e59ecb5c232f0dd42a150afdf5062f870301ad45@testnet-esc-backbone-4-service:26656"
+persistent_peers = "5ded0909f1c671c84f1cf67b4fa4a7e32e71d605@testnet-esc-backbone-3-service:26656,b026185d77a16dc0b0e06cda989cd58026f356b8@testnet-esc-backbone-1-service:26656,be8f1e510c79001bcf6da4162f618a3153d2ffb1@testnet-esc-backbone-4-service:26656,f53e41872c6c51f5cf356d4cc9b6e7ceb3e19552@testnet-esc-backbone-2-service:26656"
 
 # UPNP port forwarding
 upnp = false
