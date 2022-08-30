@@ -1,4 +1,6 @@
 #!/bin/bash
+SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
+source $SCRIPT_LOCATION/toml-helpers.sh
 
 CONFIG_FILE_NAME="config/client.toml"
 function update_client_toml(){
