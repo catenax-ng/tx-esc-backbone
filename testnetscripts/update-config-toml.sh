@@ -1,27 +1,37 @@
 #!/bin/bash
-SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
-source $SCRIPT_LOCATION/toml-helpers.sh
 
-CONFIG_FILE_NAME="config/config.toml"
+
 
 function publish_rpc(){
-  TRG=${1:?"Target folder required"}
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "rpc" "laddr" "\"tcp://0.0.0.0:26657\""
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "rpc" "cors_allowed_origins" "[\"*\"]"
+  local TRG_FILE=${1:?"Target file required"}
+  dasel -p toml put string  -f "${TRG_FILE}" -s ".rpc.laddr" -v "tcp://0.0.0.0:26657"
+
+  # dasel seem to not support setting lists with toml
+  cp "${TRG_FILE}" "${TRG_FILE}.tmp"
+  dasel -r toml -w json -f ${TRG_FILE}.tmp | \
+    jq 'setpath(path(.rpc.cors_allowed_origins);["*"])'  | \
+    dasel -r json -w toml > ${TRG_FILE}
+  rm ${TRG_FILE}.tmp
+
 }
 function update_persistent_peers() {
-  SRC=${1:?"Source folder required"}
-  TRG=${2:?"Target folder required"}
+  local SRC_FILE=${1:?"Source file required"}
+  local TRG_FILE=${2:?"Target file required"}
 
-  REPLACEMENT="$(cat ${SRC%/}/$CONFIG_FILE_NAME | grep "persistent_peers = \"")"
-  REPLACEMENT=${REPLACEMENT//\//\\/}
-  REPLACEMENT=${REPLACEMENT//:/\\:}
-  sed -i "s/\s\{0,\}\#\{0,\}\s\{0,\}persistent_peers\s\{0,\}=.\{0,\}/$REPLACEMENT/" "${TRG%/}/$CONFIG_FILE_NAME"
+  local PEERS=$(dasel -p toml -f "${SRC_FILE}" -s ".p2p.persistent_peers")
+  dasel -p toml put string  -f "${TRG_FILE}" -s ".p2p.persistent_peers" -v $PEERS
 }
 
-# cors_allowed_origins = ["*"]
 function update_config_toml(){
-  SRC=${1:?"Source folder required"}
-  TRG=${2:?"Target folder required"}
-  update_persistent_peers "$SRC" "$TRG"
+  local SRC=${1:?"Source folder required"}
+  local TRG=${2:?"Target folder required"}
+  # dasel strips comments for now. https://github.com/TomWright/dasel/issues/178
+  # creating a backup
+  local CONFIG_FILE_NAME="config/config.toml"
+  local TRG_FILE=${TRG%/}/$CONFIG_FILE_NAME
+  local SRC_FILE=${SRC%/}/$CONFIG_FILE_NAME
+  cp "${TRG_FILE}" "${TRG_FILE}.bak"
+  echo "cp "${TRG_FILE}" "${TRG_FILE}.bak""
+  update_persistent_peers "${SRC_FILE}" "${TRG_FILE}"
+  publish_rpc "${TRG_FILE}"
 }

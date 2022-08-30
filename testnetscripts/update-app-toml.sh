@@ -1,21 +1,24 @@
 #!/bin/bash
-SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
-source $SCRIPT_LOCATION/toml-helpers.sh
 
-CONFIG_FILE_NAME="config/app.toml"
+local CONFIG_FILE_NAME="config/app.toml"
 
 function enable_rest() {
-  TRG=${1:?"Target folder required"}
-
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "api" "enable" "true"
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "api" "swagger" "true"
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "api" "enabled-unsafe-cors" "true"
+  local TRG_FILE=${1:?"Target file required"}
+  dasel -p toml put bool  -f "${TRG_FILE}" -s ".api.enable" -v "true"
+  dasel -p toml put bool  -f "${TRG_FILE}" -s ".api.swagger" -v "true"
+  dasel -p toml put bool  -f "${TRG_FILE}" -s ".api.enabled-unsafe-cors" -v "true"
 }
 
 function update_app_toml(){
-  SRC=${1:?"Source folder required"}
-  TRG=${2:?"Target folder required"}
-
-  enable_rest "$TRG"
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "grpc-web" "enabled-unsafe-cors" "true"
+  local SRC=${1:?"Source folder required"}
+  local TRG=${2:?"Target folder required"}
+  # dasel strips comments for now. https://github.com/TomWright/dasel/issues/178
+  # creating a backup
+  local CONFIG_FILE_NAME="config/app.toml"
+  local TRG_FILE="${TRG%/}/config/app.toml"
+  local SRC_FILE="${SRC%/}/config/app.toml"
+  cp "${TRG_FILE}" "${TRG_FILE}.bak"
+  echo "cp "${TRG_FILE}" "${TRG_FILE}.bak""
+  enable_rest "${TRG_FILE}"
+  dasel -p toml put bool  -f "${TRG_FILE}" -s ".grpc-web.enable-unsafe-cors" -v "true"
 }

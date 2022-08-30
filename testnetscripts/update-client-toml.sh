@@ -1,10 +1,14 @@
 #!/bin/bash
-SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
-source $SCRIPT_LOCATION/toml-helpers.sh
 
-CONFIG_FILE_NAME="config/client.toml"
+
 function update_client_toml(){
-  SRC=${1:?"Source folder required"}
-  TRG=${2:?"Target folder required"}
-
+  local SRC=${1:?"Source folder required"}
+  local TRG=${2:?"Target folder required"}
+  # dasel strips comments for now. https://github.com/TomWright/dasel/issues/178
+  # creating a backup
+  local CONFIG_FILE_NAME="config/client.toml"
+  local TRG_FILE=${TRG%/}/$CONFIG_FILE_NAME
+  local SRC_FILE=${SRC%/}/$CONFIG_FILE_NAME
+  cp "${TRG_FILE}" "${TRG_FILE}.bak"
+  echo "cp "${TRG_FILE}" "${TRG_FILE}.bak""
 }

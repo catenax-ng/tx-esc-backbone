@@ -15,6 +15,13 @@ ensure_command_exists tail
 ensure_command_exists sed
 ensure_command_exists cat
 ensure_command_exists touch
+ensure_command_exists jq
+# required to edit toml files
+if ! command -v dasel &> /dev/null
+then
+  echo "dasel could not be found: can be installed with 'go install github.com/tomwright/dasel/cmd/dasel@v1.26.1'"
+  exit
+fi
 
 function each_init_home(){
   local HOME_DIR=${1:?"Home folder required"}
