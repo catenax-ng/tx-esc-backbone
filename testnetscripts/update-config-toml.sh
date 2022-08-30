@@ -6,7 +6,7 @@ CONFIG_FILE_NAME="config/config.toml"
 
 function publish_rpc(){
   TRG=${1:?"Target folder required"}
-  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "rpc" "laddr" "\"tcp://127.0.0.1:26657\""
+  toml_set "${TRG%/}/$CONFIG_FILE_NAME" "rpc" "laddr" "\"tcp://0.0.0.0:26657\""
   toml_set "${TRG%/}/$CONFIG_FILE_NAME" "rpc" "cors_allowed_origins" "[\"*\"]"
 }
 function update_persistent_peers() {
