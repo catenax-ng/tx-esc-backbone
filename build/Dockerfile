@@ -14,12 +14,12 @@ WORKDIR /build/esc-backbone
 
 COPY cmd ./cmd
 COPY app ./app
-COPY web ./web
 COPY docs ./docs
 COPY go.mod go.sum config.yml ./
 
 RUN /build/ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
+COPY web ./web
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
 
 # COPY prepared test net homes.
