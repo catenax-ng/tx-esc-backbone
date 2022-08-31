@@ -46,8 +46,9 @@ ENV CHAIN_NAME=""
 ENV CHAIN_DENOM_FILE=""
 ENV CHAIN_DENOM_NEW=""
 COPY --from=web-chain-suggestion-build /build/web/build /usr/share/nginx/html
-RUN chown $UID:$GID /usr/share/nginx/html/chain/*.json
+RUN chown -R $UID:$GID /usr/share/nginx/html/chain/
 COPY --chown=$UID:$GID build/webapp-entrypoint.sh /
+COPY --chown=$UID:$GID build/write-env-to-json.sh /
 COPY --chown=$UID:$GID build/update-chain-suggestion.sh  /
 
 ENTRYPOINT ["/webapp-entrypoint.sh"]
