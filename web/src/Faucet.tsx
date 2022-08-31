@@ -1,9 +1,21 @@
 import React, {useState} from 'react';
 import {Button, Input} from "cx-portal-shared-components";
+import Env from "./Env";
 
+function SendFunds(receiver: string, faucetAddress: string) {
+    fetch(faucetAddress+"/credit", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"denom":"ncaxdemo","address":receiver})
+        }
+    ).catch(console.log).then((_)=>{})
+}
 
 export default function Faucet() {
     const [receiver, setReceiver] = useState("");
+    const faucetAddress=Env.getVars().then(o=>o["WEBAPP_FAUCET"])
     return (
         <div>
             <Input
@@ -16,9 +28,7 @@ export default function Faucet() {
             />
             <Button
                 color="primary"
-                onClick={function noRefCheck() {
-                    console.log("Public address", {receiver})
-                }}
+                onClick={()=> { faucetAddress.then(a=>SendFunds( receiver.toString(),a))}}
                 onFocusVisible={function noRefCheck() {
                 }}
                 size="large"
