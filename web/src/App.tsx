@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Faucet from './Faucet';
 
 import SuggestKeplrChain from "./KeplrChainSuggestion";
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <p>
           TODO make it catena-x branding
         </p>
+        <Faucet/>
       </header>
     </div>
   );
