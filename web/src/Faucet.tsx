@@ -12,10 +12,20 @@ function SendFunds(receiver: string, faucetAddress: string) {
         }
     ).catch(console.log).then((_)=>{})
 }
+const URL_REGEX = new RegExp('(https?:\\/\\/[A-Za-z-_.]+(:\\d+)?)(\\/.*)?');
+
+function sanitizeUrlToHostWithSchemaAndPort(url: string, openError: (errorMsg: string) => void): string {
+    const match = url.match(URL_REGEX)
+    if (match) {
+        return match[1]
+    }else{
+        throw "Invalid faucet url: "+ url
+    }
+}
 
 export default function Faucet() {
     const [receiver, setReceiver] = useState("");
-    const faucetAddress=Env.getVars().then(o=>o["WEBAPP_FAUCET"])
+    const faucetAddress=Env.getVars().then(o => o["WEBAPP_FAUCET"]).then(u => sanitizeUrlToHostWithSchemaAndPort(u))
     return (
         <div>
             <Input
