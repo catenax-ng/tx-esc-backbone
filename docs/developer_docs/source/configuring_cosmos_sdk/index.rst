@@ -1,4 +1,4 @@
-.. _configuring_comos_sdk:
+.. _configuring_cosmos_sdk:
 
 Configuring the cosmos sdk
 ==========================
