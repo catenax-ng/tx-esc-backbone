@@ -34,11 +34,11 @@ Serve the development chain
 
    $ cd esc-backbone && ignite chain serve
 
-Serve the vue web app
+Serve the web app
 ^^^^^^^^^^^^^^^^^^^^^
 
 Open a new terminal
 
 .. code-block::
 
-   $ cd esc-backbone/vue && npm install && npm run build && npm run serve
+   $ cd esc-backbone/web && npm install && npm run build && npm run serve

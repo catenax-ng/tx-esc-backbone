@@ -72,7 +72,7 @@ Clicking on `Cosmos Hub` shows the default chains, which Keplr knows. Our test c
 Importing the chain into Keplr
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Visit the vue app at `http://localhost:5000/ <http://localhost:5000/>`_. 
+Visit the web app at `http://localhost:3000/ <http://localhost:3000/>`_.
 
 Keplr will ask for importing the suggested chain `catenax-1`. Approve it.
 
