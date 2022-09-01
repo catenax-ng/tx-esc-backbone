@@ -1,6 +1,6 @@
 alabaster>=0.7.11
 Babel>=2.6.0
-docutils>=0.14
+docutils<0.18
 imagesize>=1.0.0
 Jinja2>=2.10
 MarkupSafe>=1.0
