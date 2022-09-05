@@ -4,10 +4,11 @@ import './App.css';
 import Faucet from './Faucet';
 
 import SuggestKeplrChain from "./KeplrChainSuggestion";
+
 function App() {
-  // Register the keplr chain suggestion to window.onload
+  // Register the keplr chain suggestion to the App component
   React.useEffect( () => {
-    window.addEventListener('load', SuggestKeplrChain);
+    SuggestKeplrChain()
   },[])
   return (
     <div className="App">
