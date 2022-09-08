@@ -1,0 +1,21 @@
+syntax = "proto3";
+package escbackbone.resourcesync;
+
+option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
+
+
+enum ActionLog{
+  ACTION_NOT_SET=0;
+  RESOURCE_CREATE=1;
+  RESOURCE_UPDATE=2;
+  RESOURCE_DELETE=3;
+}
+
+message Audit {
+  ActionLog action=1;
+  Signature signature=2;
+}
+
+message Signature{
+  string pubkey=1;
+}
