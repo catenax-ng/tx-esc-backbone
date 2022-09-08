@@ -6,12 +6,15 @@ option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 message Resource {
   // issue of resource change
   string originator = 1;
+  // id of the resource by originator - this datatype allows ~18 quintillion resources per originator
+  uint64 origResId = 2;
   // pointer to the system holding the information of the resource
-  string targetSystem = 2;
+  string targetSystem =3;
   // Id of the resource to access it at the target system
-  string resourceId = 3;
+  string resourceKey = 4;
+
   // Hash of the resource
-  bytes dataHash = 4;
+  bytes dataHash = 5;
 }
 
 enum ActionLog{
