@@ -56,8 +56,38 @@ USER $UID
 
 CMD ["nginx", "-g", "daemon off;"]
 
-FROM debian:10.11-slim as faucet
-# TODO implement command for the faucet
+
+FROM debian:10.11-slim as cosmjs-checkout
+RUN apt update
+RUN apt upgrade -y
+RUN apt install -y git
+WORKDIR /git
+RUN git clone --branch v0.28.13 https://github.com/cosmos/cosmjs.git
+# this is required to fix the build issues
+RUN rm cosmjs/yarn.lock
+
+# based on https://github.com/cosmos/cosmjs/blob/v0.28.13/packages/faucet/Dockerfile#L11-L20
+FROM node:14-alpine as faucet-build-env
+RUN apk add --update --no-cache alpine-sdk linux-headers build-base gcc libusb-dev python3 py3-pip eudev-dev
+RUN ln -sf python3 /usr/bin/python
+WORKDIR /app
+COPY --from=cosmjs-checkout /git/cosmjs /app
+
+RUN yarn install && yarn run build
+RUN (cd packages/faucet && SKIP_BUILD=1 yarn pack-node)
+
+# based on https://github.com/cosmos/cosmjs/blob/v0.28.13/packages/faucet/Dockerfile#L22-L32
+FROM alpine:3.15 as esc-backbone-faucet
+# Installs Node.js 16 (https://pkgs.alpinelinux.org/packages?name=nodejs&branch=v3.15)
+RUN apk add --update nodejs
+
+COPY --from=faucet-build-env /app/packages/faucet /app/packages/faucet
+WORKDIR /app
+
+EXPOSE 8000
+ENV FAUCET_ADDRESS_PREFIX="catenax"
+ENV FAUCET_TOKENS="ncaxdemo"
+ENTRYPOINT ["/app/packages/faucet/bin/cosmos-faucet-dist"]
 
 FROM debian:10.11-slim as blockexpl
 
