@@ -65,3 +65,11 @@ func TestGenesisState_Validate(t *testing.T) {
 		})
 	}
 }
+
+func TestDefaultGenesisIsCorrect(t *testing.T) {
+	require.EqualValues(t,
+		&types.GenesisState{
+			ResourceMapList: []types.ResourceMap{},
+		},
+		types.DefaultGenesis())
+}
