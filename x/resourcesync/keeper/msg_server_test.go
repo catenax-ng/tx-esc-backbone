@@ -11,13 +11,19 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {
+const (
+	Alice = "cosmos1vvwed6f6uu4hjm6s3dqdfrrfqkwvg2dcag3ecf"
+	Bob   = "cosmos1w73d7jg8f46qx354hj62d3pa5kfncc47nw5rx2"
+)
+
+func setupMsgServer(t testing.TB) (types.MsgServer, keeper.Keeper, context.Context) {
 	k, ctx := keepertest.ResourcesyncKeeper(t)
-	return keeper.NewMsgServerImpl(*k), sdk.WrapSDKContext(ctx)
+	return keeper.NewMsgServerImpl(*k), *k, sdk.WrapSDKContext(ctx)
 }
 
 func TestMsgServer(t *testing.T) {
-	ms, ctx := setupMsgServer(t)
+	ms, keeper, ctx := setupMsgServer(t)
 	require.NotNil(t, ms)
+	require.NotNil(t, keeper)
 	require.NotNil(t, ctx)
 }
