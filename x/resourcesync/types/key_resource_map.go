@@ -26,3 +26,7 @@ func ResourceMapKey(
 
 	return key
 }
+
+func ResourceMapKeyOf(resource *Resource) []byte {
+	return ResourceMapKey(resource.Originator, resource.OrigResId)
+}
