@@ -20,5 +20,12 @@ func (k msgServer) CreateResource(goCtx context.Context, msg *types.MsgCreateRes
 	}
 	resourceMap := types.NewResourceMap(resource)
 	k.Keeper.SetResourceMap(ctx, resourceMap)
+	err2 := ctx.EventManager().EmitTypedEvent(&types.EventCreateResource{
+		Creator:  msg.Creator,
+		Resource: resource,
+	})
+	if err2 != nil {
+		return nil, err2
+	}
 	return &types.MsgCreateResourceResponse{}, nil
 }

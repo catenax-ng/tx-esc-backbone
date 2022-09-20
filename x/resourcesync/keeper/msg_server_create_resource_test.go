@@ -3,6 +3,8 @@ package keeper_test
 import (
 	"github.com/catenax/esc-backbone/x/resourcesync/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/gogo/protobuf/proto"
+	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 )
@@ -12,6 +14,7 @@ func Test_msgServer_CreateResource(t *testing.T) {
 		want    *types.MsgCreateResourceResponse
 		wantErr bool
 		stored  []types.ResourceMap
+		events  []proto.Message
 	}
 	type args struct {
 		msgs []*types.MsgCreateResource
@@ -22,11 +25,11 @@ func Test_msgServer_CreateResource(t *testing.T) {
 		wants []want
 	}{
 		{
-			"One new resource",
-			args{msgs: []*types.MsgCreateResource{
+			name: "One new resource",
+			args: args{msgs: []*types.MsgCreateResource{
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Alice,
 						OrigResId:    "an Id",
 						TargetSystem: "some url",
@@ -35,31 +38,42 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 			}},
-			[]want{
+			wants: []want{
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "an Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 			},
 		},
 		{
-			"Two new resources same originator",
-			args{msgs: []*types.MsgCreateResource{
+			name: "Two new resources same originator",
+			args: args{msgs: []*types.MsgCreateResource{
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Alice,
 						OrigResId:    "an Id",
 						TargetSystem: "some url",
@@ -68,8 +82,8 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Alice,
 						OrigResId:    "another Id",
 						TargetSystem: "some url",
@@ -78,57 +92,88 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 			}},
-			[]want{
+			wants: []want{
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "an Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "an Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
 						},
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "another Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "another Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 			},
 		},
 		{
-			"Two new resources same id different originators",
-			args{msgs: []*types.MsgCreateResource{
+			name: "Two new resources same id different originators",
+			args: args{msgs: []*types.MsgCreateResource{
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Alice,
 						OrigResId:    "same Id",
 						TargetSystem: "some url",
@@ -137,8 +182,8 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Bob,
 						OrigResId:    "same Id",
 						TargetSystem: "some url",
@@ -147,57 +192,88 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 			}},
-			[]want{
+			wants: []want{
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "same Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "same Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "same Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
 						},
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Bob,
 								OrigResId:    "same Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "same Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Bob,
+								OrigResId:    "same Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 			},
 		},
 		{
-			"Two new resources same originator same Id",
-			args{msgs: []*types.MsgCreateResource{
+			name: "Two new resources same originator same Id",
+			args: args{msgs: []*types.MsgCreateResource{
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Bob,
 						OrigResId:    "same Id",
 						TargetSystem: "some url",
@@ -206,8 +282,8 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 				{
-					"creator's address",
-					&types.Resource{
+					Creator: "creator's address",
+					Entry: &types.Resource{
 						Originator:   Bob,
 						OrigResId:    "same Id",
 						TargetSystem: "some url",
@@ -216,36 +292,58 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					},
 				},
 			}},
-			[]want{
+			wants: []want{
 				{
-					&types.MsgCreateResourceResponse{},
-					false,
-					[]types.ResourceMap{
+					want:    &types.MsgCreateResourceResponse{},
+					wantErr: false,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Bob,
 								OrigResId:    "same Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Bob,
+								OrigResId:    "same Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
 				{
-					nil,
-					true,
-					[]types.ResourceMap{
+					want:    nil,
+					wantErr: true,
+					stored: []types.ResourceMap{
 						{
-							types.Resource{
+							Resource: types.Resource{
 								Originator:   Bob,
 								OrigResId:    "same Id",
 								TargetSystem: "some url",
 								ResourceKey:  "target system's key",
 								DataHash:     []byte("not empty hash"),
 							},
-							nil,
+						},
+					},
+					events: []proto.Message{
+						&types.EventCreateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Bob,
+								OrigResId:    "same Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
 						},
 					},
 				},
@@ -265,12 +363,21 @@ func Test_msgServer_CreateResource(t *testing.T) {
 					t.Errorf("CreateResource() got = %v, want %v", got, tt.wants[i].want)
 				}
 				ctx := sdk.UnwrapSDKContext(goCtx)
+				require.NotNil(t, ctx)
 				gotStored := keeper.GetAllResourceMap(ctx)
-
 				if !reflect.DeepEqual(gotStored, tt.wants[i].stored) {
 					t.Errorf("After CreateResource() keeper stored = %v, want %v", gotStored, tt.wants[i].stored)
 				}
-
+				abciEvents := ctx.EventManager().ABCIEvents()
+				var gotTypedEvents []proto.Message
+				for _, event := range abciEvents {
+					typedEvent, err := sdk.ParseTypedEvent(event)
+					require.Nil(t, err)
+					gotTypedEvents = append(gotTypedEvents, typedEvent)
+				}
+				if !reflect.DeepEqual(gotTypedEvents, tt.wants[i].events) {
+					t.Errorf("CreateResource() emitted events = %v, want %v", gotTypedEvents, tt.wants[i].events)
+				}
 			}
 
 		})
