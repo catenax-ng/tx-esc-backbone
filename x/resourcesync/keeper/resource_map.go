@@ -66,3 +66,9 @@ func (k Keeper) GetAllResourceMap(ctx sdk.Context) (list []types.ResourceMap) {
 
 	return
 }
+
+func (k Keeper) HasResourceMapFor(ctx sdk.Context, resource types.Resource) bool {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ResourceMapKeyPrefix))
+	key := types.ResourceMapKeyOf(&resource)
+	return store.Has(key)
+}

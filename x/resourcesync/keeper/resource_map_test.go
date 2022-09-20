@@ -65,3 +65,16 @@ func TestResourceMapGetAll(t *testing.T) {
 		nullify.Fill(keeper.GetAllResourceMap(ctx)),
 	)
 }
+
+func TestKeeper_HasResourceMapFor(t *testing.T) {
+	keeper, ctx := keepertest.ResourcesyncKeeper(t)
+	_ = createNResourceMap(keeper, ctx, 2)
+
+	require.True(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "0", OrigResId: "0"}))
+	require.True(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "1", OrigResId: "1"}))
+	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "0", OrigResId: "1"}))
+	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "1", OrigResId: "0"}))
+	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "2", OrigResId: "2"}))
+	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "3", OrigResId: "3"}))
+
+}
