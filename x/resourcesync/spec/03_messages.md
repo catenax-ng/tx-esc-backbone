@@ -19,3 +19,11 @@ Deletes a resource defined by the `originator` and the `origResId` entry to publ
 The message will fail under the following conditions:
 
 - There is no resource with the same `originator` `origResId` combination.
+
+## MsgUpdateResource
+
+Changes a resource entry to publish its update via an event.
+
+The message will fail under the following conditions:
+
+- There is no resource with the same `originator` `origResId` combination.
