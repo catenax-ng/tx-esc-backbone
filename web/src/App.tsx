@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './Catena-X_Logo_ohne_Zusatz_2021.svg';
 import './App.css';
 import Faucet from './Faucet';
 
@@ -14,9 +14,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          TODO make it catena-x branding
-        </p>
         <Faucet/>
       </header>
     </div>
