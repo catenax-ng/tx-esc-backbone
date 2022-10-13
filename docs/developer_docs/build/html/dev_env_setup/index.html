@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -27,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> ESC Backbone
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ESC Backbone
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -47,7 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#serve-the-development-chain">Serve the development chain</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#clone-the-repository">Clone the repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Serve the development chain</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#serve-the-vue-web-app">Serve the vue web app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#serve-the-web-app">Serve the web app</a></li>
 </ul>
 </li>
 </ul>
@@ -69,8 +75,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Development environment setup</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Development environment setup</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/dev_env_setup/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,36 +87,36 @@
            <div itemprop="articleBody">
              
   <section id="development-environment-setup">
-<span id="dev-env-setup"></span><h1>Development environment setup<a class="headerlink" href="#development-environment-setup" title="Permalink to this headline"></a></h1>
+<span id="dev-env-setup"></span><h1>Development environment setup<a class="headerlink" href="#development-environment-setup" title="Permalink to this heading"></a></h1>
 <section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
 <section id="install-ignite-cli">
-<h3>Install Ignite-cli<a class="headerlink" href="#install-ignite-cli" title="Permalink to this headline"></a></h3>
+<h3>Install Ignite-cli<a class="headerlink" href="#install-ignite-cli" title="Permalink to this heading"></a></h3>
 <p>Follow  <a class="reference external" href="https://docs.ignite.com/guide/install.html">these instructions</a></p>
 </section>
 <section id="install-nodejs-with-npm">
-<h3>Install nodejs with npm<a class="headerlink" href="#install-nodejs-with-npm" title="Permalink to this headline"></a></h3>
+<h3>Install nodejs with npm<a class="headerlink" href="#install-nodejs-with-npm" title="Permalink to this heading"></a></h3>
 <p>Suggestion is to use <a class="reference external" href="https://github.com/nvm-sh/nvm#installing-and-updating">Node Version Manager</a> for installing nodejs</p>
 </section>
 </section>
 <section id="serve-the-development-chain">
-<h2>Serve the development chain<a class="headerlink" href="#serve-the-development-chain" title="Permalink to this headline"></a></h2>
+<h2>Serve the development chain<a class="headerlink" href="#serve-the-development-chain" title="Permalink to this heading"></a></h2>
 <section id="clone-the-repository">
-<h3>Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this headline"></a></h3>
+<h3>Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:catenax/esc-backbone.git
 </pre></div>
 </div>
 </section>
 <section id="id1">
-<h3>Serve the development chain<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3>Serve the development chain<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd esc-backbone &amp;&amp; ignite chain serve
 </pre></div>
 </div>
 </section>
-<section id="serve-the-vue-web-app">
-<h3>Serve the vue web app<a class="headerlink" href="#serve-the-vue-web-app" title="Permalink to this headline"></a></h3>
+<section id="serve-the-web-app">
+<h3>Serve the web app<a class="headerlink" href="#serve-the-web-app" title="Permalink to this heading"></a></h3>
 <p>Open a new terminal</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd esc-backbone/vue &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; npm run serve
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd esc-backbone/web &amp;&amp; npm install &amp;&amp; npm run build &amp;&amp; npm run serve
 </pre></div>
 </div>
 </section>

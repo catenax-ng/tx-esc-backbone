@@ -1,0 +1,222 @@
+.. _dev_smart_contracts:
+
+Smart Contracts
+===============
+**Wasmd** is a Cosmos SDK based blockchain application that supports CosmWasm contracts. The base of the code is forked from Cosmos Hub’s gaia with the addition of one module, x/wasm that adds smart contract support. 
+
+Please note that wasmd is available on unix-like systems (Linux and MacOS), if you run Windows, you could give WSL2 a try.
+
+Prerequisites
+-------------
+
+Prepare a wallet and request funds
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If you do not have wallet yet, have a look at the :ref:`wallet_tutorial`.
+
+Install Go
+^^^^^^^^^^
+Modules in the Cosmos SDK, therfor also the Wasmd module, are written in Go.
+
+You can set up golang following the `official documentation <https://github.com/golang/go/wiki#working-with-go>`_.
+
+The latest versions of wasmd require go version v1.17+.
+
+Install Rust
+^^^^^^^^^^^^
+Assuming you have never worked with rust, you will first need to install some tooling.
+The standard approach is to use `rustup <https://www.rust-lang.org/tools/install>`_
+to maintain dependencies and handle updating multiple versions of cargo and rustc, which you will be using.
+
+Installing Rust in Linux and Mac
+""""""""""""""""""""""""""""""""
+First, install rustup. Once installed, make sure you have the wasm32 target:
+
+.. code-block:: bash
+
+    rustup default stable
+    cargo version
+
+**If this is lower than 1.55.0+, update**
+
+.. code-block:: bash
+
+    rustup update stable
+    rustup target list --installed
+    rustup target add wasm32-unknown-unknown
+
+Compiling and Testing Contract
+------------------------------
+For test purposes we can just checkout and compile a exemplary CosmWasm contract being part of the `cw-contracts GitHub repository <https://github.com/InterWasm/cw-contracts>`_. It is a example of an simple name service contract where mimics a name service marketplace. Also this tutorial is the de facto cosmos-sdk entrance tutorial.
+So First, clone the repo and try to build the wasm bundle:
+
+Get the code
+^^^^^^^^^^^^
+.. code-block:: bash
+
+    git clone https://github.com/InterWasm/cw-contracts
+    cd cw-contracts
+    git checkout main
+    cd contracts/nameservice
+
+Compile the wasm contract with stable toolchain
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: bash
+
+    rustup default stable
+    cargo wasm
+
+Optimized Compilation
+^^^^^^^^^^^^^^^^^^^^^
+To reduce gas costs, the binary size should be as small as possible. This will result in a less costly deployment,
+and lower fees on every interaction. Luckily, there is tooling to help with this. You can optimize production code
+using rust-optimizer. rust-optimizer produces reproducible builds of CosmWasm smart contracts.
+This means third parties can verify the contract is actually the claimed code.
+
+.. code-block:: bash
+
+    docker run --rm -v "$(pwd)":/code \
+        --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+        --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+        cosmwasm/rust-optimizer:0.12.4
+
+Binary will be at the artifacts subfolder in your project.
+
+Deploy a Smart Contract to the testnet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The following command will deploy the smart contract to our testnet.
+
+For easier use, we store alice's and bob's addresses in a variable
+
+.. code-block:: bash
+
+   export alice=$(esc-backboned keys show alice -a)
+   export bob=$(esc-backboned keys show bob -a)
+
+We can request founds for them with such a request.
+
+.. code-block:: bash
+
+   export FAUCET_ADDRESS="https://validator1.dev.demo.catena-x.net/"
+   curl --header "Content-Type: application/json"   --request POST \
+      --data '{"denom":"ncaxdemo","address":"$alice"}' $FAUCET_ADDRESS
+
+.. code-block:: bash
+
+    esc-backboned tx wasm store artifacts/cw_nameservice.wasm --from $alice --gas 1000000 --chain-id catenax-testnet-1
+
+
+After deployment the Smart Contract should be listed by queriing for deployed code on the chain.
+
+.. code-block:: bash
+
+    esc-backboned query wasm list-code
+
+Instantiate the deployed Smart Contract on the testnet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To be able to interact with the deployed smart contract via CLI we have to save the deployment transaction in an environment variable. So lets just re-deploy the same smart contract again (it wil be deployed under a new address) and save the transaction in the $RES environment variable
+
+.. code-block:: bash
+
+    RES=$(esc-backboned tx wasm store artifacts/cw_nameservice.wasm --from $alice --gas 1000000 --chain-id catenax-testnet-1 -y --output json -b block)
+
+Now we can retrieve the code id and persist it in $CODE_ID:
+
+.. note::
+   TODO: verify, that the last event always contains the code id in the first attribute
+
+.. code-block:: bash
+
+    export CODE_ID=$(echo $RES | jq -r '.logs[0].events[-1].attributes[0].value')
+
+You can also inspect the code ids via:
+
+.. code-block:: bash
+
+    esc-backboned query wasm list-code
+
+Until now we only deployed (or uploaded) our smart contract without instantiating it.
+Therefore the next command should return an empty list.
+
+.. code-block:: bash
+
+    esc-backboned query wasm list-contract-by-code $CODE_ID $NODE --output json
+
+We can now create an instance of this wasm contract.
+Here we first instantiate the contract and make some query operations on it.
+
+.. code-block:: bash
+
+    export NODE="--node https://validator1-tdmt-rpc.dev.demo.catena-x.net/"
+    export INIT='{"purchase_price":{"amount":"100","denom":"ncaxdemo"},"transfer_price":{"amount":"999","denom":"ncaxdemo"}}'
+    esc-backboned tx wasm instantiate $CODE_ID "$INIT" --from $alice --chain-id catenax-testnet-1 --label "awesome name service" --no-admin
+
+The `--no-admin` flag will make the contract immutable.
+In case you would like to have it changeable by an "admin" you have to give a wallet address with the --admin flag.
+This wallet address than "owns" the smart contract.
+
+The `query wasm list-contract-by-code` should now return the instantiated smart contract
+
+.. code-block:: bash
+
+    esc-backboned query wasm list-contract-by-code $CODE_ID $NODE --output json
+
+Let's now save the address under which the contract is deployed in an environment variable for further interactions.
+We select the last contract from the returned list of contracts (`.contract[-1]`).
+
+.. code-block:: bash
+
+    export CONTRACT=$(esc-backboned query wasm list-contract-by-code $CODE_ID $NODE --output json | jq -r '.contracts[-1]')
+    echo $CONTRACT
+
+
+We should see this contract with 100 ncaxdemo
+
+.. code-block:: bash
+
+    esc-backboned query wasm contract $CONTRACT $NODE
+    esc-backboned query bank balances $CONTRACT $NODE
+
+
+You can also dump entire contract state
+
+.. code-block:: bash
+
+    esc-backboned query wasm contract-state all $CONTRACT $NODE
+
+Interact with an instantiated Smart Contract on the testnet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Once contract instantiated, let's register a name and transfer it with paying its price.
+If you are running on the testnet, have a look at :ref:`request_funds_testnet`, how to get token there.
+
+.. code-block:: bash
+
+    esc-backboned tx wasm execute $CONTRACT "$REGISTER" --amount 10ncaxdemo --from $alice --chain-id catenax-testnet-1
+
+
+Query name record
+
+.. code-block:: bash
+
+    export NAME_QUERY='{"resolve_record": {"name": "fred"}}'
+    esc-backboned query wasm contract-state smart $CONTRACT "$NAME_QUERY" $NODE --output json
+    {"data":{"address":"catenax1pze5wsf0dg0fa4ysnttugn0m22ssf3t4a9yz3h"}}
+
+Buy and transfer name record to bob ( `$bob` holds bob's public address).
+
+.. code-block:: bash
+
+    export TXFLAG="${NODE} --chain-id catenax-testnet-1 --gas-prices 0.25ncaxdemo --gas auto --gas-adjustment 1.3"
+    TRANSFER='{"transfer":{"name":"fred","to":"$bob"}}'
+    esc-backboned tx wasm execute $CONTRACT "$TRANSFER" \
+        --amount 999ncaxdemo \
+        --from $alice $TXFLAG -y
+
+
+
+Query record to see the new owner address:
+
+.. code-block:: bash
+
+    export NAME_QUERY='{"resolve_record": {"name": "fred"}}'
+    esc-backboned query wasm contract-state smart $CONTRACT "$NAME_QUERY" $NODE --output json
+    {"data":{"address":"catenax15522nrwtvsf7mt2vhehhwuw9qpsxw2mghqzu50"}}

@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -26,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> ESC Backbone
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ESC Backbone
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -61,8 +67,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Configuring the cosmos sdk</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuring the cosmos sdk</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/configuring_cosmos_sdk/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,12 +79,12 @@
            <div itemprop="articleBody">
              
   <section id="configuring-the-cosmos-sdk">
-<span id="configuring-comos-sdk"></span><h1>Configuring the cosmos sdk<a class="headerlink" href="#configuring-the-cosmos-sdk" title="Permalink to this headline"></a></h1>
+<span id="configuring-cosmos-sdk"></span><h1>Configuring the cosmos sdk<a class="headerlink" href="#configuring-the-cosmos-sdk" title="Permalink to this heading"></a></h1>
 <p>This section provides an overview what aspects of the node can be configured,
 how and where to do it. It is intended as a starting point for new developers
 joining the team and as a quick reference for all developers.</p>
 <section id="configuration-files">
-<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this headline"></a></h2>
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this heading"></a></h2>
 <p>The configuration files are stored in the <cite>config</cite> directory in the node’s home
 folder. This directory consists of 3 configuration files:</p>
 <ol class="arabic simple">
@@ -92,7 +98,7 @@ includes allowed pub key types and parameters for each included modules.</p></li
 </ol>
 </section>
 <section id="different-endpoints-exposed-by-a-running-node">
-<h2>Different endpoints exposed by a running node<a class="headerlink" href="#different-endpoints-exposed-by-a-running-node" title="Permalink to this headline"></a></h2>
+<h2>Different endpoints exposed by a running node<a class="headerlink" href="#different-endpoints-exposed-by-a-running-node" title="Permalink to this heading"></a></h2>
 <p>There are 3 different set of APIs, that are relevant for the user of the node.
 These are</p>
 <ol class="arabic simple">
@@ -153,7 +159,7 @@ tendermint docs for further info.</p></li>
 </ol>
 </section>
 <section id="keys">
-<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this headline"></a></h2>
+<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this heading"></a></h2>
 <p>In the cosmos SDk, two types of keys are used:</p>
 <ol class="arabic simple">
 <li><p>Application keys: Used for signing transactions created by the user of this
@@ -163,7 +169,7 @@ process.</p></li>
 </ol>
 </section>
 <section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline"></a></h2>
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
 <p>The architecture of the node consists of the two components:</p>
 <ol class="arabic simple">
 <li><p>Blockchain application: It interprets, validates and maintains the state;

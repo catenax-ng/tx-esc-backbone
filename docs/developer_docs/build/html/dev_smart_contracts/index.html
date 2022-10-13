@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Contracts &mdash; ESC Backbone  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuring the cosmos sdk" href="../configuring_cosmos_sdk/index.html" />
+    <link rel="prev" title="Wallet tutorial" href="../wallet_tutorial/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> ESC Backbone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../dev_env_setup/index.html">Development environment setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wallet_tutorial/index.html">Wallet tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Smart Contracts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-a-wallet-and-request-funds">Prepare a wallet and request funds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-go">Install Go</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-rust">Install Rust</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installing-rust-in-linux-and-mac">Installing Rust in Linux and Mac</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-and-testing-contract">Compiling and Testing Contract</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-code">Get the code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compile-the-wasm-contract-with-stable-toolchain">Compile the wasm contract with stable toolchain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimized-compilation">Optimized Compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy-a-smart-contract-to-the-testnet">Deploy a Smart Contract to the testnet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instantiate-the-deployed-smart-contract-on-the-testnet">Instantiate the deployed Smart Contract on the testnet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interact-with-an-instantiated-smart-contract-on-the-testnet">Interact with an instantiated Smart Contract on the testnet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuring_cosmos_sdk/index.html">Configuring the cosmos sdk</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ESC Backbone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Smart Contracts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/dev_smart_contracts/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="smart-contracts">
+<span id="dev-smart-contracts"></span><h1>Smart Contracts<a class="headerlink" href="#smart-contracts" title="Permalink to this heading"></a></h1>
+<p><strong>Wasmd</strong> is a Cosmos SDK based blockchain application that supports CosmWasm contracts. The base of the code is forked from Cosmos Hub’s gaia with the addition of one module, x/wasm that adds smart contract support.</p>
+<p>Please note that wasmd is available on unix-like systems (Linux and MacOS), if you run Windows, you could give WSL2 a try.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<section id="prepare-a-wallet-and-request-funds">
+<h3>Prepare a wallet and request funds<a class="headerlink" href="#prepare-a-wallet-and-request-funds" title="Permalink to this heading"></a></h3>
+<p>If you do not have wallet yet, have a look at the <a class="reference internal" href="../wallet_tutorial/index.html#wallet-tutorial"><span class="std std-ref">Wallet tutorial</span></a>.</p>
+</section>
+<section id="install-go">
+<h3>Install Go<a class="headerlink" href="#install-go" title="Permalink to this heading"></a></h3>
+<p>Modules in the Cosmos SDK, therfor also the Wasmd module, are written in Go.</p>
+<p>You can set up golang following the <a class="reference external" href="https://github.com/golang/go/wiki#working-with-go">official documentation</a>.</p>
+<p>The latest versions of wasmd require go version v1.17+.</p>
+</section>
+<section id="install-rust">
+<h3>Install Rust<a class="headerlink" href="#install-rust" title="Permalink to this heading"></a></h3>
+<p>Assuming you have never worked with rust, you will first need to install some tooling.
+The standard approach is to use <a class="reference external" href="https://www.rust-lang.org/tools/install">rustup</a>
+to maintain dependencies and handle updating multiple versions of cargo and rustc, which you will be using.</p>
+<section id="installing-rust-in-linux-and-mac">
+<h4>Installing Rust in Linux and Mac<a class="headerlink" href="#installing-rust-in-linux-and-mac" title="Permalink to this heading"></a></h4>
+<p>First, install rustup. Once installed, make sure you have the wasm32 target:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rustup default stable
+cargo version
+</pre></div>
+</div>
+<p><strong>If this is lower than 1.55.0+, update</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rustup update stable
+rustup target list --installed
+rustup target add wasm32-unknown-unknown
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="compiling-and-testing-contract">
+<h2>Compiling and Testing Contract<a class="headerlink" href="#compiling-and-testing-contract" title="Permalink to this heading"></a></h2>
+<p>For test purposes we can just checkout and compile a exemplary CosmWasm contract being part of the <a class="reference external" href="https://github.com/InterWasm/cw-contracts">cw-contracts GitHub repository</a>. It is a example of an simple name service contract where mimics a name service marketplace. Also this tutorial is the de facto cosmos-sdk entrance tutorial.
+So First, clone the repo and try to build the wasm bundle:</p>
+<section id="get-the-code">
+<h3>Get the code<a class="headerlink" href="#get-the-code" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/InterWasm/cw-contracts
+<span class="nb">cd</span> cw-contracts
+git checkout main
+<span class="nb">cd</span> contracts/nameservice
+</pre></div>
+</div>
+</section>
+<section id="compile-the-wasm-contract-with-stable-toolchain">
+<h3>Compile the wasm contract with stable toolchain<a class="headerlink" href="#compile-the-wasm-contract-with-stable-toolchain" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rustup default stable
+cargo wasm
+</pre></div>
+</div>
+</section>
+<section id="optimized-compilation">
+<h3>Optimized Compilation<a class="headerlink" href="#optimized-compilation" title="Permalink to this heading"></a></h3>
+<p>To reduce gas costs, the binary size should be as small as possible. This will result in a less costly deployment,
+and lower fees on every interaction. Luckily, there is tooling to help with this. You can optimize production code
+using rust-optimizer. rust-optimizer produces reproducible builds of CosmWasm smart contracts.
+This means third parties can verify the contract is actually the claimed code.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run --rm -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/code <span class="se">\</span>
+    --mount <span class="nv">type</span><span class="o">=</span>volume,source<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>basename <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">_cache&quot;</span>,target<span class="o">=</span>/code/target <span class="se">\</span>
+    --mount <span class="nv">type</span><span class="o">=</span>volume,source<span class="o">=</span>registry_cache,target<span class="o">=</span>/usr/local/cargo/registry <span class="se">\</span>
+    cosmwasm/rust-optimizer:0.12.4
+</pre></div>
+</div>
+<p>Binary will be at the artifacts subfolder in your project.</p>
+</section>
+<section id="deploy-a-smart-contract-to-the-testnet">
+<h3>Deploy a Smart Contract to the testnet<a class="headerlink" href="#deploy-a-smart-contract-to-the-testnet" title="Permalink to this heading"></a></h3>
+<p>The following command will deploy the smart contract to our testnet.</p>
+<p>For easier use, we store alice’s and bob’s addresses in a variable</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">alice</span><span class="o">=</span><span class="k">$(</span>esc-backboned keys show alice -a<span class="k">)</span>
+<span class="nb">export</span> <span class="nv">bob</span><span class="o">=</span><span class="k">$(</span>esc-backboned keys show bob -a<span class="k">)</span>
+</pre></div>
+</div>
+<p>We can request founds for them with such a request.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">FAUCET_ADDRESS</span><span class="o">=</span><span class="s2">&quot;https://validator1.dev.demo.catena-x.net/&quot;</span>
+curl --header <span class="s2">&quot;Content-Type: application/json&quot;</span>   --request POST <span class="se">\</span>
+   --data <span class="s1">&#39;{&quot;denom&quot;:&quot;ncaxdemo&quot;,&quot;address&quot;:&quot;$alice&quot;}&#39;</span> <span class="nv">$FAUCET_ADDRESS</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned tx wasm store artifacts/cw_nameservice.wasm --from <span class="nv">$alice</span> --gas <span class="m">1000000</span> --chain-id catenax-testnet-1
+</pre></div>
+</div>
+<p>After deployment the Smart Contract should be listed by queriing for deployed code on the chain.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm list-code
+</pre></div>
+</div>
+</section>
+<section id="instantiate-the-deployed-smart-contract-on-the-testnet">
+<h3>Instantiate the deployed Smart Contract on the testnet<a class="headerlink" href="#instantiate-the-deployed-smart-contract-on-the-testnet" title="Permalink to this heading"></a></h3>
+<p>To be able to interact with the deployed smart contract via CLI we have to save the deployment transaction in an environment variable. So lets just re-deploy the same smart contract again (it wil be deployed under a new address) and save the transaction in the $RES environment variable</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">RES</span><span class="o">=</span><span class="k">$(</span>esc-backboned tx wasm store artifacts/cw_nameservice.wasm --from <span class="nv">$alice</span> --gas <span class="m">1000000</span> --chain-id catenax-testnet-1 -y --output json -b block<span class="k">)</span>
+</pre></div>
+</div>
+<p>Now we can retrieve the code id and persist it in $CODE_ID:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TODO: verify, that the last event always contains the code id in the first attribute</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CODE_ID</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$RES</span> <span class="p">|</span> jq -r <span class="s1">&#39;.logs[0].events[-1].attributes[0].value&#39;</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>You can also inspect the code ids via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm list-code
+</pre></div>
+</div>
+<p>Until now we only deployed (or uploaded) our smart contract without instantiating it.
+Therefore the next command should return an empty list.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm list-contract-by-code <span class="nv">$CODE_ID</span> <span class="nv">$NODE</span> --output json
+</pre></div>
+</div>
+<p>We can now create an instance of this wasm contract.
+Here we first instantiate the contract and make some query operations on it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NODE</span><span class="o">=</span><span class="s2">&quot;--node https://validator1-tdmt-rpc.dev.demo.catena-x.net/&quot;</span>
+<span class="nb">export</span> <span class="nv">INIT</span><span class="o">=</span><span class="s1">&#39;{&quot;purchase_price&quot;:{&quot;amount&quot;:&quot;100&quot;,&quot;denom&quot;:&quot;ncaxdemo&quot;},&quot;transfer_price&quot;:{&quot;amount&quot;:&quot;999&quot;,&quot;denom&quot;:&quot;ncaxdemo&quot;}}&#39;</span>
+esc-backboned tx wasm instantiate <span class="nv">$CODE_ID</span> <span class="s2">&quot;</span><span class="nv">$INIT</span><span class="s2">&quot;</span> --from <span class="nv">$alice</span> --chain-id catenax-testnet-1 --label <span class="s2">&quot;awesome name service&quot;</span> --no-admin
+</pre></div>
+</div>
+<p>The <cite>–no-admin</cite> flag will make the contract immutable.
+In case you would like to have it changeable by an “admin” you have to give a wallet address with the –admin flag.
+This wallet address than “owns” the smart contract.</p>
+<p>The <cite>query wasm list-contract-by-code</cite> should now return the instantiated smart contract</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm list-contract-by-code <span class="nv">$CODE_ID</span> <span class="nv">$NODE</span> --output json
+</pre></div>
+</div>
+<p>Let’s now save the address under which the contract is deployed in an environment variable for further interactions.
+We select the last contract from the returned list of contracts (<cite>.contract[-1]</cite>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CONTRACT</span><span class="o">=</span><span class="k">$(</span>esc-backboned query wasm list-contract-by-code <span class="nv">$CODE_ID</span> <span class="nv">$NODE</span> --output json <span class="p">|</span> jq -r <span class="s1">&#39;.contracts[-1]&#39;</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="nv">$CONTRACT</span>
+</pre></div>
+</div>
+<p>We should see this contract with 100 ncaxdemo</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm contract <span class="nv">$CONTRACT</span> <span class="nv">$NODE</span>
+esc-backboned query bank balances <span class="nv">$CONTRACT</span> <span class="nv">$NODE</span>
+</pre></div>
+</div>
+<p>You can also dump entire contract state</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned query wasm contract-state all <span class="nv">$CONTRACT</span> <span class="nv">$NODE</span>
+</pre></div>
+</div>
+</section>
+<section id="interact-with-an-instantiated-smart-contract-on-the-testnet">
+<h3>Interact with an instantiated Smart Contract on the testnet<a class="headerlink" href="#interact-with-an-instantiated-smart-contract-on-the-testnet" title="Permalink to this heading"></a></h3>
+<p>Once contract instantiated, let’s register a name and transfer it with paying its price.
+If you are running on the testnet, have a look at <a class="reference internal" href="../wallet_tutorial/index.html#request-funds-testnet"><span class="std std-ref">Request funds for the testnet chain</span></a>, how to get token there.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>esc-backboned tx wasm execute <span class="nv">$CONTRACT</span> <span class="s2">&quot;</span><span class="nv">$REGISTER</span><span class="s2">&quot;</span> --amount 10ncaxdemo --from <span class="nv">$alice</span> --chain-id catenax-testnet-1
+</pre></div>
+</div>
+<p>Query name record</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NAME_QUERY</span><span class="o">=</span><span class="s1">&#39;{&quot;resolve_record&quot;: {&quot;name&quot;: &quot;fred&quot;}}&#39;</span>
+esc-backboned query wasm contract-state smart <span class="nv">$CONTRACT</span> <span class="s2">&quot;</span><span class="nv">$NAME_QUERY</span><span class="s2">&quot;</span> <span class="nv">$NODE</span> --output json
+<span class="o">{</span><span class="s2">&quot;data&quot;</span>:<span class="o">{</span><span class="s2">&quot;address&quot;</span>:<span class="s2">&quot;catenax1pze5wsf0dg0fa4ysnttugn0m22ssf3t4a9yz3h&quot;</span><span class="o">}}</span>
+</pre></div>
+</div>
+<p>Buy and transfer name record to bob ( <cite>$bob</cite> holds bob’s public address).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">TXFLAG</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">NODE</span><span class="si">}</span><span class="s2"> --chain-id catenax-testnet-1 --gas-prices 0.25ncaxdemo --gas auto --gas-adjustment 1.3&quot;</span>
+<span class="nv">TRANSFER</span><span class="o">=</span><span class="s1">&#39;{&quot;transfer&quot;:{&quot;name&quot;:&quot;fred&quot;,&quot;to&quot;:&quot;$bob&quot;}}&#39;</span>
+esc-backboned tx wasm execute <span class="nv">$CONTRACT</span> <span class="s2">&quot;</span><span class="nv">$TRANSFER</span><span class="s2">&quot;</span> <span class="se">\</span>
+    --amount 999ncaxdemo <span class="se">\</span>
+    --from <span class="nv">$alice</span> <span class="nv">$TXFLAG</span> -y
+</pre></div>
+</div>
+<p>Query record to see the new owner address:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">NAME_QUERY</span><span class="o">=</span><span class="s1">&#39;{&quot;resolve_record&quot;: {&quot;name&quot;: &quot;fred&quot;}}&#39;</span>
+esc-backboned query wasm contract-state smart <span class="nv">$CONTRACT</span> <span class="s2">&quot;</span><span class="nv">$NAME_QUERY</span><span class="s2">&quot;</span> <span class="nv">$NODE</span> --output json
+<span class="o">{</span><span class="s2">&quot;data&quot;</span>:<span class="o">{</span><span class="s2">&quot;address&quot;</span>:<span class="s2">&quot;catenax15522nrwtvsf7mt2vhehhwuw9qpsxw2mghqzu50&quot;</span><span class="o">}}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../wallet_tutorial/index.html" class="btn btn-neutral float-left" title="Wallet tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../configuring_cosmos_sdk/index.html" class="btn btn-neutral float-right" title="Configuring the cosmos sdk" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ESC Backbone Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

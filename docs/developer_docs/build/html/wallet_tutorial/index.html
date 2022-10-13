@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -27,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> ESC Backbone
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ESC Backbone
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -47,7 +53,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#use-the-wallet-browser-extension">Use the wallet browser extension</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#import-the-example-test-wallet">Import the example/ test wallet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#importing-the-chain-into-keplr">Importing the chain into Keplr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importing-the-local-chain-into-keplr">Importing the local chain into Keplr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importing-the-testnet-chain-into-keplr">Importing the testnet chain into Keplr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-funds-for-the-testnet-chain">Request funds for the testnet chain</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#regarding-chain-suggestions">Regarding chain suggestions</a><ul>
@@ -73,8 +81,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Wallet tutorial</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Wallet tutorial</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/wallet_tutorial/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,47 +93,47 @@
            <div itemprop="articleBody">
              
   <section id="wallet-tutorial">
-<h1>Wallet tutorial<a class="headerlink" href="#wallet-tutorial" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Wallet tutorial<a class="headerlink" href="#wallet-tutorial" title="Permalink to this heading"></a></h1>
 <section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"></a></h2>
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
 <section id="build-and-launch-the-chain-and-frontend">
-<h3>Build and launch the chain and frontend<a class="headerlink" href="#build-and-launch-the-chain-and-frontend" title="Permalink to this headline"></a></h3>
+<h3>Build and launch the chain and frontend<a class="headerlink" href="#build-and-launch-the-chain-and-frontend" title="Permalink to this heading"></a></h3>
 <p>See <a class="reference internal" href="../dev_env_setup/index.html#dev-env-setup"><span class="std std-ref">Development environment setup</span></a></p>
 </section>
 <section id="install-keplr-extension">
-<h3>Install Keplr extension<a class="headerlink" href="#install-keplr-extension" title="Permalink to this headline"></a></h3>
+<h3>Install Keplr extension<a class="headerlink" href="#install-keplr-extension" title="Permalink to this heading"></a></h3>
 <p>Install the <a class="reference external" href="https://chrome.google.com/webstore/search/keplr">keplr extension</a> to chrome.</p>
 <img alt="install keplr extension" class="align-center" src="../_images/0_install_keplr_extension.png" />
 </section>
 </section>
 <section id="use-the-wallet-browser-extension">
-<h2>Use the wallet browser extension<a class="headerlink" href="#use-the-wallet-browser-extension" title="Permalink to this headline"></a></h2>
+<h2>Use the wallet browser extension<a class="headerlink" href="#use-the-wallet-browser-extension" title="Permalink to this heading"></a></h2>
 <section id="import-the-example-test-wallet">
-<h3>Import the example/ test wallet<a class="headerlink" href="#import-the-example-test-wallet" title="Permalink to this headline"></a></h3>
+<h3>Import the example/ test wallet<a class="headerlink" href="#import-the-example-test-wallet" title="Permalink to this heading"></a></h3>
 <p>Click at the Keplr extension at the top right.</p>
 <img alt="keplr_extension_icon" class="align-center" src="../_images/1_click_on_extension_at_the_top_right.png" />
 <p>If there is no wallet configured you are taken to this page. Click on either on <cite>Create new account</cite> for a new account
 or on <cite>Import existing account</cite> to import an account with mnemonic.</p>
-<img alt="create_an_account" class="align-center" src="../_images/2_import_exisiting_account.png" />
+<img alt="create_an_account" class="align-center" src="../_images/2_import_existing_account.png" />
 <p><strong>NOTE: The password entered at the next page is used to secure the Keplr walled entirely and not just the account.
 All later added accounts are protected by this password too.</strong></p>
 <p>If you chose creating a new one, you have to enter your mnemonic at the last page by clicking at the words in the correct order to prove, you backed up the mnemonic.</p>
-<p>This description chose <cite>Import existing account</cite> to import a prefunded test account.
-Enter the following mnemonic for the prefunded test account.
+<p>This description chose <cite>Import existing account</cite> to import a pre-funded test account.
+Enter the following mnemonic for the pre-funded test account.
 <code class="docutils literal notranslate"><span class="pre">`text</span>
 <span class="pre">old</span> <span class="pre">square</span> <span class="pre">lecture</span> <span class="pre">frog</span> <span class="pre">curtain</span> <span class="pre">habit</span> <span class="pre">bunker</span> <span class="pre">casino</span> <span class="pre">awesome</span> <span class="pre">defy</span> <span class="pre">fashion</span> <span class="pre">cry</span> <span class="pre">wife</span> <span class="pre">rain</span> <span class="pre">outer</span> <span class="pre">scene</span> <span class="pre">fork</span> <span class="pre">leaf</span> <span class="pre">raven</span> <span class="pre">twin</span> <span class="pre">hen</span> <span class="pre">hurt</span> <span class="pre">calm</span> <span class="pre">bulb</span>
 <span class="pre">`</span></code>
 Enter a password to unlock the Keplr extension in the future.
 Do not modify the derivation path, which would result in a different account otherwise.</p>
 <img alt="enter_mnemonic_of_test_acc" class="align-center" src="../_images/3_enter_mnemonic_of_test_acc.png" />
-<p>Clicking now on the icon should show an account similiar to the image below for the Cosmos Hub.</p>
+<p>Clicking now on the icon should show an account similar to the image below for the Cosmos Hub.</p>
 <img alt="cosmos_hub_balance_of_test_acc" class="align-center" src="../_images/4_cosmos_hub_balance_of_test_acc.png" />
 <p>Clicking on <cite>Cosmos Hub</cite> shows the default chains, which Keplr knows. Our test chain is not contained in it yet.</p>
 <img alt="test_net_not_available_yet" class="align-center" src="../_images/5_test_net_not_available_yet.png" />
 </section>
-<section id="importing-the-chain-into-keplr">
-<h3>Importing the chain into Keplr<a class="headerlink" href="#importing-the-chain-into-keplr" title="Permalink to this headline"></a></h3>
-<p>Visit the vue app at <a class="reference external" href="http://localhost:5000/">http://localhost:5000/</a>.</p>
+<section id="importing-the-local-chain-into-keplr">
+<h3>Importing the local chain into Keplr<a class="headerlink" href="#importing-the-local-chain-into-keplr" title="Permalink to this heading"></a></h3>
+<p>Visit the web app at <a class="reference external" href="http://localhost:3000/">http://localhost:3000/</a>.</p>
 <p>Keplr will ask for importing the suggested chain <cite>catenax-1</cite>. Approve it.</p>
 <img alt="open_vue_app_and_approve_chain_addition" class="align-center" src="../_images/6_open_vue_app_and_approve_chain_addition.png" />
 <p>Now select the testnet <cite>catenax testnet</cite>.</p>
@@ -133,44 +141,52 @@ Do not modify the derivation path, which would result in a different account oth
 <p>This will show the accounts balance from the chain, which was locally start in the first terminal by <cite>starport chain serve</cite>.</p>
 <img alt="balance_of_the_testnet" class="align-center" src="../_images/8_balance_of_the_testnet.png" />
 </section>
+<section id="importing-the-testnet-chain-into-keplr">
+<h3>Importing the testnet chain into Keplr<a class="headerlink" href="#importing-the-testnet-chain-into-keplr" title="Permalink to this heading"></a></h3>
+<p>Visit the web app at <a class="reference external" href="https://validator1.dev.demo.catena-x.net/">https://validator1.dev.demo.catena-x.net/</a>.
+Keplr will ask for importing the suggested chain <cite>catenax-testnet-1</cite>. Approve it.</p>
+</section>
+<section id="request-funds-for-the-testnet-chain">
+<span id="request-funds-testnet"></span><h3>Request funds for the testnet chain<a class="headerlink" href="#request-funds-for-the-testnet-chain" title="Permalink to this heading"></a></h3>
+<p>Visit <a class="reference external" href="https://validator1.dev.demo.catena-x.net/">https://validator1.dev.demo.catena-x.net/</a> and put your public address
+for the testnet into the text box and press the <cite>Fund me</cite> button.</p>
+</section>
 </section>
 <section id="regarding-chain-suggestions">
-<h2>Regarding chain suggestions<a class="headerlink" href="#regarding-chain-suggestions" title="Permalink to this headline"></a></h2>
+<h2>Regarding chain suggestions<a class="headerlink" href="#regarding-chain-suggestions" title="Permalink to this heading"></a></h2>
 <section id="suggesting-a-chain-in-a-web-app">
-<h3>Suggesting a chain in a web app<a class="headerlink" href="#suggesting-a-chain-in-a-web-app" title="Permalink to this headline"></a></h3>
-<p>The following snippet at [App.vue](../../vue/src/App.vue) makes the chain suggestion to the Keplr extension</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nx">catenax_suggestion</span> <span class="kr">from</span> <span class="s1">&#39;./catenax-1-suggestion.json&#39;</span>
-<span class="c1">// ...</span>
-<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
-    <span class="c1">// ...</span>
-    <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-        <span class="k">async</span> <span class="nx">onWindowLoad</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">getOfflineSigner</span> <span class="o">||</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Please install keplr extension&quot;</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">.</span><span class="nx">experimentalSuggestChain</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">try</span> <span class="p">{</span>
-                        <span class="k">await</span> <span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">.</span><span class="nx">experimentalSuggestChain</span><span class="p">(</span><span class="nx">catenax_suggestion</span><span class="p">);</span>
-                    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-                        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Failed to suggest the chain &quot;</span> <span class="o">+</span> <span class="nx">catenax_suggestion</span><span class="p">[</span><span class="s2">&quot;chainName&quot;</span><span class="p">]);</span>
-                    <span class="p">}</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Please use the recent version of keplr extension&quot;</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="p">},</span>
-    <span class="nx">mounted</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">onWindowLoad</span><span class="p">();</span>
-    <span class="p">},</span>
-    <span class="c1">// ...</span>
+<h3>Suggesting a chain in a web app<a class="headerlink" href="#suggesting-a-chain-in-a-web-app" title="Permalink to this heading"></a></h3>
+<p>The following snippet at <a class="reference download internal" download="" href="../_downloads/396ebbb20d3dd661e3e36104ba0267cd/KeplrChainSuggestion.tsx"><code class="xref download docutils literal notranslate"><span class="pre">KeplrChainSuggestion.tsx</span></code></a> makes the chain suggestion to the Keplr extension</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">SuggestKeplrChain</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">getOfflineSigner</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Keplr extension not found. Please install it.&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">.</span><span class="nx">experimentalSuggestChain</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="nx">suggestion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">createChainSuggestion</span><span class="p">()</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">await</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">keplr</span><span class="p">.</span><span class="nx">experimentalSuggestChain</span><span class="p">(</span><span class="nx">suggestion</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Chain %s added.&#39;</span><span class="p">,</span><span class="nx">suggestion</span><span class="p">.</span><span class="nx">chainName</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">alert</span><span class="p">(</span><span class="sb">`Add the chain </span><span class="si">${</span><span class="nx">suggestion</span><span class="p">.</span><span class="nx">chainName</span><span class="si">}</span><span class="sb"> failed: </span><span class="si">${</span><span class="nb">String</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Please use the recent version of Keplr extension&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">createChainSuggestion</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">catenax_suggestion</span><span class="o">=</span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/chain/catenax-testnet-1-suggestion.json&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">catenax_suggestion</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 <section id="generation-of-the-chain-suggestion-json">
-<h3>Generation of the chain suggestion json<a class="headerlink" href="#generation-of-the-chain-suggestion-json" title="Permalink to this headline"></a></h3>
-<p>The [./catenax-1-suggestion.json](../../vue/src/catenax-1-suggestion.json) can be generated with the [keplr-suggestion command](../../cmd/keplr-suggestion/main.go).
+<h3>Generation of the chain suggestion json<a class="headerlink" href="#generation-of-the-chain-suggestion-json" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference download internal" download="" href="../_downloads/156c359df61289423a6eb156f5ef8f36/catenax-testnet-1-suggestion.json"><code class="xref download docutils literal notranslate"><span class="pre">catenax-testnet-1-suggestion.json</span></code></a> can be generated
+with the <a class="reference download internal" download="" href="../_downloads/960eeb3183d86f05a44a344c4b56af9e/main.go"><code class="xref download docutils literal notranslate"><span class="pre">keplr-suggestion.go</span></code></a> command.
 The command is currently missing a useful cli and parameters can be changed in the code.</p>
 <p>Further information about the chain suggestion json can be found in <a class="reference external" href="https://docs.keplr.app/api/suggest-chain.html">Keplr’s documentation</a>
 and its <a class="reference external" href="https://github.com/chainapsis/keplr-example/blob/master/src/main.js">example repository</a>.</p>
