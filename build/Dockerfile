@@ -8,7 +8,7 @@ WORKDIR /build
 RUN apt update
 RUN apt install $PACKAGES -y
 
-RUN curl https://get.ignite.com/cli?type=script | bash && chown root:root ignite
+RUN curl https://get.ignite.com/cli@v0.26.1?type=script | bash && chown root:root ignite
 
 WORKDIR /build/esc-backbone
 
