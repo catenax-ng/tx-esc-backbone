@@ -4,9 +4,6 @@ REPO_BRANCH=main
 NODE_NAME_PREFIX=n
 KEEP_LOCAL_REPO=0
 NETWORK_ADDRESS_TEMPLATE="testnet-esc-backbone-{host}-service"
-NETWORK_ADDRESS="172.16.0.0/24"
-NETWORK_GATEWAY_ADDRESS="172.16.0.1"
-DOCKER_COMPOSE_YAML_LOCATION=
 CURRENCY="ncaxdemo"
 CHAIN_ID="catenax-testnet-1"
 # ADD_FAUCET_ACCOUNT="i-know-this-is-insecure"
@@ -15,7 +12,6 @@ FAUCET_INITIAL_BALANCE="1000000000000000000000"
 
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
 source $SCRIPT_LOCATION/cosmos-helpers.sh
-source $SCRIPT_LOCATION/docker-compose-templating/docker-compose-template.sh
 
 ensure_command_exists mktemp
 ensure_command_exists cat
@@ -46,11 +42,6 @@ if [ -z "$GIT_REPO" ]; then
 fi
 
 echo "generating homes for $NODE_COUNT nodes at $NODES with repo at $GIT_REPO."
-
-if [ -z "$DOCKER_COMPOSE_YAML_LOCATION"]; then
-  DOCKER_COMPOSE_YAML_LOCATION="$NODES/../docker-compose.yml"
-  echo "docker-compose.yml will be generated at $DOCKER_COMPOSE_YAML_LOCATION"
-fi
 
 function generate_home_folders_for_nodes() {
   echo "generate_home_folders_for_nodes with $NODE_COUNT"
@@ -142,10 +133,6 @@ function fetch_genesis_file_with_txs(){
   adapt_config_toml $1
 }
 
-function write_docker_compose_file() {
-  echo "###TODO write_docker_compose_file"
-}
-
 function cleanup_temp_repo() {
   if [ ! -z $GIT_TEMP_REPO ]; then
     if [ $KEEP_LOCAL_REPO -ne 1 ]; then
@@ -178,8 +165,6 @@ main() {
   sync_apply_gentxs $SYNC_HOME
   # each load genesis file and adapt *.toml files
   apply_on_each fetch_genesis_file_with_txs ${NODE_HOMES[@]}
-  # write docker-compose.yaml
-  generate_docker_compose_yml "$DOCKER_COMPOSE_YAML_LOCATION" $NODES $NETWORK_ADDRESS $NETWORK_GATEWAY_ADDRESS
 
   cleanup_temp_repo
 }

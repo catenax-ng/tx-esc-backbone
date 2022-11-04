@@ -1,6 +1,6 @@
 # Generate a set of validator home folders
 
-[setup-nodes.sh](../../testnetscripts/setup-nodes.sh) used to prepare a folder structure and a docker-compose.yml to boot some nodes locally.
+[setup-nodes.sh](../../testnetscripts/setup-nodes.sh) used to prepare a folder structure to boot some nodes.
 
 ## Usage
 

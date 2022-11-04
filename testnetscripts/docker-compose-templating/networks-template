@@ -1,8 +1,0 @@
-networks:
-  {network-name}:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: {network-address}
-          gateway: {gateway-address}
