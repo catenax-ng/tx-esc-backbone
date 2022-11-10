@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - CG-131-user-friendly-token-faucet-for-testnet
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
