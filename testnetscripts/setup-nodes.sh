@@ -9,6 +9,7 @@ CHAIN_ID="catenax-testnet-1"
 # ADD_FAUCET_ACCOUNT="i-know-this-is-insecure"
 FAUCET_MNEMONIC=${FAUCET_MNEMONIC:-"abuse submit area wide early west ripple oppose shed size describe foster need course lock use humble step film bridge timber unveil anxiety list"}
 FAUCET_INITIAL_BALANCE="1000000000000000000000"
+VALIDATOR_INITIAL_BALANCE="1000000000000000000000"
 
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
 source $SCRIPT_LOCATION/cosmos-helpers.sh
@@ -80,7 +81,7 @@ function add_funds_for_initial_account() {
   local PUB_ADDR_FILE=${1:?"Requires a file with the public address as name and the moniker as content."}
   local PUB_ADDR=$(basename $PUB_ADDR_FILE)
   local MONIKER=$(cat $PUB_ADDR_FILE)
-  add_funds_to_addr "$SYNC_HOME" $PUB_ADDR "100000000000" $CURRENCY
+  add_funds_to_addr "$SYNC_HOME" $PUB_ADDR $VALIDATOR_INITIAL_BALANCE $CURRENCY
 }
 
 function add_initial_accounts() {
@@ -116,7 +117,7 @@ function delegate_stake(){
   echo "delegate_stake for $1"
   local NODE_HOME="$1"
   local MONIKER=$(home_name "$NODE_HOME")
-  each_create_gentx_for_delegation "$NODE_HOME" "$MONIKER" "1000000000" $CURRENCY
+  each_create_gentx_for_delegation "$NODE_HOME" "$MONIKER" $VALIDATOR_INITIAL_BALANCE $CURRENCY
   each_write_delegation_gentx_to_repo "$NODE_HOME"
 }
 
