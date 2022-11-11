@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2022-08-30T14:54:01.778663636Z",
+  "genesis_time": "2022-11-11T11:32:46.30111584Z",
   "chain_id": "catenax-testnet-1",
   "initial_height": "1",
   "consensus_params": {
@@ -33,28 +33,28 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "catenax13s8jscsndk8mj3zh39kee4jj7tjzt7qewhw9kt",
+          "address": "catenax122805ryq6e0xu2z4feq43tymzulv6d4gd2r5ye",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "catenax1ck5zdfykv63vfp8c4qhd4hhhlrfrrq75mvmcka",
+          "address": "catenax16zhxukywxsym8k8gxlyvglr4k8w44ql5zd26e9",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "catenax1g50z055ff74lknve92hemlk8juf0kdpkk97j8h",
+          "address": "catenax1fndrh3vpqkz0sqpzhjf6slxjge90fafftt0zge",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
         },
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "catenax1hkudhk73qgw9fcu9msqlrtvxp2er74yahagp79",
+          "address": "catenax1z4f9897ew0355ce2t4ale6ha0gr7de76m0znwf",
           "pub_key": null,
           "account_number": "0",
           "sequence": "0"
@@ -75,6 +75,15 @@
       },
       "balances": [
         {
+          "address": "catenax1z4f9897ew0355ce2t4ale6ha0gr7de76m0znwf",
+          "coins": [
+            {
+              "denom": "ncaxdemo",
+              "amount": "1000000000000000000000"
+            }
+          ]
+        },
+        {
           "address": "catenax1yaguppdflv7a7fu70947dryuzq9dsqtrlhf94l",
           "coins": [
             {
@@ -84,38 +93,29 @@
           ]
         },
         {
-          "address": "catenax1g50z055ff74lknve92hemlk8juf0kdpkk97j8h",
+          "address": "catenax1fndrh3vpqkz0sqpzhjf6slxjge90fafftt0zge",
           "coins": [
             {
               "denom": "ncaxdemo",
-              "amount": "100000000000"
+              "amount": "1000000000000000000000"
             }
           ]
         },
         {
-          "address": "catenax13s8jscsndk8mj3zh39kee4jj7tjzt7qewhw9kt",
+          "address": "catenax122805ryq6e0xu2z4feq43tymzulv6d4gd2r5ye",
           "coins": [
             {
               "denom": "ncaxdemo",
-              "amount": "100000000000"
+              "amount": "1000000000000000000000"
             }
           ]
         },
         {
-          "address": "catenax1hkudhk73qgw9fcu9msqlrtvxp2er74yahagp79",
+          "address": "catenax16zhxukywxsym8k8gxlyvglr4k8w44ql5zd26e9",
           "coins": [
             {
               "denom": "ncaxdemo",
-              "amount": "100000000000"
-            }
-          ]
-        },
-        {
-          "address": "catenax1ck5zdfykv63vfp8c4qhd4hhhlrfrrq75mvmcka",
-          "coins": [
-            {
-              "denom": "ncaxdemo",
-              "amount": "100000000000"
+              "amount": "1000000000000000000000"
             }
           ]
         }
@@ -166,67 +166,6 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "n3",
-                  "identity": "",
-                  "website": "",
-                  "security_contact": "",
-                  "details": ""
-                },
-                "commission": {
-                  "rate": "0.100000000000000000",
-                  "max_rate": "0.200000000000000000",
-                  "max_change_rate": "0.010000000000000000"
-                },
-                "min_self_delegation": "1",
-                "delegator_address": "catenax1g50z055ff74lknve92hemlk8juf0kdpkk97j8h",
-                "validator_address": "catenaxvaloper1g50z055ff74lknve92hemlk8juf0kdpk2rfcyg",
-                "pubkey": {
-                  "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "YpiUgSallDL9BGmnK56TeggYCBZvhmYYlQBkMCAagnM="
-                },
-                "value": {
-                  "denom": "ncaxdemo",
-                  "amount": "1000000000"
-                }
-              }
-            ],
-            "memo": "5ded0909f1c671c84f1cf67b4fa4a7e32e71d605@testnet-esc-backbone-3-service:26656",
-            "timeout_height": "0",
-            "extension_options": [],
-            "non_critical_extension_options": []
-          },
-          "auth_info": {
-            "signer_infos": [
-              {
-                "public_key": {
-                  "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "AkCHLHKaff0HdvwVjLAk3KuC8W4Y9zGT8jLl3jsfczGJ"
-                },
-                "mode_info": {
-                  "single": {
-                    "mode": "SIGN_MODE_DIRECT"
-                  }
-                },
-                "sequence": "0"
-              }
-            ],
-            "fee": {
-              "amount": [],
-              "gas_limit": "200000",
-              "payer": "",
-              "granter": ""
-            }
-          },
-          "signatures": [
-            "+vZcWnlooX92hG1rXIXlBwlkAsUtTZdjAAtnKMMsAQIpsNorwS1WwGDjizOud0HIaLjfl+pcIWjoLFfYKss6CQ=="
-          ]
-        },
-        {
-          "body": {
-            "messages": [
-              {
-                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
-                "description": {
                   "moniker": "n1",
                   "identity": "",
                   "website": "",
@@ -239,19 +178,19 @@
                   "max_change_rate": "0.010000000000000000"
                 },
                 "min_self_delegation": "1",
-                "delegator_address": "catenax1hkudhk73qgw9fcu9msqlrtvxp2er74yahagp79",
-                "validator_address": "catenaxvaloper1hkudhk73qgw9fcu9msqlrtvxp2er74yatmlta6",
+                "delegator_address": "catenax1fndrh3vpqkz0sqpzhjf6slxjge90fafftt0zge",
+                "validator_address": "catenaxvaloper1fndrh3vpqkz0sqpzhjf6slxjge90faffhdcgtx",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "mGcXXv+BS2XM1AnovUgDIqF1JtybVy3JSrFTAteF8to="
+                  "key": "7R/p4HChSx4hvnWDN2+TNyFNTaZ4O2GymtuWH4YP4bE="
                 },
                 "value": {
                   "denom": "ncaxdemo",
-                  "amount": "1000000000"
+                  "amount": "1000000000000000000000"
                 }
               }
             ],
-            "memo": "b026185d77a16dc0b0e06cda989cd58026f356b8@testnet-esc-backbone-1-service:26656",
+            "memo": "082b6528408c7b94fd95dc9a4d3009f79fd14dc0@testnet-esc-backbone-1-service:26656",
             "timeout_height": "0",
             "extension_options": [],
             "non_critical_extension_options": []
@@ -261,7 +200,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "AkXmf6XGOlBolIciuhojKtGBSTIu6IDK30N5snuoZTX0"
+                  "key": "A0429XaAVIEcu/KZzv/NAeThqFi3VSLTfiwaSimJjS3z"
                 },
                 "mode_info": {
                   "single": {
@@ -279,7 +218,7 @@
             }
           },
           "signatures": [
-            "11Z2m7XdWsDEqCHnJk5IczrSBQPssMID2HVsT5BaKskiq1wpq7GfvEdTlO93Jv2h0NCQm7yWKuU4oO69+8zEvA=="
+            "y8NFlblsde7+9TaD+sQIpSpNGFlqG3ZZMhygvGq5Uv1feazeBHAAYVlRXclxWUqoHV1NWYC5nnVR5SN+f/PTrg=="
           ]
         },
         {
@@ -300,19 +239,19 @@
                   "max_change_rate": "0.010000000000000000"
                 },
                 "min_self_delegation": "1",
-                "delegator_address": "catenax13s8jscsndk8mj3zh39kee4jj7tjzt7qewhw9kt",
-                "validator_address": "catenaxvaloper13s8jscsndk8mj3zh39kee4jj7tjzt7qej3e045",
+                "delegator_address": "catenax1z4f9897ew0355ce2t4ale6ha0gr7de76m0znwf",
+                "validator_address": "catenaxvaloper1z4f9897ew0355ce2t4ale6ha0gr7de768f4edk",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "crDUIfu5/sRHozHK1sZYjhXg7uhv9TxKCycxkL3gy+U="
+                  "key": "1uNeYqOYlFFUal5+eFh47tWDIb+4HSpkca+Z0ANBDQQ="
                 },
                 "value": {
                   "denom": "ncaxdemo",
-                  "amount": "1000000000"
+                  "amount": "1000000000000000000000"
                 }
               }
             ],
-            "memo": "be8f1e510c79001bcf6da4162f618a3153d2ffb1@testnet-esc-backbone-4-service:26656",
+            "memo": "416aa38e953d883e030ca39fedb497cd0051c1e3@testnet-esc-backbone-4-service:26656",
             "timeout_height": "0",
             "extension_options": [],
             "non_critical_extension_options": []
@@ -322,7 +261,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "Auh0/EsMWzBBUfRQ6ECvG1d6MUPcajWUggEuTCs9zrcS"
+                  "key": "AwXlmiDgO7YsjpuhYN9HILYq7ZO5DlnA6X4UyFcELZGQ"
                 },
                 "mode_info": {
                   "single": {
@@ -340,7 +279,68 @@
             }
           },
           "signatures": [
-            "xmgofodKivo4dzu5pGgb7AROusbovAoRc66K6G4MM8xSUVATmlC+YBI2kN3YzYIo/Cg/tKkB2YKx3XNNkxTnvQ=="
+            "DYJuIjT+Noo1the6De5Hkm3BnQcfkcqmn/tSjpOoNcghTwcxvpIaO+wBfNlU1qm88Gxa9AwnimvWAdXvjAhXIQ=="
+          ]
+        },
+        {
+          "body": {
+            "messages": [
+              {
+                "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
+                "description": {
+                  "moniker": "n3",
+                  "identity": "",
+                  "website": "",
+                  "security_contact": "",
+                  "details": ""
+                },
+                "commission": {
+                  "rate": "0.100000000000000000",
+                  "max_rate": "0.200000000000000000",
+                  "max_change_rate": "0.010000000000000000"
+                },
+                "min_self_delegation": "1",
+                "delegator_address": "catenax16zhxukywxsym8k8gxlyvglr4k8w44ql5zd26e9",
+                "validator_address": "catenaxvaloper16zhxukywxsym8k8gxlyvglr4k8w44ql57tas66",
+                "pubkey": {
+                  "@type": "/cosmos.crypto.ed25519.PubKey",
+                  "key": "ZE1a3Wzy0VsnxczP/alMCaTVUPweDencOmb3d9t/e2c="
+                },
+                "value": {
+                  "denom": "ncaxdemo",
+                  "amount": "1000000000000000000000"
+                }
+              }
+            ],
+            "memo": "6efef91e2d3ca57f71bb1a70af3fc9e862fb21dd@testnet-esc-backbone-3-service:26656",
+            "timeout_height": "0",
+            "extension_options": [],
+            "non_critical_extension_options": []
+          },
+          "auth_info": {
+            "signer_infos": [
+              {
+                "public_key": {
+                  "@type": "/cosmos.crypto.secp256k1.PubKey",
+                  "key": "AkCiJPGc2eDdSBRraBLpeaSGYhUPxgDUWEagZ975OiQO"
+                },
+                "mode_info": {
+                  "single": {
+                    "mode": "SIGN_MODE_DIRECT"
+                  }
+                },
+                "sequence": "0"
+              }
+            ],
+            "fee": {
+              "amount": [],
+              "gas_limit": "200000",
+              "payer": "",
+              "granter": ""
+            }
+          },
+          "signatures": [
+            "e7Ztiy9LZPBbTjxJUte4zVwBgrxlz7l61NMzkTC9/ot3ZyKm0UCZKe2N/p04lDWuEXXk0T4cdN4YYc6CC1dg2w=="
           ]
         },
         {
@@ -361,19 +361,19 @@
                   "max_change_rate": "0.010000000000000000"
                 },
                 "min_self_delegation": "1",
-                "delegator_address": "catenax1ck5zdfykv63vfp8c4qhd4hhhlrfrrq75mvmcka",
-                "validator_address": "catenaxvaloper1ck5zdfykv63vfp8c4qhd4hhhlrfrrq7582vj4z",
+                "delegator_address": "catenax122805ryq6e0xu2z4feq43tymzulv6d4gd2r5ye",
+                "validator_address": "catenaxvaloper122805ryq6e0xu2z4feq43tymzulv6d4g3v578x",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "RQRbiZkbczJ+FlDb3Yyr6Tv6BAwzX4C4hZA0wOqhafg="
+                  "key": "SfmH/EYyEL5oM7qcbaXB+MPO8Ici3YQJnZ26ERWIsz4="
                 },
                 "value": {
                   "denom": "ncaxdemo",
-                  "amount": "1000000000"
+                  "amount": "1000000000000000000000"
                 }
               }
             ],
-            "memo": "f53e41872c6c51f5cf356d4cc9b6e7ceb3e19552@testnet-esc-backbone-2-service:26656",
+            "memo": "93cedc7bf15cad0d4cf185ba2ff8f30e19ab292d@testnet-esc-backbone-2-service:26656",
             "timeout_height": "0",
             "extension_options": [],
             "non_critical_extension_options": []
@@ -383,7 +383,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "A018cPunIIM5qunmMY0lKarOOtsf4sorEemeUX+YDWS6"
+                  "key": "Aqa+xzxKQEG8kSEBD1DGvazNgaRXIpfpoULw6t5lSB/U"
                 },
                 "mode_info": {
                   "single": {
@@ -401,7 +401,7 @@
             }
           },
           "signatures": [
-            "0GCxwksQ9l5I62dRHVMYZM8q1ZP0N/1UsFdgyoxVCv4e9xy7BZ5GbG2rCE14T+ndp6L/Y0ilEhIYvcdnlBrsjw=="
+            "K39VzhaWha8IJCuKq/XPAmQv2O3UhlNY4jVOTo5Rao1fGHiEpD6OsWMXQmtE6wlbT9zBNyplEjz2gBicL8iNVQ=="
           ]
         }
       ]
@@ -477,7 +477,7 @@
       }
     },
     "monitoringp": {
-      "port_id": "monitoring",
+      "port_id": "monitoringp",
       "consumerClientID": null,
       "connectionChannelID": null,
       "monitoringInfo": null,
@@ -539,8 +539,7 @@
           "permission": "Everybody",
           "address": ""
         },
-        "instantiate_default_permission": "Everybody",
-        "max_wasm_code_size": "1228800"
+        "instantiate_default_permission": "Everybody"
       },
       "codes": [],
       "contracts": [],

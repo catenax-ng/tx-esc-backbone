@@ -212,7 +212,7 @@ external_address = ""
 seeds = ""
 
 # Comma separated list of nodes to keep persistent connections to
-persistent_peers = "5ded0909f1c671c84f1cf67b4fa4a7e32e71d605@testnet-esc-backbone-3-service:26656,b026185d77a16dc0b0e06cda989cd58026f356b8@testnet-esc-backbone-1-service:26656,be8f1e510c79001bcf6da4162f618a3153d2ffb1@testnet-esc-backbone-4-service:26656,f53e41872c6c51f5cf356d4cc9b6e7ceb3e19552@testnet-esc-backbone-2-service:26656"
+persistent_peers = "082b6528408c7b94fd95dc9a4d3009f79fd14dc0@testnet-esc-backbone-1-service:26656,416aa38e953d883e030ca39fedb497cd0051c1e3@testnet-esc-backbone-4-service:26656,6efef91e2d3ca57f71bb1a70af3fc9e862fb21dd@testnet-esc-backbone-3-service:26656,93cedc7bf15cad0d4cf185ba2ff8f30e19ab292d@testnet-esc-backbone-2-service:26656"
 
 # UPNP port forwarding
 upnp = false
