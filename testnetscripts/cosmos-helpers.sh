@@ -23,11 +23,7 @@ then
   exit
 fi
 
-function each_init_home(){
-  local HOME_DIR=${1:?"Home folder required"}
-  local MONIKER=${2:?"Moniker required"}
-  $CHAIN_BINARY --home $HOME_DIR init $MONIKER &> /dev/null
-}
+
 
 function reset_validator_dir() {
   local HOME_DIR=${1:?"Home folder required"}
@@ -41,20 +37,6 @@ function add_funds_to_addr(){
   local DENOM=${4:?"Currency required"}
   echo "$CHAIN_BINARY --home $HOME_DIR add-genesis-account $PUB_ADDR $AMOUNT$DENOM"
   $CHAIN_BINARY --home $HOME_DIR add-genesis-account $PUB_ADDR $AMOUNT$DENOM
-}
-
-function each_create_gentx_for_delegation() {
-  local HOME_DIR="${1:?"Home folder required"}"
-  local MONIKER="${2:?"Moniker required"}"
-  local AMOUNT=${3:?"Amount required"}
-  local DENOM=${4:?"Currency required"}
-  local KEYRING_BACKEND=${5:---keyring-backend test}
-  local KEYRING_DIR=${6:---keyring-dir $HOME_DIR}
-  local REPO="${HOME_DIR%/}/sync"
-  local IP_ADDRESS=$(cat ${HOME_DIR%/}/ip_address)
-  local KEY_NAME=val-$MONIKER
-  echo "$CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $IP_ADDRESS --moniker $MONIKER"
-  $CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $IP_ADDRESS --moniker $MONIKER
 }
 
 function each_add_key(){
@@ -72,19 +54,6 @@ function each_add_key(){
 }
 
 
-function each_write_delegation_gentx_to_repo(){
-  local HOME_DIR=${1:?"Home folder required"}
-  local REPO="${HOME_DIR%/}/sync"
-  local CONFIG="${HOME_DIR%/}/config"
-  pull_git $REPO
-  cp -r $CONFIG/gentx $REPO/config
-  cd $REPO
-  git add config
-  git commit $GIT_QUIET -s -m "Add staking transaction for $MONIKER"
-  git push $GIT_QUIET
-  cd - > /dev/null
-}
-
 function get_pub_addr(){
   local HOME_DIR=${1:?"Home folder required"}
   local MONIKER=${2:?"Moniker required"}
@@ -97,46 +66,52 @@ function get_pub_addr(){
 function clone_sync_repo(){
   local REPO_TARGET=${1:?"target folder for git repo cloning required"}
   local REPO_URL=${2:?"git repo url for git repo cloning required"}
-  local REPO_TARGET_PARENT=$(dirname $SCRIPT_LOCATION/REPO_TARGET)
-  local BRANCH=-B main
-  if [ ! -z "$REPO_BRANCH" ]; then
-    BRANCH="-B $REPO_BRANCH"
-  fi
+  local BRANCH="-B ${REPO_BRANCH:-main}"
+  local retry=1
   git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+  local clone_result=$?
+  while [ $clone_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
+  do
+    echo "Cloning repository $REPO_URL failed"
+    echo "Retrying in ${GIT_WAIT:-1}s ... "
+    sleep ${GIT_WAIT:-1}
+    retry=$(( $retry + 1 ))
+    git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+    local clone_result=$?
+  done
+  if [ $clone_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
+  then
+    echo "Cloning repository $REPO_URL failed"
+    echo "retries exceeded"
+    exit 1
+  fi
   cd $REPO_TARGET
+  retry=1
   git checkout $GIT_QUIET ${BRANCH}
+  local checkout_result=$?
+  while [ $checkout_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
+  do
+    echo "Checking out ${REPO_BRANCH:-main} from $REPO_URL after cloning failed failed"
+    echo "Retrying in ${GIT_WAIT:-1}s ... "
+    sleep ${GIT_WAIT:-1}
+    retry=$(( $retry + 1 ))
+    git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+    local checkout_result=$?
+  done
   cd - > /dev/null
+  if [ $checkout_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
+  then
+    echo "Checking out ${REPO_BRANCH:-main} from $REPO_URL after cloning failed failed"
+    echo "retries exceeded"
+    exit 1
+  fi
 }
 
-function each_fetch_genesis_file_for_node_from_tag(){
-  local HOME_DIR=${1:?"Home folder required"}
-  local REPO="${HOME_DIR%/}/sync"
-  pull_git $REPO ${2:?"tag name required"}
-  mkdir -p "${HOME_DIR%/}/config/"
-  cp "$REPO/config/genesis.json" "${HOME_DIR%/}/config/"
-}
-
-function each_write_address_to_repo(){
-  local HOME_DIR=${1:?"Home folder required"}
-  local MONIKER=$(home_name "$HOME_DIR")
-  local REPO="${HOME_DIR%/}/sync"
-  pull_git $REPO
-  mkdir -p $REPO/pub_addr
-  local PUB_ADDR=$(get_pub_addr "$HOME_DIR" "$MONIKER")
-  touch $REPO/pub_addr/$PUB_ADDR
-  echo "$MONIKER" > $REPO/pub_addr/$PUB_ADDR
-  cd $REPO
-  git add pub_addr/$PUB_ADDR
-  git commit $GIT_QUIET -s -m "Add public address for $MONIKER"
-  git push $GIT_QUIET
-  cd - > /dev/null
-}
 
 function sync_generate_genesis_file() {
-  local HOME_DIR=${1:?"Home folder required"}
   local TEMP_HOME=$(mktemp -d)
   $CHAIN_BINARY --home $TEMP_HOME init git-moniker --chain-id ${CHAIN_ID:?"CHAIN_ID required"} &> /dev/null
-  local HOME_DIR=${1:?"Git repo folder required"}
+  local HOME_DIR=${1:?"Home folder required"}
   mkdir -p $HOME_DIR/config
   mv $TEMP_HOME/* $HOME_DIR/
   sed -i "s/\\\"stake\\\"/\"$CURRENCY\"/g" $HOME_DIR/config/genesis.json
@@ -144,18 +119,11 @@ function sync_generate_genesis_file() {
   tag_genesis_file $HOME_DIR "init_genesis" "initial genesis file"
 }
 
-function sync_apply_gentxs(){
-    local HOME_DIR=${1:?"Home folder required"}
-    pull_git "$HOME_DIR"
-    echo "$CHAIN_BINARY --home $HOME_DIR collect-gentxs"
-    $CHAIN_BINARY --home "$HOME_DIR" collect-gentxs
-    tag_genesis_file $HOME_DIR "genesis_with_txs" "genesis file with transactions"
-}
-
 function tag_genesis_file(){
   local REPO="${1:?'Git repo folder required'}"
   local TAG_NAME="${2:?'Tag name required'}"
   local COMMIT_MESSAGE="${3:?'Commit message required'}"
+  echo "Tag $REPO with $TAG_NAME"
   cd $REPO
   if [ -f config/app.toml ]; then
     git add config/app.toml
@@ -176,28 +144,51 @@ function tag_genesis_file(){
 function pull_git() {
   local REPO=${1:?"Git repo folder required"}
   local TAG="$2"
+  local BRANCH=${REPO_BRANCH:-main}
   cd $REPO
   git fetch $GIT_QUIET --tags
   if [ ! -z "$TAG" ]; then
     git checkout $GIT_QUIET tags/$TAG -b $TAG
   else
-    git switch $GIT_QUIET ${REPO_BRANCH:-main}
-    git pull $GIT_QUIET origin ${REPO_BRANCH:-main}
+    git switch $GIT_QUIET ${BRANCH}
+    git pull $GIT_QUIET origin  --ff-only ${BRANCH}
+    local pull_result=$?
+    if [  $pull_result -ne 0 ] ; then
+      echo "Failed pulling fast forward $REPO"
+      exit 1
+    fi
   fi
   cd - > /dev/null
 }
 
-function adapt_app_toml(){
-  echo "adapt_app_toml for $1"
-  update_app_toml "${1%/}/sync" $1
+
+function wait_for_validator_commits() {
+  local REPO=$1
+  local GLOB="$2"
+  local WAIT_FOR_NUM=$3
+  pull_git $REPO
+  echo "Wait for $WAIT_FOR_NUM validators to commit for $GLOB"
+  local VALIDATOR_INPUT=($GLOB)
+  echo ${VALIDATOR_INPUT[@]}
+  local retry=1
+  local max_retry=$(( ${GIT_WAIT_MAX_RETRY:-5} * $WAIT_FOR_NUM ))
+  echo $max_retry
+  while [ ${#VALIDATOR_INPUT[@]} -lt $WAIT_FOR_NUM -a $retry -lt $max_retry ]
+  do
+    echo "Not all validators committed yet (${#VALIDATOR_INPUT[@]}/$WAIT_FOR_NUM)"
+    sleep ${GIT_WAIT:-1}
+    retry=$(( $retry + 1 ))
+    pull_git $REPO
+    VALIDATOR_INPUT=($GLOB)
+    echo ${VALIDATOR_INPUT[@]}
+  done
+  if [ ${#VALIDATOR_INPUT[@]} -lt $WAIT_FOR_NUM -a $retry -eq $max_retry ]
+  then
+      echo "Failed waiting for $WAIT_FOR_NUM validator commits at $GLOB with $retry retries."
+      echo "This might be caused, if the number of validators is less than the value of \$VALIDATOR_COUNT (default: 4)"
+      exit 2
+  fi
+  echo "All validators committed"
 }
 
-function adapt_client_toml(){
-  echo "adapt_client_toml for $1"
-  update_client_toml "${1%/}/sync" $1
-}
 
-function adapt_config_toml(){
-  echo "adapt_config_toml for $1"
-  update_config_toml "${1%/}/sync" $1
-}
