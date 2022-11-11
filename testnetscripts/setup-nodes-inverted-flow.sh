@@ -72,7 +72,8 @@ main() {
   for entry in "${NODE_HOMES[@]}"
   do
     local MNEMONIC=$($CHAIN_BINARY keys mnemonic)
-    $SCRIPT_LOCATION/setup-node.sh $entry $MNEMONIC &
+    local PUBLIC_HOST_NAME=$(cat ${entry%/}/ip_address)
+    $SCRIPT_LOCATION/setup-node.sh $entry $PUBLIC_HOST_NAME $MNEMONIC &
     local pid=$!
     declare node_pid$(basename $entry)=$pid
   done

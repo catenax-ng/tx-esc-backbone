@@ -9,7 +9,8 @@ if [ -z "$GIT_REPO" ]; then
   echo "\$GIT_REPO has to be set"
 fi
 HOME_FOLDER="${1:?Provide a home folder}"
-MNEMONIC="${2:?Provide the validator\'s mnemonic}"
+PUBLIC_HOST_NAME="${2:?Provide the validators public hostname/ ip address}"
+MNEMONIC="${3:?Provide the validator\'s mnemonic}"
 
 function each_init_home(){
   local HOME_DIR=${1:?"Home folder required"}
@@ -136,11 +137,9 @@ function each_create_gentx_for_delegation() {
   local KEYRING_BACKEND=${5:---keyring-backend test}
   local KEYRING_DIR=${6:---keyring-dir $HOME_DIR}
   local REPO="${HOME_DIR%/}/sync"
-  # TODO rework the way the validator's public address is identified. (use script paramemter no. 3 PUBLIC_HOST_NAME)
-  local IP_ADDRESS=$(cat ${HOME_DIR%/}/ip_address)
   local KEY_NAME=val-$MONIKER
-  echo "$CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $IP_ADDRESS --moniker $MONIKER"
-  $CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $IP_ADDRESS --moniker $MONIKER
+  echo "$CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $PUBLIC_HOST_NAME --moniker $MONIKER"
+  $CHAIN_BINARY  --home $HOME_DIR gentx $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR $AMOUNT$DENOM --chain-id ${CHAIN_ID:?"CHAIN_ID required"} --ip $PUBLIC_HOST_NAME --moniker $MONIKER
 }
 
 function each_write_delegation_gentx_to_repo(){
