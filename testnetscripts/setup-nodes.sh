@@ -27,11 +27,11 @@ fi
 export GIT_REPO="${4}"
 if [ -z "$GIT_REPO" ]; then
  export GIT_REPO=$(mktemp -d)
+ CREATE_REPO="TRUE"
  GIT_TEMP_REPO="$GIT_REPO"
  echo "Using the temporary folder $GIT_REPO as remote repository."
  echo "To keep it, set KEEP_LOCAL_REPO=1."
  echo "If this script fails run 'rm -rf $GIT_REPO' to clean the remainder."
- create_a_local_empty_repo $GIT_REPO $REPO_BRANCH
 fi
 
 echo "generating homes for $NODE_COUNT nodes at $NODES with repo at $GIT_REPO."
@@ -63,7 +63,7 @@ main() {
   # generate node homes
   generate_home_folders_for_nodes
   # generate initial genesis file
-  $SCRIPT_LOCATION/orchestrator-network-setup.sh $SYNC_HOME &
+  $SCRIPT_LOCATION/orchestrator-network-setup.sh $SYNC_HOME $CREATE_REPO &
   ORCH_PID=$!
   # collect node homes
   NODE_HOMES=($NODES/*/)

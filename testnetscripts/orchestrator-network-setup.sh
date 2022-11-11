@@ -5,8 +5,30 @@ source $SCRIPT_LOCATION/init-global-vars.sh
 
 if [ -z "$GIT_REPO" ]; then
   echo "\$GIT_REPO has to be set"
+  exit 1
 fi
+
 ORCHESTRATOR_HOME="${1:?Provide a home folder}"
+CREATE_LOCAL_REPO="${2:-FALSE}"
+
+if [ "$CREATE_LOCAL_REPO" = "TRUE" ]; then
+  url="://"
+  if [ -z "${CREATE_LOCAL_REPO##*$url*}" ] ;then
+    echo "Cannot create a temporary repository for $CREATE_LOCAL_REPO"
+  else
+    if [ -d $GIT_REPO ]; then
+      cd $GIT_REPO
+      if [ ! $(git rev-parse --is-inside-work-tree 2> /dev/null) ]; then
+        cd - > /dev/null
+        create_a_local_empty_repo $GIT_REPO $REPO_BRANCH
+      else
+        cd - > /dev/null
+      fi
+    else
+      create_a_local_empty_repo $GIT_REPO $REPO_BRANCH
+    fi
+  fi
+fi
 
 echo "Operating on $REPO_BRANCH at $GIT_REPO"
 function publish_initial_genesis_file() {

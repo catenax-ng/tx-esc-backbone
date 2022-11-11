@@ -43,4 +43,4 @@ fi
 if [ -z $FAUCET_MNEMONIC ]; then
   export FAUCET_MNEMONIC="abuse submit area wide early west ripple oppose shed size describe foster need course lock use humble step film bridge timber unveil anxiety list"
 fi
-# ADD_FAUCET_ACCOUNT="i-know-this-is-insecure"
+# export ADD_FAUCET_ACCOUNT="i-know-this-is-insecure"
