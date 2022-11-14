@@ -11,11 +11,13 @@ RUN apt install $PACKAGES -y
 RUN curl https://get.ignite.com/cli@v0.26.1?type=script | bash && chown root:root ignite
 
 WORKDIR /build/esc-backbone
+COPY go.mod go.sum ./
+RUN go mod download
 
 COPY cmd ./cmd
 COPY app ./app
 COPY docs ./docs
-COPY go.mod go.sum config.yml ./
+COPY config.yml ./
 
 RUN /build/ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
