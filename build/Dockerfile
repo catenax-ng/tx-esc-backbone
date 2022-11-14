@@ -57,10 +57,6 @@ USER $UID
 
 CMD ["nginx", "-g", "daemon off;"]
 
-
-
-FROM debian:10.11-slim as blockexpl
-
 FROM debian:10.11-slim as esc-backbone-node
 ARG BRANCH=main
 ARG UID=102
