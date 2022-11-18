@@ -7,9 +7,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}" )
+
+id
 source $SCRIPT_LOCATION/cosmos-helpers.sh
 source $SCRIPT_LOCATION/init-global-vars.sh
-
 if [ -z "$GIT_REPO" ]; then
   echo "\$GIT_REPO has to be set"
   exit 1

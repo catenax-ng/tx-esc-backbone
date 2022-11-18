@@ -13,8 +13,6 @@ source $SCRIPT_LOCATION/update-app-toml.sh
 source $SCRIPT_LOCATION/update-client-toml.sh
 source $SCRIPT_LOCATION/update-config-toml.sh
 
-CHAIN_BINARY=esc-backboned
-
 ensure_command_exists $CHAIN_BINARY
 ensure_command_exists pwd
 ensure_command_exists grep
@@ -72,23 +70,27 @@ function get_pub_addr(){
 
 function clone_sync_repo(){
   local REPO_TARGET=${1:?"target folder for git repo cloning required"}
-  local REPO_URL=${2:?"git repo url for git repo cloning required"}
+  local _GIT_REPO=${2:?"git repo url for git repo cloning required"}
   local BRANCH="-B ${REPO_BRANCH:-main}"
   local retry=1
-  git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+#  mkdir -p "$REPO_TARGET"
+#  ls -la "$REPO_TARGET"
+  git clone $GIT_QUIET "$_GIT_REPO" "$REPO_TARGET" > /dev/null
   local clone_result=$?
   while [ $clone_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
   do
-    echo "Cloning repository $REPO_URL failed"
+    id
+    ls -la $(dirname $REPO_TARGET)
+    echo "Cloning repository $_GIT_REPO failed"
     echo "Retrying in ${GIT_WAIT:-1}s ... "
     sleep ${GIT_WAIT:-1}
     retry=$(( $retry + 1 ))
-    git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+    git clone $GIT_QUIET "$_GIT_REPO" "$REPO_TARGET" > /dev/null
     local clone_result=$?
   done
   if [ $clone_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
   then
-    echo "Cloning repository $REPO_URL failed"
+    echo "Cloning repository $_GIT_REPO failed"
     echo "retries exceeded"
     exit 1
   fi
@@ -98,17 +100,17 @@ function clone_sync_repo(){
   local checkout_result=$?
   while [ $checkout_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
   do
-    echo "Checking out ${REPO_BRANCH:-main} from $REPO_URL after cloning failed failed"
+    echo "Checking out ${REPO_BRANCH:-main} from $_GIT_REPO after cloning failed failed"
     echo "Retrying in ${GIT_WAIT:-1}s ... "
     sleep ${GIT_WAIT:-1}
     retry=$(( $retry + 1 ))
-    git clone $GIT_QUIET "$REPO_URL" "$REPO_TARGET" > /dev/null
+    git clone $GIT_QUIET "$_GIT_REPO" "$REPO_TARGET" > /dev/null
     local checkout_result=$?
   done
   cd - > /dev/null
   if [ $checkout_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
   then
-    echo "Checking out ${REPO_BRANCH:-main} from $REPO_URL after cloning failed failed"
+    echo "Checking out ${REPO_BRANCH:-main} from $_GIT_REPO after cloning failed failed"
     echo "retries exceeded"
     exit 1
   fi

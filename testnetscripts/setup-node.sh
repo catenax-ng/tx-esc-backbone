@@ -186,12 +186,15 @@ function adapt_config_toml(){
   update_config_toml "${1%/}/sync" $1
 }
 
-create_home_and_key $HOME_FOLDER
+function setup_node_main() {
+  if [ -d $HOME_FOLDER ]; then
+    exit 0;
+  fi
+  create_home_and_key $HOME_FOLDER
+  each_write_address_to_repo $HOME_FOLDER
+  fetch_genesis_file_with_funds $HOME_FOLDER
+  delegate_stake $HOME_FOLDER
+  fetch_genesis_file_with_txs $HOME_FOLDER
+}
 
-each_write_address_to_repo $HOME_FOLDER
-
-fetch_genesis_file_with_funds $HOME_FOLDER
-
-delegate_stake $HOME_FOLDER
-
-fetch_genesis_file_with_txs $HOME_FOLDER
+setup_node_main
