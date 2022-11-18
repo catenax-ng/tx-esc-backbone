@@ -1,3 +1,11 @@
+<!--
+Copyright (c) 2022 - for information on the respective copyright owner
+see the NOTICE file and/or the repository at
+https://github.com/catenax-ng/product-esc-backbone-code
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # ESC Backbone
 **ESC Backbone** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite](https://ignite.com/cli).
 

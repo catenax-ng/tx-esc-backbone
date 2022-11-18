@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Copyright (c) 2022 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
 id
 MOUNT_FOLDER=${1:?"Mount folder required"}
 MOUNT_FOLDER=${MOUNT_FOLDER%/}

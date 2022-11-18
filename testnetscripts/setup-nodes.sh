@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Copyright (c) 2022 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
 NODE_NAME_PREFIX=n
 KEEP_LOCAL_REPO=0
 NETWORK_ADDRESS_TEMPLATE="testnet-esc-backbone-{host}-service"

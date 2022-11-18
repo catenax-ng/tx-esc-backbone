@@ -1,3 +1,11 @@
+<!--
+Copyright (c) 2022 - for information on the respective copyright owner
+see the NOTICE file and/or the repository at
+https://github.com/catenax-ng/product-esc-backbone-code
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Generate a set of validator home folders
 
 [setup-nodes.sh](../../testnetscripts/setup-nodes.sh) used to prepare a folder structure to boot some nodes.

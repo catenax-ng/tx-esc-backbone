@@ -1,6 +1,10 @@
 #!/bin/bash
 
-
+# Copyright (c) 2022 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
 
 function publish_rpc(){
   local TRG_FILE=${1:?"Target file required"}

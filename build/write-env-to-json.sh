@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Copyright (c) 2022 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # This script reads the environment variables and writes the one with the prefix 'WEBAPP_' to the given JSON file.
 # This enables the static web app to access these environment variables by doing a HTTP GET.
 # The image works in Docker and Kubernetes by just passing environment variables to the deployed container.
