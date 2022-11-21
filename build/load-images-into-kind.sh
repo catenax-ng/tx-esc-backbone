@@ -11,3 +11,4 @@ kind load docker-image ghcr.io/catenax-ng/esc-backbone-web:latest
 kind load docker-image ghcr.io/catenax-ng/catena-faucet:latest
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-node-init:latest
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-orchestrator:latest
+kind load docker-image ghcr.io/catenax-ng/ssh-client:latest

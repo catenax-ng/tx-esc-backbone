@@ -169,3 +169,13 @@ ENV GIT_PUSH_MAX_RETRY=5
 
 USER $UID
 ENTRYPOINT ["sh", "-c","/initscripts/orchestrator-network-setup.sh /orchestrator/$NODE_HOME FALSE"]
+
+FROM debian:11.5-slim as ssh-client
+ARG BRANCH=main
+
+LABEL branch="$BRANCH" repository="github.com/catenax-ng/product-esc-backbone-code"
+
+ENV PACKAGES  openssh-client sshpass curl jq git sed
+
+RUN apt-get update
+RUN apt-get install -y $PACKAGES
