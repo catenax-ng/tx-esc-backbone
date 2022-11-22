@@ -1,0 +1,36 @@
+# Copyright (c) 2022 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Copyright check
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+
+  copyright-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: install-deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh
+      - name: run-checker
+        run: |
+          export PATH="/home/runner/.deno/bin:$PATH"
+          deno run --allow-read https://deno.land/x/license_checker@v3.2.2/main.ts
