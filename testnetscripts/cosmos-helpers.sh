@@ -177,6 +177,7 @@ function wait_for_validator_commits() {
   local WAIT_FOR_NUM=$3
   pull_git $REPO
   echo "Wait for $WAIT_FOR_NUM validators to commit for $GLOB"
+  shopt -s nullglob
   local VALIDATOR_INPUT=($GLOB)
   echo ${VALIDATOR_INPUT[@]}
   local retry=1
@@ -197,6 +198,7 @@ function wait_for_validator_commits() {
       echo "This might be caused, if the number of validators is less than the value of \$VALIDATOR_COUNT (default: 4)"
       exit 2
   fi
+  shopt -u nullglob
   echo "All validators committed"
 }
 
