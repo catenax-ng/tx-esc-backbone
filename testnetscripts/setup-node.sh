@@ -17,7 +17,8 @@ if [ -z "$GIT_REPO" ]; then
 fi
 HOME_FOLDER="${1:?Provide a home folder}"
 PUBLIC_HOST_NAME="${2:?Provide the validators public hostname/ ip address}"
-MNEMONIC="${3:?Provide the validator\'s mnemonic}"
+GIVEN_MONIKER="${3:?Provide a moniker for the validator}"
+MNEMONIC="${4:?Provide the validator\'s mnemonic}"
 
 function each_init_home(){
   local HOME_DIR=${1:?"Home folder required"}
@@ -28,7 +29,7 @@ function each_init_home(){
 function create_home_and_key() {
   echo "create_home_and_key for $1"
   local NODE_HOME="$1"
-  local MONIKER="$(home_name "$NODE_HOME")"
+  local MONIKER="${2:?"Moniker required"}"
   local REPO="${NODE_HOME%/}/sync"
   echo "Processing $MONIKER"
   clone_sync_repo "$REPO" "$GIT_REPO"
@@ -81,7 +82,7 @@ function wait_for_tag(){
 function each_write_address_to_repo(){
   echo "each_write_address_to_repo for $1"
   local HOME_DIR=${1:?"Home folder required"}
-  local MONIKER=$(home_name "$HOME_DIR")
+  local MONIKER="${2:?"Moniker required"}"
   local REPO="${HOME_DIR%/}/sync"
   echo "Publish public key for $MONIKER"
   pull_git $REPO
@@ -131,9 +132,9 @@ function fetch_genesis_file_with_funds(){
 function delegate_stake(){
   echo "delegate_stake for $1"
   local NODE_HOME="$1"
-  local MONIKER=$(home_name "$NODE_HOME")
+  local MONIKER="${2:?"Moniker required"}"
   each_create_gentx_for_delegation "$NODE_HOME" "$MONIKER" $VALIDATOR_INITIAL_BALANCE $CURRENCY
-  each_write_delegation_gentx_to_repo "$NODE_HOME"
+  each_write_delegation_gentx_to_repo "$NODE_HOME" "$MONIKER"
 }
 
 function each_create_gentx_for_delegation() {
@@ -151,6 +152,7 @@ function each_create_gentx_for_delegation() {
 
 function each_write_delegation_gentx_to_repo(){
   local HOME_DIR=${1:?"Home folder required"}
+  local MONIKER="${2:?"Moniker required"}"
   local REPO="${HOME_DIR%/}/sync"
   local CONFIG="${HOME_DIR%/}/config"
   pull_git $REPO
@@ -188,13 +190,15 @@ function adapt_config_toml(){
 
 function setup_node_main() {
   if [ -d $HOME_FOLDER ]; then
+    ls -la $HOME_FOLDER
     exit 0;
   fi
-  create_home_and_key $HOME_FOLDER
-  each_write_address_to_repo $HOME_FOLDER
+  create_home_and_key $HOME_FOLDER $GIVEN_MONIKER
+  each_write_address_to_repo $HOME_FOLDER $GIVEN_MONIKER
   fetch_genesis_file_with_funds $HOME_FOLDER
-  delegate_stake $HOME_FOLDER
+  delegate_stake $HOME_FOLDER $GIVEN_MONIKER
   fetch_genesis_file_with_txs $HOME_FOLDER
+  ls -la $HOME_FOLDER
 }
 
 setup_node_main
