@@ -182,7 +182,6 @@ function wait_for_validator_commits() {
   echo ${VALIDATOR_INPUT[@]}
   local retry=1
   local max_retry=$(( ${GIT_WAIT_MAX_RETRY:-5} * $WAIT_FOR_NUM ))
-  echo $max_retry
   while [ ${#VALIDATOR_INPUT[@]} -lt $WAIT_FOR_NUM -a $retry -lt $max_retry ]
   do
     echo "Not all validators committed yet (${#VALIDATOR_INPUT[@]}/$WAIT_FOR_NUM)"
