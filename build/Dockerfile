@@ -127,7 +127,6 @@ RUN chmod u+x /validator/validator-node-entrypoint.sh
 COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
 COPY --from=build --chown=$UID:$GID /home/testnet /home/testnet
 
-VOLUME /home/validator/
 USER $UID
 #ENTRYPOINT ["sh", "-c","/validator/validator-node-entrypoint.sh /validator/data $NODE_HOME $TEMPLATE_HOME"]
 ENTRYPOINT ["sh", "-c", "id; ls -la /home/validator; /validator/esc-backboned start --home /home/validator/$NODE_HOME"]
