@@ -23,7 +23,7 @@ if [ -z "$CURRENCY" ]; then
 fi
 
 if [ -z "$GIT_WAIT" ]; then
-  export GIT_WAIT=1
+  export GIT_WAIT=3
 fi
 
 if [ -z "$VALIDATOR_COUNT" ]; then
@@ -31,7 +31,7 @@ if [ -z "$VALIDATOR_COUNT" ]; then
 fi
 
 if [ -z "$GIT_WAIT_MAX_RETRY" ]; then
-  export GIT_WAIT_MAX_RETRY=5
+  export GIT_WAIT_MAX_RETRY=20
 fi
 
 if [ -z "$GIT_PUSH_MAX_RETRY" ]; then
