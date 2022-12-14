@@ -29,9 +29,6 @@ RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 COPY web ./web
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
 
-# COPY prepared test net homes.
-COPY testnet /home/testnet
-
 FROM node:17.9 as web-chain-suggestion-build
 
 WORKDIR /build
@@ -122,13 +119,10 @@ ENV NODE_HOME="chain"
 RUN groupadd -g $GID validator
 RUN useradd -g $GID -u $UID -s /bin/bash -d /home/validator validator
 WORKDIR /validator
-COPY --chown=$UID:$GID build/validator-node-entrypoint.sh /validator/
-RUN chmod u+x /validator/validator-node-entrypoint.sh
 COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
-COPY --from=build --chown=$UID:$GID /home/testnet /home/testnet
 
 USER $UID
-#ENTRYPOINT ["sh", "-c","/validator/validator-node-entrypoint.sh /validator/data $NODE_HOME $TEMPLATE_HOME"]
+
 ENTRYPOINT ["sh", "-c", "id; ls -la /home/validator; /validator/esc-backboned start --home /home/validator/$NODE_HOME"]
 
 FROM debian:11.5-slim as esc-backbone-orchestrator
