@@ -13,7 +13,7 @@ WORKDIR /build
 RUN apt update
 RUN apt install -y $PACKAGES
 
-RUN curl https://get.ignite.com/cli@v0.26.1?type=script | bash && chown root:root ignite
+RUN curl https://get.ignite.com/cli@v0.26.1! | bash
 
 WORKDIR /build/esc-backbone
 COPY go.mod go.sum ./
@@ -24,7 +24,7 @@ COPY app ./app
 COPY docs ./docs
 COPY config.yml ./
 
-RUN /build/ignite chain build
+RUN ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 COPY web ./web
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
