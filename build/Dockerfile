@@ -97,12 +97,14 @@ ENV GIT_WAIT_MAX_RETRY=5
 ENV GIT_PUSH_MAX_RETRY=5
 # The public address the validator will be available at.
 ENV PUBLIC_HOST_NAME=""
-# The validator's mnemonic to create it's validator key
+# The validator's mnemonic to create it's validator account key
 ENV VALIDATOR_MNEMONIC=""
+# The validator's mnemonic to create it's validator node key
+ENV NODE_MNEMONIC=""
 
 USER $UID
 
-ENTRYPOINT ["sh", "-c","/initscripts/setup-node.sh /home/validator/$NODE_HOME $PUBLIC_HOST_NAME $MONIKER \"$VALIDATOR_MNEMONIC\""]
+ENTRYPOINT ["sh", "-c","/initscripts/setup-node.sh /home/validator/$NODE_HOME $PUBLIC_HOST_NAME $MONIKER \"$VALIDATOR_MNEMONIC\" \"$NODE_MNEMONIC\""]
 
 FROM debian:11.5-slim as esc-backbone-node
 ARG BRANCH=main

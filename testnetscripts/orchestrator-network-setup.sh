@@ -54,7 +54,7 @@ function add_faucet_account(){
     local MONIKER=$(home_name "$FAUCET_DIR")
     FAUCET_MNEMONIC_FILE=$FAUCET_DIR/mnemonic
     echo "$FAUCET_MNEMONIC" > $FAUCET_MNEMONIC_FILE
-    each_add_key $FAUCET_DIR $MONIKER $FAUCET_MNEMONIC_FILE
+    each_add_key $FAUCET_DIR $MONIKER "$FAUCET_MNEMONIC"
     cd "${ORCHESTRATOR_HOME}"
     git add faucet
     git commit -m "Add faucet account"

@@ -18,12 +18,19 @@ fi
 HOME_FOLDER="${1:?Provide a home folder}"
 PUBLIC_HOST_NAME="${2:?Provide the validators public hostname/ ip address}"
 GIVEN_MONIKER="${3:?Provide a moniker for the validator}"
-MNEMONIC="${4:?Provide the validator\'s mnemonic}"
+MNEMONIC="${4:?Provide the validator owner\'s mnemonic}"
+NODE_MNEMONIC="${5:?Provide the validator node key\'s mnemonic}"
 
 function each_init_home(){
   local HOME_DIR=${1:?"Home folder required"}
   local MONIKER=${2:?"Moniker required"}
-  $CHAIN_BINARY --home $HOME_DIR init $MONIKER &> /dev/null
+  local _NODE_MNEMONIC="${3:?Provide the validator node key\'s mnemonic}"
+    if [ -z "$_NODE_MNEMONIC" ]; then
+      $CHAIN_BINARY --home $HOME_DIR init $MONIKER &> /dev/null
+    else
+      echo "$_NODE_MNEMONIC" > "${HOME_DIR%/}/mnemonic-$MONIKER-node"
+      echo "$_NODE_MNEMONIC" | $CHAIN_BINARY --home $HOME_DIR init $MONIKER --recover  &> /dev/null
+    fi
 }
 
 function create_home_and_key() {
@@ -34,8 +41,8 @@ function create_home_and_key() {
   echo "Processing $MONIKER"
   clone_sync_repo "$REPO" "$GIT_REPO"
   echo "each_init_home "$NODE_HOME" "$MONIKER""
-  each_init_home "$NODE_HOME" "$MONIKER"
-  each_add_key "$NODE_HOME" "$MONIKER"
+  each_init_home "$NODE_HOME" "$MONIKER" "$NODE_MNEMONIC"
+  each_add_key "$NODE_HOME" "$MONIKER" "$MNEMONIC"
   echo rm "$NODE_HOME/config/genesis.json"
   rm "$NODE_HOME/config/genesis.json"
   each_fetch_genesis_file_for_node_from_tag "$NODE_HOME" "init_genesis"
@@ -190,6 +197,7 @@ function adapt_config_toml(){
 
 function setup_node_main() {
   if [ -d $HOME_FOLDER ]; then
+    echo "$HOME_FOLDER already exists."
     ls -la $HOME_FOLDER
     exit 0;
   fi

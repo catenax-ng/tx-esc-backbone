@@ -47,14 +47,15 @@ function add_funds_to_addr(){
 function each_add_key(){
   local HOME_DIR=${1:?"Home folder required"}
   local MONIKER=${2:?"Moniker required"}
-  local MNEMONIC=$3
+  local _MNEMONIC="$3"
   local KEY_NAME=val-$MONIKER
   local KEYRING_BACKEND=${4:---keyring-backend test}
   local KEYRING_DIR=${5:---keyring-dir $HOME_DIR}
-  if [ -z "$MNEMONIC" ]; then
+  if [ -z "$_MNEMONIC" ]; then
     $CHAIN_BINARY --home $HOME_DIR keys add $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR  |& grep -A 3 "It is the only way to recover your account if you ever forget your password." | tail -n +3 - > "$HOME_DIR"mnemonic-$KEY_NAME
   else
-    cat $MNEMONIC | $CHAIN_BINARY --home $HOME_DIR keys add $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR --recover
+    echo "$_MNEMONIC" > "${HOME_DIR%/}/mnemonic-$KEY_NAME"
+    echo "$_MNEMONIC" | $CHAIN_BINARY --home $HOME_DIR keys add $KEY_NAME $KEYRING_BACKEND $KEYRING_DIR --recover
   fi
 }
 
