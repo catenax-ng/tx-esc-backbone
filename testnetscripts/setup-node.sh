@@ -59,32 +59,6 @@ function each_fetch_genesis_file_for_node_from_tag(){
   cp "$REPO/config/genesis.json" "${HOME_DIR%/}/config/"
 }
 
-function wait_for_tag(){
-  local REPO=${1:?"Repo folder required"}
-  local TAG=${2:?"tag name required"}
-  cd $REPO
-  local retry=1
-  git ls-remote $GIT_QUIET --exit-code --tags origin $TAG > /dev/null
-  local lstag_result=$?
-  while [ $lstag_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
-  do
-    echo "no tag $TAG found"
-    echo "waiting ${GIT_WAIT:-1}s ... "
-    sleep ${GIT_WAIT:-1}
-    retry=$(( $retry + 1 ))
-    git ls-remote  $GIT_QUIET --exit-code --tags origin $TAG
-    lstag_result=$?
-  done
-  if [ $lstag_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
-  then
-    echo "no tag $TAG found"
-    echo "retries exceeded"
-    exit 1
-  fi
-  echo "tag $TAG found"
-  cd - > /dev/null
-}
-
 function each_write_address_to_repo(){
   echo "each_write_address_to_repo for $1"
   local HOME_DIR=${1:?"Home folder required"}

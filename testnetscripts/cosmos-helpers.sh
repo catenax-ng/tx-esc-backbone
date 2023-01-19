@@ -170,6 +170,31 @@ function pull_git() {
   cd - > /dev/null
 }
 
+function wait_for_tag(){
+  local REPO=${1:?"Repo folder required"}
+  local TAG=${2:?"tag name required"}
+  cd $REPO
+  local retry=1
+  git ls-remote $GIT_QUIET --exit-code --tags origin $TAG > /dev/null
+  local lstag_result=$?
+  while [ $lstag_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
+  do
+    echo "no tag $TAG found"
+    echo "waiting ${GIT_WAIT:-1}s ... "
+    sleep ${GIT_WAIT:-1}
+    retry=$(( $retry + 1 ))
+    git ls-remote  $GIT_QUIET --exit-code --tags origin $TAG
+    lstag_result=$?
+  done
+  if [ $lstag_result -ne 0 -a $retry -eq ${GIT_WAIT_MAX_RETRY:-5} ]
+  then
+    echo "no tag $TAG found"
+    echo "retries exceeded"
+    exit 1
+  fi
+  echo "tag $TAG found"
+  cd - > /dev/null
+}
 
 function wait_for_validator_commits() {
   local REPO=$1
