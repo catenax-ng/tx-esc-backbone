@@ -80,7 +80,6 @@ function clone_sync_repo(){
   local clone_result=$?
   while [ $clone_result -ne 0 -a $retry -lt ${GIT_WAIT_MAX_RETRY:-5} ]
   do
-    id
     ls -la $(dirname $REPO_TARGET)
     echo "Cloning repository $_GIT_REPO failed"
     echo "Retrying in ${GIT_WAIT:-1}s ... "
