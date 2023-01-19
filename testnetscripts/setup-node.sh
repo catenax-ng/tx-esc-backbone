@@ -53,15 +53,14 @@ function each_fetch_genesis_file_for_node_from_tag(){
   local HOME_DIR=${1:?"Home folder required"}
   local REPO="${HOME_DIR%/}/sync"
   local TAG=${2:?"tag name required"}
-  wait_for_tag $HOME_DIR $TAG
+  wait_for_tag $REPO $TAG
   pull_git $REPO $TAG
   mkdir -p "${HOME_DIR%/}/config/"
   cp "$REPO/config/genesis.json" "${HOME_DIR%/}/config/"
 }
 
 function wait_for_tag(){
-  local HOME_DIR=${1:?"Home folder required"}
-  local REPO="${HOME_DIR%/}/sync"
+  local REPO=${1:?"Repo folder required"}
   local TAG=${2:?"tag name required"}
   cd $REPO
   local retry=1
