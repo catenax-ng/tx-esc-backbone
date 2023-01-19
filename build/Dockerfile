@@ -174,3 +174,10 @@ ENV PACKAGES  openssh-client sshpass curl jq git sed
 
 RUN apt-get update
 RUN apt-get install -y $PACKAGES
+
+COPY --from=load-dasel --chown=$UID:$GID /output/dasel /usr/local/bin/
+
+# add the testnet scripts for easier watching a git repo
+WORKDIR /testnetscripts
+COPY testnetscripts/*.sh .
+WORKDIR /
