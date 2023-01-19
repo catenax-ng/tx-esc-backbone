@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - CGE-118-Create_docker_image_for_initialising_the_home_folder
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
