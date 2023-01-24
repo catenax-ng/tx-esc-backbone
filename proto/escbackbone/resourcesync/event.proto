@@ -1,0 +1,13 @@
+syntax = "proto3";
+package escbackbone.resourcesync;
+
+
+import "escbackbone/resourcesync/resource.proto";
+import "gogoproto/gogo.proto";
+option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
+
+
+message EventCreateResource{
+  string creator = 1;
+  Resource resource = 2 [(gogoproto.nullable) = false,  (gogoproto.embed) = true];
+}
