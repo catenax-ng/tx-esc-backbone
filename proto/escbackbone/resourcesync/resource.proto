@@ -2,8 +2,10 @@ syntax = "proto3";
 package escbackbone.resourcesync;
 
 option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
+import "gogoproto/gogo.proto";
 import "escbackbone/resourcesync/audit.proto";
 message Resource {
+  option (gogoproto.goproto_getters) = false;
   // issue of resource change
   string originator = 1;
   // id of the resource by originator -  unique per originator
