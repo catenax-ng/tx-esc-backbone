@@ -50,78 +50,40 @@ func TestResourceMapKey(t *testing.T) {
 }
 
 func TestResourceMapKeyOf(t *testing.T) {
-	reusedResource := Resource{
-		"reusedOrig",
-		"reusedOrigKey",
-		"reused ignored string",
-		"reused ignored key",
-		[]byte{42, 5, 7},
-	}
+	reusedResourceKey := createValidResouceKey(Alice, "reusedOrigKey")
+
 	type args struct {
-		resource *Resource
+		resource ResourceKey
 	}
 	tests := []struct {
-		name string
-		args args
-		want []byte
+		name    string
+		args    args
+		want    []byte
+		wantErr bool
 	}{
-		{
-			"originator contributes to key",
-			args{
-				&Resource{
-					"orig1",
-					"",
-					"",
-					"",
-					[]byte{},
-				},
-			},
-			[]byte("orig1//"),
-		},
-		{
-			"origResId contributes to key",
-			args{
-				&Resource{
-					"",
-					"orig1key",
-					"",
-					"",
-					[]byte{},
-				},
-			},
-			[]byte("/orig1key/"),
-		},
 		{
 			"originator and origResId contribute to key",
 			args{
-				&Resource{
-					"orig2",
-					"orig2key",
-					"",
-					"",
-					[]byte{},
-				},
+				createValidResouceKey(Bob, "orig2key"),
 			},
-			[]byte("orig2/orig2key/"),
+			[]byte(Bob + "/orig2key/"),
+			false,
 		},
 		{
 			"only originator and origResId contribute to key other fields are ignored",
 			args{
-				&Resource{
-					"orig2",
-					"orig2key",
-					"ignored string",
-					"ignored key",
-					[]byte{5, 7},
-				},
+				createValidResouceKey(Bob, "orig2key"),
 			},
-			[]byte("orig2/orig2key/"),
-		}, {
-			"Delivers the same as ResourceMapKey(resource.Originator,resource.OrigResId)",
+			[]byte(Bob + "/orig2key/"),
+			false,
+		},
+		{
+			"Delivers the same as ResourceMapKey(reusedResourceKey.GetOriginator(),reusedResourceKey.GetOrigResKey())",
 			args{
-				&reusedResource,
+				reusedResourceKey,
 			},
-			ResourceMapKey(reusedResource.Originator, reusedResource.OrigResId),
+			ResourceMapKey(reusedResourceKey.GetOriginator(), reusedResourceKey.GetOrigResKey()),
+			false,
 		},
 	}
 	for _, tt := range tests {

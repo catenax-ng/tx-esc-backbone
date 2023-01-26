@@ -27,6 +27,10 @@ func (m *Resource) GetDataHash() (dataHash []byte, err error) {
 	return m.DataHash, nil
 }
 
+func (m *Resource) ToResourceKey() (ResourceKey, error) {
+	return NewResourceKey(m.Originator, m.OrigResId)
+}
+
 func (m *Resource) Validate() (err error) {
 	_, err = m.GetOriginatorAddress()
 	if err != nil {

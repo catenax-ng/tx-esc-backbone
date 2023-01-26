@@ -19,16 +19,11 @@ func (k Keeper) SetResourceMap(ctx sdk.Context, resourceMap types.ResourceMap) {
 // GetResourceMap returns a resourceMap from its index
 func (k Keeper) GetResourceMap(
 	ctx sdk.Context,
-	originator string,
-	origResId string,
-
+	resourceKey types.ResourceKey,
 ) (val types.ResourceMap, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ResourceMapKeyPrefix))
 
-	b := store.Get(types.ResourceMapKey(
-		originator,
-		origResId,
-	))
+	b := store.Get(types.ResourceMapKeyOf(resourceKey))
 	if b == nil {
 		return val, false
 	}
@@ -40,15 +35,10 @@ func (k Keeper) GetResourceMap(
 // RemoveResourceMap removes a resourceMap from the store
 func (k Keeper) RemoveResourceMap(
 	ctx sdk.Context,
-	originator string,
-	origResId string,
-
+	resourceKey types.ResourceKey,
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ResourceMapKeyPrefix))
-	store.Delete(types.ResourceMapKey(
-		originator,
-		origResId,
-	))
+	store.Delete(types.ResourceMapKeyOf(resourceKey))
 }
 
 // GetAllResourceMap returns all resourceMap
@@ -67,8 +57,8 @@ func (k Keeper) GetAllResourceMap(ctx sdk.Context) (list []types.ResourceMap) {
 	return
 }
 
-func (k Keeper) HasResourceMapFor(ctx sdk.Context, resource types.Resource) bool {
+func (k Keeper) HasResourceMapFor(ctx sdk.Context, resourceKey types.ResourceKey) bool {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ResourceMapKeyPrefix))
-	key := types.ResourceMapKeyOf(&resource)
+	key := types.ResourceMapKeyOf(resourceKey)
 	return store.Has(key)
 }

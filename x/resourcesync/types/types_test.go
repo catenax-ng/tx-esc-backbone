@@ -5,3 +5,11 @@ const (
 	Bob   = "cosmos1w73d7jg8f46qx354hj62d3pa5kfncc47nw5rx2"
 	Carol = "cosmos12z5a5r50c73tgyel4csk3eakp9ntvjn2ztuqpc"
 )
+
+func createValidResouceKey(originator string, origResId string) ResourceKey {
+	resourceKey, err := NewResourceKey(originator, origResId)
+	if err != nil {
+		panic(err)
+	}
+	return resourceKey
+}

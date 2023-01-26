@@ -17,10 +17,10 @@ var _ = strconv.IntSize
 
 func createNResourceMap(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.ResourceMap {
 	items := make([]types.ResourceMap, n)
+	addresses := []string{Alice, Bob}
 	for i := range items {
-		items[i].Originator = strconv.Itoa(i)
+		items[i].Originator = addresses[i%len(addresses)]
 		items[i].OrigResId = strconv.Itoa(i)
-
 		keeper.SetResourceMap(ctx, items[i])
 	}
 	return items
@@ -30,10 +30,8 @@ func TestResourceMapGet(t *testing.T) {
 	keeper, ctx := keepertest.ResourcesyncKeeper(t)
 	items := createNResourceMap(keeper, ctx, 10)
 	for _, item := range items {
-		rst, found := keeper.GetResourceMap(ctx,
-			item.Originator,
-			item.OrigResId,
-		)
+		resKey := createValidResouceKey(item.Originator, item.OrigResId)
+		rst, found := keeper.GetResourceMap(ctx, resKey)
 		require.True(t, found)
 		require.Equal(t,
 			nullify.Fill(&item),
@@ -45,14 +43,9 @@ func TestResourceMapRemove(t *testing.T) {
 	keeper, ctx := keepertest.ResourcesyncKeeper(t)
 	items := createNResourceMap(keeper, ctx, 10)
 	for _, item := range items {
-		keeper.RemoveResourceMap(ctx,
-			item.Originator,
-			item.OrigResId,
-		)
-		_, found := keeper.GetResourceMap(ctx,
-			item.Originator,
-			item.OrigResId,
-		)
+		resKey := createValidResouceKey(item.Originator, item.OrigResId)
+		keeper.RemoveResourceMap(ctx, resKey)
+		_, found := keeper.GetResourceMap(ctx, resKey)
 		require.False(t, found)
 	}
 }
@@ -70,11 +63,12 @@ func TestKeeper_HasResourceMapFor(t *testing.T) {
 	keeper, ctx := keepertest.ResourcesyncKeeper(t)
 	_ = createNResourceMap(keeper, ctx, 2)
 
-	require.True(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "0", OrigResId: "0"}))
-	require.True(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "1", OrigResId: "1"}))
-	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "0", OrigResId: "1"}))
-	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "1", OrigResId: "0"}))
-	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "2", OrigResId: "2"}))
-	require.False(t, keeper.HasResourceMapFor(ctx, types.Resource{Originator: "3", OrigResId: "3"}))
+	require.True(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Alice, "0")))
+	require.True(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Bob, "1")))
+	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Alice, "1")))
+	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Bob, "0")))
+	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Carol, "0")))
+	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Carol, "1")))
+	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Carol, "2")))
 
 }

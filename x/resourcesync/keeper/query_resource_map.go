@@ -43,12 +43,15 @@ func (k Keeper) ResourceMap(goCtx context.Context, req *types.QueryGetResourceMa
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
+         resourceKey, err := types.NewResourceKey(req.Originator, req.OrigResId)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid request")
+	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	val, found := k.GetResourceMap(
 		ctx,
-		req.Originator,
-		req.OrigResId,
+		resourceKey,
 	)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")

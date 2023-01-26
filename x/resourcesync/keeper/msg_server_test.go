@@ -14,6 +14,7 @@ import (
 const (
 	Alice = "cosmos1vvwed6f6uu4hjm6s3dqdfrrfqkwvg2dcag3ecf"
 	Bob   = "cosmos1w73d7jg8f46qx354hj62d3pa5kfncc47nw5rx2"
+	Carol = "cosmos12z5a5r50c73tgyel4csk3eakp9ntvjn2ztuqpc"
 )
 
 func setupMsgServer(t testing.TB) (types.MsgServer, keeper.Keeper, context.Context) {
@@ -26,4 +27,12 @@ func TestMsgServer(t *testing.T) {
 	require.NotNil(t, ms)
 	require.NotNil(t, keeper)
 	require.NotNil(t, ctx)
+}
+
+func createValidResouceKey(originator string, origResId string) types.ResourceKey {
+	resourceKey, err := types.NewResourceKey(originator, origResId)
+	if err != nil {
+		panic(err)
+	}
+	return resourceKey
 }

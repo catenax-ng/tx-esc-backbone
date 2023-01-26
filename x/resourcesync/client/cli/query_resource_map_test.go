@@ -18,6 +18,12 @@ import (
 	"github.com/catenax/esc-backbone/x/resourcesync/types"
 )
 
+const (
+	Alice = "cosmos1vvwed6f6uu4hjm6s3dqdfrrfqkwvg2dcag3ecf"
+	Bob   = "cosmos1w73d7jg8f46qx354hj62d3pa5kfncc47nw5rx2"
+	Carol = "cosmos12z5a5r50c73tgyel4csk3eakp9ntvjn2ztuqpc"
+)
+
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
@@ -25,10 +31,11 @@ func networkWithResourceMapObjects(t *testing.T, n int) (*network.Network, []typ
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
+        addresses := []string{Alice, Bob}
 	for i := 0; i < n; i++ {
 		resourceMap := types.ResourceMap{
 			Resource: types.Resource{
-				Originator: strconv.Itoa(i),
+				Originator: addresses[i%len(addresses)],
 				OrigResId:  strconv.Itoa(i),
 			},
 		}

@@ -47,14 +47,23 @@ func TestResourceMapQuerySingle(t *testing.T) {
 		{
 			desc: "KeyNotFound",
 			request: &types.QueryGetResourceMapRequest{
-				Originator: strconv.Itoa(100000),
+				Originator: Carol,
 				OrigResId:  strconv.Itoa(100000),
 			},
 			err: status.Error(codes.NotFound, "not found"),
 		},
 		{
-			desc: "InvalidRequest",
-			err:  status.Error(codes.InvalidArgument, "invalid request"),
+			desc:    "InvalidRequest",
+			request: nil,
+			err:     status.Error(codes.InvalidArgument, "invalid request"),
+		},
+		{
+			desc: "Invalid originator request",
+			request: &types.QueryGetResourceMapRequest{
+				Originator: "invalid",
+				OrigResId:  "5",
+			},
+			err: status.Error(codes.InvalidArgument, "invalid request"),
 		},
 	}
 	for _, tc := range tests {

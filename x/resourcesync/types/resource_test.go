@@ -350,6 +350,96 @@ func TestResource_GetTargetSystem(t *testing.T) {
 	}
 }
 
+func TestResource_ToResourceKey(t *testing.T) {
+	type fields struct {
+		Originator   string
+		OrigResId    string
+		TargetSystem string
+		ResourceKey  string
+		DataHash     []byte
+	}
+	tests := []struct {
+		name            string
+		fields          fields
+		wantResourceKey ResourceKey
+		wantErr         bool
+	}{
+		{
+			"empty address fails",
+			fields{
+				"",
+				"some resId",
+				"some target system",
+				"some resource key",
+				[]byte("some hash"),
+			},
+			nil,
+			true,
+		},
+		{
+			"invalid address fails",
+			fields{
+				"some invalid address",
+				"some resId",
+				"some target system",
+				"some resource key",
+				[]byte("some hash"),
+			},
+			nil,
+			true,
+		},
+		{
+			"Alice's address is fine",
+			fields{
+				Alice,
+				"some resId",
+				"some target system",
+				"some resource key",
+				[]byte("some hash"),
+			},
+			&resourceKey{
+				Alice,
+				"some resId",
+			},
+			false,
+		},
+		{
+			"Bob's address is fine",
+			fields{
+				Bob,
+				"some other resId",
+				"this value has no impact",
+				"this value has no effect",
+				[]byte("some hash"),
+			},
+			&resourceKey{
+				Bob,
+				"some other resId",
+			},
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m := &Resource{
+				Originator:   tt.fields.Originator,
+				OrigResId:    tt.fields.OrigResId,
+				TargetSystem: tt.fields.TargetSystem,
+				ResourceKey:  tt.fields.ResourceKey,
+				DataHash:     tt.fields.DataHash,
+			}
+			gotResourceKey, err := m.ToResourceKey()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ToResourceKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotResourceKey, tt.wantResourceKey) {
+				t.Errorf("ToResourceKey() gotOriginator = %v, want %v", gotResourceKey, tt.wantResourceKey)
+			}
+		})
+	}
+}
+
 func TestResource_Validate(t *testing.T) {
 	type fields struct {
 		Originator   string

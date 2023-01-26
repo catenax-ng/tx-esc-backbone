@@ -15,7 +15,11 @@ func (k msgServer) CreateResource(goCtx context.Context, msg *types.MsgCreateRes
 	if err != nil {
 		return nil, err
 	}
-	if k.Keeper.HasResourceMapFor(ctx, resource) {
+	resourceKey, err := resource.ToResourceKey()
+	if err != nil {
+		return nil, err
+	}
+	if k.Keeper.HasResourceMapFor(ctx, resourceKey) {
 		return nil, sdkerrors.Wrapf(types.ErrDuplicateResource, "resource %s/%s cannot be created: duplicate", resource.Originator, resource.OrigResId)
 	}
 	resourceMap := types.NewResourceMap(resource)
