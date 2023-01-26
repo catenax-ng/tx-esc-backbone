@@ -41,6 +41,17 @@ func (k Keeper) RemoveResourceMap(
 	store.Delete(types.ResourceMapKeyOf(resourceKey))
 }
 
+func (k Keeper) RemoveAndGetResourceMap(ctx sdk.Context, resourceKey types.ResourceKey) (*types.ResourceMap, bool) {
+	result, found := k.GetResourceMap(ctx, resourceKey)
+	removed := &result
+	if found {
+		k.RemoveResourceMap(ctx, resourceKey)
+	} else {
+		removed = nil
+	}
+	return removed, found
+}
+
 // GetAllResourceMap returns all resourceMap
 func (k Keeper) GetAllResourceMap(ctx sdk.Context) (list []types.ResourceMap) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ResourceMapKeyPrefix))

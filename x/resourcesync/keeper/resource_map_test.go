@@ -72,3 +72,37 @@ func TestKeeper_HasResourceMapFor(t *testing.T) {
 	require.False(t, keeper.HasResourceMapFor(ctx, createValidResouceKey(Carol, "2")))
 
 }
+
+func TestKeeper_RemoveAndGetResourceMap(t *testing.T) {
+	keeper, ctx := keepertest.ResourcesyncKeeper(t)
+	_ = createNResourceMap(keeper, ctx, 2)
+	var result *types.ResourceMap
+	var found bool
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Alice, "0"))
+	require.True(t, found)
+	require.Equal(t,
+		nullify.Fill(&types.ResourceMap{Resource: types.Resource{Originator: Alice, OrigResId: "0"}}),
+		nullify.Fill(result),
+	)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Bob, "1"))
+	require.True(t, found)
+	require.Equal(t,
+		nullify.Fill(&types.ResourceMap{Resource: types.Resource{Originator: Bob, OrigResId: "1"}}),
+		nullify.Fill(result),
+	)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Alice, "1"))
+	require.False(t, found)
+	require.Nil(t, result)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Bob, "0"))
+	require.False(t, found)
+	require.Nil(t, result)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Carol, "0"))
+	require.False(t, found)
+	require.Nil(t, result)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Carol, "1"))
+	require.False(t, found)
+	require.Nil(t, result)
+	result, found = keeper.RemoveAndGetResourceMap(ctx, createValidResouceKey(Carol, "2"))
+	require.False(t, found)
+	require.Nil(t, result)
+}
