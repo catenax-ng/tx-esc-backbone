@@ -14,9 +14,16 @@ func (k msgServer) DeleteResource(goCtx context.Context, msg *types.MsgDeleteRes
 	if err != nil {
 		return nil, err
 	}
-	if !k.Keeper.HasResourceMapFor(ctx, resourceKey) {
+	removed, found := k.Keeper.RemoveAndGetResourceMap(ctx, resourceKey)
+	if !found {
 		return nil, sdkerrors.Wrapf(types.ErrNonexistentResource, "resource %s/%s cannot be deleted: nonexistent", resourceKey.GetOriginator(), resourceKey.GetOrigResKey())
 	}
-	k.Keeper.RemoveResourceMap(ctx, resourceKey)
+	err2 := ctx.EventManager().EmitTypedEvent(&types.EventDeleteResource{
+		Creator:  msg.Creator,
+		Resource: removed.Resource,
+	})
+	if err2 != nil {
+		return nil, err2
+	}
 	return &types.MsgDeleteResourceResponse{}, nil
 }

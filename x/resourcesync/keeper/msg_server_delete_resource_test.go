@@ -53,7 +53,18 @@ func Test_msgServer_DeleteResource(t *testing.T) {
 					want:    &types.MsgDeleteResourceResponse{},
 					wantErr: false,
 					stored:  nil,
-					events:  nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -100,7 +111,18 @@ func Test_msgServer_DeleteResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -147,7 +169,18 @@ func Test_msgServer_DeleteResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "another Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -199,13 +232,45 @@ func Test_msgServer_DeleteResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Bob,
+								OrigResId:    "another Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 				{
 					want:    &types.MsgDeleteResourceResponse{},
 					wantErr: false,
 					stored:  nil,
-					events:  nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Bob,
+								OrigResId:    "another Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -280,13 +345,35 @@ func Test_msgServer_DeleteResource(t *testing.T) {
 					want:    &types.MsgDeleteResourceResponse{},
 					wantErr: false,
 					stored:  nil,
-					events:  nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 				{
 					want:    nil,
 					wantErr: true,
 					stored:  nil,
-					events:  nil,
+					events: []proto.Message{
+						&types.EventDeleteResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
