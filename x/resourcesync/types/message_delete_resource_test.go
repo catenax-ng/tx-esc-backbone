@@ -15,16 +15,39 @@ func TestMsgDeleteResource_ValidateBasic(t *testing.T) {
 		err  error
 	}{
 		{
-			name: "invalid address",
+			name: "invalid creator address, valid resource",
 			msg: MsgDeleteResource{
-				Creator: "invalid_address",
+				Creator:    "invalid_address",
+				Originator: sample.AccAddress(),
+				OrigResId:  "some id",
 			},
 			err: sdkerrors.ErrInvalidAddress,
-		}, {
-			name: "valid address",
+		},
+		{
+			name: "valid address, valid resource",
 			msg: MsgDeleteResource{
-				Creator: sample.AccAddress(),
+				Creator:    sample.AccAddress(),
+				Originator: sample.AccAddress(),
+				OrigResId:  "some id",
 			},
+		},
+		{
+			name: "invalid address, invalid resource",
+			msg: MsgDeleteResource{
+				Creator:    "invalid_address",
+				Originator: "invalid_address",
+				OrigResId:  "some id",
+			},
+			err: sdkerrors.ErrInvalidAddress,
+		},
+		{
+			name: "valid address, invalid resource",
+			msg: MsgDeleteResource{
+				Creator:    sample.AccAddress(),
+				Originator: "invalid_address",
+				OrigResId:  "some id",
+			},
+			err: ErrInvalidResource,
 		},
 	}
 	for _, tt := range tests {

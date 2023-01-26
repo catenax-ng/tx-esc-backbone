@@ -43,5 +43,9 @@ func (msg *MsgDeleteResource) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+	_, err = NewResourceKeyForDelete(msg)
+	if err != nil {
+		return sdkerrors.Wrapf(ErrInvalidResource, "resource to delete invalid: %s", err)
+	}
 	return nil
 }

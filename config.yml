@@ -20,6 +20,13 @@ accounts:
   coins:
   - 100000000000000000000acax
   - 10000cvoucher
+- name: carol
+  mnemonic: "defy soft media source say health kingdom define casual twin
+    jacket spice mask skirt boat squirrel often pigeon lecture lawsuit little
+    joke october lumber"
+  coins:
+  - 100000000000000000000acax
+  - 10000cvoucher
 - name: test-wallet
   mnemonic: "old square lecture frog curtain habit bunker casino awesome defy
     fashion cry wife rain outer scene fork leaf raven twin hen hurt calm

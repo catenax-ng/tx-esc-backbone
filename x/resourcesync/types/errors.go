@@ -11,5 +11,5 @@ var (
 	ErrSample            = sdkerrors.Register(ModuleName, 1100, "sample error")
 	ErrInvalidOriginator = sdkerrors.Register(ModuleName, 1101, "originator address is invalid %s")
 	ErrInvalidResource   = sdkerrors.Register(ModuleName, 1102, "resource invalid")
-	ErrDuplicateResource = sdkerrors.Register(ModuleName, 1103, "resource %s/%s cannot be created:")
+	ErrDuplicateResource = sdkerrors.Register(ModuleName, 1103, "resource duplicate")
 )
