@@ -15,16 +15,59 @@ func TestMsgUpdateResource_ValidateBasic(t *testing.T) {
 		err  error
 	}{
 		{
-			name: "invalid address",
+			name: "invalid creator address, valid resource",
 			msg: MsgUpdateResource{
 				Creator: "invalid_address",
+				Entry: &Resource{
+					Originator:   sample.AccAddress(),
+					OrigResId:    "some id",
+					TargetSystem: "some target system",
+					ResourceKey:  "some res key",
+					DataHash:     []byte("some hase"),
+				},
 			},
 			err: sdkerrors.ErrInvalidAddress,
-		}, {
-			name: "valid address",
+		},
+		{
+			name: "valid address, valid resource",
 			msg: MsgUpdateResource{
 				Creator: sample.AccAddress(),
+				Entry: &Resource{
+					Originator:   sample.AccAddress(),
+					OrigResId:    "some id",
+					TargetSystem: "some target system",
+					ResourceKey:  "some res key",
+					DataHash:     []byte("some hase"),
+				},
 			},
+		},
+		{
+			name: "invalid address, invalid resource",
+			msg: MsgUpdateResource{
+				Creator: "invalid_address",
+				Entry: &Resource{
+					Originator:   "invalid_address",
+					OrigResId:    "some id",
+					TargetSystem: "some target system",
+					ResourceKey:  "some res key",
+					DataHash:     []byte("some hase"),
+				},
+			},
+			err: sdkerrors.ErrInvalidAddress,
+		},
+		{
+			name: "valid address, invalid resource",
+			msg: MsgUpdateResource{
+				Creator: sample.AccAddress(),
+				Entry: &Resource{
+					Originator:   "invalid_address",
+					OrigResId:    "some id",
+					TargetSystem: "some target system",
+					ResourceKey:  "some res key",
+					DataHash:     []byte("some hase"),
+				},
+			},
+			err: ErrInvalidResource,
 		},
 	}
 	for _, tt := range tests {

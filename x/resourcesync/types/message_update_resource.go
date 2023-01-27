@@ -42,5 +42,9 @@ func (msg *MsgUpdateResource) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+	err = msg.Entry.Validate()
+	if err != nil {
+		return sdkerrors.Wrapf(ErrInvalidResource, "resource to create invalid: %s", err)
+	}
 	return nil
 }
