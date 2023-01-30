@@ -16,3 +16,8 @@ message EventDeleteResource{
   string creator = 1;
   Resource resource = 2 [(gogoproto.nullable) = false,  (gogoproto.embed) = true];
 }
+
+message EventUpdateResource{
+  string creator = 1;
+  Resource resource = 2 [(gogoproto.nullable) = false,  (gogoproto.embed) = true];
+}
