@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/catenax/esc-backbone/x/resourcesync/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -9,9 +10,20 @@ import (
 
 func (k msgServer) UpdateResource(goCtx context.Context, msg *types.MsgUpdateResource) (*types.MsgUpdateResourceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	// TODO: Handling the message
-	_ = ctx
-
+	resource := *msg.Entry
+	err := resource.Validate()
+	if err != nil {
+		return nil, err
+	}
+	resourceKey, err := resource.ToResourceKey()
+	if err != nil {
+		return nil, err
+	}
+	resourceMap, found := k.Keeper.GetResourceMap(ctx, resourceKey)
+	if !found {
+		return nil, sdkerrors.Wrapf(types.ErrNonexistentResource, "resource %s/%s cannot be updated: does not exist", resource.Originator, resource.OrigResId)
+	}
+	resourceMap.Resource = resource
+	k.Keeper.SetResourceMap(ctx, resourceMap)
 	return &types.MsgUpdateResourceResponse{}, nil
 }
