@@ -66,7 +66,18 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some url",
+								ResourceKey:  "target system's new key",
+								DataHash:     []byte("other not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -127,7 +138,18 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some updated url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -188,7 +210,18 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "another Id",
+								TargetSystem: "some updated url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -259,7 +292,18 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "another Id",
+								TargetSystem: "some updated url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 				{
 					want:    &types.MsgUpdateResourceResponse{},
@@ -284,7 +328,28 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "another Id",
+								TargetSystem: "some updated url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "some updated url",
+								ResourceKey:  "target system's key",
+								DataHash:     []byte("not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},
@@ -352,7 +417,7 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 						Entry: &types.Resource{
 							Originator:   Alice,
 							OrigResId:    "an Id",
-							TargetSystem: "some other url",
+							TargetSystem: "url of update 1",
 							ResourceKey:  "target system's new key",
 							DataHash:     []byte("other not empty hash"),
 						},
@@ -362,7 +427,7 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 						Entry: &types.Resource{
 							Originator:   Alice,
 							OrigResId:    "an Id",
-							TargetSystem: "another url",
+							TargetSystem: "url of update 2",
 							ResourceKey:  "target system's new key",
 							DataHash:     []byte("other not empty hash"),
 						},
@@ -378,13 +443,24 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "an Id",
-								TargetSystem: "some other url",
+								TargetSystem: "url of update 1",
 								ResourceKey:  "target system's new key",
 								DataHash:     []byte("other not empty hash"),
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "url of update 1",
+								ResourceKey:  "target system's new key",
+								DataHash:     []byte("other not empty hash"),
+							},
+						},
+					},
 				},
 				{
 					want:    &types.MsgUpdateResourceResponse{},
@@ -394,13 +470,34 @@ func Test_msgServer_UpdateResource(t *testing.T) {
 							Resource: types.Resource{
 								Originator:   Alice,
 								OrigResId:    "an Id",
-								TargetSystem: "another url",
+								TargetSystem: "url of update 2",
 								ResourceKey:  "target system's new key",
 								DataHash:     []byte("other not empty hash"),
 							},
 						},
 					},
-					events: nil,
+					events: []proto.Message{
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "url of update 1",
+								ResourceKey:  "target system's new key",
+								DataHash:     []byte("other not empty hash"),
+							},
+						},
+						&types.EventUpdateResource{
+							Creator: "creator's address",
+							Resource: types.Resource{
+								Originator:   Alice,
+								OrigResId:    "an Id",
+								TargetSystem: "url of update 2",
+								ResourceKey:  "target system's new key",
+								DataHash:     []byte("other not empty hash"),
+							},
+						},
+					},
 				},
 			},
 		},

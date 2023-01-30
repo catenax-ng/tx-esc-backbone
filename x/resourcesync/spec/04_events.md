@@ -22,6 +22,12 @@ The resourcesync module emits the following events:
 | catenax.escbackbone.resourcesync.EventDeleteResource | creator       | {senderAddress}          |
 | catenax.escbackbone.resourcesync.EventDeleteResource | resource      | {deleted types.Resource} |
 
+### MsgUpdateResource
+
+| Type                                                 | Attribute Key | Attribute Value          |
+|------------------------------------------------------|---------------|--------------------------|
+| catenax.escbackbone.resourcesync.EventUpdateResource | creator       | {senderAddress}          |
+| catenax.escbackbone.resourcesync.EventUpdateResource | resource      | {updated types.Resource} |
 
 ## Keeper events
 
