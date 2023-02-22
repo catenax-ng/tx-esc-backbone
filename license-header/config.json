@@ -1,0 +1,66 @@
+{
+  "ignore": [
+    "docs/static/openapi.yml",
+    "docs/developer_docs/",
+    "testnet",
+    "go.mod",
+    "go.sum",
+    "**/*.lock",
+    "**/*.tpl",
+    "**/*.svg",
+    "**/robots.txt",
+    "license-header/*",
+    "3rd-party-licenses.txt",
+    ".idea/**",
+    "**/.gitignore",
+    "**/.gitinclude",
+    "**/.dockerignore",
+    "artifacts/cw_nameservice.wasm",
+    "build/mnemonic",
+    "NOTICE"
+  ],
+  "license": "license-header/license-header",
+  "regexIdentifier": "_!##",
+  "defaultFormat": {
+    "eachLine": {
+      "prepend": "# "
+    }
+  },
+  "licenseFormats": {
+    "go|ts|tsx": {
+      "eachLine": {
+        "prepend": "// "
+      }
+    },
+    "js|css|scss": {
+      "prepend": "/*",
+      "append": " */",
+      "eachLine": {
+        "prepend": " * "
+      }
+    },
+    "rst": {
+      "eachLine": {
+        "prepend": ".. "
+      }
+    },
+    "bat": {
+      "eachLine": {
+        "prepend": ":: "
+      }
+    },
+    "vue|html|xml|md|MD": {
+      "prepend": "<!--",
+      "append": "-->",
+      "eachLine": {
+        "prepend": " "
+      }
+    },
+    "gitignore|npmignore|eslintignore|dockerignore|sh|dotfile|^Dockerfile|^.env|npmrc": {
+      "eachLine": {
+        "prepend": "# "
+      }
+    }
+  },
+  "trailingWhitespace": "TRIM"
+}
