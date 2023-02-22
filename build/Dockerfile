@@ -22,6 +22,10 @@ RUN go mod download
 COPY cmd ./cmd
 COPY app ./app
 COPY docs ./docs
+COPY x ./x
+COPY testutil ./testutil
+COPY test ./test
+COPY proto ./proto
 COPY config.yml ./
 
 RUN ignite chain build
