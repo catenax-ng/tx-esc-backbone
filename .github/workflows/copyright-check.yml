@@ -28,9 +28,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: install-deno
-        run: curl -fsSL https://deno.land/x/install/install.sh | sh
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
       - name: run-checker
-        run: |
-          export PATH="/home/runner/.deno/bin:$PATH"
-          deno run --allow-read https://deno.land/x/license_checker@v3.2.2/main.ts
+        run: license-header/check.sh
