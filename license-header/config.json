@@ -27,7 +27,7 @@
     }
   },
   "licenseFormats": {
-    "go|ts|tsx": {
+    "go|ts|tsx|proto": {
       "eachLine": {
         "prepend": "// "
       }
