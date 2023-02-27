@@ -27,8 +27,10 @@ func networkWithResourceMapObjects(t *testing.T, n int) (*network.Network, []typ
 	state := types.GenesisState{}
 	for i := 0; i < n; i++ {
 		resourceMap := types.ResourceMap{
-			Originator: strconv.Itoa(i),
-			OrigResId:  strconv.Itoa(i),
+			Resource: types.Resource{
+				Originator: strconv.Itoa(i),
+				OrigResId:  strconv.Itoa(i),
+			},
 		}
 		nullify.Fill(&resourceMap)
 		state.ResourceMapList = append(state.ResourceMapList, resourceMap)

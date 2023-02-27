@@ -34898,6 +34898,317 @@ paths:
           format: int64
       tags:
         - Query
+  /catenax/esc-backbone/resourcesync/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: EscbackboneResourcesyncParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /catenax/esc-backbone/resourcesync/resource_map:
+    get:
+      operationId: EscbackboneResourcesyncResourceMapAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              resourceMap:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resource:
+                      type: object
+                      properties:
+                        originator:
+                          type: string
+                          title: issue of resource change
+                        origResId:
+                          type: string
+                          title: >-
+                            id of the resource by originator -  unique per
+                            originator
+                        targetSystem:
+                          type: string
+                          title: >-
+                            pointer to the system holding the information of the
+                            resource
+                        resourceKey:
+                          type: string
+                          title: Id of the resource to access it at the target system
+                        dataHash:
+                          type: string
+                          format: byte
+                          title: Hash of the resource
+                    auditLogs:
+                      type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - ACTION_NOT_SET
+                            - RESOURCE_CREATE
+                            - RESOURCE_UPDATE
+                            - RESOURCE_DELETE
+                          default: ACTION_NOT_SET
+                        signature:
+                          type: object
+                          properties:
+                            pubkey:
+                              type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    description: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently. It will be empty if
+                      there are no more results.
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  /catenax/esc-backbone/resourcesync/resource_map/{originator}/{origResId}:
+    get:
+      summary: Queries a list of ResourceMap items.
+      operationId: EscbackboneResourcesyncResourceMap
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              resourceMap:
+                type: object
+                properties:
+                  resource:
+                    type: object
+                    properties:
+                      originator:
+                        type: string
+                        title: issue of resource change
+                      origResId:
+                        type: string
+                        title: >-
+                          id of the resource by originator -  unique per
+                          originator
+                      targetSystem:
+                        type: string
+                        title: >-
+                          pointer to the system holding the information of the
+                          resource
+                      resourceKey:
+                        type: string
+                        title: Id of the resource to access it at the target system
+                      dataHash:
+                        type: string
+                        format: byte
+                        title: Hash of the resource
+                  auditLogs:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                          - ACTION_NOT_SET
+                          - RESOURCE_CREATE
+                          - RESOURCE_UPDATE
+                          - RESOURCE_DELETE
+                        default: ACTION_NOT_SET
+                      signature:
+                        type: object
+                        properties:
+                          pubkey:
+                            type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: originator
+          in: path
+          required: true
+          type: string
+        - name: origResId
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /catenax/esc-backbone/ubc/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: EscbackboneUbcParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /ibc/apps/interchain_accounts/controller/v1/owners/{owner}/connections/{connection_id}:
     get:
       summary: >-
@@ -70252,6 +70563,226 @@ definitions:
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
     description: Period defines a length of time and amount of coins that will vest.
+  escbackbone.resourcesync.ActionLog:
+    type: string
+    enum:
+      - ACTION_NOT_SET
+      - RESOURCE_CREATE
+      - RESOURCE_UPDATE
+      - RESOURCE_DELETE
+    default: ACTION_NOT_SET
+  escbackbone.resourcesync.Audit:
+    type: object
+    properties:
+      action:
+        type: string
+        enum:
+          - ACTION_NOT_SET
+          - RESOURCE_CREATE
+          - RESOURCE_UPDATE
+          - RESOURCE_DELETE
+        default: ACTION_NOT_SET
+      signature:
+        type: object
+        properties:
+          pubkey:
+            type: string
+  escbackbone.resourcesync.MsgCreateResourceResponse:
+    type: object
+  escbackbone.resourcesync.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  escbackbone.resourcesync.QueryAllResourceMapResponse:
+    type: object
+    properties:
+      resourceMap:
+        type: array
+        items:
+          type: object
+          properties:
+            resource:
+              type: object
+              properties:
+                originator:
+                  type: string
+                  title: issue of resource change
+                origResId:
+                  type: string
+                  title: id of the resource by originator -  unique per originator
+                targetSystem:
+                  type: string
+                  title: >-
+                    pointer to the system holding the information of the
+                    resource
+                resourceKey:
+                  type: string
+                  title: Id of the resource to access it at the target system
+                dataHash:
+                  type: string
+                  format: byte
+                  title: Hash of the resource
+            auditLogs:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - ACTION_NOT_SET
+                    - RESOURCE_CREATE
+                    - RESOURCE_UPDATE
+                    - RESOURCE_DELETE
+                  default: ACTION_NOT_SET
+                signature:
+                  type: object
+                  properties:
+                    pubkey:
+                      type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            description: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently. It will be empty if
+              there are no more results.
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  escbackbone.resourcesync.QueryGetResourceMapResponse:
+    type: object
+    properties:
+      resourceMap:
+        type: object
+        properties:
+          resource:
+            type: object
+            properties:
+              originator:
+                type: string
+                title: issue of resource change
+              origResId:
+                type: string
+                title: id of the resource by originator -  unique per originator
+              targetSystem:
+                type: string
+                title: pointer to the system holding the information of the resource
+              resourceKey:
+                type: string
+                title: Id of the resource to access it at the target system
+              dataHash:
+                type: string
+                format: byte
+                title: Hash of the resource
+          auditLogs:
+            type: object
+            properties:
+              action:
+                type: string
+                enum:
+                  - ACTION_NOT_SET
+                  - RESOURCE_CREATE
+                  - RESOURCE_UPDATE
+                  - RESOURCE_DELETE
+                default: ACTION_NOT_SET
+              signature:
+                type: object
+                properties:
+                  pubkey:
+                    type: string
+  escbackbone.resourcesync.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  escbackbone.resourcesync.Resource:
+    type: object
+    properties:
+      originator:
+        type: string
+        title: issue of resource change
+      origResId:
+        type: string
+        title: id of the resource by originator -  unique per originator
+      targetSystem:
+        type: string
+        title: pointer to the system holding the information of the resource
+      resourceKey:
+        type: string
+        title: Id of the resource to access it at the target system
+      dataHash:
+        type: string
+        format: byte
+        title: Hash of the resource
+  escbackbone.resourcesync.ResourceMap:
+    type: object
+    properties:
+      resource:
+        type: object
+        properties:
+          originator:
+            type: string
+            title: issue of resource change
+          origResId:
+            type: string
+            title: id of the resource by originator -  unique per originator
+          targetSystem:
+            type: string
+            title: pointer to the system holding the information of the resource
+          resourceKey:
+            type: string
+            title: Id of the resource to access it at the target system
+          dataHash:
+            type: string
+            format: byte
+            title: Hash of the resource
+      auditLogs:
+        type: object
+        properties:
+          action:
+            type: string
+            enum:
+              - ACTION_NOT_SET
+              - RESOURCE_CREATE
+              - RESOURCE_UPDATE
+              - RESOURCE_DELETE
+            default: ACTION_NOT_SET
+          signature:
+            type: object
+            properties:
+              pubkey:
+                type: string
+  escbackbone.resourcesync.Signature:
+    type: object
+    properties:
+      pubkey:
+        type: string
+  escbackbone.ubc.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  escbackbone.ubc.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
   ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse:
     type: object
     properties:

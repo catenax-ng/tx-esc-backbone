@@ -24,12 +24,24 @@ func TestGenesisState_Validate(t *testing.T) {
 
 				ResourceMapList: []types.ResourceMap{
 					{
-						Originator: "0",
-						OrigResId:  "0",
+						Resource: types.Resource{
+							Originator:   "0",
+							OrigResId:    "0",
+							TargetSystem: "0",
+							ResourceKey:  "0",
+							DataHash:     nil,
+						},
+						AuditLogs: nil,
 					},
 					{
-						Originator: "1",
-						OrigResId:  "1",
+						Resource: types.Resource{
+							Originator:   "1",
+							OrigResId:    "1",
+							TargetSystem: "1",
+							ResourceKey:  "1",
+							DataHash:     nil,
+						},
+						AuditLogs: nil,
 					},
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
@@ -41,12 +53,24 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 				ResourceMapList: []types.ResourceMap{
 					{
-						Originator: "0",
-						OrigResId:  "0",
+						Resource: types.Resource{
+							Originator:   "0",
+							OrigResId:    "0",
+							TargetSystem: "0",
+							ResourceKey:  "0",
+							DataHash:     nil,
+						},
+						AuditLogs: nil,
 					},
 					{
-						Originator: "0",
-						OrigResId:  "0",
+						Resource: types.Resource{
+							Originator:   "0",
+							OrigResId:    "0",
+							TargetSystem: "1",
+							ResourceKey:  "1",
+							DataHash:     nil,
+						},
+						AuditLogs: nil,
 					},
 				},
 			},

@@ -4,12 +4,11 @@ package escbackbone.resourcesync;
 option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 import "escbackbone/resourcesync/resource.proto"; 
 import "escbackbone/resourcesync/audit.proto"; 
+import "gogoproto/gogo.proto";
 
 message ResourceMap {
-  string originator = 1; 
-  string origResId = 2; 
-  Resource resource = 3; 
-  Audit auditLogs = 4; 
+  Resource resource = 1 [(gogoproto.nullable) = false,  (gogoproto.embed) = true];
+  Audit auditLogs = 2;
   
 }
 
