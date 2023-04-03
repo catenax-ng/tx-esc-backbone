@@ -21,3 +21,5 @@ DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-orchestra
 docker tag esc-backbone-orchestrator ghcr.io/catenax-ng/esc-backbone-orchestrator:latest
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  ssh-client -t ssh-client  -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
 docker tag ssh-client ghcr.io/catenax-ng/ssh-client:latest
+DOCKER_BUILDKIT=1 docker build --progress=plain --target  demo -t mid-term-demo  -f "${SCRIPT_LOCATION}/../web-mid-term-demo/build/Dockerfile" "${SCRIPT_LOCATION}/../web-mid-term-demo"
+docker tag mid-term-demo ghcr.io/catenax-ng/esc-mid-term-demo:latest
