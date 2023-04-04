@@ -36,17 +36,6 @@ func TestWrite(t *testing.T) {
 	var nodeID string
 	var refHost string
 
-	//  The http protocol.
-	httpProtocol := httpProtocol()
-	//  The tendermint GRPC server host name (Test node).
-	testHost := getTestHost()
-	//  The list of tendermint GRPC server host names (Reference node).
-	refHostsList := getRefHostsList()
-	//  The faccet server host name.
-	faucetHost := getFaucetHost()
-	//  The configuration of the Test node.
-	cfg := getTestNodeConfig()
-
 	//  Check Test node
 	t.Run("check_test_node", func(t *testing.T) {
 		nodeID, err = CheckTestNode(testHost)

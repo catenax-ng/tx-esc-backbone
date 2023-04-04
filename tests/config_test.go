@@ -18,39 +18,25 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 )
 
-// Get list of Reference node (GRPC server) host names.
-func getRefHostsList() []string {
+var (
+	refHostsList []string
+	cfg          map[string]string
+)
 
-	return []string{
+const (
+	testHost     = "validator1-csms-grpc.dev.demo.catena-x.net:443"
+	faucetHost   = "faucet-faucet.dev.demo.catena-x.net/"
+	httpProtocol = "https://"
+)
+
+func init() {
+	refHostsList = []string{
 		"validator2-csms-grpc.dev.demo.catena-x.net:443",
 		"validator3-csms-grpc.dev.demo.catena-x.net:443",
 		"validator4-csms-grpc.dev.demo.catena-x.net:443",
 	}
-}
 
-// Get the Test node (GRPC server) host name.
-func getTestHost() string {
-
-	return "validator1-csms-grpc.dev.demo.catena-x.net:443"
-}
-
-// Get the faucet host name.
-func getFaucetHost() string {
-
-	return "faucet-faucet.dev.demo.catena-x.net/"
-}
-
-// Get the http protocol.
-func httpProtocol() string {
-
-	return "https://"
-}
-
-// Get the Test node configurations.
-func getTestNodeConfig() map[string]string {
-
-	cfg := make(map[string]string)
-
+	cfg = make(map[string]string)
 	cfg["App"] = "/home/<user>/<golib>/bin/esc-backboned"
 	cfg["ValidatorAccount"] = "catenax105gtxtvscdywtzwcn46n60sfmkqwjy53078vum"
 	cfg["FromAccount"] = "catenax14r7fw8vl6tk9gf6a4km9ef9j5xycu6mzg4n0av"
@@ -63,6 +49,4 @@ func getTestNodeConfig() map[string]string {
 	cfg["Fee"] = "2000000"
 	cfg["GasLimit"] = "2000000"
 	cfg["KeyringBackend"] = keyring.BackendTest
-
-	return cfg
 }

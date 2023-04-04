@@ -34,11 +34,6 @@ func TestRead(t *testing.T) {
 	var nodeID string
 	var refHost string
 
-	//  The tendermint GRPC server host name (Test node).
-	testHost := getTestHost()
-	//  The list of tendermint GRPC server host names (Reference node).
-	refHostsList := getRefHostsList()
-
 	//  Check Test Node
 	t.Run("check_test_node", func(t *testing.T) {
 		nodeID, err = CheckTestNode(testHost)

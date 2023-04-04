@@ -35,11 +35,6 @@ func TestProposeBlock(t *testing.T) {
 	var txHash string
 	var txHeight int64
 
-	//  The tendermint GRPC server host name (Test node).
-	testHost := getTestHost()
-	//  The configuration of the Test node.
-	cfg := getTestNodeConfig()
-
 	//  Check Test node is a validator
 	t.Run("check_test_node_validator", func(t *testing.T) {
 		validator, accountAddr, numofValidators, err = ExistInValidatorSet(testHost, cfg["ValidatorAccount"])
