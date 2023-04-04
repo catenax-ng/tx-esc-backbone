@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - CGE-167-Complete_Resource_Sync_module
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
