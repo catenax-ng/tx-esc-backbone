@@ -15,6 +15,9 @@
 package txn_test
 
 import (
+	"os"
+	"path"
+
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 )
 
@@ -36,15 +39,20 @@ func init() {
 		"validator4-csms-grpc.dev.demo.catena-x.net:443",
 	}
 
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		os.Exit(-1)
+	}
+
 	cfg = make(map[string]string)
-	cfg["App"] = "/home/<user>/<golib>/bin/esc-backboned"
+	cfg["App"] = path.Join(homeDir, "go", "bin", "esc-backboned")
 	cfg["ValidatorAccount"] = "catenax105gtxtvscdywtzwcn46n60sfmkqwjy53078vum"
 	cfg["FromAccount"] = "catenax14r7fw8vl6tk9gf6a4km9ef9j5xycu6mzg4n0av"
 	cfg["ToAccount"] = "catenax192s9m0tjua7f9enwlklgwk5zu2t956zn89cvqv"
 	cfg["TxfAmount"] = "5"
 	cfg["TxfDenom"] = "ncaxdemo"
 	cfg["ChainID"] = "catenax-testnet-1"
-	cfg["HomeDir"] = "/home/<user>/.esc-backbone"
+	cfg["HomeDir"] = path.Join(homeDir, ".esc-backbone")
 	cfg["PassPhrase"] = "password"
 	cfg["Fee"] = "2000000"
 	cfg["GasLimit"] = "2000000"
