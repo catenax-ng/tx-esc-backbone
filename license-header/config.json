@@ -13,6 +13,7 @@
     "3rd-party-licenses.txt",
     ".idea/**",
     "**/.gitignore",
+    "**/node_modules",
     "**/.gitinclude",
     "**/.dockerignore",
     "artifacts/cw_nameservice.wasm",
