@@ -1,10 +1,12 @@
 syntax = "proto3";
 package escbackbone.ubc;
 
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Flatsegment {
   
-  string y = 1; 
-  string x0 = 2; 
+  string y = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string x0 = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
 }
