@@ -5,6 +5,8 @@ package types
 
 import (
 	fmt "fmt"
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
@@ -23,13 +25,13 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Segment struct {
-	P0     string `protobuf:"bytes,1,opt,name=p0,proto3" json:"p0,omitempty"`
-	A      string `protobuf:"bytes,2,opt,name=a,proto3" json:"a,omitempty"`
-	B      string `protobuf:"bytes,3,opt,name=b,proto3" json:"b,omitempty"`
-	P1     string `protobuf:"bytes,4,opt,name=p1,proto3" json:"p1,omitempty"`
-	P0X    string `protobuf:"bytes,5,opt,name=p0X,proto3" json:"p0X,omitempty"`
-	P1X    string `protobuf:"bytes,6,opt,name=p1X,proto3" json:"p1X,omitempty"`
-	DelatX string `protobuf:"bytes,7,opt,name=delatX,proto3" json:"delatX,omitempty"`
+	P0     *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=p0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p0,omitempty"`
+	A      *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a,omitempty"`
+	B      *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,3,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b,omitempty"`
+	P1     *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=p1,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p1,omitempty"`
+	P0X    *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,5,opt,name=p0X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p0X,omitempty"`
+	P1X    *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=p1X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p1X,omitempty"`
+	DelatX *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,7,opt,name=delatX,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"delatX,omitempty"`
 }
 
 func (m *Segment) Reset()         { *m = Segment{} }
@@ -65,55 +67,6 @@ func (m *Segment) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Segment proto.InternalMessageInfo
 
-func (m *Segment) GetP0() string {
-	if m != nil {
-		return m.P0
-	}
-	return ""
-}
-
-func (m *Segment) GetA() string {
-	if m != nil {
-		return m.A
-	}
-	return ""
-}
-
-func (m *Segment) GetB() string {
-	if m != nil {
-		return m.B
-	}
-	return ""
-}
-
-func (m *Segment) GetP1() string {
-	if m != nil {
-		return m.P1
-	}
-	return ""
-}
-
-func (m *Segment) GetP0X() string {
-	if m != nil {
-		return m.P0X
-	}
-	return ""
-}
-
-func (m *Segment) GetP1X() string {
-	if m != nil {
-		return m.P1X
-	}
-	return ""
-}
-
-func (m *Segment) GetDelatX() string {
-	if m != nil {
-		return m.DelatX
-	}
-	return ""
-}
-
 func init() {
 	proto.RegisterType((*Segment)(nil), "escbackbone.ubc.Segment")
 }
@@ -121,21 +74,24 @@ func init() {
 func init() { proto.RegisterFile("escbackbone/ubc/segment.proto", fileDescriptor_c7293bbfb2f004b1) }
 
 var fileDescriptor_c7293bbfb2f004b1 = []byte{
-	// 220 bytes of a gzipped FileDescriptorProto
+	// 264 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4d, 0x2d, 0x4e, 0x4e,
 	0x4a, 0x4c, 0xce, 0x4e, 0xca, 0xcf, 0x4b, 0xd5, 0x2f, 0x4d, 0x4a, 0xd6, 0x2f, 0x4e, 0x4d, 0xcf,
 	0x4d, 0xcd, 0x2b, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x47, 0x92, 0xd6, 0x2b, 0x4d,
-	0x4a, 0x56, 0x6a, 0x64, 0xe4, 0x62, 0x0f, 0x86, 0x28, 0x11, 0xe2, 0xe3, 0x62, 0x2a, 0x30, 0x90,
-	0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x62, 0x2a, 0x30, 0x10, 0xe2, 0xe1, 0x62, 0x4c, 0x94, 0x60,
-	0x02, 0x73, 0x19, 0x13, 0x41, 0xbc, 0x24, 0x09, 0x66, 0x08, 0x2f, 0x09, 0xac, 0xd6, 0x50, 0x82,
-	0x05, 0xaa, 0xd6, 0x50, 0x48, 0x80, 0x8b, 0xb9, 0xc0, 0x20, 0x42, 0x82, 0x15, 0x2c, 0x00, 0x62,
-	0x82, 0x45, 0x0c, 0x23, 0x24, 0xd8, 0xa0, 0x22, 0x86, 0x11, 0x42, 0x62, 0x5c, 0x6c, 0x29, 0xa9,
-	0x39, 0x89, 0x25, 0x11, 0x12, 0xec, 0x60, 0x41, 0x28, 0xcf, 0xc9, 0xf5, 0xc4, 0x23, 0x39, 0xc6,
-	0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39,
-	0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xb4, 0xd3, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4, 0x92, 0xf3,
-	0x73, 0xf5, 0x93, 0x13, 0x4b, 0x52, 0xf3, 0x12, 0x2b, 0xf4, 0x53, 0x8b, 0x93, 0x75, 0xe1, 0x3e,
-	0xac, 0x00, 0xfb, 0xb1, 0xa4, 0xb2, 0x20, 0xb5, 0x38, 0x89, 0x0d, 0xec, 0x45, 0x63, 0x40, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x31, 0xc3, 0x63, 0x17, 0x03, 0x01, 0x00, 0x00,
+	0x4a, 0x96, 0x12, 0x49, 0xcf, 0x4f, 0xcf, 0x07, 0xcb, 0xe9, 0x83, 0x58, 0x10, 0x65, 0x4a, 0x5b,
+	0x99, 0xb9, 0xd8, 0x83, 0x21, 0x1a, 0x85, 0xac, 0xb8, 0x98, 0x0a, 0x0c, 0x24, 0x18, 0x15, 0x18,
+	0x35, 0x38, 0x9d, 0xb4, 0x6e, 0xdd, 0x93, 0x57, 0x4b, 0xcf, 0x2c, 0xc9, 0x28, 0x4d, 0xd2, 0x4b,
+	0xce, 0xcf, 0xd5, 0x4f, 0xce, 0x2f, 0xce, 0xcd, 0x2f, 0x86, 0x52, 0xba, 0xc5, 0x29, 0xd9, 0xfa,
+	0x25, 0x95, 0x05, 0xa9, 0xc5, 0x7a, 0x2e, 0xa9, 0xc9, 0x41, 0x4c, 0x05, 0x06, 0x42, 0x16, 0x5c,
+	0x8c, 0x89, 0x12, 0x4c, 0x24, 0x6b, 0x65, 0x4c, 0x04, 0xe9, 0x4c, 0x92, 0x60, 0x26, 0x5d, 0x67,
+	0x12, 0xd8, 0xbd, 0x86, 0x12, 0x2c, 0x64, 0xb8, 0xd7, 0x50, 0xc8, 0x86, 0x8b, 0xb9, 0xc0, 0x20,
+	0x42, 0x82, 0x95, 0x64, 0xcd, 0x20, 0x6d, 0x60, 0xdd, 0x86, 0x11, 0x12, 0x6c, 0x64, 0xe8, 0x36,
+	0x8c, 0x10, 0x72, 0xe2, 0x62, 0x4b, 0x49, 0xcd, 0x49, 0x2c, 0x89, 0x90, 0x60, 0x27, 0xd9, 0x00,
+	0xa8, 0x4e, 0x27, 0xd7, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e,
+	0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0xd2, 0x46,
+	0x36, 0x29, 0xb1, 0x24, 0x35, 0x2f, 0xb1, 0x42, 0x3f, 0xb5, 0x38, 0x59, 0x17, 0x9e, 0x56, 0x2a,
+	0xc0, 0xa9, 0x05, 0x6c, 0x64, 0x12, 0x1b, 0x38, 0x15, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff,
+	0xbe, 0x44, 0xaa, 0x8c, 0x4d, 0x02, 0x00, 0x00,
 }
 
 func (m *Segment) Marshal() (dAtA []byte, err error) {
@@ -158,52 +114,87 @@ func (m *Segment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.DelatX) > 0 {
-		i -= len(m.DelatX)
-		copy(dAtA[i:], m.DelatX)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.DelatX)))
+	if m.DelatX != nil {
+		{
+			size := m.DelatX.Size()
+			i -= size
+			if _, err := m.DelatX.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x3a
 	}
-	if len(m.P1X) > 0 {
-		i -= len(m.P1X)
-		copy(dAtA[i:], m.P1X)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.P1X)))
+	if m.P1X != nil {
+		{
+			size := m.P1X.Size()
+			i -= size
+			if _, err := m.P1X.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x32
 	}
-	if len(m.P0X) > 0 {
-		i -= len(m.P0X)
-		copy(dAtA[i:], m.P0X)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.P0X)))
+	if m.P0X != nil {
+		{
+			size := m.P0X.Size()
+			i -= size
+			if _, err := m.P0X.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x2a
 	}
-	if len(m.P1) > 0 {
-		i -= len(m.P1)
-		copy(dAtA[i:], m.P1)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.P1)))
+	if m.P1 != nil {
+		{
+			size := m.P1.Size()
+			i -= size
+			if _, err := m.P1.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.B) > 0 {
-		i -= len(m.B)
-		copy(dAtA[i:], m.B)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.B)))
+	if m.B != nil {
+		{
+			size := m.B.Size()
+			i -= size
+			if _, err := m.B.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.A) > 0 {
-		i -= len(m.A)
-		copy(dAtA[i:], m.A)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.A)))
+	if m.A != nil {
+		{
+			size := m.A.Size()
+			i -= size
+			if _, err := m.A.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.P0) > 0 {
-		i -= len(m.P0)
-		copy(dAtA[i:], m.P0)
-		i = encodeVarintSegment(dAtA, i, uint64(len(m.P0)))
+	if m.P0 != nil {
+		{
+			size := m.P0.Size()
+			i -= size
+			if _, err := m.P0.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintSegment(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0xa
 	}
@@ -227,32 +218,32 @@ func (m *Segment) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.P0)
-	if l > 0 {
+	if m.P0 != nil {
+		l = m.P0.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.A)
-	if l > 0 {
+	if m.A != nil {
+		l = m.A.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.B)
-	if l > 0 {
+	if m.B != nil {
+		l = m.B.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.P1)
-	if l > 0 {
+	if m.P1 != nil {
+		l = m.P1.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.P0X)
-	if l > 0 {
+	if m.P0X != nil {
+		l = m.P0X.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.P1X)
-	if l > 0 {
+	if m.P1X != nil {
+		l = m.P1X.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
-	l = len(m.DelatX)
-	if l > 0 {
+	if m.DelatX != nil {
+		l = m.DelatX.Size()
 		n += 1 + l + sovSegment(uint64(l))
 	}
 	return n
@@ -323,7 +314,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.P0 = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.P0 = &v
+			if err := m.P0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -355,7 +350,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.A = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.A = &v
+			if err := m.A.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -387,7 +386,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.B = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.B = &v
+			if err := m.B.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -419,7 +422,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.P1 = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.P1 = &v
+			if err := m.P1.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -451,7 +458,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.P0X = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.P0X = &v
+			if err := m.P0X.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -483,7 +494,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.P1X = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.P1X = &v
+			if err := m.P1X.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -515,7 +530,11 @@ func (m *Segment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DelatX = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.DelatX = &v
+			if err := m.DelatX.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
