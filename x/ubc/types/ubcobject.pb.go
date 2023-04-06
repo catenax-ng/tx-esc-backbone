@@ -5,6 +5,8 @@ package types
 
 import (
 	fmt "fmt"
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
@@ -23,21 +25,21 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Ubcobject struct {
-	FS0             string `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
-	S0              string `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
-	S1              string `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
-	S2              string `protobuf:"bytes,4,opt,name=s2,proto3" json:"s2,omitempty"`
-	QS3             string `protobuf:"bytes,5,opt,name=qS3,proto3" json:"qS3,omitempty"`
-	RefProfitFactor string `protobuf:"bytes,6,opt,name=refProfitFactor,proto3" json:"refProfitFactor,omitempty"`
-	RefTokenSupply  string `protobuf:"bytes,7,opt,name=refTokenSupply,proto3" json:"refTokenSupply,omitempty"`
-	RefTokenPrice   string `protobuf:"bytes,8,opt,name=refTokenPrice,proto3" json:"refTokenPrice,omitempty"`
-	BPool           string `protobuf:"bytes,9,opt,name=bPool,proto3" json:"bPool,omitempty"`
-	FactorFy        string `protobuf:"bytes,10,opt,name=factorFy,proto3" json:"factorFy,omitempty"`
-	FactorFxy       string `protobuf:"bytes,11,opt,name=factorFxy,proto3" json:"factorFxy,omitempty"`
-	TradingPoint    string `protobuf:"bytes,12,opt,name=tradingPoint,proto3" json:"tradingPoint,omitempty"`
-	CurrentSupply   string `protobuf:"bytes,13,opt,name=currentSupply,proto3" json:"currentSupply,omitempty"`
-	SlopeP2         string `protobuf:"bytes,14,opt,name=slopeP2,proto3" json:"slopeP2,omitempty"`
-	SlopeP3         string `protobuf:"bytes,15,opt,name=slopeP3,proto3" json:"slopeP3,omitempty"`
+	FS0             *Flatsegment                            `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
+	S0              *Segment                                `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
+	S1              *Segment                                `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
+	S2              *Fixedsegment                           `protobuf:"bytes,4,opt,name=s2,proto3" json:"s2,omitempty"`
+	QS3             *Quadraticsegment                       `protobuf:"bytes,5,opt,name=qS3,proto3" json:"qS3,omitempty"`
+	RefProfitFactor *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=refProfitFactor,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refProfitFactor,omitempty"`
+	RefTokenSupply  *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,7,opt,name=refTokenSupply,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refTokenSupply,omitempty"`
+	RefTokenPrice   *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,8,opt,name=refTokenPrice,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refTokenPrice,omitempty"`
+	BPool           *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,9,opt,name=bPool,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"bPool,omitempty"`
+	FactorFy        *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,10,opt,name=factorFy,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"factorFy,omitempty"`
+	FactorFxy       *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,11,opt,name=factorFxy,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"factorFxy,omitempty"`
+	TradingPoint    *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,12,opt,name=tradingPoint,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"tradingPoint,omitempty"`
+	CurrentSupply   *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,13,opt,name=currentSupply,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"currentSupply,omitempty"`
+	SlopeP2         *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,14,opt,name=slopeP2,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"slopeP2,omitempty"`
+	SlopeP3         *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,15,opt,name=slopeP3,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"slopeP3,omitempty"`
 }
 
 func (m *Ubcobject) Reset()         { *m = Ubcobject{} }
@@ -73,109 +75,39 @@ func (m *Ubcobject) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Ubcobject proto.InternalMessageInfo
 
-func (m *Ubcobject) GetFS0() string {
+func (m *Ubcobject) GetFS0() *Flatsegment {
 	if m != nil {
 		return m.FS0
 	}
-	return ""
+	return nil
 }
 
-func (m *Ubcobject) GetS0() string {
+func (m *Ubcobject) GetS0() *Segment {
 	if m != nil {
 		return m.S0
 	}
-	return ""
+	return nil
 }
 
-func (m *Ubcobject) GetS1() string {
+func (m *Ubcobject) GetS1() *Segment {
 	if m != nil {
 		return m.S1
 	}
-	return ""
+	return nil
 }
 
-func (m *Ubcobject) GetS2() string {
+func (m *Ubcobject) GetS2() *Fixedsegment {
 	if m != nil {
 		return m.S2
 	}
-	return ""
+	return nil
 }
 
-func (m *Ubcobject) GetQS3() string {
+func (m *Ubcobject) GetQS3() *Quadraticsegment {
 	if m != nil {
 		return m.QS3
 	}
-	return ""
-}
-
-func (m *Ubcobject) GetRefProfitFactor() string {
-	if m != nil {
-		return m.RefProfitFactor
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetRefTokenSupply() string {
-	if m != nil {
-		return m.RefTokenSupply
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetRefTokenPrice() string {
-	if m != nil {
-		return m.RefTokenPrice
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetBPool() string {
-	if m != nil {
-		return m.BPool
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetFactorFy() string {
-	if m != nil {
-		return m.FactorFy
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetFactorFxy() string {
-	if m != nil {
-		return m.FactorFxy
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetTradingPoint() string {
-	if m != nil {
-		return m.TradingPoint
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetCurrentSupply() string {
-	if m != nil {
-		return m.CurrentSupply
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetSlopeP2() string {
-	if m != nil {
-		return m.SlopeP2
-	}
-	return ""
-}
-
-func (m *Ubcobject) GetSlopeP3() string {
-	if m != nil {
-		return m.SlopeP3
-	}
-	return ""
+	return nil
 }
 
 func init() {
@@ -185,29 +117,37 @@ func init() {
 func init() { proto.RegisterFile("escbackbone/ubc/ubcobject.proto", fileDescriptor_0c3b77eaec928d1f) }
 
 var fileDescriptor_0c3b77eaec928d1f = []byte{
-	// 351 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x92, 0xcb, 0x4a, 0xeb, 0x40,
-	0x18, 0xc7, 0x9b, 0xf6, 0xf4, 0x92, 0x39, 0xbd, 0x1c, 0x86, 0xb3, 0xf8, 0x10, 0x89, 0x52, 0x44,
-	0x0a, 0x62, 0x6f, 0x79, 0x03, 0xc1, 0xae, 0x83, 0xd1, 0x8d, 0xbb, 0xcc, 0x38, 0xa9, 0xb1, 0x35,
-	0x93, 0x4e, 0x26, 0xd0, 0xbc, 0x85, 0x2f, 0xe1, 0xbb, 0xb8, 0xec, 0xd2, 0xa5, 0xb4, 0x2f, 0x22,
-	0xf9, 0x92, 0x5e, 0x17, 0x81, 0xf9, 0xff, 0x7e, 0x7f, 0x26, 0xdf, 0xc0, 0x47, 0x2e, 0x44, 0xcc,
-	0x99, 0xc7, 0x67, 0x4c, 0x86, 0x62, 0x90, 0x30, 0x9e, 0x7d, 0x92, 0xbd, 0x09, 0xae, 0xfb, 0x91,
-	0x92, 0x5a, 0xd2, 0xce, 0x41, 0xa1, 0x9f, 0x30, 0xde, 0xfd, 0xac, 0x10, 0xf3, 0x69, 0x5b, 0xa2,
-	0xff, 0x48, 0xc5, 0x77, 0x87, 0x60, 0x5c, 0x1a, 0x3d, 0xf3, 0x21, 0x3b, 0xd2, 0x36, 0x29, 0xc7,
-	0x43, 0x28, 0x23, 0x28, 0xc7, 0x79, 0x1e, 0x41, 0xa5, 0xc8, 0x23, 0xcc, 0x63, 0xf8, 0x53, 0xe4,
-	0x71, 0x76, 0xc3, 0xc2, 0xb5, 0xa1, 0x9a, 0xdf, 0xb0, 0x70, 0x6d, 0xda, 0x23, 0x1d, 0x25, 0x7c,
-	0x47, 0x49, 0x3f, 0xd0, 0x13, 0x8f, 0x6b, 0xa9, 0xa0, 0x86, 0xf6, 0x14, 0xd3, 0x6b, 0xd2, 0x56,
-	0xc2, 0x7f, 0x94, 0x33, 0x11, 0xba, 0x49, 0x14, 0xcd, 0x53, 0xa8, 0x63, 0xf1, 0x84, 0xd2, 0x2b,
-	0xd2, 0xda, 0x12, 0x47, 0x05, 0x5c, 0x40, 0x03, 0x6b, 0xc7, 0x90, 0xfe, 0x27, 0x55, 0xe6, 0x48,
-	0x39, 0x07, 0x13, 0x6d, 0x1e, 0xe8, 0x19, 0x69, 0xf8, 0xf8, 0xb7, 0x49, 0x0a, 0x04, 0xc5, 0x2e,
-	0xd3, 0x73, 0x62, 0x16, 0xe7, 0x65, 0x0a, 0x7f, 0x51, 0xee, 0x01, 0xed, 0x92, 0xa6, 0x56, 0xde,
-	0x4b, 0x10, 0x4e, 0x1d, 0x19, 0x84, 0x1a, 0x9a, 0x58, 0x38, 0x62, 0xd9, 0x64, 0x3c, 0x51, 0x4a,
-	0x84, 0xba, 0x78, 0x40, 0x2b, 0x9f, 0xec, 0x08, 0x52, 0x20, 0xf5, 0x78, 0x2e, 0x23, 0xe1, 0x8c,
-	0xa1, 0x8d, 0x7e, 0x1b, 0xf7, 0xc6, 0x86, 0xce, 0xa1, 0xb1, 0xef, 0xee, 0xbf, 0xd6, 0x96, 0xb1,
-	0x5a, 0x5b, 0xc6, 0xcf, 0xda, 0x32, 0x3e, 0x36, 0x56, 0x69, 0xb5, 0xb1, 0x4a, 0xdf, 0x1b, 0xab,
-	0xf4, 0x7c, 0x33, 0x0d, 0xf4, 0x6b, 0xc2, 0xfa, 0x5c, 0xbe, 0x0f, 0xb8, 0xa7, 0x45, 0xe8, 0x2d,
-	0x07, 0x22, 0xe6, 0xb7, 0xbb, 0x3d, 0x58, 0xe2, 0x26, 0xe8, 0x34, 0x12, 0x31, 0xab, 0xe1, 0x1a,
-	0xd8, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x31, 0x82, 0x9b, 0x46, 0x29, 0x02, 0x00, 0x00,
+	// 474 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x94, 0xcd, 0x6e, 0x9b, 0x40,
+	0x10, 0xc7, 0x0d, 0x6e, 0xe2, 0x78, 0xf3, 0x61, 0x69, 0xd5, 0xc3, 0x2a, 0x6a, 0xc8, 0xc7, 0x21,
+	0xb2, 0x5a, 0x19, 0x12, 0xf3, 0x02, 0x55, 0x94, 0x5a, 0x3d, 0x55, 0x14, 0xa7, 0x97, 0xde, 0x60,
+	0x3d, 0x50, 0x6a, 0x9b, 0x21, 0xbb, 0x8b, 0x64, 0xbf, 0x45, 0x1f, 0xab, 0xc7, 0x1c, 0xab, 0x1e,
+	0xaa, 0xca, 0x7e, 0x82, 0xbe, 0x41, 0x05, 0xc6, 0xb1, 0xc1, 0x87, 0x8a, 0x1e, 0x10, 0xa3, 0xe5,
+	0xf7, 0xff, 0xc1, 0x0c, 0xd2, 0x90, 0x73, 0x90, 0xdc, 0xf7, 0xf8, 0xd8, 0xc7, 0x18, 0xac, 0xd4,
+	0xe7, 0xd9, 0x85, 0xfe, 0x57, 0xe0, 0xca, 0x4c, 0x04, 0x2a, 0xa4, 0x9d, 0x2d, 0xc0, 0x4c, 0x7d,
+	0x7e, 0x7a, 0x56, 0x4d, 0x48, 0x08, 0xa7, 0x10, 0x17, 0xfc, 0xe9, 0x75, 0xf5, 0xf1, 0x63, 0xea,
+	0x8d, 0x84, 0xa7, 0x22, 0x5e, 0xe6, 0x2e, 0xab, 0x5c, 0x30, 0xf1, 0x54, 0x19, 0xb9, 0xda, 0x41,
+	0xa2, 0x19, 0x8c, 0xca, 0xcc, 0xcb, 0x10, 0x43, 0xcc, 0x4b, 0x2b, 0xab, 0x56, 0xa7, 0x57, 0x7f,
+	0x5a, 0xa4, 0xfd, 0x69, 0xdd, 0x08, 0x35, 0x49, 0x33, 0x18, 0xde, 0x30, 0xed, 0x42, 0xeb, 0x1e,
+	0xf6, 0x5f, 0x99, 0x95, 0x86, 0xcc, 0xc1, 0xe6, 0xc5, 0x6e, 0x06, 0xd2, 0x2e, 0xd1, 0xe5, 0x0d,
+	0xd3, 0x73, 0x9c, 0xed, 0xe0, 0xc3, 0x02, 0xd5, 0xe5, 0x8a, 0xbc, 0x65, 0xcd, 0x7f, 0x92, 0xb7,
+	0xb4, 0x47, 0x74, 0xd9, 0x67, 0x2f, 0x72, 0xf2, 0x6c, 0xf7, 0x13, 0xb6, 0x1a, 0x73, 0x75, 0xd9,
+	0xa7, 0x36, 0x69, 0x3e, 0x0e, 0x6d, 0xb6, 0x97, 0xf3, 0x97, 0x3b, 0xfc, 0xc7, 0xca, 0x4c, 0xdd,
+	0x8c, 0xa6, 0x0f, 0xa4, 0x23, 0x20, 0x70, 0x04, 0x06, 0x91, 0x1a, 0x78, 0x5c, 0xa1, 0x60, 0xfb,
+	0x17, 0x5a, 0xb7, 0x7d, 0xf7, 0xfa, 0xe7, 0xaf, 0xf3, 0xeb, 0x30, 0x52, 0x5f, 0x52, 0xdf, 0xe4,
+	0x38, 0xb5, 0x38, 0xca, 0x29, 0xca, 0xe2, 0xd6, 0x93, 0xa3, 0xb1, 0xa5, 0xe6, 0x09, 0x48, 0xf3,
+	0x1e, 0xb8, 0x5b, 0x55, 0x50, 0x97, 0x9c, 0x08, 0x08, 0x1e, 0x70, 0x0c, 0xf1, 0x30, 0x4d, 0x92,
+	0xc9, 0x9c, 0xb5, 0x6a, 0x4b, 0x2b, 0x06, 0xea, 0x90, 0xe3, 0xf5, 0x89, 0x23, 0x22, 0x0e, 0xec,
+	0xa0, 0xb6, 0xb2, 0x2c, 0xa0, 0x6f, 0xc9, 0x9e, 0xef, 0x20, 0x4e, 0x58, 0xbb, 0xb6, 0x69, 0x15,
+	0xa4, 0x03, 0x72, 0x10, 0xe4, 0x1d, 0x0f, 0xe6, 0x8c, 0xd4, 0x96, 0x3c, 0x67, 0xe9, 0x7b, 0xd2,
+	0x2e, 0xea, 0xd9, 0x9c, 0x1d, 0xd6, 0x16, 0x6d, 0xc2, 0xf4, 0x03, 0x39, 0x52, 0xc2, 0x1b, 0x45,
+	0x71, 0xe8, 0x60, 0x14, 0x2b, 0x76, 0x54, 0x5b, 0x56, 0xca, 0x67, 0x53, 0xe7, 0xa9, 0x10, 0x10,
+	0xab, 0xe2, 0x47, 0x1e, 0xd7, 0x9f, 0x7a, 0x49, 0x40, 0xef, 0x49, 0x4b, 0x4e, 0x30, 0x01, 0xa7,
+	0xcf, 0x4e, 0x6a, 0xbb, 0xd6, 0xd1, 0x8d, 0xc5, 0x66, 0x9d, 0xff, 0xb5, 0xd8, 0x77, 0xef, 0xbe,
+	0x2f, 0x0c, 0xed, 0x69, 0x61, 0x68, 0xbf, 0x17, 0x86, 0xf6, 0x6d, 0x69, 0x34, 0x9e, 0x96, 0x46,
+	0xe3, 0xc7, 0xd2, 0x68, 0x7c, 0x7e, 0xb3, 0xad, 0xf2, 0x14, 0xc4, 0xde, 0xcc, 0x02, 0xc9, 0x7b,
+	0xcf, 0xbb, 0x65, 0x96, 0x6f, 0x97, 0xdc, 0xe9, 0xef, 0xe7, 0x1b, 0xc4, 0xfe, 0x1b, 0x00, 0x00,
+	0xff, 0xff, 0x03, 0xab, 0x02, 0x06, 0x19, 0x05, 0x00, 0x00,
 }
 
 func (m *Ubcobject) Marshal() (dAtA []byte, err error) {
@@ -230,108 +170,183 @@ func (m *Ubcobject) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.SlopeP3) > 0 {
-		i -= len(m.SlopeP3)
-		copy(dAtA[i:], m.SlopeP3)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.SlopeP3)))
+	if m.SlopeP3 != nil {
+		{
+			size := m.SlopeP3.Size()
+			i -= size
+			if _, err := m.SlopeP3.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x7a
 	}
-	if len(m.SlopeP2) > 0 {
-		i -= len(m.SlopeP2)
-		copy(dAtA[i:], m.SlopeP2)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.SlopeP2)))
+	if m.SlopeP2 != nil {
+		{
+			size := m.SlopeP2.Size()
+			i -= size
+			if _, err := m.SlopeP2.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x72
 	}
-	if len(m.CurrentSupply) > 0 {
-		i -= len(m.CurrentSupply)
-		copy(dAtA[i:], m.CurrentSupply)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.CurrentSupply)))
+	if m.CurrentSupply != nil {
+		{
+			size := m.CurrentSupply.Size()
+			i -= size
+			if _, err := m.CurrentSupply.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x6a
 	}
-	if len(m.TradingPoint) > 0 {
-		i -= len(m.TradingPoint)
-		copy(dAtA[i:], m.TradingPoint)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.TradingPoint)))
+	if m.TradingPoint != nil {
+		{
+			size := m.TradingPoint.Size()
+			i -= size
+			if _, err := m.TradingPoint.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x62
 	}
-	if len(m.FactorFxy) > 0 {
-		i -= len(m.FactorFxy)
-		copy(dAtA[i:], m.FactorFxy)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.FactorFxy)))
+	if m.FactorFxy != nil {
+		{
+			size := m.FactorFxy.Size()
+			i -= size
+			if _, err := m.FactorFxy.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x5a
 	}
-	if len(m.FactorFy) > 0 {
-		i -= len(m.FactorFy)
-		copy(dAtA[i:], m.FactorFy)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.FactorFy)))
+	if m.FactorFy != nil {
+		{
+			size := m.FactorFy.Size()
+			i -= size
+			if _, err := m.FactorFy.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x52
 	}
-	if len(m.BPool) > 0 {
-		i -= len(m.BPool)
-		copy(dAtA[i:], m.BPool)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.BPool)))
+	if m.BPool != nil {
+		{
+			size := m.BPool.Size()
+			i -= size
+			if _, err := m.BPool.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x4a
 	}
-	if len(m.RefTokenPrice) > 0 {
-		i -= len(m.RefTokenPrice)
-		copy(dAtA[i:], m.RefTokenPrice)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.RefTokenPrice)))
+	if m.RefTokenPrice != nil {
+		{
+			size := m.RefTokenPrice.Size()
+			i -= size
+			if _, err := m.RefTokenPrice.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x42
 	}
-	if len(m.RefTokenSupply) > 0 {
-		i -= len(m.RefTokenSupply)
-		copy(dAtA[i:], m.RefTokenSupply)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.RefTokenSupply)))
+	if m.RefTokenSupply != nil {
+		{
+			size := m.RefTokenSupply.Size()
+			i -= size
+			if _, err := m.RefTokenSupply.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x3a
 	}
-	if len(m.RefProfitFactor) > 0 {
-		i -= len(m.RefProfitFactor)
-		copy(dAtA[i:], m.RefProfitFactor)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.RefProfitFactor)))
+	if m.RefProfitFactor != nil {
+		{
+			size := m.RefProfitFactor.Size()
+			i -= size
+			if _, err := m.RefProfitFactor.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x32
 	}
-	if len(m.QS3) > 0 {
-		i -= len(m.QS3)
-		copy(dAtA[i:], m.QS3)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.QS3)))
+	if m.QS3 != nil {
+		{
+			size, err := m.QS3.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x2a
 	}
-	if len(m.S2) > 0 {
-		i -= len(m.S2)
-		copy(dAtA[i:], m.S2)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.S2)))
+	if m.S2 != nil {
+		{
+			size, err := m.S2.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.S1) > 0 {
-		i -= len(m.S1)
-		copy(dAtA[i:], m.S1)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.S1)))
+	if m.S1 != nil {
+		{
+			size, err := m.S1.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x1a
 	}
-	if len(m.S0) > 0 {
-		i -= len(m.S0)
-		copy(dAtA[i:], m.S0)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.S0)))
+	if m.S0 != nil {
+		{
+			size, err := m.S0.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.FS0) > 0 {
-		i -= len(m.FS0)
-		copy(dAtA[i:], m.FS0)
-		i = encodeVarintUbcobject(dAtA, i, uint64(len(m.FS0)))
+	if m.FS0 != nil {
+		{
+			size, err := m.FS0.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintUbcobject(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0xa
 	}
@@ -355,64 +370,64 @@ func (m *Ubcobject) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.FS0)
-	if l > 0 {
+	if m.FS0 != nil {
+		l = m.FS0.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.S0)
-	if l > 0 {
+	if m.S0 != nil {
+		l = m.S0.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.S1)
-	if l > 0 {
+	if m.S1 != nil {
+		l = m.S1.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.S2)
-	if l > 0 {
+	if m.S2 != nil {
+		l = m.S2.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.QS3)
-	if l > 0 {
+	if m.QS3 != nil {
+		l = m.QS3.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.RefProfitFactor)
-	if l > 0 {
+	if m.RefProfitFactor != nil {
+		l = m.RefProfitFactor.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.RefTokenSupply)
-	if l > 0 {
+	if m.RefTokenSupply != nil {
+		l = m.RefTokenSupply.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.RefTokenPrice)
-	if l > 0 {
+	if m.RefTokenPrice != nil {
+		l = m.RefTokenPrice.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.BPool)
-	if l > 0 {
+	if m.BPool != nil {
+		l = m.BPool.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.FactorFy)
-	if l > 0 {
+	if m.FactorFy != nil {
+		l = m.FactorFy.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.FactorFxy)
-	if l > 0 {
+	if m.FactorFxy != nil {
+		l = m.FactorFxy.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.TradingPoint)
-	if l > 0 {
+	if m.TradingPoint != nil {
+		l = m.TradingPoint.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.CurrentSupply)
-	if l > 0 {
+	if m.CurrentSupply != nil {
+		l = m.CurrentSupply.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.SlopeP2)
-	if l > 0 {
+	if m.SlopeP2 != nil {
+		l = m.SlopeP2.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
-	l = len(m.SlopeP3)
-	if l > 0 {
+	if m.SlopeP3 != nil {
+		l = m.SlopeP3.Size()
 		n += 1 + l + sovUbcobject(uint64(l))
 	}
 	return n
@@ -457,7 +472,7 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FS0", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUbcobject
@@ -467,29 +482,33 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthUbcobject
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthUbcobject
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.FS0 = string(dAtA[iNdEx:postIndex])
+			if m.FS0 == nil {
+				m.FS0 = &Flatsegment{}
+			}
+			if err := m.FS0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S0", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUbcobject
@@ -499,29 +518,33 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthUbcobject
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthUbcobject
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.S0 = string(dAtA[iNdEx:postIndex])
+			if m.S0 == nil {
+				m.S0 = &Segment{}
+			}
+			if err := m.S0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S1", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUbcobject
@@ -531,29 +554,33 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthUbcobject
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthUbcobject
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.S1 = string(dAtA[iNdEx:postIndex])
+			if m.S1 == nil {
+				m.S1 = &Segment{}
+			}
+			if err := m.S1.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field S2", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUbcobject
@@ -563,29 +590,33 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthUbcobject
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthUbcobject
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.S2 = string(dAtA[iNdEx:postIndex])
+			if m.S2 == nil {
+				m.S2 = &Fixedsegment{}
+			}
+			if err := m.S2.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field QS3", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowUbcobject
@@ -595,23 +626,27 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthUbcobject
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthUbcobject
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.QS3 = string(dAtA[iNdEx:postIndex])
+			if m.QS3 == nil {
+				m.QS3 = &Quadraticsegment{}
+			}
+			if err := m.QS3.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -643,7 +678,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RefProfitFactor = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.RefProfitFactor = &v
+			if err := m.RefProfitFactor.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -675,7 +714,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RefTokenSupply = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.RefTokenSupply = &v
+			if err := m.RefTokenSupply.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
@@ -707,7 +750,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RefTokenPrice = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.RefTokenPrice = &v
+			if err := m.RefTokenPrice.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 9:
 			if wireType != 2 {
@@ -739,7 +786,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.BPool = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.BPool = &v
+			if err := m.BPool.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 10:
 			if wireType != 2 {
@@ -771,7 +822,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.FactorFy = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.FactorFy = &v
+			if err := m.FactorFy.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 11:
 			if wireType != 2 {
@@ -803,7 +858,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.FactorFxy = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.FactorFxy = &v
+			if err := m.FactorFxy.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 12:
 			if wireType != 2 {
@@ -835,7 +894,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.TradingPoint = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.TradingPoint = &v
+			if err := m.TradingPoint.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 13:
 			if wireType != 2 {
@@ -867,7 +930,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.CurrentSupply = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.CurrentSupply = &v
+			if err := m.CurrentSupply.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 14:
 			if wireType != 2 {
@@ -899,7 +966,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SlopeP2 = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.SlopeP2 = &v
+			if err := m.SlopeP2.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 15:
 			if wireType != 2 {
@@ -931,7 +1002,11 @@ func (m *Ubcobject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SlopeP3 = string(dAtA[iNdEx:postIndex])
+			var v github_com_cosmos_cosmos_sdk_types.Dec
+			m.SlopeP3 = &v
+			if err := m.SlopeP3.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

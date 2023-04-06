@@ -1,23 +1,29 @@
 syntax = "proto3";
 package escbackbone.ubc;
 
+import "escbackbone/ubc/segment.proto";
+import "escbackbone/ubc/quadraticsegment.proto";
+import "escbackbone/ubc/flatsegment.proto";
+import "escbackbone/ubc/fixedsegment.proto";
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Ubcobject {
   
-  string fS0 = 1; 
-  string s0 = 2; 
-  string s1 = 3; 
-  string s2 = 4; 
-  string qS3 = 5; 
-  string refProfitFactor = 6; 
-  string refTokenSupply = 7; 
-  string refTokenPrice = 8; 
-  string bPool = 9; 
-  string factorFy = 10; 
-  string factorFxy = 11; 
-  string tradingPoint = 12; 
-  string currentSupply = 13; 
-  string slopeP2 = 14; 
-  string slopeP3 = 15; 
+  Flatsegment fS0 = 1;
+  Segment s0 = 2;
+  Segment s1 = 3;
+  Fixedsegment s2 = 4;
+  Quadraticsegment qS3 = 5;
+  string refProfitFactor = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string refTokenSupply = 7 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string refTokenPrice = 8 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string bPool = 9 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string factorFy = 10 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string factorFxy = 11 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string tradingPoint = 12 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string currentSupply = 13 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string slopeP2 = 14 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string slopeP3 = 15 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
 }
