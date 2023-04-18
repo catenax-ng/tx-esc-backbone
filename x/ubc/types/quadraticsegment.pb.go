@@ -30,12 +30,12 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Quadraticsegment struct {
-	A             *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a,omitempty"`
-	B             *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b,omitempty"`
-	C             *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,3,opt,name=c,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"c,omitempty"`
-	ScalingFactor *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=scalingFactor,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"scalingFactor,omitempty"`
-	InitialX0     *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,5,opt,name=initialX0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"initialX0,omitempty"`
-	CurrentX0     *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=currentX0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"currentX0,omitempty"`
+	A             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a"`
+	B             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b"`
+	C             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,3,opt,name=c,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"c"`
+	ScalingFactor github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=scalingFactor,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"scalingFactor"`
+	InitialX0     github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,5,opt,name=initialX0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"initialX0"`
+	CurrentX0     github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=currentX0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"currentX0"`
 }
 
 func (m *Quadraticsegment) Reset()         { *m = Quadraticsegment{} }
@@ -80,25 +80,25 @@ func init() {
 }
 
 var fileDescriptor_eeac9996564ed96c = []byte{
-	// 278 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0xd2, 0x3d, 0x4b, 0x03, 0x31,
-	0x18, 0xc0, 0xf1, 0x8b, 0xd5, 0x42, 0x0f, 0x44, 0x39, 0x1c, 0x82, 0x43, 0x14, 0x87, 0x22, 0x4a,
-	0x2f, 0x05, 0x17, 0xe7, 0xa2, 0xe2, 0xa8, 0x4e, 0xc5, 0xed, 0xc9, 0xd3, 0x70, 0x86, 0xf6, 0x92,
-	0x9a, 0x17, 0xa8, 0xdf, 0xc2, 0x4f, 0xe1, 0x67, 0x71, 0xec, 0x28, 0x0e, 0x22, 0x77, 0x5f, 0x44,
-	0xee, 0x94, 0x5a, 0xdd, 0x32, 0x25, 0x90, 0xe7, 0xff, 0x5b, 0xf2, 0xa4, 0x7d, 0xe9, 0x50, 0x00,
-	0x4e, 0x85, 0xd1, 0x92, 0x07, 0x81, 0xfc, 0x31, 0xc0, 0xc4, 0x82, 0x57, 0xe8, 0x64, 0x51, 0x4a,
-	0xed, 0xf3, 0xb9, 0x35, 0xde, 0x64, 0x3b, 0x6b, 0x73, 0x79, 0x10, 0xb8, 0xbf, 0x57, 0x98, 0xc2,
-	0xb4, 0x6f, 0xbc, 0xb9, 0x7d, 0x8f, 0x1d, 0xbd, 0x74, 0xd2, 0xdd, 0xdb, 0x7f, 0x42, 0x76, 0x9e,
-	0x12, 0xa0, 0xe4, 0x90, 0x1c, 0xf7, 0x46, 0x27, 0xef, 0x1f, 0x07, 0xfd, 0x42, 0xf9, 0x87, 0x20,
-	0x72, 0x34, 0x25, 0x47, 0xe3, 0x4a, 0xe3, 0x7e, 0x8e, 0x81, 0x9b, 0x4c, 0xb9, 0x7f, 0x9a, 0x4b,
-	0x97, 0x5f, 0x48, 0xbc, 0x23, 0xd0, 0x94, 0x82, 0x6e, 0xc4, 0x97, 0xa2, 0x29, 0x91, 0x76, 0xe2,
-	0x4b, 0xcc, 0x6e, 0xd2, 0x6d, 0x87, 0x30, 0x53, 0xba, 0xb8, 0x02, 0xf4, 0xc6, 0xd2, 0xcd, 0x68,
-	0xe5, 0x2f, 0x90, 0x5d, 0xa7, 0x3d, 0xa5, 0x95, 0x57, 0x30, 0x1b, 0x0f, 0xe9, 0x56, 0xb4, 0xf6,
-	0x1b, 0x37, 0x12, 0x06, 0x6b, 0xa5, 0xf6, 0xe3, 0x21, 0xed, 0xc6, 0x4b, 0xab, 0x78, 0x74, 0xf9,
-	0x5a, 0x31, 0xb2, 0xac, 0x18, 0xf9, 0xac, 0x18, 0x79, 0xae, 0x59, 0xb2, 0xac, 0x59, 0xf2, 0x56,
-	0xb3, 0xe4, 0xfe, 0x74, 0x1d, 0x03, 0x2f, 0x35, 0x2c, 0xb8, 0x74, 0x38, 0x58, 0x6d, 0xc9, 0xa2,
-	0xdd, 0x93, 0x56, 0x15, 0xdd, 0xf6, 0xdb, 0xcf, 0xbe, 0x02, 0x00, 0x00, 0xff, 0xff, 0x70, 0xaf,
-	0xbb, 0x47, 0x47, 0x02, 0x00, 0x00,
+	// 281 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0xd2, 0x3f, 0x4b, 0x03, 0x31,
+	0x18, 0x06, 0xf0, 0x8b, 0xd5, 0x42, 0x0f, 0x44, 0x39, 0x1c, 0x82, 0x43, 0x2a, 0x0e, 0x45, 0x90,
+	0x5e, 0x0a, 0xae, 0x4e, 0x45, 0x9d, 0x5c, 0x14, 0x87, 0xe2, 0xf6, 0xe6, 0x6d, 0x38, 0x43, 0xdb,
+	0xa4, 0xe6, 0x0f, 0xd4, 0x6f, 0xe1, 0x27, 0x72, 0xee, 0xd8, 0x51, 0x1c, 0x8a, 0xdc, 0x7d, 0x11,
+	0xb9, 0x53, 0x6a, 0x75, 0xcc, 0x94, 0xc0, 0xfb, 0x3c, 0xbf, 0xe9, 0x49, 0x7b, 0xd2, 0xa1, 0x00,
+	0x9c, 0x08, 0xa3, 0x25, 0x0f, 0x02, 0xf9, 0x73, 0x80, 0xb1, 0x05, 0xaf, 0xd0, 0xc9, 0x62, 0x26,
+	0xb5, 0xcf, 0xe7, 0xd6, 0x78, 0x93, 0x1d, 0x6c, 0xe5, 0xf2, 0x20, 0xf0, 0xf8, 0xa8, 0x30, 0x85,
+	0x69, 0x6e, 0xbc, 0xfe, 0x7d, 0xc7, 0x4e, 0xdf, 0x5a, 0xe9, 0xe1, 0xdd, 0x3f, 0x21, 0xbb, 0x4c,
+	0x09, 0x50, 0x72, 0x42, 0xce, 0x3a, 0xc3, 0x7c, 0xb9, 0xee, 0x26, 0x1f, 0xeb, 0x6e, 0xaf, 0x50,
+	0xfe, 0x29, 0x88, 0x1c, 0xcd, 0x8c, 0xa3, 0x71, 0x33, 0xe3, 0x7e, 0x9e, 0xbe, 0x1b, 0x4f, 0xb8,
+	0x7f, 0x99, 0x4b, 0x97, 0x5f, 0x49, 0xbc, 0x27, 0x50, 0xb7, 0x05, 0xdd, 0x89, 0x6b, 0x8b, 0xba,
+	0x8d, 0xb4, 0x15, 0xd7, 0xc6, 0xec, 0x21, 0xdd, 0x77, 0x08, 0x53, 0xa5, 0x8b, 0x1b, 0x40, 0x6f,
+	0x2c, 0xdd, 0x8d, 0x92, 0xfe, 0x22, 0xd9, 0x6d, 0xda, 0x51, 0x5a, 0x79, 0x05, 0xd3, 0xd1, 0x80,
+	0xee, 0x45, 0x89, 0xbf, 0x40, 0xad, 0x61, 0xb0, 0x56, 0x6a, 0x3f, 0x1a, 0xd0, 0x76, 0x9c, 0xb6,
+	0x01, 0x86, 0xd7, 0xcb, 0x92, 0x91, 0x55, 0xc9, 0xc8, 0x67, 0xc9, 0xc8, 0x6b, 0xc5, 0x92, 0x55,
+	0xc5, 0x92, 0xf7, 0x8a, 0x25, 0x8f, 0xe7, 0xdb, 0x18, 0x78, 0xa9, 0x61, 0xc1, 0xa5, 0xc3, 0xfe,
+	0x66, 0x3d, 0x8b, 0x66, 0x3f, 0x8d, 0x2a, 0xda, 0xcd, 0x1c, 0x2e, 0xbe, 0x02, 0x00, 0x00, 0xff,
+	0xff, 0x4d, 0x8e, 0x88, 0x05, 0x5f, 0x02, 0x00, 0x00,
 }
 
 func (m *Quadraticsegment) Marshal() (dAtA []byte, err error) {
@@ -121,78 +121,66 @@ func (m *Quadraticsegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.CurrentX0 != nil {
-		{
-			size := m.CurrentX0.Size()
-			i -= size
-			if _, err := m.CurrentX0.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	{
+		size := m.CurrentX0.Size()
+		i -= size
+		if _, err := m.CurrentX0.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0x32
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
-	if m.InitialX0 != nil {
-		{
-			size := m.InitialX0.Size()
-			i -= size
-			if _, err := m.InitialX0.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	i--
+	dAtA[i] = 0x32
+	{
+		size := m.InitialX0.Size()
+		i -= size
+		if _, err := m.InitialX0.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0x2a
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
-	if m.ScalingFactor != nil {
-		{
-			size := m.ScalingFactor.Size()
-			i -= size
-			if _, err := m.ScalingFactor.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	i--
+	dAtA[i] = 0x2a
+	{
+		size := m.ScalingFactor.Size()
+		i -= size
+		if _, err := m.ScalingFactor.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0x22
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
-	if m.C != nil {
-		{
-			size := m.C.Size()
-			i -= size
-			if _, err := m.C.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	i--
+	dAtA[i] = 0x22
+	{
+		size := m.C.Size()
+		i -= size
+		if _, err := m.C.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0x1a
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
-	if m.B != nil {
-		{
-			size := m.B.Size()
-			i -= size
-			if _, err := m.B.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	i--
+	dAtA[i] = 0x1a
+	{
+		size := m.B.Size()
+		i -= size
+		if _, err := m.B.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0x12
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
-	if m.A != nil {
-		{
-			size := m.A.Size()
-			i -= size
-			if _, err := m.A.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
+	i--
+	dAtA[i] = 0x12
+	{
+		size := m.A.Size()
+		i -= size
+		if _, err := m.A.MarshalTo(dAtA[i:]); err != nil {
+			return 0, err
 		}
-		i--
-		dAtA[i] = 0xa
+		i = encodeVarintQuadraticsegment(dAtA, i, uint64(size))
 	}
+	i--
+	dAtA[i] = 0xa
 	return len(dAtA) - i, nil
 }
 
@@ -213,30 +201,18 @@ func (m *Quadraticsegment) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.A != nil {
-		l = m.A.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
-	if m.B != nil {
-		l = m.B.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
-	if m.C != nil {
-		l = m.C.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
-	if m.ScalingFactor != nil {
-		l = m.ScalingFactor.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
-	if m.InitialX0 != nil {
-		l = m.InitialX0.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
-	if m.CurrentX0 != nil {
-		l = m.CurrentX0.Size()
-		n += 1 + l + sovQuadraticsegment(uint64(l))
-	}
+	l = m.A.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
+	l = m.B.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
+	l = m.C.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
+	l = m.ScalingFactor.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
+	l = m.InitialX0.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
+	l = m.CurrentX0.Size()
+	n += 1 + l + sovQuadraticsegment(uint64(l))
 	return n
 }
 
@@ -305,8 +281,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.A = &v
 			if err := m.A.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -341,8 +315,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.B = &v
 			if err := m.B.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -377,8 +349,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.C = &v
 			if err := m.C.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -413,8 +383,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.ScalingFactor = &v
 			if err := m.ScalingFactor.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -449,8 +417,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.InitialX0 = &v
 			if err := m.InitialX0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -485,8 +451,6 @@ func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.CurrentX0 = &v
 			if err := m.CurrentX0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}

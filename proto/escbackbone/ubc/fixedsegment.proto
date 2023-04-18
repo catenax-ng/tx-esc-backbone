@@ -14,5 +14,8 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 message Fixedsegment {
   
   Segment s = 1;
-  string intervalP0X = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"]; 
+  string intervalP0X = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }

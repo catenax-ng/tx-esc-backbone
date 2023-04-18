@@ -12,6 +12,12 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Flatsegment {
   
-  string y = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string x0 = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string y = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string x0 = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }

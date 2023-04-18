@@ -21,14 +21,44 @@ message Ubcobject {
   Segment s1 = 3;
   Fixedsegment s2 = 4;
   Quadraticsegment qS3 = 5;
-  string refProfitFactor = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string refTokenSupply = 7 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string refTokenPrice = 8 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string bPool = 9 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string factorFy = 10 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string factorFxy = 11 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string tradingPoint = 12 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string currentSupply = 13 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string slopeP2 = 14 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string slopeP3 = 15 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string refProfitFactor = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string refTokenSupply = 7 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string refTokenPrice = 8 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string bPool = 9 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string factorFy = 10 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string factorFxy = 11 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string tradingPoint = 12 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string currentSupply = 13 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string slopeP2 = 14 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string slopeP3 = 15 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }

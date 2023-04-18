@@ -12,11 +12,32 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Segment {
   
-  string p0 = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string a = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string b = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string p1 = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string p0X = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string p1X = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string delatX = 7 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string p0 = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string a = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string b = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string p1 = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string p0X = 5 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string p1X = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string delatX = 7 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }

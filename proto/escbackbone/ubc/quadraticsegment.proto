@@ -12,10 +12,28 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Quadraticsegment {
   
-  string a = 1 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string b = 2 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string c = 3 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string scalingFactor = 4 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string initialX0 = 5 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
-  string currentX0 = 6 [(gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"];
+  string a = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string b = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string c = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string scalingFactor = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string initialX0 = 5 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string currentX0 = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }
