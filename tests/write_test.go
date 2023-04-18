@@ -36,6 +36,18 @@ func TestWrite(t *testing.T) {
 	var nodeID string
 	var refHost string
 
+	//  Setup
+	err = createTestAccounts(cfg)
+	require.NoError(t, err)
+	t.Logf("From account: %s", cfg["FromAccount"])
+	t.Logf("To account: %s", cfg["ToAccount"])
+
+	//  Tear down
+	t.Cleanup(func() {
+		err = deleteTestAccounts(cfg)
+		require.NoError(t, err)
+	})
+
 	//  Check Test node
 	t.Run("check_test_node", func(t *testing.T) {
 		nodeID, err = CheckTestNode(testHost)
@@ -50,16 +62,6 @@ func TestWrite(t *testing.T) {
 		require.NoError(t, err)
 		t.Logf("Reference node ID: %s", nodeID)
 		t.Logf("Reference node host name: %s", refHost)
-	})
-
-	//  Check from & to account addresses exist (Test node)
-	t.Run("check_existence_of_from_and_to_account", func(t *testing.T) {
-		_, err = ApiGetAccount(testHost, cfg["FromAccount"])
-		require.NoError(t, err)
-		t.Log("'From' account exists")
-		_, err = ApiGetAccount(testHost, cfg["ToAccount"])
-		require.NoError(t, err)
-		t.Log("'To' account exists")
 	})
 
 	//  Get fund from faucet

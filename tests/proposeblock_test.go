@@ -35,13 +35,32 @@ func TestProposeBlock(t *testing.T) {
 	var txHash string
 	var txHeight int64
 
+	//  Setup
+	err = createTestAccounts(cfg)
+	require.NoError(t, err)
+	t.Logf("From account: %s", cfg["FromAccount"])
+	t.Logf("To account: %s", cfg["ToAccount"])
+
+	//  Tear down
+	t.Cleanup(func() {
+		err = deleteTestAccounts(cfg)
+		require.NoError(t, err)
+	})
+
 	//  Check Test node is a validator
 	t.Run("check_test_node_validator", func(t *testing.T) {
 		validator, accountAddr, numofValidators, err = ExistInValidatorSet(testHost, cfg["ValidatorAccount"])
 		require.NoError(t, err)
 		t.Logf("Operator address: %s", validator.OperatorAddress)
 		t.Logf("Account address: %s", accountAddr)
+		t.Logf("Moniker: %s", validator.Description.Moniker)
 		t.Logf("Number of validators: %d", numofValidators)
+	})
+
+	//  Get fund from faucet
+	t.Run("get_fund_from_faucet", func(t *testing.T) {
+		err = getFundFromFaucet(t, httpProtocol, testHost, faucetHost, cfg)
+		assert.NoError(t, err)
 	})
 
 	//  Check proposer (Test node)

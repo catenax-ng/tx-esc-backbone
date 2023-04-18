@@ -11,6 +11,9 @@
 // https://confluence.catena-x.net/display/CORE/Validator+Setup+Instructions+(Testnet)
 //
 // Enter the specific host names and information in this config.
+// For CI Pipeline automated test, set cfg["ValidatorAccount"] = "".
+// To check if a particular validator is one of the block-proposers,
+// set cfg["ValidatorAccount"] to the specific account.
 
 package txn_test
 
@@ -19,20 +22,33 @@ import (
 	"path"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	sdktypes "github.com/cosmos/cosmos-sdk/types"
+
+	catxapp "github.com/catenax/esc-backbone/app"
 )
 
 var (
 	refHostsList []string
 	cfg          map[string]string
+	escKeyring   keyring.Keyring
 )
 
 const (
+	Bech32AccountPrefix       = catxapp.AccountAddressPrefix
+	Bech32ValidatorAddrPrefix = Bech32AccountPrefix +
+		sdktypes.PrefixValidator +
+		sdktypes.PrefixOperator
+	Bech32ConsensusAddrPrefix = Bech32AccountPrefix +
+		sdktypes.PrefixValidator +
+		sdktypes.PrefixConsensus
+
 	testHost     = "validator1-csms-grpc.dev.demo.catena-x.net:443"
 	faucetHost   = "faucet-faucet.dev.demo.catena-x.net/"
 	httpProtocol = "https://"
 )
 
 func init() {
+
 	refHostsList = []string{
 		"validator2-csms-grpc.dev.demo.catena-x.net:443",
 		"validator3-csms-grpc.dev.demo.catena-x.net:443",
@@ -46,9 +62,7 @@ func init() {
 
 	cfg = make(map[string]string)
 	cfg["App"] = path.Join(homeDir, "go", "bin", "esc-backboned")
-	cfg["ValidatorAccount"] = "catenax105gtxtvscdywtzwcn46n60sfmkqwjy53078vum"
-	cfg["FromAccount"] = "catenax14r7fw8vl6tk9gf6a4km9ef9j5xycu6mzg4n0av"
-	cfg["ToAccount"] = "catenax192s9m0tjua7f9enwlklgwk5zu2t956zn89cvqv"
+	cfg["ValidatorAccount"] = ""
 	cfg["TxfAmount"] = "5"
 	cfg["TxfDenom"] = "ncaxdemo"
 	cfg["ChainID"] = "catenax-testnet-1"
@@ -57,4 +71,14 @@ func init() {
 	cfg["Fee"] = "2000000"
 	cfg["GasLimit"] = "2000000"
 	cfg["KeyringBackend"] = keyring.BackendTest
+
+	config := sdktypes.GetConfig()
+	config.SetBech32PrefixForAccount(Bech32AccountPrefix, sdktypes.PrefixPublic)
+	config.SetBech32PrefixForValidator(Bech32ValidatorAddrPrefix, sdktypes.PrefixPublic)
+	config.SetBech32PrefixForConsensusNode(Bech32ConsensusAddrPrefix, sdktypes.PrefixPublic)
+
+	escKeyring, err = NewKeyring(cfg)
+	if err != nil {
+		os.Exit(-1)
+	}
 }

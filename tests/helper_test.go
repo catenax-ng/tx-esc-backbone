@@ -8,15 +8,18 @@ package txn_test
 
 import (
 	"context"
+	"crypto/rand"
 	"crypto/tls"
 	"encoding/hex"
 	"errors"
+	"math/big"
 	"strconv"
 	"strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
+	"github.com/catenax/esc-backbone/app"
 	"github.com/cometbft/cometbft/proto/tendermint/p2p"
 	tmtypes "github.com/cometbft/cometbft/proto/tendermint/types"
 	grpcsvc "github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
@@ -32,28 +35,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	xstaketypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-
-	"github.com/catenax/esc-backbone/app"
-	catxapp "github.com/catenax/esc-backbone/app"
 )
-
-const (
-	Bech32AccountPrefix       = catxapp.AccountAddressPrefix
-	Bech32ValidatorAddrPrefix = Bech32AccountPrefix +
-		sdktypes.PrefixValidator +
-		sdktypes.PrefixOperator
-	Bech32ConsensusAddrPrefix = Bech32AccountPrefix +
-		sdktypes.PrefixValidator +
-		sdktypes.PrefixConsensus
-)
-
-func init() {
-
-	config := sdktypes.GetConfig()
-	config.SetBech32PrefixForAccount(Bech32AccountPrefix, sdktypes.PrefixPublic)
-	config.SetBech32PrefixForValidator(Bech32ValidatorAddrPrefix, sdktypes.PrefixPublic)
-	config.SetBech32PrefixForConsensusNode(Bech32ConsensusAddrPrefix, sdktypes.PrefixPublic)
-}
 
 // Get the node info.
 func ApiGetNodeInfo(grpcHost string) (*p2p.DefaultNodeInfo, error) {
@@ -346,11 +328,20 @@ func ExistInValidatorSet(grpcHost, accountAddr string) (xstaketypes.Validator, s
 		return validator, "", 0, err
 	}
 
+	nodeInfo, err := ApiGetNodeInfo(grpcHost)
+	if err != nil {
+		return validator, "", 0, err
+	}
+	moniker := nodeInfo.Moniker
+
 	numofValidators := len(validatorList)
 	for _, validator = range validatorList {
 		accAddr, err := GetAccountAddress(validator)
 		if err != nil {
 			return validator, "", 0, err
+		}
+		if accountAddr == "" && validator.Description.Moniker == moniker {
+			return validator, accAddr.String(), numofValidators, nil
 		}
 		if accAddr.String() == accountAddr {
 			return validator, accAddr.String(), numofValidators, nil
@@ -477,17 +468,12 @@ func CreateSignedTxn(testHost string,
 	gasLimit, err := strconv.ParseUint(cfg["GasLimit"], 10, 64)
 	txBuilder.SetGasLimit(gasLimit)
 
-	kr, err := NewKeyring(cfg)
+	keyInfo, err := escKeyring.KeyByAddress(fromAddr)
 	if err != nil {
 		return nil, err
 	}
 
-	keyInfo, err := kr.KeyByAddress(fromAddr)
-	if err != nil {
-		return nil, err
-	}
-
-	exportedPrivateKey, err := kr.ExportPrivKeyArmor(keyInfo.Name, cfg["PassPhrase"])
+	exportedPrivateKey, err := escKeyring.ExportPrivKeyArmor(keyInfo.Name, cfg["PassPhrase"])
 	if err != nil {
 		return nil, err
 	}
@@ -553,4 +539,89 @@ func CreateSignedTxn(testHost string,
 	}
 
 	return txBytes, nil
+}
+
+// Create account.
+func createAccount(cfg map[string]string) (string, error) {
+
+	keyringAlgo, _ := escKeyring.SupportedAlgorithms()
+	signatureAlgo, err := keyring.NewSigningAlgoFromString("secp256k1", keyringAlgo)
+	if err != nil {
+		return "", err
+	}
+	uid := genRandomString(40)
+	record, _, err := escKeyring.NewMnemonic(uid, keyring.English, "", cfg["PassPhrase"], signatureAlgo)
+	if err != nil {
+		return "", err
+	}
+
+	pubKey, err := record.GetPubKey()
+	if err != nil {
+		return "", err
+	}
+
+	acc, err := sdktypes.AccAddressFromHexUnsafe(pubKey.Address().String())
+	if err != nil {
+		return "", err
+	}
+
+	return acc.String(), nil
+}
+
+// Generate a random number up to the specific max.
+func genRandomNumber(max int64) int64 {
+	randomNum, _ := rand.Int(rand.Reader, big.NewInt(max))
+	return randomNum.Int64()
+}
+
+// Generate a random string of the specific length.
+func genRandomString(strLen int) string {
+
+	const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	max := int64(strLen)
+	buf := make([]byte, strLen)
+	for idx := range buf {
+		randomNum, _ := rand.Int(rand.Reader, big.NewInt(max))
+		buf[idx] = alphabets[randomNum.Int64()]
+	}
+	return string(buf)
+}
+
+// Create test accounts.
+func createTestAccounts(cfg map[string]string) error {
+	fromAccount, err := createAccount(cfg)
+	if err != nil {
+		return err
+	}
+	toAccount, err := createAccount(cfg)
+	if err != nil {
+		return err
+	}
+	cfg["FromAccount"] = fromAccount
+	cfg["ToAccount"] = toAccount
+
+	return nil
+}
+
+// Delete test accounts.
+func deleteTestAccounts(cfg map[string]string) error {
+
+	fromAddr, err := sdktypes.AccAddressFromBech32(cfg["FromAccount"])
+	if err != nil {
+		return err
+	}
+	toAddr, err := sdktypes.AccAddressFromBech32(cfg["ToAccount"])
+	if err != nil {
+		return err
+	}
+	err = escKeyring.DeleteByAddress(fromAddr)
+	if err != nil {
+		return err
+	}
+	err = escKeyring.DeleteByAddress(toAddr)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

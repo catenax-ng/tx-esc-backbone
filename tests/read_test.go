@@ -34,6 +34,18 @@ func TestRead(t *testing.T) {
 	var nodeID string
 	var refHost string
 
+	//  Setup
+	err = createTestAccounts(cfg)
+	require.NoError(t, err)
+	t.Logf("From account: %s", cfg["FromAccount"])
+	t.Logf("To account: %s", cfg["ToAccount"])
+
+	//  Tear down
+	t.Cleanup(func() {
+		err = deleteTestAccounts(cfg)
+		require.NoError(t, err)
+	})
+
 	//  Check Test Node
 	t.Run("check_test_node", func(t *testing.T) {
 		nodeID, err = CheckTestNode(testHost)
