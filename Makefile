@@ -14,3 +14,4 @@ build-vmso:
 
 gen-proto-go:
 	ignite generate proto-go --yes
+	./license-header/update-year.sh
