@@ -14,10 +14,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_UbcObject_Init_Happy(t *testing.T) {
+func Test_UbcObject_Fit_Happy(t *testing.T) {
 	t.Run("primary set of valid params", func(t *testing.T) {
 		ubc := validUbcParams()
-		require.NoError(t, ubc.Init())
+		require.NoError(t, ubc.Fit())
 
 		IsEqualDecimal(t, "0.000000000000000000", ubc.FS0.X0)
 		IsEqualDecimal(t, "0.012826277713841738", ubc.FS0.Y)
@@ -66,7 +66,7 @@ func Test_UbcObject_Init_Happy(t *testing.T) {
 				func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(150e6) }},
 			{"BPoolUnder_alternate2",
 				func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(90e6) }},
-			{"BPool_notSet", // Because BPool is not used in Init.
+			{"BPool_notSet", // Because BPool is not used in Fit.
 				func(ubc *types.Ubcobject) { ubc.BPool = sdk.Dec{} }},
 		}
 
@@ -74,13 +74,13 @@ func Test_UbcObject_Init_Happy(t *testing.T) {
 			t.Run(tc.name, func(t *testing.T) {
 				ubc := validUbcParams()
 				tc.modifier(&ubc)
-				assert.NoError(t, ubc.Init())
+				assert.NoError(t, ubc.Fit())
 			})
 		}
 	})
 }
 
-func Test_UbcObject_Init_Error(t *testing.T) {
+func Test_UbcObject_Fit_Error(t *testing.T) {
 	type test struct {
 		name     string
 		modifier func(ubc *types.Ubcobject)
@@ -121,14 +121,14 @@ func Test_UbcObject_Init_Error(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			ubc := validUbcParams()
 			tc.modifier(&ubc)
-			assert.Error(t, ubc.Init())
+			assert.Error(t, ubc.Fit())
 		})
 	}
 }
-func BenchmarkUbcInit(b *testing.B) {
+func BenchmarkUbcFit(b *testing.B) {
 	ubc := validUbcParams()
 	for i := 0; i < b.N; i++ {
-		ubc.Init()
+		ubc.Fit()
 	}
 }
 

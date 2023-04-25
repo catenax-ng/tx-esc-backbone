@@ -10,18 +10,19 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Init initializes the undergirding bonding curve for the given set of parameters.
+// Fit fits each of the segments of the undergirding bonding curve using the
+// given set of parameters.
 //
-// It returns an error if any of the parameters was not set or if the curve
-// obtained using the given set of parameters is invalid.
-func (ubc *Ubcobject) Init() error {
+// It returns an error if any of the parameters was not set or if the resulting
+// curve fitted is invalid.
+func (ubc *Ubcobject) Fit() error {
 	if err := ubc.validateParameters(); err != nil {
 		return err
 	}
 
 	ubc.initSegmentsToZero()
-	ubc.initS2()
-	ubc.initS3()
+	ubc.fitS2()
+	ubc.fitS3()
 	ubc.fitS1()
 
 	// Self-consistency to fit P0 better.
@@ -85,7 +86,7 @@ func (ubc *Ubcobject) initSegmentsToZero() {
 	ubc.QS3 = &Quadraticsegment{}
 }
 
-func (ubc *Ubcobject) initS2() {
+func (ubc *Ubcobject) fitS2() {
 	ubc.setP3X(ubc.RefTokenSupply)
 	ubc.setP3(ubc.RefTokenPrice)
 	ubc.setP2X(ubc.RefTokenSupply.Quo(sdk.NewDec(2)))
@@ -100,7 +101,7 @@ func (ubc *Ubcobject) calcS2AB() {
 	ubc.S2.A = ubc.S2.P0.Add(factor.Mul(ubc.SlopeP2.Mul(ubc.S2.DeltaX)))
 }
 
-func (ubc *Ubcobject) initS3() {
+func (ubc *Ubcobject) fitS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
 	curvatureP3 := ubc.S2.secondDerivationX(ubc.p3x())
