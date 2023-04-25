@@ -20,7 +20,8 @@ func (ubc *Ubcobject) Init() error {
 	}
 
 	ubc.initSegmentsToZero()
-	ubc.initS23()
+	ubc.initS2()
+	ubc.initS3()
 	ubc.fitS1()
 
 	// Self-consistency to fit P0 better.
@@ -82,12 +83,6 @@ func (ubc *Ubcobject) initSegmentsToZero() {
 		},
 	}
 	ubc.QS3 = &Quadraticsegment{}
-}
-
-func (ubc *Ubcobject) initS23() {
-	ubc.initS2()
-	ubc.initS3()
-
 }
 
 func (ubc *Ubcobject) initS2() {
