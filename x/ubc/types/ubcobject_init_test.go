@@ -16,7 +16,7 @@ import (
 
 func Test_UbcObject_Init_Happy(t *testing.T) {
 	t.Run("primary set of valid params", func(t *testing.T) {
-		ubc := validUBCParams()
+		ubc := validUbcParams()
 		require.NoError(t, ubc.Init())
 
 		IsEqualDecimal(t, "0.000000000000000000", ubc.FS0.X0)
@@ -72,7 +72,7 @@ func Test_UbcObject_Init_Happy(t *testing.T) {
 
 		for _, tc := range tests {
 			t.Run(tc.name, func(t *testing.T) {
-				ubc := validUBCParams()
+				ubc := validUbcParams()
 				tc.modifier(&ubc)
 				assert.NoError(t, ubc.Init())
 			})
@@ -119,14 +119,14 @@ func Test_UbcObject_Init_Error(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			ubc := validUBCParams()
+			ubc := validUbcParams()
 			tc.modifier(&ubc)
 			assert.Error(t, ubc.Init())
 		})
 	}
 }
 func BenchmarkUbcInit(b *testing.B) {
-	ubc := validUBCParams()
+	ubc := validUbcParams()
 	for i := 0; i < b.N; i++ {
 		ubc.Init()
 	}
@@ -139,7 +139,7 @@ func IsEqualDecimal(t *testing.T, expected string, actual sdk.Dec) {
 	assert.Equal(t, expectedDec, actual)
 }
 
-func validUBCParams() types.Ubcobject {
+func validUbcParams() types.Ubcobject {
 	return types.Ubcobject{
 		RefTokenSupply:  sdk.NewDec(6e9),
 		RefTokenPrice:   sdk.NewDec(1),

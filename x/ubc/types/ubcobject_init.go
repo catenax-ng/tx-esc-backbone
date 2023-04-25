@@ -109,10 +109,10 @@ func (ubc *Ubcobject) initS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
 	curvatureP3 := ubc.S2.secondDerivationX(ubc.p3x())
-	ubc.calcABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
+	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
 }
 
-func (ubc *Ubcobject) calcABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
+func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 	x3Scaled := p3X.Quo(ubc.QS3.ScalingFactor)
 
 	ubc.QS3.A = curvatureP3.Mul(ubc.QS3.ScalingFactor).Quo(sdk.NewDec(2))
