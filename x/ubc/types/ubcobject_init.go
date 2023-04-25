@@ -184,21 +184,13 @@ func (ubc *Ubcobject) calcP1() sdk.Dec {
 }
 
 func (ubc *Ubcobject) calcS0B() sdk.Dec {
-	factor1 := sdk.NewDec(1).Sub(sdk.NewDecWithPrec(5, 1).Mul(ubc.FactorFy))
-	factor2 := sdk.NewDecWithPrec(5, 1).Mul(ubc.FactorFy)
-	return factor1.Mul(ubc.p0()).Add(factor2.Mul(ubc.p2()))
+	return sdk.NewDecWithPrec(5, 1).Mul(ubc.p0().Add(ubc.p1()))
 }
 
 func (ubc *Ubcobject) calcS1A() sdk.Dec {
-	return sdk.NewDecWithPrec(5, 1).Mul(
-		ubc.S1.DeltaX.Quo(ubc.S0.DeltaX)).
-		Add(sdk.NewDec(1)).Mul(ubc.FactorFy).Mul(ubc.p2()).Sub(
-		sdk.NewDecWithPrec(5, 1).
-			Mul(ubc.S1.DeltaX.Quo(ubc.S0.DeltaX)).
-			Mul(ubc.FactorFy).
-			Sub(sdk.NewDec(1)).
-			Add(ubc.FactorFy).
-			Mul(ubc.p0()))
+	factorPart1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.S1.DeltaX.Quo(ubc.S0.DeltaX))
+	part1 := factorPart1.Mul(ubc.p1().Sub(ubc.p0()))
+	return part1.Add(ubc.p1())
 }
 
 func (ubc *Ubcobject) validateCurvature() error {

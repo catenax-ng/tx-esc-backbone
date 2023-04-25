@@ -31,7 +31,7 @@ func Test_UbcObject_Init_Happy(t *testing.T) {
 		IsEqualDecimal(t, "1891524601.156705919616317034", ubc.S0.DeltaX)
 
 		IsEqualDecimal(t, "0.030261022171073390", ubc.S1.P0)
-		IsEqualDecimal(t, "0.035369595779934341", ubc.S1.A)
+		IsEqualDecimal(t, "0.035369595779934340", ubc.S1.A)
 		IsEqualDecimal(t, "0.063050820038556864", ubc.S1.B)
 		IsEqualDecimal(t, "0.100000000000000000", ubc.S1.P1)
 		IsEqualDecimal(t, "1891524601.156705919616317034", ubc.S1.P0X)
