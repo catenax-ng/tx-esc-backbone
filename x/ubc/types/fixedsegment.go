@@ -31,7 +31,7 @@ func (fixsg *Fixedsegment) gamma2T(t sdk.Dec) (y sdk.Dec) {
 	return sdk.NewDec(6).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
 }
 
-func (fx *Fixedsegment) secondDerivationX(x sdk.Dec) (y sdk.Dec) {
+func (fx *Fixedsegment) secondDerivativeX(x sdk.Dec) (y sdk.Dec) {
 	t := x.Sub(fx.P0X).Quo(fx.DeltaX)
 	return fx.gamma2T(t).Quo(fx.DeltaX)
 }

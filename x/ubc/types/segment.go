@@ -23,7 +23,7 @@ func (sg *Segment) calcDeltaX() {
 	sg.DeltaX = sg.P1X.Sub(sg.P0X)
 }
 
-func (sg *Segment) firstDerivationT(t sdk.Dec) (y sdk.Dec) {
+func (sg *Segment) firstDerivativeT(t sdk.Dec) (y sdk.Dec) {
 	return sg.gamma1T(t)
 
 }

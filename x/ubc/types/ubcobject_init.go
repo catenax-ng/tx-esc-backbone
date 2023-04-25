@@ -104,7 +104,7 @@ func (ubc *Ubcobject) calcS2AB() {
 func (ubc *Ubcobject) fitS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
-	curvatureP3 := ubc.S2.secondDerivationX(ubc.p3x())
+	curvatureP3 := ubc.S2.secondDerivativeX(ubc.p3x())
 	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
 }
 
@@ -218,7 +218,7 @@ func (ubc *Ubcobject) validateCurvature() error {
 		return errors.Errorf("curvature condition 4 failed")
 	}
 
-	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivationT(sdk.ZeroDec())) {
+	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeT(sdk.ZeroDec())) {
 		return errors.Errorf("curvature condition 5 failed")
 	}
 
