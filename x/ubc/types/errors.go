@@ -13,6 +13,7 @@ import (
 
 // x/ubc module sentinel errors
 var (
-	ErrSample     = sdkerrors.Register(ModuleName, 1100, "sample error")
-	ErrInvalidArg = sdkerrors.Register(ModuleName, 1102, "invalid argument")
+	ErrSample       = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrInvalidArg   = sdkerrors.Register(ModuleName, 1101, "invalid argument")
+	ErrCurveFitting = sdkerrors.Register(ModuleName, 1102, "fitting the curve")
 )

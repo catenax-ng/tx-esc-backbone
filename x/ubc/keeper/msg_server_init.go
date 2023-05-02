@@ -10,13 +10,24 @@ import (
 
 	"github.com/catenax/esc-backbone/x/ubc/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/pkg/errors"
 )
 
 func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgInitResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	if err := msg.ValidateBasic(); err != nil {
+		return nil, err
+	}
+	ubc, err := msg.ParseUbcobject()
+	if err != nil {
+		return nil, err
+	}
+
+	if err = ubc.Fit(); err != nil {
+		return nil, errors.Wrap(types.ErrCurveFitting, err.Error())
+	}
+	k.SetUbcobject(ctx, *ubc)
 
 	return &types.MsgInitResponse{}, nil
 }
