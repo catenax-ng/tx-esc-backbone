@@ -17,25 +17,23 @@ import (
 func TestMsgInit_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgInit
+		addr string
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgInit{
-				Creator: "invalid_address",
-			},
-			err: sdkerrors.ErrInvalidAddress,
+			addr: "invalid_address",
+			err:  sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgInit{
-				Creator: sample.AccAddress(),
-			},
+			addr: sample.AccAddress(),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := tt.msg.ValidateBasic()
+			msg := validMsgInitUbc()
+			msg.Creator = tt.addr
+			err := msg.ValidateBasic()
 			if tt.err != nil {
 				require.ErrorIs(t, err, tt.err)
 				return

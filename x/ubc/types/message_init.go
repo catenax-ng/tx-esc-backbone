@@ -56,6 +56,13 @@ func (msg *MsgInit) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+	ubc, err := msg.ParseUbcobject()
+	if err != nil {
+		return err
+	}
+	if ubc.Fit() != nil {
+		return errors.Wrap(ErrCurveFitting, err.Error())
+	}
 	return nil
 }
 

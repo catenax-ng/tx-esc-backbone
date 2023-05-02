@@ -19,14 +19,11 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 	if err := msg.ValidateBasic(); err != nil {
 		return nil, err
 	}
-	ubc, err := msg.ParseUbcobject()
-	if err != nil {
-		return nil, err
-	}
 
-	if err = ubc.Fit(); err != nil {
-		return nil, errors.Wrap(types.ErrCurveFitting, err.Error())
-	}
+	// This will not err, as error has been checked in ValidateBasic.
+	ubc, _ := msg.ParseUbcobject()
+	_ = ubc.Fit() // TODO: Consumer gas from gas meter and make it a param that can be changed later using a param.
+
 	k.SetUbcobject(ctx, *ubc)
 
 	creatorAddress, err := sdk.AccAddressFromBech32(msg.Creator)
