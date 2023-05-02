@@ -12,28 +12,33 @@ accounts:
     advance earth"
   coins:
   - 200000000000000000000acax
-  - 20000cvoucher
+  - 0cvoucher
 - name: bob
   mnemonic: "mix thank switch crawl garden venue badge much kite foot clap
     stage skin shaft earn decade reward method ability mix lumber glad initial
     enrich"
   coins:
   - 100000000000000000000acax
-  - 10000cvoucher
+  - 0cvoucher
 - name: carol
   mnemonic: "defy soft media source say health kingdom define casual twin
     jacket spice mask skirt boat squirrel often pigeon lecture lawsuit little
     joke october lumber"
   coins:
   - 100000000000000000000acax
-  - 10000cvoucher
+  - 0cvoucher
 - name: test-wallet
   mnemonic: "old square lecture frog curtain habit bunker casino awesome defy
     fashion cry wife rain outer scene fork leaf raven twin hen hurt calm
     bulb"
   coins:
   - 10000000000000000000acax
-  - 100000000cvoucher
+  - 0cvoucher
+- name: ubc_initiator
+  mnemonic: "slice bachelor test little pink purse shaft weekend priority atom math borrow surprise undo trust pause drip payment gather gaze siren predict ostrich virus"
+  coins:
+  - 1000000acax
+  - 10000000000cvoucher
 
 validators:
 - name: alice

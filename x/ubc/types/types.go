@@ -4,3 +4,17 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 package types
+
+const (
+	// CaxMultiplier is the multiplier for cax tokens
+	CaxMultiplier = 1e18
+
+	// VoucherMultiplier is the multiplier for voucher
+	VoucherMultiplier = 1e2
+
+	// CaxDenom is the denominator for cax tokens
+	CaxDenom = "acax"
+
+	// VoucherDenom is the denominator for voucher
+	VoucherDenom = "cvoucher"
+)

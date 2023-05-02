@@ -29,5 +29,39 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 	}
 	k.SetUbcobject(ctx, *ubc)
 
+	creatorAddress, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errors.Wrap(types.ErrFundHandling, "creator address: "+err.Error())
+	}
+
+	initcvoucher := sdk.NewCoin(
+		types.VoucherDenom,
+		ubc.BPool.RoundInt().MulRaw(types.VoucherMultiplier))
+	err = k.bankKeeper.SendCoinsFromAccountToModule(
+		ctx,
+		creatorAddress,
+		types.ModuleName,
+		sdk.NewCoins(initcvoucher))
+	if err != nil {
+		return nil, errors.Wrap(types.ErrFundHandling, "insufficient cvoucher: "+err.Error())
+	}
+
+	acaxToMint := sdk.NewCoin(
+		types.CaxDenom,
+		ubc.BPool.RoundInt().MulRaw(types.CaxMultiplier))
+	err = k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(acaxToMint))
+	if err != nil {
+		return nil, errors.Wrap(types.ErrFundHandling, "minting acax: "+err.Error())
+	}
+
+	err = k.bankKeeper.SendCoinsFromModuleToAccount(
+		ctx,
+		types.ModuleName,
+		creatorAddress,
+		sdk.NewCoins(acaxToMint))
+	if err != nil {
+		return nil, errors.Wrap(types.ErrFundHandling, "transfering minted acax: "+err.Error())
+	}
+
 	return &types.MsgInitResponse{}, nil
 }
