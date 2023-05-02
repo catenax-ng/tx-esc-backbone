@@ -538,6 +538,8 @@ func New(
 		keys[ubcmoduletypes.StoreKey],
 		keys[ubcmoduletypes.MemStoreKey],
 		app.GetSubspace(ubcmoduletypes.ModuleName),
+
+		app.BankKeeper,
 	)
 	ubcModule := ubcmodule.NewAppModule(appCodec, app.UbcKeeper, app.AccountKeeper, app.BankKeeper)
 
