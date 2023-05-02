@@ -8,6 +8,7 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/pkg/errors"
 )
 
 const TypeMsgInit = "init"
@@ -56,4 +57,38 @@ func (msg *MsgInit) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
 	return nil
+}
+
+func (msg *MsgInit) ParseUbcobject() (ubc *Ubcobject, err error) {
+	ubc = &Ubcobject{}
+
+	if ubc.RefTokenSupply, err = sdk.NewDecFromStr(msg.RefTokenSupply); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "RefTokenSupply")
+	}
+	if ubc.RefTokenPrice, err = sdk.NewDecFromStr(msg.RefTokenPrice); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "RefTokenPrice")
+	}
+	if ubc.RefProfitFactor, err = sdk.NewDecFromStr(msg.RefProfitFactor); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "RefProfitFactor")
+	}
+	if ubc.BPool, err = sdk.NewDecFromStr(msg.BPool); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "BPool")
+	}
+	if ubc.BPoolUnder, err = sdk.NewDecFromStr(msg.BPoolUnder); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "BPoolUnder")
+	}
+	if ubc.SlopeP2, err = sdk.NewDecFromStr(msg.SlopeP2); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "SlopeP2")
+	}
+	if ubc.SlopeP3, err = sdk.NewDecFromStr(msg.SlopeP3); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "SlopeP3")
+	}
+	if ubc.FactorFy, err = sdk.NewDecFromStr(msg.FactorFy); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "FactorFy")
+	}
+	if ubc.FactorFxy, err = sdk.NewDecFromStr(msg.FactorFxy); err != nil {
+		return nil, errors.Wrap(ErrInvalidArg, "FactorFxy")
+	}
+
+	return ubc, nil
 }
