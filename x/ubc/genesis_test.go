@@ -12,30 +12,57 @@ import (
 	"github.com/catenax/esc-backbone/testutil/nullify"
 	"github.com/catenax/esc-backbone/x/ubc"
 	"github.com/catenax/esc-backbone/x/ubc/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGenesis(t *testing.T) {
+
+	zeroSegment := func() *types.Segment {
+		return &types.Segment{
+			P0:     sdk.ZeroDec(),
+			A:      sdk.ZeroDec(),
+			B:      sdk.ZeroDec(),
+			P1:     sdk.ZeroDec(),
+			P0X:    sdk.ZeroDec(),
+			P1X:    sdk.ZeroDec(),
+			DeltaX: sdk.ZeroDec(),
+		}
+	}
+
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
 		Ubcobject: &types.Ubcobject{
-			FS0:             "97",
-			S0:              "8",
-			S1:              "5",
-			S2:              "19",
-			QS3:             "44",
-			RefProfitFactor: "42",
-			RefTokenSupply:  "8",
-			RefTokenPrice:   "91",
-			BPool:           "99",
-			BPoolUnder:      "35",
-			FactorFy:        "57",
-			FactorFxy:       "8",
-			TradingPoint:    "96",
-			CurrentSupply:   "41",
-			Slopep2:         "69",
-			Slopep3:         "62",
+			FS0: &types.Flatsegment{
+				Y:  sdk.ZeroDec(),
+				X0: sdk.ZeroDec(),
+			},
+			S0: zeroSegment(),
+			S1: zeroSegment(),
+			S2: &types.Fixedsegment{
+				Segment:     zeroSegment(),
+				IntervalP0X: sdk.ZeroDec(),
+			},
+			QS3: &types.Quadraticsegment{
+				A:             sdk.ZeroDec(),
+				B:             sdk.ZeroDec(),
+				C:             sdk.ZeroDec(),
+				ScalingFactor: sdk.ZeroDec(),
+				InitialX0:     sdk.ZeroDec(),
+				CurrentX0:     sdk.ZeroDec(),
+			},
+			RefProfitFactor: sdk.ZeroDec(),
+			RefTokenSupply:  sdk.ZeroDec(),
+			RefTokenPrice:   sdk.ZeroDec(),
+			BPool:           sdk.ZeroDec(),
+			BPoolUnder:      sdk.ZeroDec(),
+			FactorFy:        sdk.ZeroDec(),
+			FactorFxy:       sdk.ZeroDec(),
+			TradingPoint:    sdk.ZeroDec(),
+			CurrentSupply:   sdk.ZeroDec(),
+			SlopeP2:         sdk.ZeroDec(),
+			SlopeP3:         sdk.ZeroDec(),
 		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}

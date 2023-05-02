@@ -11,6 +11,7 @@ import (
 
 	tmcli "github.com/cometbft/cometbft/libs/cli"
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/status"
 
@@ -24,7 +25,19 @@ func networkWithUbcobjectObjects(t *testing.T) (*network.Network, types.Ubcobjec
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
-	ubcobject := &types.Ubcobject{}
+	ubcobject := &types.Ubcobject{
+		RefTokenSupply:  sdk.ZeroDec(),
+		RefTokenPrice:   sdk.ZeroDec(),
+		RefProfitFactor: sdk.ZeroDec(),
+		BPool:           sdk.ZeroDec(),
+		BPoolUnder:      sdk.ZeroDec(),
+		SlopeP2:         sdk.ZeroDec(),
+		SlopeP3:         sdk.ZeroDec(),
+		FactorFy:        sdk.ZeroDec(),
+		FactorFxy:       sdk.ZeroDec(),
+		TradingPoint:    sdk.ZeroDec(),
+		CurrentSupply:   sdk.ZeroDec(),
+	}
 	nullify.Fill(&ubcobject)
 	state.Ubcobject = ubcobject
 	buf, err := cfg.Codec.MarshalJSON(&state)

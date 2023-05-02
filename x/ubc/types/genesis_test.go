@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/catenax/esc-backbone/x/ubc/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -28,22 +29,22 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 
 				Ubcobject: &types.Ubcobject{
-					FS0:             "75",
-					S0:              "71",
-					S1:              "32",
-					S2:              "77",
-					QS3:             "52",
-					RefProfitFactor: "100",
-					RefTokenSupply:  "36",
-					RefTokenPrice:   "94",
-					BPool:           "64",
-					BPoolUnder:      "17",
-					FactorFy:        "52",
-					FactorFxy:       "63",
-					TradingPoint:    "17",
-					CurrentSupply:   "91",
-					Slopep2:         "64",
-					Slopep3:         "57",
+					FS0:             new(types.Flatsegment),
+					S0:              new(types.Segment),
+					S1:              new(types.Segment),
+					S2:              new(types.Fixedsegment),
+					QS3:             new(types.Quadraticsegment),
+					RefProfitFactor: sdk.ZeroDec(),
+					RefTokenSupply:  sdk.ZeroDec(),
+					RefTokenPrice:   sdk.ZeroDec(),
+					BPool:           sdk.ZeroDec(),
+					BPoolUnder:      sdk.ZeroDec(),
+					FactorFy:        sdk.ZeroDec(),
+					FactorFxy:       sdk.ZeroDec(),
+					TradingPoint:    sdk.ZeroDec(),
+					CurrentSupply:   sdk.ZeroDec(),
+					SlopeP2:         sdk.ZeroDec(),
+					SlopeP3:         sdk.ZeroDec(),
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},

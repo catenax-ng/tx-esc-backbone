@@ -18,7 +18,19 @@ import (
 )
 
 func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Ubcobject {
-	item := types.Ubcobject{}
+	item := types.Ubcobject{
+		RefTokenSupply:  sdk.ZeroDec(),
+		RefTokenPrice:   sdk.ZeroDec(),
+		RefProfitFactor: sdk.ZeroDec(),
+		BPool:           sdk.ZeroDec(),
+		BPoolUnder:      sdk.ZeroDec(),
+		SlopeP2:         sdk.ZeroDec(),
+		SlopeP3:         sdk.ZeroDec(),
+		FactorFy:        sdk.ZeroDec(),
+		FactorFxy:       sdk.ZeroDec(),
+		TradingPoint:    sdk.ZeroDec(),
+		CurrentSupply:   sdk.ZeroDec(),
+	}
 	keeper.SetUbcobject(ctx, item)
 	return item
 }
