@@ -3,12 +3,11 @@
 // https://github.com/catenax-ng/product-esc-backbone-code
 //
 // SPDX-License-Identifier: Apache-2.0
-package types_test
+package types
 
 import (
 	"testing"
 
-	"github.com/catenax/esc-backbone/x/ubc/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -58,16 +57,16 @@ func Test_UbcObject_Fit_Happy(t *testing.T) {
 	t.Run("alternate set of valid params", func(t *testing.T) {
 		type test struct {
 			name     string
-			modifier func(ubc *types.Ubcobject)
+			modifier func(ubc *Ubcobject)
 		}
 
 		tests := []test{
 			{"BPoolUnder_alternate1",
-				func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(150e6) }},
+				func(ubc *Ubcobject) { ubc.BPoolUnder = sdk.NewDec(150e6) }},
 			{"BPoolUnder_alternate2",
-				func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(90e6) }},
+				func(ubc *Ubcobject) { ubc.BPoolUnder = sdk.NewDec(90e6) }},
 			{"BPool_notSet", // Because BPool is not used in Fit.
-				func(ubc *types.Ubcobject) { ubc.BPool = sdk.Dec{} }},
+				func(ubc *Ubcobject) { ubc.BPool = sdk.Dec{} }},
 		}
 
 		for _, tc := range tests {
@@ -83,38 +82,38 @@ func Test_UbcObject_Fit_Happy(t *testing.T) {
 func Test_UbcObject_Fit_Error(t *testing.T) {
 	type test struct {
 		name     string
-		modifier func(ubc *types.Ubcobject)
+		modifier func(ubc *Ubcobject)
 	}
 
 	tests := []test{
 		{"RefTokenSupply_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.RefTokenSupply = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.RefTokenSupply = sdk.Dec{} }},
 		{"RefTokenPrice_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.RefTokenPrice = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.RefTokenPrice = sdk.Dec{} }},
 		{"RefProfitFactor_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.RefProfitFactor = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.RefProfitFactor = sdk.Dec{} }},
 		{"BPoolUnder_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.BPoolUnder = sdk.Dec{} }},
 		{"SlopeP2_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.SlopeP2 = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.SlopeP2 = sdk.Dec{} }},
 		{"SlopeP3_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.SlopeP3 = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.SlopeP3 = sdk.Dec{} }},
 		{"FactorFy_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.FactorFy = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.FactorFy = sdk.Dec{} }},
 		{"FactorFxy_isNotSet",
-			func(ubc *types.Ubcobject) { ubc.FactorFxy = sdk.Dec{} }},
+			func(ubc *Ubcobject) { ubc.FactorFxy = sdk.Dec{} }},
 		{"RefTokenSupply_isTooLess",
-			func(ubc *types.Ubcobject) { ubc.RefTokenSupply = sdk.NewDec(6e6) }},
+			func(ubc *Ubcobject) { ubc.RefTokenSupply = sdk.NewDec(6e6) }},
 		{"RefTokenSupply_isTooHigh",
-			func(ubc *types.Ubcobject) { ubc.RefTokenSupply = sdk.NewDec(6e10) }},
+			func(ubc *Ubcobject) { ubc.RefTokenSupply = sdk.NewDec(6e10) }},
 		{"RefTokenTokenPrice_isTooLess",
-			func(ubc *types.Ubcobject) { ubc.RefTokenPrice = sdk.NewDecWithPrec(1, 1) }},
+			func(ubc *Ubcobject) { ubc.RefTokenPrice = sdk.NewDecWithPrec(1, 1) }},
 		{"RefTokenTokenPrice_isTooHigh",
-			func(ubc *types.Ubcobject) { ubc.RefTokenPrice = sdk.NewDec(10) }},
+			func(ubc *Ubcobject) { ubc.RefTokenPrice = sdk.NewDec(10) }},
 		{"BPoolUnder_isTooLess",
-			func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(100e3) }},
+			func(ubc *Ubcobject) { ubc.BPoolUnder = sdk.NewDec(100e3) }},
 		{"BPoolUnder_isTooHigh",
-			func(ubc *types.Ubcobject) { ubc.BPoolUnder = sdk.NewDec(100e10) }},
+			func(ubc *Ubcobject) { ubc.BPoolUnder = sdk.NewDec(100e10) }},
 	}
 
 	for _, tc := range tests {
@@ -139,8 +138,8 @@ func IsEqualDecimal(t *testing.T, expected string, actual sdk.Dec) {
 	assert.Equal(t, expectedDec, actual)
 }
 
-func validUbcParams() types.Ubcobject {
-	return types.Ubcobject{
+func validUbcParams() Ubcobject {
+	return Ubcobject{
 		RefTokenSupply:  sdk.NewDec(6e9),
 		RefTokenPrice:   sdk.NewDec(1),
 		RefProfitFactor: sdk.NewDec(10),
