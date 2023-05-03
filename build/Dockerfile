@@ -9,21 +9,6 @@ RUN go install github.com/tomwright/dasel/cmd/dasel@v1.26.1
 WORKDIR /output
 RUN cp `which dasel` /output
 
-FROM golang:1.19.1-bullseye as esc-backbone-build-base
-
-ENV PACKAGES bash curl
-
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y $PACKAGES && \
-    apt-get remove --purge --auto-remove -y && \
-    apt-get clean
-
-ONBUILD RUN apt-get update && \
-            apt-get upgrade -y && \
-            apt-get remove --purge --auto-remove -y && \
-            apt-get clean \
-
 FROM ghcr.io/catenax-ng/esc-backbone-build-base:latest as build
 
 WORKDIR /build

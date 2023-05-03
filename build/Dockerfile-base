@@ -1,0 +1,17 @@
+# Copyright (c) 2022-2023 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+# syntax=docker/dockerfile:1.4
+FROM golang:1.18.1-bullseye as esc-backbone-build-base
+ENV PACKAGES bash curl
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y $PACKAGES && \
+    apt-get clean
+
+ONBUILD RUN apt-get update && \
+            apt-get upgrade -y && \
+            apt-get remove --purge --auto-remove -y && \
+            apt-get clean
