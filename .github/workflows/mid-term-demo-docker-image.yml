@@ -8,13 +8,8 @@ name: mid-term-demo Docker Image CI
 
 on:
   push:
-    branches:
-      - main
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
-  pull_request:
-    branches:
-      - '*'
 
 jobs:
   build-mid-term-demo:
