@@ -8,7 +8,8 @@
 
 SCRIPT_LOCATION=$( dirname -- "${BASH_SOURCE[0]}")
 
-
+DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-build-base -t esc-backbone-build-base -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
+docker tag esc-backbone-build-base ghcr.io/catenax-ng/esc-backbone-build-base
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-node -t esc-backbone-node -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
 docker tag esc-backbone-node ghcr.io/catenax-ng/esc-backbone-node:latest
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-node-init -t esc-backbone-node-init  -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."

@@ -9,6 +9,8 @@ RUN go install github.com/tomwright/dasel/cmd/dasel@v1.26.1
 WORKDIR /output
 RUN cp `which dasel` /output
 
+FROM golang:1.19.1-bullseye as esc-backbone-build-base
+
 FROM golang:1.19.1-bullseye as build
 
 ENV PACKAGES bash curl
