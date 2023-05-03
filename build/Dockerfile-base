@@ -4,12 +4,16 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # syntax=docker/dockerfile:1.4
-FROM golang:1.18.1-bullseye as esc-backbone-build-base
+FROM golang:1.19.1-bullseye as esc-backbone-build-base
 ENV PACKAGES bash curl
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y $PACKAGES && \
     apt-get clean
+
+RUN go install github.com/tomwright/dasel/cmd/dasel@v1.26.1
+WORKDIR /output
+RUN cp `which dasel` /output
 
 ONBUILD RUN apt-get update && \
             apt-get upgrade -y && \

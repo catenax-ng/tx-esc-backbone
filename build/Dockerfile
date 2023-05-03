@@ -4,11 +4,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # syntax=docker/dockerfile:1.4
-FROM golang:1.19.1-bullseye as load-dasel
-RUN go install github.com/tomwright/dasel/cmd/dasel@v1.26.1
-WORKDIR /output
-RUN cp `which dasel` /output
-
 FROM ghcr.io/catenax-ng/esc-backbone-build-base:latest as build
 
 WORKDIR /build
@@ -85,7 +80,7 @@ WORKDIR /initscripts
 COPY --chown=$UID:$GID testnetscripts/*.sh /initscripts/
 RUN chmod u+x /initscripts/*.sh
 WORKDIR /validator
-COPY --from=load-dasel --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
 COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
 COPY --from=build /build/esc-backbone/shared-libs /usr/lib
 ENV CHAIN_BINARY="/validator/esc-backboned"
@@ -152,7 +147,7 @@ COPY --chown=$UID:$GID testnetscripts/*.sh /initscripts/
 RUN chmod u+x /initscripts/*.sh
 WORKDIR /orchestrator
 RUN chown $UID:$GID /orchestrator
-COPY --from=load-dasel --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
 COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /orchestrator/
 COPY --from=build /build/esc-backbone/shared-libs /usr/lib
 ENV CHAIN_BINARY="/orchestrator/esc-backboned"
@@ -179,7 +174,7 @@ ENV PACKAGES  openssh-client sshpass curl jq git sed
 RUN apt-get update
 RUN apt-get install -y $PACKAGES
 
-COPY --from=load-dasel --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
 
 # add the testnet scripts for easier watching a git repo
 WORKDIR /testnetscripts
