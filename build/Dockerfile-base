@@ -30,3 +30,8 @@ ONBUILD RUN apt-get update && \
             apt-get upgrade -y && \
             apt-get remove --purge --auto-remove -y && \
             apt-get clean
+
+FROM node:17.9 as esc-backbone-web-build-base
+WORKDIR /build/web
+COPY web/package.json web/package-lock.json ./
+RUN npm install

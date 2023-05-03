@@ -28,7 +28,7 @@ RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 COPY web ./web
 RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
 
-FROM node:17.9 as web-chain-suggestion-build
+FROM ghcr.io/catenax-ng/esc-backbone-web-build-base:latest as web-chain-suggestion-build
 
 WORKDIR /build
 COPY --from=build /build/esc-backbone /build
