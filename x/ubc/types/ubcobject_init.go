@@ -19,6 +19,8 @@ func (ubc *Ubcobject) Fit() error {
 	if err := ubc.validateParameters(); err != nil {
 		return err
 	}
+	// Trading starts at 50% of reference supply.
+	ubc.CurrentSupply = ubc.RefTokenSupply.Quo(sdk.NewDec(2))
 
 	ubc.initSegmentsToZero()
 	ubc.fitS2()
@@ -104,7 +106,7 @@ func (ubc *Ubcobject) calcS2AB() {
 func (ubc *Ubcobject) fitS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
-	curvatureP3 := ubc.S2.secondDerivativeX(ubc.p3x())
+	curvatureP3 := ubc.S2.secondDerivativeX1(ubc.p3x())
 	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
 }
 
@@ -218,7 +220,7 @@ func (ubc *Ubcobject) validateCurvature() error {
 		return errors.Errorf("curvature condition 4 failed")
 	}
 
-	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeT(sdk.ZeroDec())) {
+	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeT1(sdk.ZeroDec())) {
 		return errors.Errorf("curvature condition 5 failed")
 	}
 

@@ -20,16 +20,47 @@ func TestMsgBuytokens_ValidateBasic(t *testing.T) {
 		err  error
 	}{
 		{
+			name: "valid",
+			msg: MsgBuytokens{
+				Buyer: sample.AccAddress(),
+				Value: "10" + CaxDenom,
+			},
+			err: nil,
+		}, {
+			name: "zero value",
+			msg: MsgBuytokens{
+				Buyer: sample.AccAddress(),
+				Value: "0" + CaxDenom,
+			},
+			err: ErrInvalidArg,
+		}, {
+			name: "negative value",
+			msg: MsgBuytokens{
+				Buyer: sample.AccAddress(),
+				Value: "-5" + CaxDenom,
+			},
+			err: sdkerrors.ErrInvalidCoins,
+		}, {
 			name: "invalid address",
 			msg: MsgBuytokens{
 				Buyer: "invalid_address",
+				Value: "10" + CaxDenom,
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
-			name: "valid address",
+			name: "invalid value",
 			msg: MsgBuytokens{
 				Buyer: sample.AccAddress(),
+				Value: "abcd",
 			},
+			err: sdkerrors.ErrInvalidCoins,
+		}, {
+			name: "invalid denom",
+			msg: MsgBuytokens{
+				Buyer: sample.AccAddress(),
+				Value: "2" + CaxDenom + "x",
+			},
+			err: ErrInvalidArg,
 		},
 	}
 	for _, tt := range tests {

@@ -18,3 +18,7 @@ const (
 	// VoucherDenom is the denominator for voucher
 	VoucherDenom = "cvoucher"
 )
+
+func isValidDenom(denom string) bool {
+	return denom == VoucherDenom || denom == CaxDenom
+}

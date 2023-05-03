@@ -17,4 +17,5 @@ var (
 	ErrInvalidArg   = sdkerrors.Register(ModuleName, 1101, "invalid argument")
 	ErrCurveFitting = sdkerrors.Register(ModuleName, 1102, "fitting the curve")
 	ErrFundHandling = sdkerrors.Register(ModuleName, 1103, "fund handling")
+	ErrComputation  = sdkerrors.Register(ModuleName, 1104, "computation error")
 )
