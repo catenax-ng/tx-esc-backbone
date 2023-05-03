@@ -60,16 +60,13 @@ USER $UID
 
 CMD ["nginx", "-g", "daemon off;"]
 
-
-FROM debian:11.5-slim as esc-backbone-node-init
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-backbone-node-init
 ARG BRANCH=main
 ARG UID=102
 ARG GID=102
 LABEL branch="$BRANCH" repository="github.com/catenax-ng/product-esc-backbone-code"
 
 ENV PACKAGES openssh-client sed jq git
-RUN apt-get update
-RUN apt-get upgrade -y
 RUN apt-get install -y $PACKAGES
 
 # NODE_HOME specifies the folder name, which the validator will use as home folder below /validator/data
@@ -105,13 +102,10 @@ USER $UID
 
 ENTRYPOINT ["sh", "-c","/initscripts/setup-node.sh /home/validator/$NODE_HOME $PUBLIC_HOST_NAME $MONIKER \"$VALIDATOR_MNEMONIC\" \"$NODE_MNEMONIC\""]
 
-FROM debian:11.5-slim as esc-backbone-node
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-backbone-node
 ARG BRANCH=main
 ARG UID=102
 ARG GID=102
-
-RUN apt-get update
-RUN apt-get upgrade -y
 
 LABEL branch="$BRANCH" repository="github.com/catenax-ng/product-esc-backbone-code"
 EXPOSE 1317 9090 9091 26656 26657 26658
@@ -126,15 +120,13 @@ USER $UID
 
 ENTRYPOINT ["sh", "-c", "id; ls -la /home/validator; /validator/esc-backboned start --home /home/validator/$NODE_HOME"]
 
-FROM debian:11.5-slim as esc-backbone-orchestrator
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-backbone-orchestrator
 ARG BRANCH=main
 ARG UID=102
 ARG GID=102
 LABEL branch="$BRANCH" repository="github.com/catenax-ng/product-esc-backbone-code"
 
 ENV PACKAGES  openssh-client git sed jq
-RUN apt update
-RUN apt-get upgrade -y
 RUN apt-get install -y $PACKAGES
 
 
@@ -164,14 +156,13 @@ ENV GIT_PUSH_MAX_RETRY=5
 USER $UID
 ENTRYPOINT ["sh", "-c","/initscripts/orchestrator-network-setup.sh /orchestrator/$NODE_HOME FALSE"]
 
-FROM debian:11.5-slim as ssh-client
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as ssh-client
 ARG BRANCH=main
 
 LABEL branch="$BRANCH" repository="github.com/catenax-ng/product-esc-backbone-code"
 
 ENV PACKAGES  openssh-client sshpass curl jq git sed
 
-RUN apt-get update
 RUN apt-get install -y $PACKAGES
 
 COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/

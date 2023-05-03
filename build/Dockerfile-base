@@ -19,3 +19,14 @@ ONBUILD RUN apt-get update && \
             apt-get upgrade -y && \
             apt-get remove --purge --auto-remove -y && \
             apt-get clean
+
+FROM debian:11.5-slim as esc-backbone-debian-base
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get remove --purge --auto-remove -y && \
+    apt-get clean
+
+ONBUILD RUN apt-get update && \
+            apt-get upgrade -y && \
+            apt-get remove --purge --auto-remove -y && \
+            apt-get clean
