@@ -6,10 +6,6 @@
 # syntax=docker/dockerfile:1.4
 FROM ghcr.io/catenax-ng/esc-backbone-build-base:latest as build
 
-WORKDIR /build
-
-RUN curl https://get.ignite.com/cli@v0.26.1! | bash
-
 WORKDIR /build/esc-backbone
 COPY go.mod go.sum ./
 RUN go mod download
