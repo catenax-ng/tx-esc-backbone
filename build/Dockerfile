@@ -11,14 +11,22 @@ RUN cp `which dasel` /output
 
 FROM golang:1.19.1-bullseye as esc-backbone-build-base
 
-FROM golang:1.19.1-bullseye as build
-
 ENV PACKAGES bash curl
 
-WORKDIR /build
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y $PACKAGES && \
+    apt-get remove --purge --auto-remove -y && \
+    apt-get clean
 
-RUN apt update
-RUN apt install -y $PACKAGES
+ONBUILD RUN apt-get update && \
+            apt-get upgrade -y && \
+            apt-get remove --purge --auto-remove -y && \
+            apt-get clean \
+
+FROM ghcr.io/catenax-ng/esc-backbone-build-base:latest as build
+
+WORKDIR /build
 
 RUN curl https://get.ignite.com/cli@v0.26.1! | bash
 
