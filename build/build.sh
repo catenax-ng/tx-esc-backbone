@@ -14,6 +14,8 @@ DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-debian-ba
 docker tag esc-backbone-debian-base ghcr.io/catenax-ng/esc-backbone-debian-base
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-web-build-base -t esc-backbone-web-build-base -f "$SCRIPT_LOCATION/Dockerfile-base" "$SCRIPT_LOCATION/.."
 docker tag esc-backbone-web-build-base ghcr.io/catenax-ng/esc-backbone-web-build-base
+DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-web-base -t esc-backbone-web-base -f "$SCRIPT_LOCATION/Dockerfile-base" "$SCRIPT_LOCATION/.."
+docker tag esc-backbone-web-base ghcr.io/catenax-ng/esc-backbone-web-base
 
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-node -t esc-backbone-node -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
 docker tag esc-backbone-node ghcr.io/catenax-ng/esc-backbone-node:latest

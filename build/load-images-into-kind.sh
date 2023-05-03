@@ -9,6 +9,7 @@
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-build-base:latest
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-debian-base:latest
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-web-build-base:latest
+kind load docker-image ghcr.io/catenax-ng/esc-backbone-web-base:latest
 
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-node:latest
 kind load docker-image ghcr.io/catenax-ng/esc-backbone-web:latest

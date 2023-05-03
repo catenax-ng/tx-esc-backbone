@@ -35,3 +35,17 @@ FROM node:17.9 as esc-backbone-web-build-base
 WORKDIR /build/web
 COPY web/package.json web/package-lock.json ./
 RUN npm install
+
+FROM nginxinc/nginx-unprivileged:1.23 as esc-backbone-web-base
+USER 0
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y jq &&  \
+    apt-get remove --purge --auto-remove -y && \
+    apt-get clean
+
+ONBUILD USER 0
+ONBUILD RUN apt-get update && \
+            apt-get upgrade -y && \
+            apt-get remove --purge --auto-remove -y && \
+            apt-get clean

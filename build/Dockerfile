@@ -35,12 +35,10 @@ COPY --from=build /build/esc-backbone /build
 WORKDIR /build/web
 RUN npm install && npm run build
 
-FROM nginxinc/nginx-unprivileged:1.23 as esc-backbone-web
+FROM ghcr.io/catenax-ng/esc-backbone-web-base:latest as esc-backbone-web
 
 ARG UID=101
 ARG GID=101
-USER 0
-RUN apt-get update && apt-get install -y jq && apt-get remove --purge --auto-remove -y
 ENV CHAIN_SUGGESTION=/usr/share/nginx/html/chain/catenax-testnet-1-suggestion.json
 ENV CHAIN_REST="http://0.0.0.0:1317/"
 ENV CHAIN_RPC="http://0.0.0.0:26657/"
@@ -55,8 +53,8 @@ COPY --chown=$UID:$GID build/write-env-to-json.sh /
 COPY --chown=$UID:$GID build/update-chain-suggestion.sh  /
 
 ENTRYPOINT ["/webapp-entrypoint.sh"]
-USER $UID
 
+USER $UID
 
 CMD ["nginx", "-g", "daemon off;"]
 
