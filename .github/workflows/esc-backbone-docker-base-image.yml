@@ -15,7 +15,7 @@ on:
 jobs:
 
 
-  build-esc-backbone-build-base:
+  build-base-images:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -46,16 +46,6 @@ jobs:
           push: true
           tags: ${{ steps.esc_backbone_build_base_meta.outputs.tags }}
           labels: ${{ steps.esc_backbone_build_base_meta.outputs.labels }}
-  build-esc-backbone-web-build-base:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: ESC-Backbone-Web-Build-base Docker Metadata
         id: esc_backbone_web_build_base_meta
         uses: docker/metadata-action@v4
@@ -77,16 +67,6 @@ jobs:
           push: true
           tags: ${{ steps.esc_backbone_web_build_base_meta.outputs.tags }}
           labels: ${{ steps.esc_backbone_web_build_base_meta.outputs.labels }}
-  build-esc-backbone-web-base:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: ESC-Backbone-Web-base Docker Metadata
         id: esc_backbone_web_base_meta
         uses: docker/metadata-action@v4
@@ -108,16 +88,6 @@ jobs:
           push: true
           tags: ${{ steps.esc_backbone_web_base_meta.outputs.tags }}
           labels: ${{ steps.esc_backbone_web_base_meta.outputs.labels }}
-  build-esc-backbone-debian-base:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: ESC-Backbone-Debian-base Docker Metadata
         id: esc_backbone_debian_base_meta
         uses: docker/metadata-action@v4
