@@ -9,12 +9,8 @@ name: ESC-Backbone Docker Base Images CI
 on:
   schedule:
     - cron: "23 5 * * 6"
-  pull_request:
-    branches:
-      - '*'
+
 jobs:
-
-
   build-base-images:
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +57,7 @@ jobs:
             type=sha
             type=raw,value=latest
       - name: Build the ESC-Backbone-Web-Build-base Docker image and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: build/Dockerfile-base
@@ -83,7 +79,7 @@ jobs:
             type=sha
             type=raw,value=latest
       - name: Build the ESC-Backbone-Web-base Docker image and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: build/Dockerfile-base
@@ -105,7 +101,7 @@ jobs:
             type=sha
             type=raw,value=latest
       - name: Build the ESC-Backbone-Debian-base Docker image and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: build/Dockerfile-base
