@@ -18,8 +18,20 @@ on:
 
 jobs:
 
-  build-esc-web:
+  build-esc-backbone-images:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: esc-backbone-web
+          - target: esc-backbone-node
+          - target: esc-backbone-node-init
+          - target: esc-backbone-orchestrator
+          - target: ssh-client
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - name: Login to Github Packages
@@ -28,89 +40,27 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Web Docker Metadata
-        id: esc_backbone_web_meta
+      - name: Docker Metadata ${{ matrix.target }}
+        id: esc_backbone_meta
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/catenax-ng/esc-backbone-web
+            ghcr.io/catenax-ng/${{ matrix.target }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{raw}}
             type=match,pattern=\d.\d.\d
             type=sha
-      - name: Build the ESC-Web Docker image and push
+      - name: Build the  ${{ matrix.target }} image and push
         uses: docker/build-push-action@v2
         with:
           context: .
           file: build/Dockerfile
-          target: esc-backbone-web
+          target: ${{ matrix.target }}
           push: true
-          tags: ${{ steps.esc_backbone_web_meta.outputs.tags }}
-          labels: ${{ steps.esc_backbone_web_meta.outputs.labels }}
-  build-esc-backbone-node:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Backbone Docker Metadata
-        id: esc_backbone_node_meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/catenax-ng/esc-backbone-node
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{raw}}
-            type=match,pattern=\d.\d.\d
-            type=sha
-      - name: Build the ESC-Backbone Docker image and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: build/Dockerfile
-          target: esc-backbone-node
-          push: true
-          tags: ${{ steps.esc_backbone_node_meta.outputs.tags }}
-          labels: ${{ steps.esc_backbone_node_meta.outputs.labels }}
-  build-esc-backbone-node-init:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Backbone Docker Metadata
-        id: esc_backbone_node_init_meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/catenax-ng/esc-backbone-node-init
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{raw}}
-            type=match,pattern=\d.\d.\d
-            type=sha
-      - name: Build the ESC-Backbone Docker image and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: build/Dockerfile
-          target: esc-backbone-node-init
-          push: true
-          tags: ${{ steps.esc_backbone_node_init_meta.outputs.tags }}
-          labels: ${{ steps.esc_backbone_node_init_meta.outputs.labels }}
+          tags: ${{ steps.esc_backbone_meta.outputs.tags }}
+          labels: ${{ steps.esc_backbone_meta.outputs.labels }}
   build-esc-backbone-faucet:
     runs-on: ubuntu-latest
     steps:
@@ -142,65 +92,3 @@ jobs:
           push: true
           tags: ${{ steps.esc_backbone_faucet_meta.outputs.tags }}
           labels: ${{ steps.esc_backbone_faucet_meta.outputs.labels }}
-  build-esc-backbone-orchestrator:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Backbone Docker Metadata
-        id: esc_backbone_orchestrator_meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/catenax-ng/esc-backbone-orchestrator
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{raw}}
-            type=match,pattern=\d.\d.\d
-            type=sha
-      - name: Build the ESC-Backbone Docker image and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: build/Dockerfile
-          target: esc-backbone-orchestrator
-          push: true
-          tags: ${{ steps.esc_backbone_orchestrator_meta.outputs.tags }}
-          labels: ${{ steps.esc_backbone_orchestrator_meta.outputs.labels }}
-  build-ssh-client:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Backbone Docker Metadata
-        id: ssh-client_meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/catenax-ng/ssh-client
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{raw}}
-            type=match,pattern=\d.\d.\d
-            type=sha
-      - name: Build the ESC-Backbone Docker image and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: build/Dockerfile
-          target: ssh-client
-          push: true
-          tags: ${{ steps.ssh-client_meta.outputs.tags }}
-          labels: ${{ steps.ssh-client_meta.outputs.labels }}
