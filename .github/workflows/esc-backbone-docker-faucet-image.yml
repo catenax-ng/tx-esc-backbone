@@ -1,0 +1,85 @@
+# Copyright (c) 2022-2023 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: ESC-Backbone Faucet Docker Image CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  check:
+    name: Dockerfile-faucet changed
+    outputs:
+      run_job: ${{ steps.check_files.outputs.docker_file_changed }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: check modified files
+        id: check_files
+        run: |
+          echo "=============== list modified files ==============="
+          git diff --name-only HEAD^ HEAD
+          
+          echo "========== check paths of modified files =========="
+          git diff --name-only HEAD^ HEAD > files.txt
+          while IFS= read -r file
+          do
+            echo $file
+            if [[ $file != build/Dockerfile-faucet ]]; then
+              echo "::set-output name=docker_file_changed::false"
+            else
+              echo "::set-output name=docker_file_changed::true"
+              break
+            fi
+          done < files.txt
+
+  build-esc-backbone-faucet:
+    needs: check
+    if: needs.check.outputs.docker_file_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: ESC-Backbone Docker Metadata
+        id: esc_backbone_faucet_meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/catenax-ng/catena-faucet
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{raw}}
+            type=match,pattern=\d.\d.\d
+            type=sha
+      - name: Build the ESC-Backbone faucet Docker image and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: build/Dockerfile-faucet
+          target: esc-backbone-faucet
+          push: true
+          tags: ${{ steps.esc_backbone_faucet_meta.outputs.tags }}
+          labels: ${{ steps.esc_backbone_faucet_meta.outputs.labels }}

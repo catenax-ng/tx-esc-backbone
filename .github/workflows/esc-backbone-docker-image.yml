@@ -100,34 +100,3 @@ jobs:
           push: true
           tags: ${{ steps.esc_backbone_meta.outputs.tags }}
           labels: ${{ steps.esc_backbone_meta.outputs.labels }}
-  build-esc-backbone-faucet:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: ESC-Backbone Docker Metadata
-        id: esc_backbone_faucet_meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ghcr.io/catenax-ng/catena-faucet
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{raw}}
-            type=match,pattern=\d.\d.\d
-            type=sha
-      - name: Build the ESC-Backbone faucet Docker image and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: build/Dockerfile-faucet
-          target: esc-backbone-faucet
-          push: true
-          tags: ${{ steps.esc_backbone_faucet_meta.outputs.tags }}
-          labels: ${{ steps.esc_backbone_faucet_meta.outputs.labels }}
