@@ -22,13 +22,20 @@ COPY config.yml ./
 RUN ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 COPY web ./web
-RUN chmod u+x keplr-suggestion && mkdir -p ./web/public/chain && ./keplr-suggestion
+RUN chmod u+x keplr-suggestion &&  \
+    mkdir -p ./web/public/chain &&  \
+    ./keplr-suggestion &&  \
+    mv ./web /output && \
+    cp /go/bin/esc-backboned /output
+
+FROM scratch as esc-backbone-build-output
+WORKDIR /output
+COPY --from=build /output ./
 
 FROM ghcr.io/catenax-ng/esc-backbone-web-build-base:latest as web-chain-suggestion-build
 
-WORKDIR /build
-COPY --from=build /build/esc-backbone /build
-WORKDIR /build/web
+WORKDIR /output/web
+COPY --from=esc-backbone-build-output /output/web ./
 RUN npm install && npm run build
 
 FROM ghcr.io/catenax-ng/esc-backbone-web-base:latest as esc-backbone-web
@@ -42,7 +49,7 @@ ENV CHAIN_ID=""
 ENV CHAIN_NAME=""
 ENV CHAIN_DENOM_FILE=""
 ENV CHAIN_DENOM_NEW=""
-COPY --from=web-chain-suggestion-build /build/web/build /usr/share/nginx/html
+COPY --from=web-chain-suggestion-build /output/web/build /usr/share/nginx/html
 RUN chown -R $UID:$GID /usr/share/nginx/html/chain/
 COPY --chown=$UID:$GID build/webapp-entrypoint.sh /
 COPY --chown=$UID:$GID build/write-env-to-json.sh /
@@ -71,9 +78,9 @@ WORKDIR /initscripts
 COPY --chown=$UID:$GID testnetscripts/*.sh /initscripts/
 RUN chmod u+x /initscripts/*.sh
 WORKDIR /validator
-COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
-COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
-COPY --from=build /build/esc-backbone/shared-libs /usr/lib
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /validator/
+COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 ENV CHAIN_BINARY="/validator/esc-backboned"
 ENV REPO_BRANCH="main"
 ENV CHAIN_ID="catenax-testnet-1"
@@ -108,7 +115,8 @@ ENV NODE_HOME="chain"
 RUN groupadd -g $GID validator
 RUN useradd -g $GID -u $UID -s /bin/bash -d /home/validator validator
 WORKDIR /validator
-COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /validator/
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /validator/
+COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 
 USER $UID
 
@@ -133,9 +141,9 @@ COPY --chown=$UID:$GID testnetscripts/*.sh /initscripts/
 RUN chmod u+x /initscripts/*.sh
 WORKDIR /orchestrator
 RUN chown $UID:$GID /orchestrator
-COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
-COPY --from=build --chown=$UID:$GID /go/bin/esc-backboned /orchestrator/
-COPY --from=build /build/esc-backbone/shared-libs /usr/lib
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /orchestrator/
+COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 ENV CHAIN_BINARY="/orchestrator/esc-backboned"
 ENV REPO_BRANCH="main"
 ENV CHAIN_ID="catenax-testnet-1"
@@ -159,7 +167,7 @@ ENV PACKAGES  openssh-client sshpass curl jq git sed
 
 RUN apt-get install -y $PACKAGES
 
-COPY --from=build --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
 
 # add the testnet scripts for easier watching a git repo
 WORKDIR /testnetscripts

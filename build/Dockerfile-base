@@ -34,7 +34,7 @@ ONBUILD RUN apt-get update && \
             apt-get clean
 
 FROM node:17.9 as esc-backbone-web-build-base
-WORKDIR /build/web
+WORKDIR /output/web
 COPY web/package.json web/package-lock.json ./
 RUN npm install
 
