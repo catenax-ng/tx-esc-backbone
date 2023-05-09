@@ -11,6 +11,10 @@ RUN apt-get update && \
     apt-get install -y $PACKAGES && \
     apt-get clean
 
+WORKDIR /build/esc-backbone
+COPY go.mod go.sum ./
+RUN go mod download
+
 RUN go install github.com/tomwright/dasel/cmd/dasel@v1.26.1
 WORKDIR /output
 RUN cp `which dasel` /output
