@@ -7,16 +7,16 @@ package types
 
 const (
 	// CaxMultiplier is the multiplier for cax tokens
-	CaxMultiplier = 1e18
+	CaxMultiplier = 1e6
 
 	// VoucherMultiplier is the multiplier for voucher
-	VoucherMultiplier = 1e2
+	VoucherMultiplier = 1e6
 
 	// CaxDenom is the denominator for cax tokens
-	CaxDenom = "acax"
+	CaxDenom = "ucax"
 
 	// VoucherDenom is the denominator for voucher
-	VoucherDenom = "cvoucher"
+	VoucherDenom = "uvoucher"
 )
 
 func isValidDenom(denom string) bool {
