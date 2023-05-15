@@ -10,6 +10,7 @@
 
 ubc_module="catenax13er304pz9kz6dd8zs2e9uvqlmr5jtw67rvslmp"
 ubc_initiator=$(esc-backboned keys show -a ubc_initiator)
+ubc_trader=$(esc-backboned keys show -a ubc_trader)
 
 echo "\n config chain id\n\n"
 esc-backboned config chain-id escbackbone
@@ -42,3 +43,13 @@ echo "\n balances after init\n\n"
 esc-backboned query bank balances $ubc_module
 esc-backboned query bank balances $ubc_initiator
 
+
+echo "\n# ubc buy - value in tokens\n\n"
+esc-backboned query bank balances $ubc_trader
+esc-backboned tx ubc buytokens "10000ucax" --from $ubc_trader --yes
+esc-backboned query bank balances $ubc_trader
+
+echo "\n# ubc buy - value in vouchers\n\n"
+esc-backboned query bank balances $ubc_trader
+esc-backboned tx ubc buytokens "10000uvoucher" --from $ubc_trader --yes
+esc-backboned query bank balances $ubc_trader
