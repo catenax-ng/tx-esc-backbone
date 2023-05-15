@@ -39,6 +39,11 @@ accounts:
   coins:
   - 1000000acax
   - 100000000000000uvoucher
+- name: ubc_trader
+  mnemonic: "they sting over goat invite wrestle stable play lift bike puzzle dutch economy unhappy news daring resemble father ocean mobile creek belt exist man"
+  coins:
+  - 100ucax
+  - 5000000uvoucher
 
 validators:
 - name: alice
