@@ -53,3 +53,8 @@ echo "\n# ubc buy - value in vouchers\n\n"
 esc-backboned query bank balances $ubc_trader
 esc-backboned tx ubc buytokens "10000uvoucher" --from $ubc_trader --yes
 esc-backboned query bank balances $ubc_trader
+
+echo "\n# ubc sell - value in tokens\n\n"
+esc-backboned query bank balances $ubc_trader
+esc-backboned tx ubc selltokens "10000ucax" --from=$ubc_trader --yes
+esc-backboned query bank balances $ubc_trader
