@@ -10,13 +10,64 @@ import (
 
 	"github.com/catenax/esc-backbone/x/ubc/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 func (k msgServer) Selltokens(goCtx context.Context, msg *types.MsgSelltokens) (*types.MsgSelltokensResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	// These will not err, as error has been checked in ValidateBasic.
+	seller, _ := sdk.AccAddressFromBech32(msg.Seller)
+	tokensCoin, _ := sdk.ParseCoinNormalized(msg.Value)
 
-	return &types.MsgSelltokensResponse{}, nil
+	if !(tokensCoin.Denom == types.SystemTokenDenom) {
+		errMsg := "amount should be specified in system token denom"
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, errMsg)
+	}
+
+	ubc, found := k.GetUbcobject(ctx)
+	if !found {
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "curve is not initialized")
+	}
+
+	// TODO: Consume gas from gas meter and make it a param that can be
+	// changed later using a param.
+
+	ubc, vouchersEarnedCoin := sellExactTokens(tokensCoin, ubc)
+
+	err := k.takeTokensAndGiveVouchers(ctx, seller, vouchersEarnedCoin, tokensCoin)
+	if err != nil {
+		return nil, err
+	}
+
+	k.SetUbcobject(ctx, ubc)
+
+	return &types.MsgSelltokensResponse{
+		Tokenssold:     tokensCoin.String(),
+		Vouchersearned: vouchersEarnedCoin.String(),
+	}, nil
+
+}
+
+func sellExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
+	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
+	vouchersOut := ubc.SellExactTokens(tokens)
+	vouchersEarned := subFeesDec(vouchersOut)
+	return ubc, sdk.NewCoin(types.VoucherDenom, vouchersEarned.MulInt64(types.VoucherMultiplier).TruncateInt())
+}
+
+func (k msgServer) takeTokensAndGiveVouchers(ctx sdk.Context, seller sdk.AccAddress, vouchers, tokens sdk.Coin) error {
+	err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, seller, types.ModuleName, sdk.NewCoins(tokens))
+	if err != nil {
+		return nil
+	}
+	err = k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.NewCoins(tokens))
+	if err != nil {
+		return nil
+	}
+	return k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, seller, sdk.NewCoins(vouchers))
+}
+
+func subFeesDec(v sdk.Dec) sdk.Dec {
+	return v.Mul(sdk.NewDecWithPrec(997, 3))
 }
