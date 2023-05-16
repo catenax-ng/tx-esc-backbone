@@ -139,6 +139,19 @@ func (ubc *Ubcobject) upperBoundX(segNum int) sdk.Dec {
 	}
 }
 
+func (ubc *Ubcobject) lowerBoundX(segNum int) sdk.Dec {
+	switch segNum {
+	case S0:
+		return ubc.p0x()
+	case S1:
+		return ubc.p1x()
+	case S2:
+		return ubc.p2x()
+	default: // QS3
+		return ubc.p3x()
+	}
+}
+
 func (ubc *Ubcobject) lowerBound(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
