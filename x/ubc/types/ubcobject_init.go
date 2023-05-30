@@ -135,10 +135,8 @@ func (ubc *Ubcobject) fitS1() {
 
 func (ubc *Ubcobject) calcP1X() {
 	factor := sdk.NewDec(1).Sub(ubc.FactorFy).Mul(ubc.FactorFxy)
-	part1 := factor.Mul(ubc.p0().Sub(ubc.p2()))
-	part2 := ubc.p2x()
-
-	ubc.setP1X(part1.Add(part2))
+	deltaX1 := factor.Mul(ubc.p2().Sub(ubc.p0()))
+	ubc.setP1X(ubc.p2x().Sub(deltaX1))
 }
 
 func (ubc *Ubcobject) calcG0() sdk.Dec {
