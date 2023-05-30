@@ -26,10 +26,13 @@ func (ubc *Ubcobject) Fit() error {
 	ubc.fitS2()
 	ubc.fitS3()
 	ubc.fitS1()
+	ubc.fitS0()
 
 	// Self-consistency to fit P0 better.
 	ubc.fitS1()
+	ubc.fitS0()
 	ubc.fitS1()
+	ubc.fitS0()
 
 	return ubc.validateCurvature()
 }
@@ -128,9 +131,6 @@ func (ubc *Ubcobject) fitS1() {
 	ubc.S1.B = ubc.calcS1B()
 	ubc.setP0(ubc.calcP0(g0, g1))
 	ubc.setP1(ubc.calcP1())
-	ubc.S0.A = ubc.p0()
-	ubc.S0.B = ubc.calcS0B()
-	ubc.S1.A = ubc.calcS1A()
 }
 
 func (ubc *Ubcobject) calcP1X() {
@@ -176,6 +176,12 @@ func (ubc *Ubcobject) calcP1() sdk.Dec {
 	part1 := ubc.FactorFy.Mul(ubc.p2())
 	part2 := (sdk.NewDec(1).Sub(ubc.FactorFy)).Mul(ubc.p0())
 	return part1.Add(part2)
+}
+
+func (ubc *Ubcobject) fitS0() {
+	ubc.S0.A = ubc.p0()
+	ubc.S0.B = ubc.calcS0B()
+	ubc.S1.A = ubc.calcS1A()
 }
 
 func (ubc *Ubcobject) calcS0B() sdk.Dec {
