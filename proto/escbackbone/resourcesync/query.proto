@@ -1,26 +1,61 @@
 syntax = "proto3";
+
 package escbackbone.resourcesync;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "escbackbone/resourcesync/params.proto";
+import "escbackbone/resourcesync/resource_map.proto";
+import "escbackbone/resourcesync/resource.proto";
+import "escbackbone/resourcesync/audit.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/catenax/esc-backbone/resourcesync/params";
+  
+  }
+  
+  // Queries a list of ResourceMap items.
+  rpc ResourceMap    (QueryGetResourceMapRequest) returns (QueryGetResourceMapResponse) {
+    option (google.api.http).get = "/catenax/esc-backbone/resourcesync/resource_map/{originator}/{origResId}";
+  
+  }
+  rpc ResourceMapAll (QueryAllResourceMapRequest) returns (QueryAllResourceMapResponse) {
+    option (google.api.http).get = "/catenax/esc-backbone/resourcesync/resource_map";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetResourceMapRequest {
+  string originator = 1;
+  string origResId  = 2;
+}
+
+message QueryGetResourceMapResponse {
+  ResourceMap resourceMap = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllResourceMapRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllResourceMapResponse {
+  repeated ResourceMap                            resourceMap = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+

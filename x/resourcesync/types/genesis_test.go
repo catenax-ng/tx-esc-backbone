@@ -19,12 +19,38 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				ResourceMapList: []types.ResourceMap{
+					{
+						Originator: "0",
+						OrigResId:  "0",
+					},
+					{
+						Originator: "1",
+						OrigResId:  "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
+		},
+		{
+			desc: "duplicated resourceMap",
+			genState: &types.GenesisState{
+				ResourceMapList: []types.ResourceMap{
+					{
+						Originator: "0",
+						OrigResId:  "0",
+					},
+					{
+						Originator: "0",
+						OrigResId:  "0",
+					},
+				},
+			},
+			valid: false,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
 	}

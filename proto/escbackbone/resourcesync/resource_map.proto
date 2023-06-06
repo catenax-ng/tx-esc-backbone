@@ -1,0 +1,15 @@
+syntax = "proto3";
+package escbackbone.resourcesync;
+
+option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
+import "escbackbone/resourcesync/resource.proto"; 
+import "escbackbone/resourcesync/audit.proto"; 
+
+message ResourceMap {
+  string originator = 1; 
+  string origResId = 2; 
+  Resource resource = 3; 
+  Audit auditLogs = 4; 
+  
+}
+

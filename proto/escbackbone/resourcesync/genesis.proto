@@ -1,12 +1,16 @@
 syntax = "proto3";
+
 package escbackbone.resourcesync;
 
 import "gogoproto/gogo.proto";
 import "escbackbone/resourcesync/params.proto";
+import "escbackbone/resourcesync/resource_map.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 
 // GenesisState defines the resourcesync module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+           Params      params          = 1 [(gogoproto.nullable) = false];
+  repeated ResourceMap resourceMapList = 2 [(gogoproto.nullable) = false];
 }
+
