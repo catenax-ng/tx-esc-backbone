@@ -1,7 +1,19 @@
 syntax = "proto3";
+
 package escbackbone.resourcesync;
+
+import "escbackbone/resourcesync/resource.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateResource (MsgCreateResource) returns (MsgCreateResourceResponse);
+}
+message MsgCreateResource {
+  string   creator = 1;
+  Resource entry   = 2;
+}
+
+message MsgCreateResourceResponse {}
+
