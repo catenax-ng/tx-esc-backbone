@@ -1,0 +1,12 @@
+syntax = "proto3";
+package escbackbone.ubc;
+
+import "gogoproto/gogo.proto";
+import "escbackbone/ubc/params.proto";
+
+option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+
+// GenesisState defines the ubc module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}
