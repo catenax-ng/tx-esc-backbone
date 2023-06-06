@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1.4
-FROM golang:1.18.1-bullseye as build
+FROM golang:1.19.1-bullseye as build
 
-ENV PACKAGES openssh-client bash curl
+ENV PACKAGES bash curl
 
 WORKDIR /build
 
 RUN apt update
-RUN apt install $PACKAGES
+RUN apt install $PACKAGES -y
 
 RUN curl https://get.ignite.com/cli?type=script | bash && chown root:root ignite
 
