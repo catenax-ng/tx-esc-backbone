@@ -9,6 +9,7 @@ option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 // Msg defines the Msg service.
 service Msg {
   rpc CreateResource (MsgCreateResource) returns (MsgCreateResourceResponse);
+  rpc DeleteResource (MsgDeleteResource) returns (MsgDeleteResourceResponse);
 }
 message MsgCreateResource {
   string   creator = 1;
@@ -16,4 +17,12 @@ message MsgCreateResource {
 }
 
 message MsgCreateResourceResponse {}
+
+message MsgDeleteResource {
+  string creator    = 1;
+  string originator = 2;
+  string origResId  = 3;
+}
+
+message MsgDeleteResourceResponse {}
 
