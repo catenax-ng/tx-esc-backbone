@@ -31,7 +31,7 @@ func networkWithResourceMapObjects(t *testing.T, n int) (*network.Network, []typ
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
-        addresses := []string{Alice, Bob}
+	addresses := []string{Alice, Bob}
 	for i := 0; i < n; i++ {
 		resourceMap := types.ResourceMap{
 			Resource: types.Resource{

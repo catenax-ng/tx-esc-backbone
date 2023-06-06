@@ -10,6 +10,7 @@ option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
 service Msg {
   rpc CreateResource (MsgCreateResource) returns (MsgCreateResourceResponse);
   rpc DeleteResource (MsgDeleteResource) returns (MsgDeleteResourceResponse);
+  rpc UpdateResource (MsgUpdateResource) returns (MsgUpdateResourceResponse);
 }
 message MsgCreateResource {
   string   creator = 1;
@@ -25,4 +26,11 @@ message MsgDeleteResource {
 }
 
 message MsgDeleteResourceResponse {}
+
+message MsgUpdateResource {
+  string   creator = 1;
+  Resource entry   = 2;
+}
+
+message MsgUpdateResourceResponse {}
 
