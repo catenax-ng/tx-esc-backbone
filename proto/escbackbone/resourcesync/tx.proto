@@ -1,0 +1,7 @@
+syntax = "proto3";
+package escbackbone.resourcesync;
+
+option go_package = "github.com/catenax/esc-backbone/x/resourcesync/types";
+
+// Msg defines the Msg service.
+service Msg {}

@@ -116,6 +116,9 @@ import (
 	ibctm "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
 	"github.com/spf13/cast"
 
+	resourcesyncmodule "github.com/catenax/esc-backbone/x/resourcesync"
+	resourcesyncmodulekeeper "github.com/catenax/esc-backbone/x/resourcesync/keeper"
+	resourcesyncmoduletypes "github.com/catenax/esc-backbone/x/resourcesync/types"
 	ubcmodule "github.com/catenax/esc-backbone/x/ubc"
 	ubcmodulekeeper "github.com/catenax/esc-backbone/x/ubc/keeper"
 	ubcmoduletypes "github.com/catenax/esc-backbone/x/ubc/types"
@@ -180,19 +183,21 @@ var (
 		vesting.AppModuleBasic{},
 		consensus.AppModuleBasic{},
 		ubcmodule.AppModuleBasic{},
+		resourcesyncmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
 	// module account permissions
 	maccPerms = map[string][]string{
-		authtypes.FeeCollectorName:     nil,
-		distrtypes.ModuleName:          nil,
-		icatypes.ModuleName:            nil,
-		minttypes.ModuleName:           {authtypes.Minter},
-		stakingtypes.BondedPoolName:    {authtypes.Burner, authtypes.Staking},
-		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
-		govtypes.ModuleName:            {authtypes.Burner},
-		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		authtypes.FeeCollectorName:         nil,
+		distrtypes.ModuleName:              nil,
+		icatypes.ModuleName:                nil,
+		minttypes.ModuleName:               {authtypes.Minter},
+		stakingtypes.BondedPoolName:        {authtypes.Burner, authtypes.Staking},
+		stakingtypes.NotBondedPoolName:     {authtypes.Burner, authtypes.Staking},
+		govtypes.ModuleName:                {authtypes.Burner},
+		ibctransfertypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
+		resourcesyncmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -256,6 +261,8 @@ type App struct {
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
 	UbcKeeper ubcmodulekeeper.Keeper
+
+	ResourcesyncKeeper resourcesyncmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -303,6 +310,7 @@ func New(
 		feegrant.StoreKey, evidencetypes.StoreKey, ibctransfertypes.StoreKey, icahosttypes.StoreKey,
 		capabilitytypes.StoreKey, group.StoreKey, icacontrollertypes.StoreKey, consensusparamtypes.StoreKey,
 		ubcmoduletypes.StoreKey,
+		resourcesyncmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -533,6 +541,17 @@ func New(
 	)
 	ubcModule := ubcmodule.NewAppModule(appCodec, app.UbcKeeper, app.AccountKeeper, app.BankKeeper)
 
+	app.ResourcesyncKeeper = *resourcesyncmodulekeeper.NewKeeper(
+		appCodec,
+		keys[resourcesyncmoduletypes.StoreKey],
+		keys[resourcesyncmoduletypes.MemStoreKey],
+		app.GetSubspace(resourcesyncmoduletypes.ModuleName),
+
+		app.AccountKeeper,
+		app.BankKeeper,
+	)
+	resourcesyncModule := resourcesyncmodule.NewAppModule(appCodec, app.ResourcesyncKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	/**** IBC Routing ****/
@@ -595,6 +614,7 @@ func New(
 		transferModule,
 		icaModule,
 		ubcModule,
+		resourcesyncModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 
 		crisis.NewAppModule(app.CrisisKeeper, skipGenesisInvariants, app.GetSubspace(crisistypes.ModuleName)), // always be last to make sure that it checks for all invariants and not only part of them
@@ -628,6 +648,7 @@ func New(
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
 		ubcmoduletypes.ModuleName,
+		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -654,6 +675,7 @@ func New(
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
 		ubcmoduletypes.ModuleName,
+		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -685,6 +707,7 @@ func New(
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
 		ubcmoduletypes.ModuleName,
+		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 	app.mm.SetOrderInitGenesis(genesisModuleOrder...)
@@ -910,6 +933,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(ubcmoduletypes.ModuleName)
+	paramsKeeper.Subspace(resourcesyncmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
