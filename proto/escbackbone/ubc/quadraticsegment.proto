@@ -1,0 +1,14 @@
+syntax = "proto3";
+package escbackbone.ubc;
+
+option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+
+message Quadraticsegment {
+  
+  string a = 1; 
+  string b = 2; 
+  string c = 3; 
+  string scalingFactor = 4; 
+  string initialX0 = 5; 
+  string currentX0 = 6; 
+}
