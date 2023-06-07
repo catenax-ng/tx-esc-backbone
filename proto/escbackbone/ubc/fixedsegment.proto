@@ -1,0 +1,10 @@
+syntax = "proto3";
+package escbackbone.ubc;
+
+option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+
+message Fixedsegment {
+  
+  string s = 1; 
+  string intervalP0X = 2; 
+}
