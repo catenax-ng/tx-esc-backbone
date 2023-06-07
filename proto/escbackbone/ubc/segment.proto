@@ -1,0 +1,15 @@
+syntax = "proto3";
+package escbackbone.ubc;
+
+option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+
+message Segment {
+  
+  string p0 = 1; 
+  string a = 2; 
+  string b = 3; 
+  string p1 = 4; 
+  string p0X = 5; 
+  string p1X = 6; 
+  string delatX = 7; 
+}
