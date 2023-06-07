@@ -1,0 +1,23 @@
+syntax = "proto3";
+package escbackbone.ubc;
+
+option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+
+message Ubcobject {
+  
+  string fS0 = 1; 
+  string s0 = 2; 
+  string s1 = 3; 
+  string s2 = 4; 
+  string qS3 = 5; 
+  string refProfitFactor = 6; 
+  string refTokenSupply = 7; 
+  string refTokenPrice = 8; 
+  string bPool = 9; 
+  string factorFy = 10; 
+  string factorFxy = 11; 
+  string tradingPoint = 12; 
+  string currentSupply = 13; 
+  string slopeP2 = 14; 
+  string slopeP3 = 15; 
+}
