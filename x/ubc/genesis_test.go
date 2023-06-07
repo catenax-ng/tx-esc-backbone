@@ -19,6 +19,24 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
+		Ubcobject: &types.Ubcobject{
+			FS0:             "97",
+			S0:              "8",
+			S1:              "5",
+			S2:              "19",
+			QS3:             "44",
+			RefProfitFactor: "42",
+			RefTokenSupply:  "8",
+			RefTokenPrice:   "91",
+			BPool:           "99",
+			BPoolUnder:      "35",
+			FactorFy:        "57",
+			FactorFxy:       "8",
+			TradingPoint:    "96",
+			CurrentSupply:   "41",
+			Slopep2:         "69",
+			Slopep3:         "62",
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -30,5 +48,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
+	require.Equal(t, genesisState.Ubcobject, got.Ubcobject)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

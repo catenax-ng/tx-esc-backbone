@@ -4,14 +4,18 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
+
 package escbackbone.ubc;
 
 import "gogoproto/gogo.proto";
 import "escbackbone/ubc/params.proto";
+import "escbackbone/ubc/ubcobject.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 // GenesisState defines the ubc module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+  Params    params    = 1 [(gogoproto.nullable) = false];
+  Ubcobject ubcobject = 2;
 }
+

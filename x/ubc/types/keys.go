@@ -22,3 +22,7 @@ const (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	UbcobjectKey = "Ubcobject/value/"
+)

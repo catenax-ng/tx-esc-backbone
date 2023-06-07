@@ -24,9 +24,27 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc:     "valid genesis state",
+			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				Ubcobject: &types.Ubcobject{
+					FS0:             "75",
+					S0:              "71",
+					S1:              "32",
+					S2:              "77",
+					QS3:             "52",
+					RefProfitFactor: "100",
+					RefTokenSupply:  "36",
+					RefTokenPrice:   "94",
+					BPool:           "64",
+					BPoolUnder:      "17",
+					FactorFy:        "52",
+					FactorFxy:       "63",
+					TradingPoint:    "17",
+					CurrentSupply:   "91",
+					Slopep2:         "64",
+					Slopep3:         "57",
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
