@@ -14,8 +14,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	tmtypes "github.com/cometbft/cometbft/proto/tendermint/types"
 	grpcsvc "github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
-	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
 // Number of latest blocks to get for comparison.

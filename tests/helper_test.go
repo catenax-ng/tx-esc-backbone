@@ -17,6 +17,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
+	"github.com/cometbft/cometbft/proto/tendermint/p2p"
+	tmtypes "github.com/cometbft/cometbft/proto/tendermint/types"
 	grpcsvc "github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	clienttx "github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/cosmos/cosmos-sdk/crypto"
@@ -30,10 +32,8 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	xstaketypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	"github.com/ignite/cli/ignite/pkg/cosmoscmd"
-	"github.com/tendermint/tendermint/proto/tendermint/p2p"
-	tmtypes "github.com/tendermint/tendermint/proto/tendermint/types"
 
+	"github.com/catenax/esc-backbone/app"
 	catxapp "github.com/catenax/esc-backbone/app"
 )
 
@@ -379,7 +379,7 @@ func GetAccountAddress(validator xstaketypes.Validator) (sdktypes.AccAddress, er
 		return accAddr, err
 	}
 
-	accAddr, err = sdktypes.AccAddressFromHex(hex.EncodeToString(valAddr.Bytes()))
+	accAddr, err = sdktypes.AccAddressFromHexUnsafe(hex.EncodeToString(valAddr.Bytes()))
 	if err != nil {
 		return accAddr, err
 	}
@@ -425,6 +425,7 @@ func NewKeyring(cfg map[string]string) (keyring.Keyring, error) {
 		cfg["KeyringBackend"],
 		cfg["HomeDir"],
 		reader,
+		app.MakeEncodingConfig().Marshaler,
 	)
 
 	if err != nil {
@@ -438,7 +439,7 @@ func NewKeyring(cfg map[string]string) (keyring.Keyring, error) {
 func CreateSignedTxn(testHost string,
 	cfg map[string]string) ([]byte, error) {
 
-	encodingConfig := cosmoscmd.MakeEncodingConfig(catxapp.ModuleBasics)
+	encodingConfig := app.MakeEncodingConfig()
 	txConfig := encodingConfig.TxConfig
 	txBuilder := txConfig.NewTxBuilder()
 
@@ -486,7 +487,7 @@ func CreateSignedTxn(testHost string,
 		return nil, err
 	}
 
-	exportedPrivateKey, err := kr.ExportPrivKeyArmor(keyInfo.GetName(), cfg["PassPhrase"])
+	exportedPrivateKey, err := kr.ExportPrivKeyArmor(keyInfo.Name, cfg["PassPhrase"])
 	if err != nil {
 		return nil, err
 	}
