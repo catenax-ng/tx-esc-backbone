@@ -184,36 +184,148 @@ func (m *MsgInitResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgInitResponse proto.InternalMessageInfo
 
+type MsgBuytokens struct {
+	Buyer string `protobuf:"bytes,1,opt,name=buyer,proto3" json:"buyer,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (m *MsgBuytokens) Reset()         { *m = MsgBuytokens{} }
+func (m *MsgBuytokens) String() string { return proto.CompactTextString(m) }
+func (*MsgBuytokens) ProtoMessage()    {}
+func (*MsgBuytokens) Descriptor() ([]byte, []int) {
+	return fileDescriptor_615e99961022fa10, []int{2}
+}
+func (m *MsgBuytokens) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgBuytokens) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgBuytokens.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgBuytokens) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBuytokens.Merge(m, src)
+}
+func (m *MsgBuytokens) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgBuytokens) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBuytokens.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgBuytokens proto.InternalMessageInfo
+
+func (m *MsgBuytokens) GetBuyer() string {
+	if m != nil {
+		return m.Buyer
+	}
+	return ""
+}
+
+func (m *MsgBuytokens) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
+type MsgBuytokensResponse struct {
+	Tokensbought  string `protobuf:"bytes,1,opt,name=tokensbought,proto3" json:"tokensbought,omitempty"`
+	Vouchersspent string `protobuf:"bytes,2,opt,name=vouchersspent,proto3" json:"vouchersspent,omitempty"`
+}
+
+func (m *MsgBuytokensResponse) Reset()         { *m = MsgBuytokensResponse{} }
+func (m *MsgBuytokensResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgBuytokensResponse) ProtoMessage()    {}
+func (*MsgBuytokensResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_615e99961022fa10, []int{3}
+}
+func (m *MsgBuytokensResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgBuytokensResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgBuytokensResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgBuytokensResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgBuytokensResponse.Merge(m, src)
+}
+func (m *MsgBuytokensResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgBuytokensResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgBuytokensResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgBuytokensResponse proto.InternalMessageInfo
+
+func (m *MsgBuytokensResponse) GetTokensbought() string {
+	if m != nil {
+		return m.Tokensbought
+	}
+	return ""
+}
+
+func (m *MsgBuytokensResponse) GetVouchersspent() string {
+	if m != nil {
+		return m.Vouchersspent
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgInit)(nil), "escbackbone.ubc.MsgInit")
 	proto.RegisterType((*MsgInitResponse)(nil), "escbackbone.ubc.MsgInitResponse")
+	proto.RegisterType((*MsgBuytokens)(nil), "escbackbone.ubc.MsgBuytokens")
+	proto.RegisterType((*MsgBuytokensResponse)(nil), "escbackbone.ubc.MsgBuytokensResponse")
 }
 
 func init() { proto.RegisterFile("escbackbone/ubc/tx.proto", fileDescriptor_615e99961022fa10) }
 
 var fileDescriptor_615e99961022fa10 = []byte{
-	// 335 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x91, 0xcf, 0x6a, 0xe3, 0x30,
-	0x10, 0xc6, 0xe3, 0xfc, 0xcf, 0xc0, 0x6e, 0x58, 0xb1, 0x07, 0x11, 0x16, 0x11, 0xc2, 0x52, 0x02,
-	0xa5, 0x36, 0x24, 0x6f, 0x10, 0x68, 0x20, 0x87, 0x80, 0x49, 0xdb, 0x4b, 0x6f, 0x96, 0x3a, 0x4e,
-	0x4d, 0x52, 0xcb, 0x48, 0x32, 0xd8, 0x6f, 0xd1, 0x37, 0xea, 0xb5, 0xc7, 0x1c, 0x7b, 0x2c, 0xc9,
-	0x8b, 0x94, 0xc8, 0xce, 0x9f, 0x06, 0x7a, 0x9b, 0xef, 0xfb, 0x8d, 0x34, 0xcc, 0x7c, 0x40, 0x51,
-	0x0b, 0x1e, 0x88, 0x15, 0x97, 0x31, 0x7a, 0x29, 0x17, 0x9e, 0xc9, 0xdc, 0x44, 0x49, 0x23, 0x49,
-	0xf7, 0x8c, 0xb8, 0x29, 0x17, 0x83, 0xb7, 0x2a, 0xb4, 0xe6, 0x7a, 0x39, 0x8b, 0x23, 0x43, 0x28,
-	0xb4, 0x84, 0xc2, 0xc0, 0x48, 0x45, 0x9d, 0xbe, 0x33, 0xec, 0x2c, 0x0e, 0x92, 0x5c, 0xc1, 0x6f,
-	0x85, 0xe1, 0xbd, 0x5c, 0x61, 0x7c, 0x97, 0x26, 0xc9, 0x3a, 0xa7, 0x55, 0xdb, 0x70, 0xe1, 0x92,
-	0xff, 0xf0, 0xeb, 0xe0, 0xf8, 0x2a, 0x12, 0x48, 0x6b, 0xb6, 0xed, 0xbb, 0x49, 0x86, 0xd0, 0x55,
-	0x18, 0xfa, 0x4a, 0x86, 0x91, 0x99, 0x06, 0x62, 0x3f, 0xaf, 0x6e, 0xfb, 0x2e, 0x6d, 0xf2, 0x17,
-	0x1a, 0xdc, 0x97, 0x72, 0x4d, 0x1b, 0x96, 0x17, 0x82, 0x30, 0x00, 0x5b, 0x3c, 0xc4, 0x4f, 0xa8,
-	0x68, 0xd3, 0xa2, 0x33, 0x67, 0xbf, 0x87, 0x5e, 0xcb, 0x04, 0xfd, 0x11, 0x6d, 0x15, 0x7b, 0x94,
-	0xf2, 0x44, 0xc6, 0xb4, 0x7d, 0x4e, 0xc6, 0xa4, 0x07, 0xed, 0xd0, 0xce, 0x9c, 0xe6, 0xb4, 0x63,
-	0xd1, 0x51, 0x93, 0x7f, 0xd0, 0x29, 0xeb, 0x2c, 0xa7, 0x60, 0xe1, 0xc9, 0x18, 0xfc, 0x81, 0x6e,
-	0x79, 0xc0, 0x05, 0xea, 0x44, 0xc6, 0x1a, 0x47, 0x33, 0xa8, 0xcd, 0xf5, 0x92, 0x4c, 0xa0, 0x5e,
-	0xdc, 0xd5, 0xbd, 0xb8, 0xba, 0x5b, 0x3e, 0xe8, 0xf5, 0x7f, 0x22, 0x87, 0xaf, 0x26, 0xb7, 0xef,
-	0x5b, 0xe6, 0x6c, 0xb6, 0xcc, 0xf9, 0xdc, 0x32, 0xe7, 0x75, 0xc7, 0x2a, 0x9b, 0x1d, 0xab, 0x7c,
-	0xec, 0x58, 0xe5, 0xf1, 0x7a, 0x19, 0x99, 0xe7, 0x94, 0xbb, 0x42, 0xbe, 0x78, 0x22, 0x30, 0x18,
-	0x07, 0x99, 0x87, 0x5a, 0xdc, 0x1c, 0x83, 0xcf, 0x8a, 0xe8, 0xf3, 0x04, 0x35, 0x6f, 0xda, 0xf8,
-	0xc7, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x60, 0x37, 0x77, 0x16, 0x1a, 0x02, 0x00, 0x00,
+	// 422 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xcb, 0x6e, 0xd3, 0x40,
+	0x14, 0x86, 0xe3, 0xde, 0xd2, 0x1c, 0x15, 0x22, 0x46, 0x5d, 0x8c, 0x22, 0xb0, 0x2a, 0x0b, 0x50,
+	0x25, 0x84, 0x2d, 0x35, 0x3b, 0x96, 0x91, 0xa8, 0xc4, 0x22, 0x92, 0x29, 0xb0, 0x61, 0x85, 0x67,
+	0x38, 0x76, 0xac, 0x1a, 0x8f, 0x35, 0x97, 0xca, 0x7e, 0x0b, 0x1e, 0x80, 0x77, 0x61, 0xcb, 0xb2,
+	0x4b, 0x96, 0x28, 0x79, 0x11, 0xe4, 0xf1, 0x25, 0x4e, 0x04, 0xdd, 0xcd, 0xff, 0x7f, 0xc7, 0x67,
+	0xfc, 0x9f, 0x39, 0x40, 0x51, 0x71, 0x16, 0xf1, 0x5b, 0x26, 0x72, 0x0c, 0x0c, 0xe3, 0x81, 0x2e,
+	0xfd, 0x42, 0x0a, 0x2d, 0xc8, 0x74, 0x40, 0x7c, 0xc3, 0xb8, 0xf7, 0xf3, 0x00, 0xc6, 0x4b, 0x95,
+	0xbc, 0xcb, 0x53, 0x4d, 0x28, 0x8c, 0xb9, 0xc4, 0x48, 0x0b, 0x49, 0x9d, 0x0b, 0xe7, 0x72, 0x72,
+	0xd3, 0x49, 0xf2, 0x12, 0x1e, 0x4b, 0x8c, 0x3f, 0x8a, 0x5b, 0xcc, 0x3f, 0x98, 0xa2, 0xc8, 0x2a,
+	0x7a, 0x60, 0x0b, 0xf6, 0x5c, 0xf2, 0x1c, 0x1e, 0x75, 0x4e, 0x28, 0x53, 0x8e, 0xf4, 0xd0, 0x96,
+	0xed, 0x9a, 0xe4, 0x12, 0xa6, 0x12, 0xe3, 0x50, 0x8a, 0x38, 0xd5, 0xd7, 0x11, 0xaf, 0xef, 0x3b,
+	0xb2, 0x75, 0xfb, 0x36, 0x39, 0x87, 0x63, 0x16, 0x0a, 0x91, 0xd1, 0x63, 0xcb, 0x1b, 0x41, 0x5c,
+	0x00, 0x7b, 0xf8, 0x94, 0x7f, 0x45, 0x49, 0x4f, 0x2c, 0x1a, 0x38, 0x75, 0x0e, 0x95, 0x89, 0x02,
+	0xc3, 0x2b, 0x3a, 0x6e, 0x72, 0xb4, 0x72, 0x4b, 0xe6, 0xf4, 0x74, 0x48, 0xe6, 0x64, 0x06, 0xa7,
+	0xb1, 0xbd, 0xf3, 0xba, 0xa2, 0x13, 0x8b, 0x7a, 0x4d, 0x9e, 0xc2, 0xa4, 0x3d, 0x97, 0x15, 0x05,
+	0x0b, 0xb7, 0x86, 0xf7, 0x04, 0xa6, 0xed, 0x00, 0x6f, 0x50, 0x15, 0x22, 0x57, 0xe8, 0xbd, 0x81,
+	0xb3, 0xa5, 0x4a, 0x16, 0xa6, 0xd2, 0x75, 0x68, 0x65, 0x63, 0x98, 0x0a, 0xbb, 0xb1, 0x36, 0xa2,
+	0x76, 0xef, 0xa2, 0xcc, 0x60, 0x3b, 0xcb, 0x46, 0x78, 0x5f, 0xe0, 0x7c, 0xf8, 0x6d, 0xd7, 0x93,
+	0x78, 0x70, 0xd6, 0x38, 0x4c, 0x98, 0x64, 0xa5, 0xdb, 0x56, 0x3b, 0x5e, 0x3d, 0xfe, 0x3b, 0x61,
+	0xf8, 0x0a, 0xa5, 0x52, 0x05, 0xe6, 0xba, 0xed, 0xbc, 0x6b, 0x5e, 0xfd, 0x70, 0xe0, 0x70, 0xa9,
+	0x12, 0xb2, 0x80, 0xa3, 0xe6, 0xd9, 0xfd, 0xbd, 0xa5, 0xf0, 0xdb, 0x3c, 0xb3, 0x8b, 0xff, 0x91,
+	0xfe, 0xaf, 0xde, 0xc3, 0x64, 0x1b, 0xf3, 0xd9, 0xbf, 0xca, 0x7b, 0x3c, 0x7b, 0xf1, 0x20, 0xee,
+	0x5a, 0x2e, 0xde, 0xfe, 0x5a, 0xbb, 0xce, 0xfd, 0xda, 0x75, 0xfe, 0xac, 0x5d, 0xe7, 0xfb, 0xc6,
+	0x1d, 0xdd, 0x6f, 0xdc, 0xd1, 0xef, 0x8d, 0x3b, 0xfa, 0xfc, 0x2a, 0x49, 0xf5, 0xca, 0x30, 0x9f,
+	0x8b, 0x6f, 0x01, 0x8f, 0x34, 0xe6, 0x51, 0x19, 0xa0, 0xe2, 0xaf, 0xfb, 0x55, 0x2f, 0x9b, 0x65,
+	0xaf, 0x0a, 0x54, 0xec, 0xc4, 0x2e, 0xfc, 0xfc, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xcc, 0x69,
+	0x4e, 0x5c, 0x0c, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -229,6 +341,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	Init(ctx context.Context, in *MsgInit, opts ...grpc.CallOption) (*MsgInitResponse, error)
+	Buytokens(ctx context.Context, in *MsgBuytokens, opts ...grpc.CallOption) (*MsgBuytokensResponse, error)
 }
 
 type msgClient struct {
@@ -248,9 +361,19 @@ func (c *msgClient) Init(ctx context.Context, in *MsgInit, opts ...grpc.CallOpti
 	return out, nil
 }
 
+func (c *msgClient) Buytokens(ctx context.Context, in *MsgBuytokens, opts ...grpc.CallOption) (*MsgBuytokensResponse, error) {
+	out := new(MsgBuytokensResponse)
+	err := c.cc.Invoke(ctx, "/escbackbone.ubc.Msg/Buytokens", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	Init(context.Context, *MsgInit) (*MsgInitResponse, error)
+	Buytokens(context.Context, *MsgBuytokens) (*MsgBuytokensResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -259,6 +382,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) Init(ctx context.Context, req *MsgInit) (*MsgInitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Init not implemented")
+}
+func (*UnimplementedMsgServer) Buytokens(ctx context.Context, req *MsgBuytokens) (*MsgBuytokensResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Buytokens not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -283,6 +409,24 @@ func _Msg_Init_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_Buytokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgBuytokens)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Buytokens(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/escbackbone.ubc.Msg/Buytokens",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Buytokens(ctx, req.(*MsgBuytokens))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "escbackbone.ubc.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -290,6 +434,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Init",
 			Handler:    _Msg_Init_Handler,
+		},
+		{
+			MethodName: "Buytokens",
+			Handler:    _Msg_Buytokens_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -412,6 +560,80 @@ func (m *MsgInitResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgBuytokens) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgBuytokens) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgBuytokens) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Buyer) > 0 {
+		i -= len(m.Buyer)
+		copy(dAtA[i:], m.Buyer)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Buyer)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgBuytokensResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgBuytokensResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgBuytokensResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Vouchersspent) > 0 {
+		i -= len(m.Vouchersspent)
+		copy(dAtA[i:], m.Vouchersspent)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Vouchersspent)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Tokensbought) > 0 {
+		i -= len(m.Tokensbought)
+		copy(dAtA[i:], m.Tokensbought)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Tokensbought)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -478,6 +700,40 @@ func (m *MsgInitResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
+	return n
+}
+
+func (m *MsgBuytokens) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Buyer)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgBuytokensResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Tokensbought)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Vouchersspent)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
 	return n
 }
 
@@ -886,6 +1142,234 @@ func (m *MsgInitResponse) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: MsgInitResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgBuytokens) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgBuytokens: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgBuytokens: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Buyer", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Buyer = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgBuytokensResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgBuytokensResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgBuytokensResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tokensbought", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tokensbought = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Vouchersspent", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Vouchersspent = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])

@@ -11,7 +11,8 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc Init (MsgInit) returns (MsgInitResponse);
+  rpc Init      (MsgInit     ) returns (MsgInitResponse     );
+  rpc Buytokens (MsgBuytokens) returns (MsgBuytokensResponse);
 }
 message MsgInit {
   string creator         =  1;
@@ -27,4 +28,14 @@ message MsgInit {
 }
 
 message MsgInitResponse {}
+
+message MsgBuytokens {
+  string buyer = 1;
+  string value = 2;
+}
+
+message MsgBuytokensResponse {
+  string tokensbought  = 1;
+  string vouchersspent = 2;
+}
 

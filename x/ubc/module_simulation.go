@@ -32,6 +32,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgInit int = 100
 
+	opWeightMsgBuytokens = "op_weight_msg_buytokens"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgBuytokens int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -71,6 +75,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		ubcsimulation.SimulateMsgInit(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgBuytokens int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBuytokens, &weightMsgBuytokens, nil,
+		func(_ *rand.Rand) {
+			weightMsgBuytokens = defaultWeightMsgBuytokens
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgBuytokens,
+		ubcsimulation.SimulateMsgBuytokens(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -84,6 +99,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgInit,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				ubcsimulation.SimulateMsgInit(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgBuytokens,
+			defaultWeightMsgBuytokens,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				ubcsimulation.SimulateMsgBuytokens(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),
