@@ -33,7 +33,7 @@ func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*t
 		return nil, err
 	}
 
-	err = k.takeVoucherAndGiveTokens(ctx, buyer, vouchersSpentCoin, tokensCoin)
+	err = k.takeVouchersAndGiveTokens(ctx, buyer, vouchersSpentCoin, tokensCoin)
 	if err != nil {
 		return nil, types.ErrFundHandling.Wrap(err.Error())
 	}
@@ -68,7 +68,7 @@ func buyExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, 
 	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
 	vouchersSpent := ubc.BuyExactTokens(tokens)
 
-	fee := vouchersSpent.Mul(feePercentage)
+	fee := vouchersSpent.Mul(feePercentageDec)
 
 	vouchersSpent = vouchersSpent.Add(fee).MulInt64(types.VoucherMultiplier)
 
@@ -76,7 +76,7 @@ func buyExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, 
 }
 
 func buyTokensFor(vouchersInCoin sdk.Coin, ubc types.Ubcobject) (sdk.Coin, sdk.Coin, error) {
-	vouchersToSpendInt := subFees(vouchersInCoin.Amount)
+	vouchersToSpendInt := subFeesInt(vouchersInCoin.Amount)
 	feeInt := vouchersInCoin.Amount.Sub(vouchersToSpendInt)
 	vouchersToSpend := sdk.NewDecFromInt(vouchersToSpendInt).QuoInt64(types.VoucherMultiplier)
 
@@ -93,7 +93,7 @@ func buyTokensFor(vouchersInCoin sdk.Coin, ubc types.Ubcobject) (sdk.Coin, sdk.C
 
 	return vouchersSpentCoin, tokensCoin, nil
 }
-func (k msgServer) takeVoucherAndGiveTokens(ctx sdk.Context, buyer sdk.AccAddress, vouchers, tokens sdk.Coin) error {
+func (k msgServer) takeVouchersAndGiveTokens(ctx sdk.Context, buyer sdk.AccAddress, vouchers, tokens sdk.Coin) error {
 	err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, sdk.NewCoins(vouchers))
 	if err != nil {
 		return err
@@ -106,8 +106,8 @@ func (k msgServer) takeVoucherAndGiveTokens(ctx sdk.Context, buyer sdk.AccAddres
 	return k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, buyer, sdk.NewCoins(tokens))
 }
 
-var feePercentage = sdk.NewDecWithPrec(3, 3)
+var feePercentageDec = sdk.NewDecWithPrec(3, 3)
 
-func subFees(v sdk.Int) sdk.Int {
+func subFeesInt(v sdk.Int) sdk.Int {
 	return v.MulRaw(997).QuoRaw(1000)
 }
