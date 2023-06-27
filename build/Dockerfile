@@ -81,7 +81,6 @@ RUN chmod u+x /initscripts/*.sh
 WORKDIR /validator
 COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
 COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /validator/
-COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 ENV CHAIN_BINARY="/validator/esc-backboned"
 ENV REPO_BRANCH="main"
 ENV CHAIN_ID="catenax-testnet-1"
@@ -117,7 +116,6 @@ RUN groupadd -g $GID validator
 RUN useradd -g $GID -u $UID -s /bin/bash -d /home/validator validator
 WORKDIR /validator
 COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /validator/
-COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 
 USER $UID
 
@@ -144,7 +142,6 @@ WORKDIR /orchestrator
 RUN chown $UID:$GID /orchestrator
 COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
 COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned /orchestrator/
-COPY --from=esc-backbone-build-output /output/shared-libs /usr/lib
 ENV CHAIN_BINARY="/orchestrator/esc-backboned"
 ENV REPO_BRANCH="main"
 ENV CHAIN_ID="catenax-testnet-1"
