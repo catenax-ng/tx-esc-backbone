@@ -18,6 +18,7 @@ COPY testutil ./testutil
 COPY test ./test
 COPY proto ./proto
 COPY config.yml ./
+COPY tools ./tools
 
 RUN ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
