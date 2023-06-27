@@ -44,8 +44,8 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 	}
 
 	acaxToMint := sdk.NewCoin(
-		types.CaxDenom,
-		ubc.BPool.RoundInt().MulRaw(types.CaxMultiplier))
+		types.SystemTokenDenom,
+		ubc.BPool.RoundInt().MulRaw(types.SystemTokenMultiplier))
 	err = k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(acaxToMint))
 	if err != nil {
 		return nil, errors.Wrap(types.ErrFundHandling, "minting acax: "+err.Error())

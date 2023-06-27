@@ -23,28 +23,28 @@ func TestMsgBuytokens_ValidateBasic(t *testing.T) {
 			name: "valid",
 			msg: MsgBuytokens{
 				Buyer: sample.AccAddress(),
-				Value: "10" + CaxDenom,
+				Value: "10" + SystemTokenDenom,
 			},
 			err: nil,
 		}, {
 			name: "zero value",
 			msg: MsgBuytokens{
 				Buyer: sample.AccAddress(),
-				Value: "0" + CaxDenom,
+				Value: "0" + SystemTokenDenom,
 			},
 			err: ErrInvalidArg,
 		}, {
 			name: "negative value",
 			msg: MsgBuytokens{
 				Buyer: sample.AccAddress(),
-				Value: "-5" + CaxDenom,
+				Value: "-5" + SystemTokenDenom,
 			},
 			err: sdkerrors.ErrInvalidCoins,
 		}, {
 			name: "invalid address",
 			msg: MsgBuytokens{
 				Buyer: "invalid_address",
-				Value: "10" + CaxDenom,
+				Value: "10" + SystemTokenDenom,
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
@@ -58,7 +58,7 @@ func TestMsgBuytokens_ValidateBasic(t *testing.T) {
 			name: "invalid denom",
 			msg: MsgBuytokens{
 				Buyer: sample.AccAddress(),
-				Value: "2" + CaxDenom + "x",
+				Value: "2" + SystemTokenDenom + "x",
 			},
 			err: ErrInvalidArg,
 		},
