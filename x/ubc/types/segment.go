@@ -29,17 +29,14 @@ func (sg *Segment) updateDeltaX() {
 	sg.DeltaX = sg.P1X.Sub(sg.P0X)
 }
 
-// firstDerivativeT1 computes the first derivate of the curve segment with respect to
-// the bezier curve parameter "t", at the point t1.
+// firstDerivativeTAtZero computes the first derivate of the curve segment with
+// respect to the bezier curve parameter "t", at t = 0.
 //
-// The caller should ensure t1 lies within the range of t values for which the
-// curve segment is defined.
-func (sg *Segment) firstDerivativeT1(t1 sdk.Dec) sdk.Dec {
-	Pi := sdk.NewDec(-1).Mul(sdk.NewDec(1).Sub(t1).Power(2)).Mul(sg.P0)
-	ai := sdk.NewDec(1).Sub(sdk.NewDec(3).Mul(t1)).Mul(sdk.NewDec(1).Sub(t1)).Mul(sg.A)
-	bi := t1.Mul(sdk.NewDec(2).Sub(sdk.NewDec(3).Mul(t1))).Mul(sg.B)
-	Pi1 := t1.Power(2).Mul(sg.P1)
-	return sdk.NewDec(3).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
+// The formula is simplified for t = 0 to reduce the number of calculations.
+func (sg *Segment) firstDerivativeTAtZero() sdk.Dec {
+	Pi := sdk.NewDec(-1).Mul(sg.P0)
+	ai := sg.A
+	return sdk.NewDec(3).Mul(Pi.Add(ai))
 }
 
 // integralX12 computes the integral of the curve segment with respect to "x",

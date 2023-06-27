@@ -28,26 +28,18 @@ func (fx *Fixedsegment) setP0(P0 sdk.Dec) {
 	}
 }
 
-// secondDerivativeT1 computes the second derivate of the curve segment with
-// respect to the bezier curve parameter "t", at the point t1.
-//
-// The caller should ensure t1 lies within the range of t values for which the
-// curve segment is defined.
-func (fx *Fixedsegment) secondDerivativeT1(t sdk.Dec) (y sdk.Dec) {
-	Pi := sdk.NewDec(1).Sub(t).Mul(fx.P0)
-	ai := sdk.NewDec(3).Mul(t).Sub(sdk.NewDec(2)).Mul(fx.A)
-	bi := sdk.NewDec(1).Sub(sdk.NewDec(3).Mul(t)).Mul(fx.B)
-	Pi1 := t.Mul(fx.P1)
-	return sdk.NewDec(6).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
-}
+// curvatureAtEnd computes curvature at the end of the curve segment.
+func (fx *Fixedsegment) curvatureAtEnd() sdk.Dec {
 
-// secondDerivativeX1 computes the second derivate of the curve segment with
-// respect to the "t", at the point x1.
-//
-// The caller should ensure x1 lies within the range of x values for which the
-// curve segment is defined.
-func (fx *Fixedsegment) secondDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
-	t1 := fx.t(x1)
-	// CLARIFY: Referecen for this calculation.
-	return fx.secondDerivativeT1(t1).Quo(fx.DeltaX)
+	secondDerivativeT1 := func(fx *Fixedsegment, t sdk.Dec) (y sdk.Dec) {
+		Pi := sdk.NewDec(1).Sub(t).Mul(fx.P0)
+		ai := sdk.NewDec(3).Mul(t).Sub(sdk.NewDec(2)).Mul(fx.A)
+		bi := sdk.NewDec(1).Sub(sdk.NewDec(3).Mul(t)).Mul(fx.B)
+		Pi1 := t.Mul(fx.P1)
+		return sdk.NewDec(6).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
+	}
+
+	t1 := fx.t(fx.P1X)
+	// CLARIFY: Reference for this calculation.
+	return secondDerivativeT1(fx, t1).Quo(fx.DeltaX)
 }
