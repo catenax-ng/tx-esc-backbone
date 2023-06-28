@@ -1,0 +1,11 @@
+{
+ "address_prefix": "catenax",
+ "chain_id": "catenax-testnet-1",
+ "from": "alice",
+ "node_address": "https://validator1-tdmt-rpc.dev.demo.catena-x.net:443/",
+ "fees": "1000000ncaxdemo",
+ "gas": "100000",
+ "home": "~/.esc-backbone-dev",
+ "key_ring_backend": "test",
+ "start_block": 1618830
+}
