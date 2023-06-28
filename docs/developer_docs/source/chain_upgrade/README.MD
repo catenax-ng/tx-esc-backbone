@@ -65,8 +65,8 @@ accounts:
   coins: 
   - 10000token
   - 100000000stake
-validator:
-  name: alice
+validators:
+- name: alice
   staked: "100000000stake"
 ...
 ```
