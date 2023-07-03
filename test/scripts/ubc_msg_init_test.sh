@@ -61,3 +61,19 @@ esc-backboned query bank balances $ubc_trader
 esc-backboned tx ubc selltokens "10000ucax" --from=$ubc_trader --yes
 sleep 3
 esc-backboned query bank balances $ubc_trader
+
+echo "\n# ubc send tokens from one address to another \n\n"
+esc-backboned query bank balances $ubc_trader --denom=ucax
+esc-backboned query bank balances $ubc_initiator --denom=ucax
+esc-backboned tx bank send $ubc_trader $ubc_initiator 10ucax --yes
+sleep 3
+esc-backboned query bank balances $ubc_trader --denom=ucax
+esc-backboned query bank balances $ubc_initiator --denom=ucax
+
+echo "\n# ubc send vouchers from one address to another (should fail) \n\n"
+esc-backboned query bank balances $ubc_trader --denom=uvoucher
+esc-backboned query bank balances $ubc_initiator --denom=uvoucher
+esc-backboned tx bank send $ubc_trader $ubc_initiator 10uvoucher --yes
+sleep 3
+esc-backboned query bank balances $ubc_trader --denom=uvoucher
+esc-backboned query bank balances $ubc_initiator --denom=uvoucher
