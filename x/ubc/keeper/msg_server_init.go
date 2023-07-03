@@ -60,5 +60,7 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 		return nil, errors.Wrap(types.ErrFundHandling, "transfering minted acax: "+err.Error())
 	}
 
+	k.bankKeeper.SetSendEnabled(ctx, types.VoucherDenom, false)
+
 	return &types.MsgInitResponse{}, nil
 }
