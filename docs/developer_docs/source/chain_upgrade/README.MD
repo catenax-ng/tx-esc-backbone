@@ -67,7 +67,7 @@ accounts:
   - 100000000stake
 validators:
 - name: alice
-  staked: "100000000stake"
+  bonded: "100000000stake"
 ...
 ```
 By setting this, ignite will use these instead of randomly generating them at `ignite chain serve`
@@ -454,8 +454,8 @@ If we execute `energytraded`, the OS will look up the path to find the binary an
 Because we want to use more than the currently installed version as client, we point with variables to the versions, we built with `scripts/prepare-version.sh` invocations.
 And also export some of the account addresses for convenience.
 ```shell
-CLIENT_GENESIS="scripts/worktrees/genesis/build/energytraded --home $HOME/.energytrade-mig"
-CLIENT_V100="scripts/worktrees/v1.0.0/build/energytraded --home $HOME/.energytrade-mig"
+CLIENT_GENESIS=(scripts/worktrees/genesis/build/energytraded --home $HOME/.energytrade-mig)
+CLIENT_V100=(scripts/worktrees/v1.0.0/build/energytraded --home $HOME/.energytrade-mig)
 
 alice=$($CLIENT_GENESIS keys show alice -a)
 bob=$($CLIENT_GENESIS keys show bob -a)
