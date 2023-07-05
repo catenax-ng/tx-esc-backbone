@@ -18,6 +18,8 @@ var resourceEventTypeRegex = regexp.MustCompile(`^catenax\.escbackbone\.resource
 
 type ResourceSyncClient interface {
 	CreateResource(ctx context.Context, resource types.Resource) (cosmosclient.Response, error)
+	UpdateResource(ctx context.Context, resource types.Resource) (cosmosclient.Response, error)
+	DeleteResource(ctx context.Context, origResId string) (cosmosclient.Response, error)
 	QueryAllResources(ctx context.Context) (*types.QueryAllResourceMapResponse, error)
 	Poll(ctx context.Context)
 }
