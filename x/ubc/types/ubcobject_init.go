@@ -121,7 +121,10 @@ func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 
 func (ubc *Ubcobject) fitS1S0() {
 	ubc.calcP1X()
+	ubc.fitS1S0GivenP1X()
+}
 
+func (ubc *Ubcobject) fitS1S0GivenP1X() {
 	g0 := ubc.calcG0()
 	g1 := ubc.calcG1(g0)
 
@@ -139,6 +142,11 @@ func (ubc *Ubcobject) calcP1X() {
 	factor := sdk.NewDec(1).Sub(ubc.FactorFy).Mul(ubc.FactorFxy)
 	deltaX1 := factor.Mul(ubc.p2().Sub(ubc.p0()))
 	ubc.setP1X(ubc.p2x().Sub(deltaX1))
+}
+
+func (ubc *Ubcobject) calcP1XMethod2() {
+	x1 := ubc.p2x().Sub(ubc.FactorFxy.Mul(ubc.p2().Sub(ubc.p1())))
+	ubc.setP1X(x1)
 }
 
 func (ubc *Ubcobject) calcG0() sdk.Dec {
