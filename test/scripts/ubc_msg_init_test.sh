@@ -11,6 +11,7 @@
 ubc_module="catenax13er304pz9kz6dd8zs2e9uvqlmr5jtw67rvslmp"
 ubc_initiator=$(esc-backboned keys show -a ubc_initiator)
 ubc_trader=$(esc-backboned keys show -a ubc_trader)
+ubc_operator=$(esc-backboned keys show -a ubc_operator)
 
 echo "\n config chain id\n\n"
 esc-backboned config chain-id escbackbone
@@ -77,3 +78,9 @@ esc-backboned tx bank send $ubc_trader $ubc_initiator 10uvoucher --yes
 sleep 3
 esc-backboned query bank balances $ubc_trader --denom=uvoucher
 esc-backboned query bank balances $ubc_initiator --denom=uvoucher
+
+echo "\n# ubc undergird \n\n"
+esc-backboned query bank balances $ubc_operator
+esc-backboned tx ubc undergird "10000000000000uvoucher" --from=$ubc_operator --yes
+sleep 3
+esc-backboned query bank balances $ubc_operator
