@@ -1,0 +1,247 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "the purpose of this application is to wrap the ESC-Backbone behind a web2 API.",
+    "termsOfService": "there are no TOS at this moment, use at your own risk we take no responsibility",
+    "contact": {
+      "name": "Lars Wegner",
+      "email": "lars.wegner@bosch.com"
+    },
+    "license": {
+      "name": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/"
+    },
+    "version": "0.0.1"
+  },
+  "host": "localhost",
+  "basePath": "/",
+  "paths": {
+    "/resource": {
+      "post": {
+        "description": "Create a resource with specified parameters.",
+        "summary": "Create a resource",
+        "operationId": "create-resource",
+        "parameters": [
+          {
+            "description": "Resource to create",
+            "name": "RequestResource",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RequestResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on resource creation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ResponseResource"
+              }
+            }
+          },
+          "400": {
+            "description": "Transaction failed or bad request body",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Failed to marshal the response to json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes the resource with specified origResId.",
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete a resource",
+        "operationId": "delete-resource",
+        "parameters": [
+          {
+            "description": "Resource to create",
+            "name": "RequestResource",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RequestResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on resource deletion",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ResponseResource"
+              }
+            }
+          },
+          "400": {
+            "description": "Transaction failed or bad request body",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Failed to marshal the response to json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update a resource with specified origResId.",
+        "summary": "Update a resource",
+        "operationId": "update-resource",
+        "parameters": [
+          {
+            "description": "Resource to create",
+            "name": "RequestResource",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RequestResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on resource update",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ResponseResource"
+              }
+            }
+          },
+          "400": {
+            "description": "Transaction failed or bad request body",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Failed to marshal the response to json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/resource/{origResId}": {
+      "delete": {
+        "description": "Deletes the resource with given origResId.",
+        "summary": "Delete a resource",
+        "operationId": "delete-resource-query",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Deletes the resource with specified origResId.",
+            "name": "origResId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response on resource deletion",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/ResponseResource"
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter missing or transaction failed",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Failed to marshal the response to json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RequestResource": {
+      "type": "object",
+      "title": "RequestResource is used for create, update and delete resources.",
+      "required": [
+        "origResId",
+        "targetSystem",
+        "resourceKey"
+      ],
+      "properties": {
+        "dataHash": {
+          "description": "DataHash contains the hash of the resource for integrity check",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "x-go-name": "DataHash"
+        },
+        "origResId": {
+          "description": "OrigResId is the id of the resource by originator -  unique per originator",
+          "type": "string",
+          "x-go-name": "OrigResId"
+        },
+        "resourceKey": {
+          "description": "ResourceKey is the Id of the resource to access it at the target system",
+          "type": "string",
+          "x-go-name": "ResourceKey"
+        },
+        "targetSystem": {
+          "description": "TargetSystem is holding the information of the resource",
+          "type": "string",
+          "x-go-name": "TargetSystem"
+        }
+      },
+      "x-go-package": "github.com/catenax/esc-backbone/cmd/rest-wrapper"
+    },
+    "ResponseResource": {
+      "type": "object",
+      "title": "ResponseResource contains information about the issued transaction.",
+      "properties": {
+        "height": {
+          "description": "Height of the block containing the transaction",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Height"
+        },
+        "rawLog": {
+          "description": "RawLog contains the raw log of the transaction.",
+          "type": "string",
+          "x-go-name": "RawLog"
+        },
+        "txHash": {
+          "description": "TxHash is the hash of the transaction",
+          "type": "string",
+          "x-go-name": "TxHash"
+        }
+      },
+      "x-go-package": "github.com/catenax/esc-backbone/cmd/rest-wrapper"
+    }
+  }
+}
