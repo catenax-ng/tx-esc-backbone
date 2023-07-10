@@ -53,7 +53,7 @@ func Test_UbcObject_Undergird(t *testing.T) {
 	assert.Zero(t, ubc.QS3.InitialX0)
 	assert.Zero(t, ubc.QS3.CurrentX0)
 
-	ubc.UndergirdS01(sdk.NewDec(100e5))
+	require.NoError(t, ubc.UndergirdS01(sdk.NewDec(100e5)))
 
 	// Check the paramters after undergirding
 	// Parameters that don't change

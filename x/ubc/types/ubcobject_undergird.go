@@ -7,9 +7,15 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) {
+func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) error {
+	if ubc.CurrentSupply.LT(ubc.p2x()) {
+		errMsg := "could not undergird, since the currentSupply is not beyond P2"
+		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
+	}
+
 	ubc.BPoolUnder = ubc.BPoolUnder.Add(BPoolAdd)
 	ubc.BPool = ubc.BPool.Add(BPoolAdd)
 
@@ -23,4 +29,10 @@ func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) {
 		// thousand steps to evaluate to true. In tests, this never
 		// converged in 10 cycles. So, is it okay that this is ignored ?
 	}
+
+	err := ubc.validateCurvature()
+	if err != nil {
+		return ErrCurveFitting.Wrap("curvature conditions failed after undergirding: " + err.Error())
+	}
+	return nil
 }
