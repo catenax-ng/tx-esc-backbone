@@ -22,14 +22,52 @@ func TestMsgUndergird_ValidateBasic(t *testing.T) {
 		{
 			name: "invalid address",
 			msg: MsgUndergird{
-				Operator: "invalid_address",
+				Operator:      "invalid_address",
+				Voucherstoadd: "10" + VoucherDenom,
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
+			name: "invalid vouchers to add (zero)",
+			msg: MsgUndergird{
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "0" + VoucherDenom,
+			},
+			err: ErrInvalidArg,
+		}, {
+			name: "invalid vouchers to add (negative)",
+			msg: MsgUndergird{
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "-10" + VoucherDenom,
+			},
+			err: sdkerrors.ErrInvalidCoins,
+		}, {
+			name: "invalid vouchers to add (decimal)",
+			msg: MsgUndergird{
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "10.0" + VoucherDenom,
+			},
+			err: nil,
+		}, {
+			name: "invalid vouchers to add (non number)",
+			msg: MsgUndergird{
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "abcd" + VoucherDenom,
+			},
+			err: sdkerrors.ErrInvalidCoins,
+		}, {
+			name: "invalid vouchers to add (empty)",
+			msg: MsgUndergird{
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "",
+			},
+			err: sdkerrors.ErrInvalidCoins,
+		}, {
 			name: "valid address",
 			msg: MsgUndergird{
-				Operator: sample.AccAddress(),
+				Operator:      sample.AccAddress(),
+				Voucherstoadd: "10" + VoucherDenom,
 			},
+			err: nil,
 		},
 	}
 	for _, tt := range tests {

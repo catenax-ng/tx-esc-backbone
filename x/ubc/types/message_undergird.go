@@ -47,5 +47,20 @@ func (msg *MsgUndergird) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid operator address (%s)", err)
 	}
+
+	return validateCoin(msg.Voucherstoadd)
+}
+
+func validateVoucherCoin(value string) error {
+	coin, err := sdk.ParseCoinNormalized(value)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
+	}
+	if coin.Denom == VoucherDenom {
+		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
+	}
+	if coin.Amount.IsZero() || coin.Amount.IsNegative() {
+		return sdkerrors.Wrapf(ErrInvalidArg, "amount should be a positive integer")
+	}
 	return nil
 }
