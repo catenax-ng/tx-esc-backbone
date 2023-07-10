@@ -27,4 +27,6 @@ type BankKeeper interface {
 	BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
 
 	SetSendEnabled(ctx sdk.Context, denom string, value bool)
+
+	GetBalance(ctx sdk.Context, addr sdk.AccAddress, denom string) sdk.Coin
 }
