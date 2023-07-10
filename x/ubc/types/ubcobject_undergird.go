@@ -17,8 +17,9 @@ func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) {
 	for i := 0; i < 10; i++ {
 		cycles = cycles + 1
 
-		ubc.calcP1XMethod2()
-		ubc.fitS1S0GivenP1X()
+		// CLARIFY: If it is fine to use the formula in calcP1X (used
+		// internally by fitS1S0, instead of calcP1XMethod2 ?
+		ubc.fitS1S0()
 
 		// CLARIFY: Fit S1 along with this condition is full parameter sweep.
 		// And this condition takes several thousand steps to evaluate to true.

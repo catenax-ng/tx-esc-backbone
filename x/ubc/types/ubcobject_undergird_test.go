@@ -78,13 +78,17 @@ func Test_UbcObject_Undergird(t *testing.T) {
 	IsEqualDecimal(t, "0.018376535626862294", ubc.S0.A)
 	IsEqualDecimal(t, "0.026538882064176064", ubc.S0.B)
 	IsEqualDecimal(t, "0.034701228501489835", ubc.S0.P1)
-	IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S0.P1X)
+	// IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S0.P1X)
+	IsEqualDecimal(t, "1966150664.271770980278195239", ubc.S0.P1X) // Alternate
 
-	IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S0.DeltaX)
+	// IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S0.DeltaX)
+	IsEqualDecimal(t, "1966150664.271770980278195239", ubc.S0.DeltaX) // Alternate
 	IsEqualDecimal(t, "0.034701228501489835", ubc.S1.P0)
 	IsEqualDecimal(t, "0.038993186689407263", ubc.S1.A)
 	IsEqualDecimal(t, "0.065538355475725699", ubc.S1.B)
-	IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S1.P0X)
-	IsEqualDecimal(t, "1033849335.728229022888324761", ubc.S1.DeltaX)
+	// IsEqualDecimal(t, "1966150664.271770977111675239", ubc.S1.P0X)
+	IsEqualDecimal(t, "1966150664.271770980278195239", ubc.S1.P0X) // Alternate
+	// IsEqualDecimal(t, "1033849335.728229022888324761", ubc.S1.DeltaX)
+	IsEqualDecimal(t, "1033849335.728229019721804761", ubc.S1.DeltaX) // Alternate
 
 }

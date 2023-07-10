@@ -121,10 +121,6 @@ func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 
 func (ubc *Ubcobject) fitS1S0() {
 	ubc.calcP1X()
-	ubc.fitS1S0GivenP1X()
-}
-
-func (ubc *Ubcobject) fitS1S0GivenP1X() {
 	g0 := ubc.calcG0()
 	g1 := ubc.calcG1(g0)
 
