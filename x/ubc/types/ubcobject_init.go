@@ -25,14 +25,11 @@ func (ubc *Ubcobject) Fit() error {
 	ubc.initSegmentsToZero()
 	ubc.fitS2()
 	ubc.fitS3()
-	ubc.fitS1()
-	ubc.fitS0()
+	ubc.fitS1S0()
 
 	// Self-consistency to fit P0 better.
-	ubc.fitS1()
-	ubc.fitS0()
-	ubc.fitS1()
-	ubc.fitS0()
+	ubc.fitS1S0()
+	ubc.fitS1S0()
 
 	return ubc.validateCurvature()
 }
@@ -122,7 +119,7 @@ func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 	ubc.QS3.C = p3.Sub(ubc.QS3.A.Mul(x3Scaled.Power(2))).Sub(ubc.QS3.B.Mul(x3Scaled))
 }
 
-func (ubc *Ubcobject) fitS1() {
+func (ubc *Ubcobject) fitS1S0() {
 	ubc.calcP1X()
 
 	g0 := ubc.calcG0()
@@ -131,6 +128,11 @@ func (ubc *Ubcobject) fitS1() {
 	ubc.S1.B = ubc.calcS1B()
 	ubc.setP0(ubc.calcP0(g0, g1))
 	ubc.setP1(ubc.calcP1())
+
+	ubc.S0.A = ubc.p0()
+	ubc.S0.B = ubc.calcS0B()
+
+	ubc.S1.A = ubc.calcS1A()
 }
 
 func (ubc *Ubcobject) calcP1X() {
@@ -174,12 +176,6 @@ func (ubc *Ubcobject) calcP1() sdk.Dec {
 	part1 := ubc.FactorFy.Mul(ubc.p2())
 	part2 := (sdk.NewDec(1).Sub(ubc.FactorFy)).Mul(ubc.p0())
 	return part1.Add(part2)
-}
-
-func (ubc *Ubcobject) fitS0() {
-	ubc.S0.A = ubc.p0()
-	ubc.S0.B = ubc.calcS0B()
-	ubc.S1.A = ubc.calcS1A()
 }
 
 func (ubc *Ubcobject) calcS0B() sdk.Dec {
