@@ -32,18 +32,6 @@ type chainClient struct {
 	blockHeight   int64
 }
 
-type Config struct {
-	AddressPrefix  string                       `json:"address_prefix"`
-	ChainId        string                       `json:"chain_id"`
-	From           string                       `json:"from"`
-	NodeAddress    string                       `json:"node_address"`
-	Fees           string                       `json:"fees"`
-	Gas            string                       `json:"gas"`
-	Home           string                       `json:"home"`
-	KeyRingBackend cosmosaccount.KeyringBackend `json:"key_ring_backend"`
-	StartBlock     int64                        `json:"start_block"`
-}
-
 func NewChainClient(ctx context.Context, config Config) (ResourceSyncClient, error) {
 	// Create a Cosmos client instance
 	client, err := cosmosclient.New(ctx,
@@ -110,19 +98,19 @@ func (c *chainClient) QueryAllResources(ctx context.Context) (*types.QueryAllRes
 	return c.queryClient.ResourceMapAll(ctx, &types.QueryAllResourceMapRequest{})
 }
 
-func (c *chainClient) safeConfig() {
-
-}
-
 func (c *chainClient) Poll(ctx context.Context) {
 	height, err := c.client.LatestBlockHeight(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
+	if c.blockHeight == height {
+		log.Printf("uptodate")
+		return
+	}
 	if c.blockHeight < height-100 {
 		log.Printf("Way behind: %d -> %d", c.blockHeight, height)
 	}
-	defer c.safeConfig()
+	defer c.SafeConfig()
 	for c.blockHeight < height {
 		blockProcessed := c.blockHeight + 1
 		txs, err := c.client.GetBlockTXs(ctx, blockProcessed)

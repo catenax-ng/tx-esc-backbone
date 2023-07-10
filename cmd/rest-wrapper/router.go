@@ -19,10 +19,12 @@ type router struct {
 	resourceSyncClient ResourceSyncClient
 }
 
-func newRouter(resourceSyncClient ResourceSyncClient) router {
-
+func newRouter(
+	config *Config,
+	resourceSyncClient ResourceSyncClient,
+) router {
 	return router{
-		addr:               ":8080",
+		addr:               config.HostAddress,
 		mux:                mux.NewRouter().StrictSlash(true),
 		resourceSyncClient: resourceSyncClient,
 	}
@@ -70,7 +72,7 @@ func (t router) updateResource(w http.ResponseWriter, r *http.Request) {
 		bz, err := resp.Codec.Marshal(resp)
 		if err != nil {
 			w.WriteHeader(500)
-			_, _ = fmt.Fprintln(w, "Cannot marshel response: ", err.Error())
+			_, _ = fmt.Fprintln(w, "Cannot marshal response: ", err.Error())
 		}
 		w.WriteHeader(201)
 		_, _ = w.Write(bz)
@@ -93,7 +95,7 @@ func (t router) updateResourceWithObj(w http.ResponseWriter, r *http.Request) {
 		bz, err := resp.Codec.Marshal(resp)
 		if err != nil {
 			w.WriteHeader(500)
-			_, _ = fmt.Fprintln(w, "Cannot marshel response: ", err.Error())
+			_, _ = fmt.Fprintln(w, "Cannot marshal response: ", err.Error())
 		}
 		w.WriteHeader(201)
 		_, _ = w.Write(bz)
@@ -115,7 +117,7 @@ func (t router) deleteResource(w http.ResponseWriter, r *http.Request) {
 		bz, err := resp.Codec.Marshal(resp)
 		if err != nil {
 			w.WriteHeader(500)
-			_, _ = fmt.Fprintln(w, "Cannot marshel response: ", err.Error())
+			_, _ = fmt.Fprintln(w, "Cannot marshal response: ", err.Error())
 		}
 		w.WriteHeader(201)
 		_, _ = w.Write(bz)

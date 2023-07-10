@@ -2,39 +2,32 @@ package main
 
 import (
 	"context"
-	"encoding/json"
-	"io"
+	"fmt"
+	"github.com/spf13/cobra"
 	"log"
 	"os"
 )
 
 func main() {
-	config, err := readConfig()
-	if err != nil {
-		log.Fatal(err)
+	var configFile string
+	rootCmd := &cobra.Command{
+		Run: func(cmd *cobra.Command, args []string) {
+			ctx := context.Background()
+			config, err := ReadConfig(configFile)
+			if err != nil {
+				log.Fatal(err)
+			}
+			client, err := NewChainClient(ctx, *config)
+			if err != nil {
+				log.Fatal(err)
+			}
+			client.Poll(ctx)
+			newRouter(config, client).handleRequests()
+		},
 	}
-	client, err := NewChainClient(context.Background(), *config)
-	if err != nil {
-		log.Fatal(err)
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "wrapper-config.json", "File to read configuration from")
+	if err := rootCmd.Execute(); err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
-	client.Poll(context.Background())
-	newRouter(client).handleRequests()
-}
-
-func readConfig() (*Config, error) {
-	config := &Config{}
-	configFile, err := os.Open("wrapper-config.json")
-	if err != nil {
-		return nil, err
-	}
-	defer configFile.Close()
-	bz, err := io.ReadAll(configFile)
-	if err != nil {
-		return nil, err
-	}
-	err = json.Unmarshal(bz, config)
-	if err != nil {
-		return nil, err
-	}
-	return config, nil
 }
