@@ -21,31 +21,9 @@ func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) {
 		// internally by fitS1S0, instead of calcP1XMethod2 ?
 		ubc.fitS1S0()
 
-		// CLARIFY: Fit S1 along with this condition is full parameter sweep.
-		// And this condition takes several thousand steps to evaluate to true.
-		// In tests, this never converged in 10 cycles.
-		if ubc.isA1WithinLimits() {
-			break
-		}
+		// CLARIFY: Fit S1 along with the condition "isA1WithinLimits"
+		// is full parameter sweep. And this condition takes several
+		// thousand steps to evaluate to true. In tests, this never
+		// converged in 10 cycles. So, is it okay that this is ignored ?
 	}
-}
-
-func (ubc *Ubcobject) isA1WithinLimits() bool {
-	// Allowed difference for a1 (convergence loop)
-	allowedA1Difference := sdk.NewDecWithPrec(1, 4) // 0.0001 <=> 0.01%
-
-	factor1 := sdk.NewDec(-2).Quo(sdk.NewDec(3)).Mul(ubc.S1.DeltaX)
-	factor2 := ubc.S2.firstDerivativeT1(sdk.NewDec(0)).Quo(ubc.S2.DeltaX)
-	lowerBoundA1 := factor1.Mul(factor2).Add(ubc.p2())
-
-	part1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p1())
-	part2 := sdk.NewDec(1).Quo(sdk.NewDec(6)).Mul(ubc.S1.DeltaX).Mul(factor2)
-	part3 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p2())
-	upperBoundA1 := part1.Sub(part2).Add(part3)
-
-	midA1 := lowerBoundA1.Add(upperBoundA1).Quo(sdk.NewDec(2))
-
-	lower := midA1.Mul(sdk.NewDec(1).Sub(allowedA1Difference))
-	upper := midA1.Mul(sdk.NewDec(1).Add(allowedA1Difference))
-	return lower.LT(ubc.S1.A) && upper.GT(ubc.S1.A)
 }
