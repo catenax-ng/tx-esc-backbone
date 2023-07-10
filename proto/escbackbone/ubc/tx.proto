@@ -14,6 +14,7 @@ service Msg {
   rpc Init       (MsgInit      ) returns (MsgInitResponse      );
   rpc Buytokens  (MsgBuytokens ) returns (MsgBuytokensResponse );
   rpc Selltokens (MsgSelltokens) returns (MsgSelltokensResponse);
+  rpc Undergird  (MsgUndergird ) returns (MsgUndergirdResponse );
 }
 message MsgInit {
   string creator         =  1;
@@ -49,4 +50,11 @@ message MsgSelltokensResponse {
   string tokenssold     = 1;
   string vouchersearned = 2;
 }
+
+message MsgUndergird {
+  string operator      = 1;
+  string voucherstoadd = 2;
+}
+
+message MsgUndergirdResponse {}
 
