@@ -28,7 +28,7 @@ func (ubc *Ubcobject) SellExactTokens(tokens sdk.Dec) sdk.Dec {
 		if segXCurrent == segXNew || segXCurrent == FS0 {
 			x1 = xNew
 		}
-		additionalVouchers := ubc.integralX12(segXCurrent)(x1, x2)
+		additionalVouchers := ubc.integralXFn(segXCurrent)(x1, x2)
 		vouchersOut = vouchersOut.Add(additionalVouchers)
 
 		xCurrent = ubc.lowerBoundX(segXCurrent)

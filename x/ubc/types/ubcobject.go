@@ -204,9 +204,9 @@ func (ubc *Ubcobject) deltaX(segNum int) sdk.Dec {
 	}
 }
 
-// integralX12 computes the function for computing the integral for the given
-// bezier segment.
-func (ubc *Ubcobject) integralX12(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
+// integralX12 returns the function for computing the integral for the given
+// segment.
+func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	switch segNum {
 	case FS0:
 		return ubc.FS0.integralX12

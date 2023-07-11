@@ -29,7 +29,7 @@ func (ubc *Ubcobject) BuyExactTokens(tokens sdk.Dec) sdk.Dec {
 		if segXCurrent == segXNew {
 			x2 = xNew
 		}
-		additionalVouchers := ubc.integralX12(segXCurrent)(x1, x2)
+		additionalVouchers := ubc.integralXFn(segLowerBoundX)(x1, x2)
 		vouchersUsed = vouchersUsed.Add(additionalVouchers)
 
 		xCurrent = ubc.upperBoundX(segXCurrent)
