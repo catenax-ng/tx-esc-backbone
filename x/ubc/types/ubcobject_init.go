@@ -25,11 +25,10 @@ func (ubc *Ubcobject) Fit() error {
 	ubc.initSegmentsToZero()
 	ubc.fitS2()
 	ubc.fitS3()
-	ubc.fitS1S0()
+	ubc.fitS0S1Repeatedly(1)
 
 	// Self-consistency to fit P0 better.
-	ubc.fitS1S0()
-	ubc.fitS1S0()
+	ubc.fitS0S1Repeatedly(2)
 
 	return ubc.validateCurvature()
 }
@@ -119,19 +118,23 @@ func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 	ubc.QS3.C = p3.Sub(ubc.QS3.A.Mul(x3Scaled.Power(2))).Sub(ubc.QS3.B.Mul(x3Scaled))
 }
 
-func (ubc *Ubcobject) fitS1S0() {
-	ubc.calcP1X()
-	g0 := ubc.calcG0()
-	g1 := ubc.calcG1(g0)
+// fitS0S1Repeatedly fits S0 and S1 repeatedly for given count of repititions,
+// for the sake of self consistency.
+func (ubc *Ubcobject) fitS0S1Repeatedly(repititions uint) {
+	for i := uint(0); i < repititions; i++ {
+		ubc.calcP1X()
+		g0 := ubc.calcG0()
+		g1 := ubc.calcG1(g0)
 
-	ubc.S1.B = ubc.calcS1B()
-	ubc.setP0(ubc.calcP0(g0, g1))
-	ubc.setP1(ubc.calcP1())
+		ubc.S1.B = ubc.calcS1B()
+		ubc.setP0(ubc.calcP0(g0, g1))
+		ubc.setP1(ubc.calcP1())
 
-	ubc.S0.A = ubc.p0()
-	ubc.S0.B = ubc.calcS0B()
+		ubc.S0.A = ubc.p0()
+		ubc.S0.B = ubc.calcS0B()
 
-	ubc.S1.A = ubc.calcS1A()
+		ubc.S1.A = ubc.calcS1A()
+	}
 }
 
 func (ubc *Ubcobject) calcP1X() {

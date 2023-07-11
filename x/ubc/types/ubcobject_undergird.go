@@ -19,16 +19,14 @@ func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) error {
 	ubc.BPoolUnder = ubc.BPoolUnder.Add(BPoolAdd)
 	ubc.BPool = ubc.BPool.Add(BPoolAdd)
 
-	for i := 0; i < 10; i++ {
-		// CLARIFY: If it is fine to use the formula in calcP1X (used
-		// internally by fitS1S0, instead of calcP1XMethod2 ?
-		ubc.fitS1S0()
+	// CLARIFY: If it is fine to use the formula in calcP1X (used
+	// internally by fitS1S0, instead of calcP1XMethod2 ?
+	ubc.fitS0S1Repeatedly(10)
 
-		// CLARIFY: Fit S1 along with the condition "isA1WithinLimits"
-		// is full parameter sweep. And this condition takes several
-		// thousand steps to evaluate to true. In tests, this never
-		// converged in 10 cycles. So, is it okay that this is ignored ?
-	}
+	// CLARIFY: Fit S1 along with the condition "isA1WithinLimits"
+	// is full parameter sweep. And this condition takes several
+	// thousand steps to evaluate to true. In tests, this never
+	// converged in 10 cycles. So, is it okay that this is ignored ?
 
 	err := ubc.validateCurvature()
 	if err != nil {
