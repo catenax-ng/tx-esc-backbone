@@ -21,6 +21,7 @@ on:
   push:
     branches:
       - main
+      - create-rest-wrapper-for-resourcesync
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
   pull_request:
