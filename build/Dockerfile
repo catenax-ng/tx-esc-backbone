@@ -44,19 +44,25 @@ RUN chmod u+x keplr-suggestion &&  \
     mkdir -p /output/rest-wrapper && \
     chmod u+x ./rest-wrapper && \
     cp ./rest-wrapper /output/rest-wrapper/ && \
-    cp ./cmd/rest-wrapper/config.json /output/rest-wrapper/
+    cp ./cmd/rest-wrapper/config.json /output/rest-wrapper/default-config.json
 
 FROM scratch as esc-backbone-build-output
 WORKDIR /output
 COPY --from=build /output ./
 
-FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-backbone-res-sync-rest-wrapper
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-res-sync-rest-wrapper
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g $GID wrapper && useradd -g $GID -u $UID -s /bin/bash -d /home/wrapper wrapper
 WORKDIR /wrapper
 ENV CONFIG="/wrapper/default-config.json"
 VOLUME /wrapper/config
-COPY from=esc-backbone-build-output /output/rest-wrapper/* ./
-COPY from=esc-backbone-build-output /output/esc-backboned ./
-RUN ls -l
+COPY --from=esc-backbone-build-output  --chown=$UID:$GID /output/rest-wrapper/* ./
+COPY --from=esc-backbone-build-output  --chown=$UID:$GID /output/esc-backboned ./
+
+EXPOSE 8080
+
+USER $UID
 CMD [ "sh", "-c", "/wrapper/rest-wrapper -c $CONFIG"]
 
 FROM ghcr.io/catenax-ng/esc-backbone-web-build-base:latest as web-chain-suggestion-build
