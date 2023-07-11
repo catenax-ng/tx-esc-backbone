@@ -44,6 +44,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUndergird int = 100
 
+	opWeightMsgShiftup = "op_weight_msg_shiftup"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgShiftup int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -116,6 +120,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		ubcsimulation.SimulateMsgUndergird(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgShiftup int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgShiftup, &weightMsgShiftup, nil,
+		func(_ *rand.Rand) {
+			weightMsgShiftup = defaultWeightMsgShiftup
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgShiftup,
+		ubcsimulation.SimulateMsgShiftup(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -153,6 +168,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgUndergird,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				ubcsimulation.SimulateMsgUndergird(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgShiftup,
+			defaultWeightMsgShiftup,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				ubcsimulation.SimulateMsgShiftup(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

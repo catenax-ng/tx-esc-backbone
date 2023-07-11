@@ -15,6 +15,7 @@ service Msg {
   rpc Buytokens  (MsgBuytokens ) returns (MsgBuytokensResponse );
   rpc Selltokens (MsgSelltokens) returns (MsgSelltokensResponse);
   rpc Undergird  (MsgUndergird ) returns (MsgUndergirdResponse );
+  rpc Shiftup    (MsgShiftup   ) returns (MsgShiftupResponse   );
 }
 message MsgInit {
   string creator         =  1;
@@ -57,4 +58,12 @@ message MsgUndergird {
 }
 
 message MsgUndergirdResponse {}
+
+message MsgShiftup {
+  string operator        = 1;
+  string voucherstoadd   = 2;
+  string degirdingfactor = 3;
+}
+
+message MsgShiftupResponse {}
 
