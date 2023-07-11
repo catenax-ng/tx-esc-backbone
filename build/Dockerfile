@@ -54,6 +54,8 @@ FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-res-sync-rest-wra
 ARG UID=1000
 ARG GID=1000
 RUN groupadd -g $GID wrapper && useradd -g $GID -u $UID -s /bin/bash -d /home/wrapper wrapper
+ENV PACKAGES ca-certificates openssl
+RUN apt-get install -y $PACKAGES  && mkdir -p /usr/local/share/ca-certificates
 WORKDIR /wrapper
 ENV CONFIG="/wrapper/default-config.json"
 VOLUME /wrapper/config
