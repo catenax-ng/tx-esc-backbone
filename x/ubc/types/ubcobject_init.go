@@ -227,7 +227,7 @@ func (ubc *Ubcobject) validateCurvature() error {
 		return errors.Errorf("curvature condition 4 failed")
 	}
 
-	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeTAtZero()) {
+	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeT1(sdk.ZeroDec())) {
 		return errors.Errorf("curvature condition 5 failed")
 	}
 
