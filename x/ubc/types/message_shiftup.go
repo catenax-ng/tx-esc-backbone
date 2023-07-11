@@ -48,5 +48,10 @@ func (msg *MsgShiftup) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid operator address (%s)", err)
 	}
-	return nil
+	_, err = sdk.NewDecFromStr(msg.Degirdingfactor)
+	if err != nil {
+		return sdkerrors.Wrapf(ErrInvalidArg, "degirding factor", err)
+	}
+
+	return validateCoin(msg.Voucherstoadd)
 }
