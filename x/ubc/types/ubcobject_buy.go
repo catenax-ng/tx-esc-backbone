@@ -19,26 +19,31 @@ func (ubc *Ubcobject) BuyExactTokens(tokens sdk.Dec) sdk.Dec {
 	xCurrent := ubc.CurrentSupply
 	xNew := ubc.CurrentSupply.Add(tokens)
 
-	segXCurrent := ubc.segmentNum(xCurrent)
-	segXNew := ubc.segmentNum(xNew)
-
-	var vouchersUsed = sdk.NewDec(0)
-	for ; segXCurrent <= segXNew; segXCurrent = segXCurrent + 1 {
-		x1 := xCurrent
-		x2 := ubc.upperBoundX(segXCurrent)
-		if segXCurrent == segXNew {
-			x2 = xNew
-		}
-		additionalVouchers := ubc.integralXFn(segLowerBoundX)(x1, x2)
-		vouchersUsed = vouchersUsed.Add(additionalVouchers)
-
-		xCurrent = ubc.upperBoundX(segXCurrent)
-	}
+	vouchersUsed := ubc.integralX12(xCurrent, xNew)
 	vouchersUsed = roundOff(vouchersUsed, VoucherMultiplier)
 
 	ubc.CurrentSupply = xNew
 	ubc.BPool = ubc.BPool.Add(vouchersUsed)
 	// CLARIFY: Should we change BPoolUnder
+	return vouchersUsed
+}
+
+func (ubc *Ubcobject) integralX12(lowerBoundX, upperBoundX sdk.Dec) sdk.Dec {
+	segLowerBoundX := ubc.segmentNum(lowerBoundX)
+	segUpperBoundX := ubc.segmentNum(upperBoundX)
+
+	var vouchersUsed = sdk.NewDec(0)
+	for ; segLowerBoundX <= segUpperBoundX; segLowerBoundX = segLowerBoundX + 1 {
+		x1 := lowerBoundX
+		x2 := ubc.upperBoundX(segLowerBoundX)
+		if segLowerBoundX == segUpperBoundX {
+			x2 = upperBoundX
+		}
+		additionalVouchers := ubc.integralXFn(segLowerBoundX)(x1, x2)
+		vouchersUsed = vouchersUsed.Add(additionalVouchers)
+
+		lowerBoundX = ubc.upperBoundX(segLowerBoundX)
+	}
 	return vouchersUsed
 }
 
