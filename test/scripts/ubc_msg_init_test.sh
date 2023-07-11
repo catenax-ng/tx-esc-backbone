@@ -84,3 +84,14 @@ esc-backboned query bank balances $ubc_operator
 esc-backboned tx ubc undergird "10000000000000uvoucher" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
+
+
+echo "\n# ubc shiftup - value in tokens\n\n"
+esc-backboned query bank balances $ubc_operator
+echo "\n# buy large amount of tokens (500e5 CAX) to shift current supply significanly beyond P2.\n\n"
+esc-backboned tx ubc buytokens "50000000000000ucax" --from=$ubc_operator --yes
+sleep 3
+esc-backboned query bank balances $ubc_operator
+esc-backboned tx ubc shiftup "10000000000000uvoucher" "1" --from=$ubc_operator --yes
+sleep 3
+esc-backboned query bank balances $ubc_operator

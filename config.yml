@@ -40,8 +40,8 @@ accounts:
 - name: ubc_operator
   mnemonic: "marriage salmon power work forward cube picnic sing afford fatal fee mule all nuclear ignore rocket wink sock know stem scene ability cool cabbage"
   coins:
-  - 1000000acax
-  - 100000000uvoucher
+  - 1000000acax # for transaction fees.
+  - 5210100000000uvoucher # 1e8 for undergirding and 1e10 for shifting up and 5.2e12 to pay for large purchase (500e11 ucax) before shift up.
 
 validators:
 - name: alice
