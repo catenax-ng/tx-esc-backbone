@@ -13,10 +13,7 @@ func (ubc *Ubcobject) UndergirdS01(BPoolAdd sdk.Dec) {
 	ubc.BPoolUnder = ubc.BPoolUnder.Add(BPoolAdd)
 	ubc.BPool = ubc.BPool.Add(BPoolAdd)
 
-	cycles := 0
 	for i := 0; i < 10; i++ {
-		cycles = cycles + 1
-
 		// CLARIFY: If it is fine to use the formula in calcP1X (used
 		// internally by fitS1S0, instead of calcP1XMethod2 ?
 		ubc.fitS1S0()
