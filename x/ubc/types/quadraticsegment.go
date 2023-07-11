@@ -21,6 +21,14 @@ func (qsg *Quadraticsegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
 
 }
 
+// firstDerivativeX1 computes the first derivate of the curve segment with respect to
+// the "x", at the point x1.
+func (qsg *Quadraticsegment) firstDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
+	x1 = qsg.scaleX(x1)
+	firstDerivativeX1 := sdk.NewDec(2).Mul(qsg.A).Mul(x1).Add(qsg.B)
+	return qsg.deScaleX(firstDerivativeX1)
+}
+
 // y returns the y value for the given x.
 func (qsg *Quadraticsegment) y(x1 sdk.Dec) (y sdk.Dec) {
 	x1 = qsg.scaleX(x1)

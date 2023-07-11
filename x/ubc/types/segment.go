@@ -29,6 +29,12 @@ func (sg *Segment) updateDeltaX() {
 	sg.DeltaX = sg.P1X.Sub(sg.P0X)
 }
 
+// firstDerivativeX1 computes the first derivate of the curve segment with respect to
+// the "x", at the point x1.
+func (sg *Segment) firstDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
+	return sg.firstDerivativeT1(sg.t(x1)).Quo(sg.DeltaX)
+}
+
 // firstDerivativeT1 computes the first derivate of the curve segment with respect to
 // the bezier curve parameter "t", at the point t1.
 func (sg *Segment) firstDerivativeT1(t1 sdk.Dec) sdk.Dec {

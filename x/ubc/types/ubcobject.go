@@ -223,6 +223,21 @@ func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	}
 }
 
+func (ubc *Ubcobject) slopeX1(x1 sdk.Dec) sdk.Dec {
+	switch ubc.segmentNum(x1) {
+	case FS0:
+		return sdk.ZeroDec()
+	case S0:
+		return ubc.S0.firstDerivativeX1(x1)
+	case S1:
+		return ubc.S1.firstDerivativeX1(x1)
+	case S2:
+		return ubc.S2.firstDerivativeX1(x1)
+	default: // QS3
+		return ubc.QS3.firstDerivativeX1(x1)
+	}
+}
+
 func (ubc *Ubcobject) y(x sdk.Dec) sdk.Dec {
 	switch ubc.segmentNum(x) {
 	case FS0:
