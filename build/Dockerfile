@@ -34,16 +34,30 @@ COPY tools ./tools
 
 RUN ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
+RUN go build github.com/catenax/esc-backbone/cmd/rest-wrapper
 COPY web ./web
 RUN chmod u+x keplr-suggestion &&  \
     mkdir -p ./web/public/chain &&  \
     ./keplr-suggestion &&  \
     mv ./web /output && \
-    cp /go/bin/esc-backboned /output
+    cp /go/bin/esc-backboned /output && \
+    mkdir -p /output/rest-wrapper && \
+    chmod u+x ./rest-wrapper && \
+    cp ./rest-wrapper /output/rest-wrapper/ && \
+    cp ./cmd/rest-wrapper/config.json /output/rest-wrapper/
 
 FROM scratch as esc-backbone-build-output
 WORKDIR /output
 COPY --from=build /output ./
+
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-backbone-res-sync-rest-wrapper
+WORKDIR /wrapper
+ENV CONFIG="/wrapper/default-config.json"
+VOLUME /wrapper/config
+COPY from=esc-backbone-build-output /output/rest-wrapper/* ./
+COPY from=esc-backbone-build-output /output/esc-backboned ./
+RUN ls -l
+CMD [ "sh", "-c", "/wrapper/rest-wrapper -c $CONFIG"]
 
 FROM ghcr.io/catenax-ng/esc-backbone-web-build-base:latest as web-chain-suggestion-build
 
