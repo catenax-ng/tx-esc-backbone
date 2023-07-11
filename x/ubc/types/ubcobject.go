@@ -87,10 +87,10 @@ func (ubc *Ubcobject) setP3X(p3X sdk.Dec) {
 
 // segmentNum returns the segment number for the given point x.
 func (ubc *Ubcobject) segmentNum(x sdk.Dec) int {
-	upperBounds := []sdk.Dec{ubc.p0x(), ubc.p1x(), ubc.p2x(), ubc.p3x()}
+	upperBoundsX := []sdk.Dec{ubc.p0x(), ubc.p1x(), ubc.p2x(), ubc.p3x()}
 	segments := []int{FS0, S0, S1, S2}
 
-	for i, upperBound := range upperBounds {
+	for i, upperBound := range upperBoundsX {
 		if x.LT(upperBound) {
 			return segments[i]
 		}
