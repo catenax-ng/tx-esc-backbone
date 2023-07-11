@@ -39,6 +39,22 @@ func (sg *Segment) firstDerivativeT1(t1 sdk.Dec) sdk.Dec {
 	return sdk.NewDec(3).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
 }
 
+// y returns the y value for the given x.
+func (sg *Segment) y(x sdk.Dec) sdk.Dec {
+	t := sg.t(x)
+
+	// math.Pow((1-t), 3) * sg.P0
+	Pi := sdk.NewDec(1).Sub(t).Power(3).Mul(sg.P0)
+	// 3 * t * math.Pow((1-t), 2) * sg.A
+	ai := sdk.NewDec(3).Mul(t).Mul(sdk.NewDec(1).Sub(t).Power(2)).Mul(sg.A)
+	// 3 * math.Pow(t, 2) * (1 - t) * sg.B
+	bi := sdk.NewDec(3).Mul(t.Power(2)).Mul(sdk.NewDec(1).Sub(t)).Mul(sg.B)
+	// math.Pow(t, 3) * sg.P1
+	Pi1 := t.Power(3).Mul(sg.P1)
+
+	return Pi.Add(ai).Add(bi).Add(Pi1)
+}
+
 // integralX12 computes the integral of the curve segment with respect to "x",
 // between limits x1 and x2.
 func (s *Segment) integralX12(x1, x2 sdk.Dec) sdk.Dec {

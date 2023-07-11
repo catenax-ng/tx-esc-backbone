@@ -223,6 +223,21 @@ func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	}
 }
 
+func (ubc *Ubcobject) y(x sdk.Dec) sdk.Dec {
+	switch ubc.segmentNum(x) {
+	case FS0:
+		return ubc.FS0.y(x)
+	case S0:
+		return ubc.S0.y(x)
+	case S1:
+		return ubc.S1.y(x)
+	case S2:
+		return ubc.S2.y(x)
+	default: // QS3
+		return ubc.QS3.y(x)
+	}
+}
+
 // integralT1 computes the integral of the curve segment with respect to the
 // bezier curve parameter "t", from the beginning of the curve until point t1.
 func (ubc *Ubcobject) integralT1(t1 sdk.Dec, seg int) sdk.Dec {

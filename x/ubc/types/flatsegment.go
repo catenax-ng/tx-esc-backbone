@@ -18,3 +18,8 @@ func (fl *Flatsegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
 func (fl *Flatsegment) integralX1(x1 sdk.Dec) sdk.Dec {
 	return fl.Y.Mul(x1)
 }
+
+// y returns the y value for the given x.
+func (fsg *Flatsegment) y(x sdk.Dec) sdk.Dec {
+	return fsg.Y
+}

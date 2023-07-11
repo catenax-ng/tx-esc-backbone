@@ -21,6 +21,12 @@ func (qsg *Quadraticsegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
 
 }
 
+// y returns the y value for the given x.
+func (qsg *Quadraticsegment) y(x1 sdk.Dec) (y sdk.Dec) {
+	x1 = qsg.scaleX(x1)
+	return qsg.A.Mul(x1.Power(2)).Add(qsg.B.Mul(x1)).Add(qsg.C)
+}
+
 func (qsg *Quadraticsegment) scaleX(x1 sdk.Dec) sdk.Dec {
 	return x1.Quo(qsg.ScalingFactor)
 }
