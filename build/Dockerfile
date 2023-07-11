@@ -32,7 +32,7 @@ COPY proto ./proto
 COPY config.yml ./
 COPY tools ./tools
 
-RUN ignite chain build
+RUN ignite version && ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
 RUN go build github.com/catenax/esc-backbone/cmd/rest-wrapper
 COPY web ./web
