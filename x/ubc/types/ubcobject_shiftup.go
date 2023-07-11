@@ -7,10 +7,16 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/pkg/errors"
 )
 
 func (ubc *Ubcobject) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
+	if ubc.CurrentSupply.LT(ubc.p2x()) {
+		errMsg := "could not undergird, since the currentSupply is not beyond P2"
+		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
+	}
+
 	p2XOld := ubc.p2x()
 
 	// Calculate the factored BPool that should be added.
