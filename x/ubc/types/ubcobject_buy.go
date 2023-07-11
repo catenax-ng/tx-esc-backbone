@@ -55,10 +55,6 @@ func (ubc *Ubcobject) BuyTokensFor(vouchersIn sdk.Dec) (sdk.Dec, sdk.Dec, error)
 	}
 
 	vouchersUsed := ubc.BuyExactTokens(tokens)
-	if err != nil {
-		return sdk.ZeroDec(), sdk.ZeroDec(), err
-	}
-
 	vouchersRemaining := vouchersIn.Sub(vouchersUsed)
 	// What if the vouchers are valid amount, but insufficent to buy tokens,
 	// we shold not err in thsi case, but rather return 0 in BuyTokensFor
