@@ -5,10 +5,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Package rest-wrapper.
+
+// ESC-REST-Wrapper
 //
 // the purpose of this application is to wrap the ESC-Backbone behind a web2 API.
 //
-// // Terms Of Service:
+// Terms Of Service:
 //
 // there are no TOS at this moment, use at your own risk we take no responsibility
 //
@@ -270,9 +272,9 @@ func (t router) handleRequests() {
 	// description: Deletes the resource with given origResId.
 	// parameters:
 	// - name: origResId
-	//   in: query
+	//   in: path
 	//   description: Deletes the resource with specified origResId.
-	//   required: false
+	//   required: true
 	//   type: string
 	// responses:
 	//   '200':

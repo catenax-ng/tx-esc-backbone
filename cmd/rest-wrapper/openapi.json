@@ -11,6 +11,7 @@
   "swagger": "2.0",
   "info": {
     "description": "the purpose of this application is to wrap the ESC-Backbone behind a web2 API.",
+    "title": "ESC-REST-Wrapper",
     "termsOfService": "there are no TOS at this moment, use at your own risk we take no responsibility",
     "contact": {
       "name": "Lars Wegner",
@@ -154,7 +155,8 @@
             "type": "string",
             "description": "Deletes the resource with specified origResId.",
             "name": "origResId",
-            "in": "query"
+            "in": "path",
+            "required": true
           }
         ],
         "responses": {
@@ -199,26 +201,21 @@
           "items": {
             "type": "integer",
             "format": "uint8"
-          },
-          "x-go-name": "DataHash"
+          }
         },
         "origResId": {
           "description": "OrigResId is the id of the resource by originator -  unique per originator",
-          "type": "string",
-          "x-go-name": "OrigResId"
+          "type": "string"
         },
         "resourceKey": {
           "description": "ResourceKey is the Id of the resource to access it at the target system",
-          "type": "string",
-          "x-go-name": "ResourceKey"
+          "type": "string"
         },
         "targetSystem": {
           "description": "TargetSystem is holding the information of the resource",
-          "type": "string",
-          "x-go-name": "TargetSystem"
+          "type": "string"
         }
-      },
-      "x-go-package": "github.com/catenax/esc-backbone/cmd/rest-wrapper"
+      }
     },
     "ResponseResource": {
       "type": "object",
@@ -227,21 +224,17 @@
         "height": {
           "description": "Height of the block containing the transaction",
           "type": "integer",
-          "format": "int64",
-          "x-go-name": "Height"
+          "format": "int64"
         },
         "rawLog": {
           "description": "RawLog contains the raw log of the transaction.",
-          "type": "string",
-          "x-go-name": "RawLog"
+          "type": "string"
         },
         "txHash": {
           "description": "TxHash is the hash of the transaction",
-          "type": "string",
-          "x-go-name": "TxHash"
+          "type": "string"
         }
-      },
-      "x-go-package": "github.com/catenax/esc-backbone/cmd/rest-wrapper"
+      }
     }
   }
 }
