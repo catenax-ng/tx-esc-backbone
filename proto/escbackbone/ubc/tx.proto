@@ -7,6 +7,8 @@ syntax = "proto3";
 
 package escbackbone.ubc;
 
+import "gogoproto/gogo.proto";
+
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 // Msg defines the Msg service.
@@ -62,7 +64,10 @@ message MsgUndergirdResponse {}
 message MsgShiftup {
   string operator        = 1;
   string voucherstoadd   = 2;
-  string degirdingfactor = 3;
+  string degirdingfactor = 3[
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
 }
 
 message MsgShiftupResponse {}

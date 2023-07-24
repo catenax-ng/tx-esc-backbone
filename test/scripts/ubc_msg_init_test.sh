@@ -84,6 +84,7 @@ esc-backboned query bank balances $ubc_operator
 esc-backboned tx ubc undergird "10000000000000uvoucher" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
+esc-backboned query ubc show-ubcobject
 
 
 echo "\n# ubc shiftup - value in tokens\n\n"
@@ -95,3 +96,4 @@ esc-backboned query bank balances $ubc_operator
 esc-backboned tx ubc shiftup "10000000000000uvoucher" "1" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
+esc-backboned query ubc show-ubcobject

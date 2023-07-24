@@ -6,6 +6,8 @@
 package types
 
 import (
+	fmt "fmt"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -15,11 +17,16 @@ const TypeMsgShiftup = "shiftup"
 var _ sdk.Msg = &MsgShiftup{}
 
 func NewMsgShiftup(operator string, voucherstoadd string, degirdingfactor string) *MsgShiftup {
-	return &MsgShiftup{
-		Operator:        operator,
-		Voucherstoadd:   voucherstoadd,
-		Degirdingfactor: degirdingfactor,
+	msg := &MsgShiftup{
+		Operator:      operator,
+		Voucherstoadd: voucherstoadd,
 	}
+	var err error
+	msg.Degirdingfactor, err = sdk.NewDecFromStr(degirdingfactor)
+	if err != nil {
+		panic(fmt.Sprintf("invalid value for degirding factor: %v", err))
+	}
+	return msg
 }
 
 func (msg *MsgShiftup) Route() string {
@@ -47,10 +54,6 @@ func (msg *MsgShiftup) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.Operator)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid operator address (%s)", err)
-	}
-	_, err = sdk.NewDecFromStr(msg.Degirdingfactor)
-	if err != nil {
-		return sdkerrors.Wrapf(ErrInvalidArg, "degirding factor", err)
 	}
 
 	return validateCoin(msg.Voucherstoadd)

@@ -29,7 +29,6 @@ func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types
 	// These will not err, as error has been checked in ValidateBasic.
 	operator, _ := sdk.AccAddressFromBech32(msg.Operator)
 	vouchersToAdd, _ := sdk.ParseCoinNormalized(msg.Voucherstoadd)
-	degirdingFactor, _ := sdk.NewDecFromStr(msg.Degirdingfactor)
 
 	// CLARIFY: How should the number 1e8 be arrived at based on input parameters ???
 	// CLARIFY: PoC uses 1e10 * VoucherDenom. But looking at message processing code, this seems like an error ?
@@ -49,7 +48,7 @@ func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types
 		return &types.MsgShiftupResponse{}, err
 	}
 
-	err = ubc.ShiftUp(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)), degirdingFactor)
+	err = ubc.ShiftUp(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)), msg.Degirdingfactor)
 	if err != nil {
 		return &types.MsgShiftupResponse{}, err
 	}
