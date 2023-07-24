@@ -147,8 +147,10 @@ func (ubc *Ubcobject) lowerBoundX(segNum int) sdk.Dec {
 		return ubc.p1x()
 	case S2:
 		return ubc.p2x()
-	default: // QS3
+	case QS3:
 		return ubc.p3x()
+	default:
+		return sdk.ZeroDec()
 	}
 }
 
@@ -233,8 +235,10 @@ func (ubc *Ubcobject) slopeX1(x1 sdk.Dec) sdk.Dec {
 		return ubc.S1.firstDerivativeX1(x1)
 	case S2:
 		return ubc.S2.firstDerivativeX1(x1)
-	default: // QS3
+	case QS3:
 		return ubc.QS3.firstDerivativeX1(x1)
+	default:
+		return sdk.ZeroDec()
 	}
 }
 
@@ -248,8 +252,10 @@ func (ubc *Ubcobject) y(x sdk.Dec) sdk.Dec {
 		return ubc.S1.y(x)
 	case S2:
 		return ubc.S2.y(x)
-	default: // QS3
+	case QS3:
 		return ubc.QS3.y(x)
+	default:
+		return sdk.ZeroDec()
 	}
 }
 
