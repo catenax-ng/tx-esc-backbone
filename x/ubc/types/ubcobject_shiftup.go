@@ -13,7 +13,7 @@ import (
 
 func (ubc *Ubcobject) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	if ubc.CurrentSupply.LT(ubc.p2x()) {
-		errMsg := "could not undergird, since the currentSupply is not beyond P2"
+		errMsg := "could not shiftup, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
 	}
 
