@@ -4,9 +4,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-// Package rest-wrapper.
+// Package main.
 
-// ESC-REST-Wrapper
+// ESC-Web2-Wrapper
 //
 // the purpose of this application is to wrap the ESC-Backbone behind a web2 API.
 //
