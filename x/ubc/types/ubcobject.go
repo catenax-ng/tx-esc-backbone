@@ -225,6 +225,25 @@ func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	}
 }
 
+func (ubc *Ubcobject) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec) {
+	segLowerBoundX := ubc.segmentNum(lowerBoundX)
+	segUpperBoundX := ubc.segmentNum(upperBoundX)
+
+	vouchers = sdk.NewDec(0)
+	for ; segLowerBoundX <= segUpperBoundX; segLowerBoundX = segLowerBoundX + 1 {
+		x1 := lowerBoundX
+		x2 := ubc.upperBoundX(segLowerBoundX)
+		if segLowerBoundX == segUpperBoundX {
+			x2 = upperBoundX
+		}
+		additionalVouchers := ubc.integralXFn(segLowerBoundX)(x1, x2)
+		vouchers = vouchers.Add(additionalVouchers)
+
+		lowerBoundX = ubc.upperBoundX(segLowerBoundX)
+	}
+	return vouchers
+}
+
 func (ubc *Ubcobject) slopeX1(x1 sdk.Dec) sdk.Dec {
 	switch ubc.segmentNum(x1) {
 	case FS0:

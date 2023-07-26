@@ -28,25 +28,6 @@ func (ubc *Ubcobject) BuyExactTokens(tokens sdk.Dec) sdk.Dec {
 	return vouchersUsed
 }
 
-func (ubc *Ubcobject) integralX12(lowerBoundX, upperBoundX sdk.Dec) sdk.Dec {
-	segLowerBoundX := ubc.segmentNum(lowerBoundX)
-	segUpperBoundX := ubc.segmentNum(upperBoundX)
-
-	var vouchersUsed = sdk.NewDec(0)
-	for ; segLowerBoundX <= segUpperBoundX; segLowerBoundX = segLowerBoundX + 1 {
-		x1 := lowerBoundX
-		x2 := ubc.upperBoundX(segLowerBoundX)
-		if segLowerBoundX == segUpperBoundX {
-			x2 = upperBoundX
-		}
-		additionalVouchers := ubc.integralXFn(segLowerBoundX)(x1, x2)
-		vouchersUsed = vouchersUsed.Add(additionalVouchers)
-
-		lowerBoundX = ubc.upperBoundX(segLowerBoundX)
-	}
-	return vouchersUsed
-}
-
 // BuyTokensFor buys the tokens for given amount of vouchers against the curve,
 // also deducting the fees. It returns the amount of tokens and amount of
 // vouchers used.
