@@ -3,7 +3,7 @@
 // https://github.com/catenax-ng/product-esc-backbone-code
 //
 // SPDX-License-Identifier: Apache-2.0
-package main
+package web2wrapper
 
 import (
 	"encoding/json"

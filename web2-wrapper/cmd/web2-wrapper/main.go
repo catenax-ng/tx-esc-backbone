@@ -8,6 +8,7 @@ package main
 import (
 	"context"
 	"fmt"
+	web2wrapper "github.com/catenax/web2-wrapper/pkg"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -18,16 +19,17 @@ func main() {
 	rootCmd := &cobra.Command{
 		Run: func(cmd *cobra.Command, args []string) {
 			ctx := context.Background()
-			config, err := ReadConfig(configFile)
+
+			config, err := web2wrapper.ReadConfig(configFile)
 			if err != nil {
 				log.Fatal(err)
 			}
-			client, err := NewChainClient(ctx, *config)
+			client, err := web2wrapper.NewChainClient(ctx, *config)
 			if err != nil {
 				log.Fatal(err)
 			}
 			client.Poll(ctx)
-			newRouter(config, client).handleRequests()
+			web2wrapper.NewRouter(config, client).HandleRequests()
 		},
 	}
 	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "wrapper-config.json", "File to read configuration from")

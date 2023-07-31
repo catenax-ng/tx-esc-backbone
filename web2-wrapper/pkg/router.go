@@ -27,7 +27,7 @@
 //	- application/json
 //
 // swagger:meta
-package main
+package web2wrapper
 
 import (
 	"encoding/json"
@@ -48,7 +48,7 @@ type router struct {
 	resourceSyncClient ResourceSyncClient
 }
 
-func newRouter(
+func NewRouter(
 	config *Config,
 	resourceSyncClient ResourceSyncClient,
 ) router {
@@ -183,7 +183,7 @@ func (t router) deleteResource(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (t router) handleRequests() {
+func (t router) HandleRequests() {
 	t.mux.HandleFunc("/", t.getStatus)
 	t.mux.HandleFunc("/resource", t.createResource).Methods("POST")
 	// swagger:operation POST /resource create-resource
