@@ -3,10 +3,15 @@
  "chain_id": "catenax-testnet-1",
  "from": "alice",
  "host_address": ":8080",
- "node_address": "https://validator1-tdmt-rpc.dev.demo.catena-x.net:443/",
+ "node_address": "https://validator2-tdmt-rpc.dev.demo.catena-x.net:443/",
  "fees": "1000000ncaxdemo",
  "gas": "100000",
  "home": "~/.esc-backbone-dev",
  "key_ring_backend": "test",
- "start_block": 1618830
+ "start_block": 1,
+ "broker": {
+  "url": "nats://127.0.0.1:4222",
+  "clientname": "web2wrapper",
+  "topic": "updates"
+ }
 }

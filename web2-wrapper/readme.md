@@ -1,4 +1,6 @@
 
+TODO
+rework documentation to reflect the queue interface and drop the rest interface
 
 ## Setup
 ```shell

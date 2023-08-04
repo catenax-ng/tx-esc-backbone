@@ -7,26 +7,49 @@ package web2wrapper
 
 import (
 	"context"
+	"cosmossdk.io/log"
 	"encoding/base64"
+	"fmt"
 	"github.com/catenax/esc-backbone/x/resourcesync/types"
 	abci "github.com/cometbft/cometbft/abci/types"
+	"github.com/coreos/go-semver/semver"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdk_version "github.com/cosmos/cosmos-sdk/version"
+	proto "github.com/cosmos/gogoproto/proto"
 	"github.com/ignite/cli/ignite/pkg/cosmosaccount"
 	"github.com/ignite/cli/ignite/pkg/cosmosclient"
-	"log"
 	"regexp"
+	"syscall"
+	"time"
 )
 
-var resourceEventTypeRegex = regexp.MustCompile(`^catenax\.escbackbone\.resourcesync\.Event.+`)
+func cosmosSDKatLeastv047() bool {
+	vSdkVer := sdk_version.NewInfo().CosmosSdkVersion
+	//cut of the v
+	sdkVer := vSdkVer[1:]
+	current := semver.New(sdkVer)
+	v047 := semver.New("0.47.0")
+	return !current.LessThan(*v047)
+}
 
-// taken from ignite generated code - end
+var skdVersionAtLeast047 = cosmosSDKatLeastv047()
+
+func createEventTypeRegex() *regexp.Regexp {
+	if skdVersionAtLeast047 {
+		return regexp.MustCompile(`^escbackbone\.resourcesync\.Event.+`)
+	} else {
+		return regexp.MustCompile(`^catenax\.escbackbone\.resourcesync\.Event.+`)
+	}
+}
+
+var resourceEventTypeRegex = createEventTypeRegex()
 
 type ResourceSyncClient interface {
 	CreateResource(ctx context.Context, resource types.Resource) (cosmosclient.Response, error)
 	UpdateResource(ctx context.Context, resource types.Resource) (cosmosclient.Response, error)
 	DeleteResource(ctx context.Context, origResId string) (cosmosclient.Response, error)
 	QueryAllResources(ctx context.Context) (*types.QueryAllResourceMapResponse, error)
-	Poll(ctx context.Context)
+	Poll(ctx context.Context, startBlock int64) <-chan *Msg
 }
 
 type chainClient struct {
@@ -35,9 +58,10 @@ type chainClient struct {
 	addressPrefix string
 	queryClient   types.QueryClient
 	blockHeight   int64
+	logger        log.Logger
 }
 
-func NewChainClient(ctx context.Context, config Config) (ResourceSyncClient, error) {
+func NewChainClient(ctx context.Context, logger log.Logger, config *Config) (ResourceSyncClient, error) {
 	// Create a Cosmos client instance
 	client, err := cosmosclient.New(ctx,
 		cosmosclient.WithAddressPrefix(config.AddressPrefix),
@@ -48,11 +72,13 @@ func NewChainClient(ctx context.Context, config Config) (ResourceSyncClient, err
 		cosmosclient.WithKeyringBackend(config.KeyRingBackend),
 	)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(fmt.Sprintf("Cannot create cosmos client - %v", err))
+		return nil, err
 	}
 	account, err := client.Account(config.From)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(fmt.Sprintf("Cannot read account from config - %v", err))
+		return nil, err
 	}
 	return &chainClient{
 		client:        client,
@@ -60,13 +86,14 @@ func NewChainClient(ctx context.Context, config Config) (ResourceSyncClient, err
 		addressPrefix: config.AddressPrefix,
 		queryClient:   types.NewQueryClient(client.Context()),
 		blockHeight:   config.StartBlock,
+		logger:        logger,
 	}, nil
 }
 
 func (c *chainClient) mustGetAddress() (addr string) {
 	addr, err := c.from.Address(c.addressPrefix)
 	if err != nil {
-		log.Fatal(err)
+		panic("Cannot access address for account")
 	}
 	return addr
 }
@@ -103,69 +130,112 @@ func (c *chainClient) QueryAllResources(ctx context.Context) (*types.QueryAllRes
 	return c.queryClient.ResourceMapAll(ctx, &types.QueryAllResourceMapRequest{})
 }
 
-func (c *chainClient) Poll(ctx context.Context) {
-	height, err := c.client.LatestBlockHeight(ctx)
-	if err != nil {
-		log.Fatal(err)
+func (c *chainClient) Poll(ctx context.Context, startBlock int64) <-chan *Msg {
+	result := make(chan *Msg)
+	currentBlock := startBlock
+	if currentBlock == 0 {
+		currentBlock = 1
 	}
-	if c.blockHeight == height {
-		log.Printf("uptodate")
-		return
-	}
-	if c.blockHeight < height-100 {
-		log.Printf("Way behind: %d -> %d", c.blockHeight, height)
-	}
-	defer c.SafeConfig()
-	for c.blockHeight < height {
-		blockProcessed := c.blockHeight + 1
-		txs, err := c.client.GetBlockTXs(ctx, blockProcessed)
-		if err != nil {
-			log.Fatalf("Cannot fetch block %d", blockProcessed)
+	go func() {
+		ticker := time.NewTicker(5 * time.Second)
+		defer ticker.Stop()
+		defer close(result)
+		for {
+			select {
+			case <-ticker.C:
+				c.logger.Debug("Received tick")
+				height, err := c.client.LatestBlockHeight(ctx)
+				if err != nil {
+					c.logger.Error(fmt.Sprintf("Cannot read current block height - %v", err))
+				}
+				for ; currentBlock <= height; currentBlock++ {
+					//c.logger.Info(fmt.Sprintf("Processing block: %d/%d", currentBlock, height))
+					c.parseBlock(ctx, currentBlock, result)
+				}
+			case <-ctx.Done():
+				return
+			}
 		}
-		log.Printf("Processing block %d\r", blockProcessed)
-		c.parseBlock(txs)
-		c.blockHeight = blockProcessed
-	}
+	}()
+	return result
 }
 
-func (c *chainClient) parseBlock(txs []cosmosclient.TX) {
-
+func (c *chainClient) parseBlock(ctx context.Context, currentBlock int64, output chan<- *Msg) {
+	txs, err := c.client.GetBlockTXs(ctx, currentBlock)
+	if err != nil {
+		c.logger.Error(fmt.Sprintf("Failed to access block %d - %v", currentBlock, err))
+		syscall.Exit(1)
+	}
+	c.logger.Debug(fmt.Sprintf("%d transactions at block %d", len(txs), currentBlock))
 	for _, tx := range txs {
 		resourceEvents := make([]abci.Event, 0)
+		c.logger.Debug(fmt.Sprintf("%d events at transaction %d", len(tx.Raw.TxResult.Events), tx.Raw.Hash))
 		for _, event := range tx.Raw.TxResult.Events {
+			c.logger.Debug(fmt.Sprintf("event %s with type %s matches filter: %v", event.String(), event.Type, resourceEventTypeRegex.MatchString(event.Type)))
 			if resourceEventTypeRegex.MatchString(event.Type) {
 				resourceEvents = append(resourceEvents, event)
 			}
 		}
 		if len(resourceEvents) > 0 {
-			log.Printf("Block: %d, Tx: %s, Events:", tx.Raw.Height, tx.Raw.Hash)
-
+			c.logger.Info(fmt.Sprintf("Block: %d, Tx: %s, Resource Events: %d", tx.Raw.Height, tx.Raw.Hash, len(resourceEvents)))
 		}
 		for _, resourceEvent := range resourceEvents {
-			oldAttributes := resourceEvent.Attributes
-			reworkedAttributes := make([]abci.EventAttribute, 0)
-			for _, a := range oldAttributes {
-				reworkedAttributes = append(reworkedAttributes, abci.EventAttribute{
-					Key:   string(mustDecodeBase64(a.Key)),
-					Value: string(mustDecodeBase64(a.Value)),
-					Index: a.Index,
-				})
+			if !skdVersionAtLeast047 {
+				resourceEvent.Attributes = decodeEventAttributesFromBase64(resourceEvent)
 			}
-			resourceEvent.Attributes = reworkedAttributes
 			event, err := sdk.ParseTypedEvent(resourceEvent)
-
 			if err != nil {
-				log.Fatal(err)
+				c.logger.Error(fmt.Sprintf("Cannot parse and skipping:  %v", resourceEvent))
 			}
-			log.Println(event)
+			if msg := c.getResourceFrom(event); msg != nil {
+				output <- msg
+			}
 		}
 	}
+}
+
+func decodeEventAttributesFromBase64(resourceEvent abci.Event) []abci.EventAttribute {
+	oldAttributes := resourceEvent.Attributes
+	reworkedAttributes := make([]abci.EventAttribute, 0)
+	for _, a := range oldAttributes {
+		reworkedAttributes = append(reworkedAttributes, abci.EventAttribute{
+			Key:   string(mustDecodeBase64(a.Key)),
+			Value: string(mustDecodeBase64(a.Value)),
+			Index: a.Index,
+		})
+	}
+	return reworkedAttributes
 }
 
 func mustDecodeBase64(str string) []byte {
 	result, err := base64.StdEncoding.DecodeString(str)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	return result
+}
+func (c *chainClient) getResourceFrom(event proto.Message) *Msg {
+	if created, ok := event.(*types.EventCreateResource); ok {
+		return &Msg{
+			Res: created.Resource,
+			Mod: CREATE,
+			Src: WRAPPER,
+		}
+	}
+	if updated, ok := event.(*types.EventUpdateResource); ok {
+		return &Msg{
+			Res: updated.Resource,
+			Mod: UPDATE,
+			Src: WRAPPER,
+		}
+	}
+	if deleted, ok := event.(*types.EventDeleteResource); ok {
+		return &Msg{
+			Res: deleted.Resource,
+			Mod: DELETE,
+			Src: WRAPPER,
+		}
+	}
+	c.logger.Debug(fmt.Sprintf("Ignoring unknown event type %s", event))
+	return nil
 }

@@ -7,32 +7,26 @@ package main
 
 import (
 	"context"
+	"cosmossdk.io/log"
 	"fmt"
 	web2wrapper "github.com/catenax/web2-wrapper/pkg"
-	"github.com/spf13/cobra"
-	"log"
 	"os"
 )
 
 func main() {
-	var configFile string
-	rootCmd := &cobra.Command{
-		Run: func(cmd *cobra.Command, args []string) {
-			ctx := context.Background()
-
-			config, err := web2wrapper.ReadConfig(configFile)
-			if err != nil {
-				log.Fatal(err)
-			}
-			client, err := web2wrapper.NewChainClient(ctx, *config)
-			if err != nil {
-				log.Fatal(err)
-			}
-			client.Poll(ctx)
-			web2wrapper.NewRouter(config, client).HandleRequests()
-		},
-	}
-	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "wrapper-config.json", "File to read configuration from")
+	rootCmd := web2wrapper.NewRootCmd(func(ctx context.Context, cfg *web2wrapper.Config, logger log.Logger) {
+		client, err := web2wrapper.NewChainClient(ctx, logger, cfg)
+		if err != nil {
+			logger.Error("Cannot connect to chain %v", err)
+			os.Exit(1)
+		}
+		broker, err := web2wrapper.NewNatsBrokerFor(cfg)
+		if err != nil {
+			logger.Error("Cannot connect to nats %v", err)
+			os.Exit(1)
+		}
+		web2wrapper.NewDucttape(broker, client, logger).Forward(ctx, cfg.StartBlock)
+	})
 	if err := rootCmd.Execute(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)

@@ -3,12 +3,16 @@ module github.com/catenax/web2-wrapper
 go 1.19
 
 require (
+	cosmossdk.io/log v1.1.0
 	github.com/catenax/esc-backbone v0.0.0-20220509125022-6f7e3b5672d4
 	github.com/cometbft/cometbft v0.37.1
+	github.com/coreos/go-semver v0.3.0
 	github.com/cosmos/cosmos-sdk v0.47.3
+	github.com/cosmos/gogoproto v1.4.10
 	github.com/gorilla/mux v1.8.0
 	github.com/ignite/cli v0.27.1
 	github.com/nats-io/nats.go v1.12.1
+	github.com/rs/zerolog v1.29.1
 	github.com/spf13/cobra v1.7.0
 )
 
@@ -35,7 +39,6 @@ require (
 	github.com/cosmos/btcutil v1.0.5 // indirect
 	github.com/cosmos/cosmos-proto v1.0.0-beta.2 // indirect
 	github.com/cosmos/go-bip39 v1.0.0 // indirect
-	github.com/cosmos/gogoproto v1.4.10 // indirect
 	github.com/cosmos/iavl v0.20.0 // indirect
 	github.com/cosmos/ibc-go/v7 v7.1.0 // indirect
 	github.com/cosmos/ics23/go v0.10.0 // indirect
@@ -76,6 +79,7 @@ require (
 	github.com/klauspost/compress v1.16.5 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mimoo/StrobeGo v0.0.0-20210601165009-122bf33a46e0 // indirect

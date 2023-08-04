@@ -12,6 +12,13 @@ import (
 	"os"
 )
 
+type BrokerCfg struct {
+	Url        string `json:"url"`
+	Clientname string `json:"clientname"`
+	Topic      string `json:"topic"`
+	Queue      string `json:"queue"`
+}
+
 type Config struct {
 	AddressPrefix  string                       `json:"address_prefix"`
 	ChainId        string                       `json:"chain_id"`
@@ -23,6 +30,7 @@ type Config struct {
 	Home           string                       `json:"home"`
 	KeyRingBackend cosmosaccount.KeyringBackend `json:"key_ring_backend"`
 	StartBlock     int64                        `json:"start_block"`
+	Broker         BrokerCfg                    `json:"broker"`
 	filePath       string
 }
 
