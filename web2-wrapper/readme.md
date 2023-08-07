@@ -2,28 +2,35 @@
 TODO
 rework documentation to reflect the queue interface and drop the rest interface
 
+## Login to ghcr.io
+
+```shell
+echo "enter your github username" && \
+read USERNAME && \
+echo "enter your PAT for github container registry" && \
+read -s CR_PAT && \
+echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
+```
+
 ## Setup
 ```shell
-W_HOME=wrapper-home
-mkdir -p $W_HOME && cd $W_HOME
-IMAGE_HASH=latest
-docker run -it -e CONFIG=/wrapper/config/config.json -v $(pwd):/wrapper/config ghcr.io/catenax-ng/esc-res-sync-rest-wrapper:$IMAGE_HASH /bin/bash
-cp default-config.json config/config.json
-cd config/
-echo "Create mnemonic, this is to be kept secret, from this the private key can be generated."
-/wrapper/esc-backboned keys mnemonic --home $(pwd) > mnemonic
-echo "Import private key with mnemonic as 'wrapper'"
-cat mnemonic | /wrapper/esc-backboned keys add wrapper --keyring-backend test --home $(pwd) --recover
-echo "Store public address for the faucet request."
-/wrapper/esc-backboned keys show wrapper --home $(pwd) --keyring-backend test -a > pubaddr
-exit
-echo "Request funds at the test net."
-DENOM=$(curl https://validator-webapp1-web-app.dev.demo.catena-x.net/chain/catenax-testnet-1-suggestion.json | jq ".feeCurrencies[0].coinMinimalDenom" -r)
-curl -X POST --header "Content-Type: application/json" -d '{"address":"'$(cat pubaddr)'","denom":"'$DENOM'"}'  https://faucet-faucet.dev.demo.catena-x.net/
-echo "Wait 10s and check the balance"
-wait 10 && esc-backboned query bank balances --home $(pwd) --node https://validator2-tdmt-rpc.dev.demo.catena-x.net:443/  $(cat pubaddr)
-echo "Start the wrapper"
-docker run -p 7000:8080 -e CONFIG=/wrapper/config/config.json -v $(pwd):/wrapper/config ghcr.io/catenax-ng/esc-res-sync-rest-wrapper:$IMAGE_HASH
+echo "Create env file."
+cat <<EOF > nats.env
+WRAPPER_IMAGE_HASH=latest
+NATS_IMAGE_HASH=2.9.20-scratch
+WRAPPER1_HOME=./tmp/wrapper1
+WRAPPER2_HOME=./tmp/wrapper2
+CONFIG=/wrapper/config/config.json
+EOF
+
+echo "Load settings from .env"
+set -o allexport
+source nats.env set
+set +o allexport
+mkdir -p $WRAPPER1_HOME
+mkdir -p $WRAPPER2_HOME
+
+docker compose -f docker-compose.yml up
 ```
 
 ## Creating a resource

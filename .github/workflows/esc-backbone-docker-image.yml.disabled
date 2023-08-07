@@ -77,7 +77,7 @@ jobs:
           - target: esc-backbone-node-init
           - target: esc-backbone-orchestrator
           - target: ssh-client
-          - target: esc-res-sync-rest-wrapper
+          - target: esc-res-sync-web2-wrapper
     permissions:
       contents: read
       packages: write

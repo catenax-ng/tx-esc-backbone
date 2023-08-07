@@ -3,7 +3,7 @@
  "chain_id": "catenax-testnet-1",
  "from": "alice",
  "host_address": ":8080",
- "node_address": "https://validator1-tdmt-rpc.dev.demo.catena-x.net:443/",
+ "node_address": "https://validator2-tdmt-rpc.dev.demo.catena-x.net:443/",
  "fees": "1000000ncaxdemo",
  "gas": "100000",
  "home": "/wrapper/config/",

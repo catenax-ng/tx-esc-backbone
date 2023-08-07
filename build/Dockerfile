@@ -34,38 +34,47 @@ COPY tools ./tools
 
 RUN ignite version && ignite chain build
 RUN go build github.com/catenax/esc-backbone/cmd/keplr-suggestion
-RUN go build github.com/catenax/esc-backbone/cmd/rest-wrapper
+
+COPY web2-wrapper ./web2-wrapper
+WORKDIR /build/esc-backbone/web2-wrapper/
+
+RUN sed -i -E 's!^(replace github.com/catenax/esc-backbone =>).*!\1 ../!' go.mod && \
+    go build github.com/catenax/web2-wrapper/cmd/web2-wrapper
+WORKDIR /build/esc-backbone/
+
 COPY web ./web
 RUN chmod u+x keplr-suggestion &&  \
     mkdir -p ./web/public/chain &&  \
     ./keplr-suggestion &&  \
     mv ./web /output && \
     cp /go/bin/esc-backboned /output && \
-    mkdir -p /output/rest-wrapper && \
-    chmod u+x ./rest-wrapper && \
-    cp ./rest-wrapper /output/rest-wrapper/ && \
-    cp ./cmd/rest-wrapper/config.json /output/rest-wrapper/default-config.json
+    mkdir -p /output/web2-wrapper && \
+    chmod u+x ./web2-wrapper && \
+    cp ./web2-wrapper/web2-wrapper /output/web2-wrapper/ && \
+    cp ./web2-wrapper/config.json /output/web2-wrapper/default-config.json
 
 FROM scratch as esc-backbone-build-output
 WORKDIR /output
 COPY --from=build /output ./
 
-FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-res-sync-rest-wrapper
+FROM ghcr.io/catenax-ng/esc-backbone-debian-base:latest as esc-res-sync-web2-wrapper
 ARG UID=1000
 ARG GID=1000
 RUN groupadd -g $GID wrapper && useradd -g $GID -u $UID -s /bin/bash -d /home/wrapper wrapper
-ENV PACKAGES ca-certificates openssl
+ENV PACKAGES ca-certificates openssl jq curl
 RUN apt-get install -y $PACKAGES  && mkdir -p /usr/local/share/ca-certificates
 WORKDIR /wrapper
 ENV CONFIG="/wrapper/default-config.json"
 VOLUME /wrapper/config
-COPY --from=esc-backbone-build-output  --chown=$UID:$GID /output/rest-wrapper/* ./
-COPY --from=esc-backbone-build-output  --chown=$UID:$GID /output/esc-backboned ./
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/web2-wrapper/* ./
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/esc-backboned ./
+COPY --from=esc-backbone-build-output --chown=$UID:$GID /output/dasel /usr/local/bin/
+COPY  --chown=$UID:$GID ../web2-wrapper/build/init.sh ./
 
 EXPOSE 8080
 
 USER $UID
-CMD [ "sh", "-c", "/wrapper/rest-wrapper -c $CONFIG"]
+CMD [ "sh", "-c", "/wrapper/web2-wrapper -c $CONFIG"]
 
 FROM ghcr.io/catenax-ng/esc-backbone-web-build-base:latest as web-chain-suggestion-build
 

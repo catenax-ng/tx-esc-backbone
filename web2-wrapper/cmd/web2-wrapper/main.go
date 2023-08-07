@@ -17,7 +17,7 @@ func main() {
 	rootCmd := web2wrapper.NewRootCmd(func(ctx context.Context, cfg *web2wrapper.Config, logger log.Logger) {
 		client, err := web2wrapper.NewChainClient(ctx, logger, cfg)
 		if err != nil {
-			logger.Error("Cannot connect to chain %v", err)
+			logger.Error(fmt.Sprintf("Cannot connect to chain %v", err))
 			os.Exit(1)
 		}
 		broker, err := web2wrapper.NewNatsBrokerFor(cfg)

@@ -28,8 +28,8 @@ docker tag esc-backbone-web-build-base ghcr.io/catenax-ng/esc-backbone-web-build
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-web-base -t esc-backbone-web-base -f "$SCRIPT_LOCATION/Dockerfile-base" "$SCRIPT_LOCATION/.."
 docker tag esc-backbone-web-base ghcr.io/catenax-ng/esc-backbone-web-base
 
-DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-res-sync-rest-wrapper -t esc-res-sync-rest-wrapper -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
-docker tag esc-res-sync-rest-wrapper ghcr.io/catenax-ng/esc-res-sync-rest-wrapper:latest
+DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-res-sync-web2-wrapper -t esc-res-sync-web2-wrapper -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
+docker tag esc-res-sync-web2-wrapper ghcr.io/catenax-ng/esc-res-sync-web2-wrapper:latest
 
 DOCKER_BUILDKIT=1 docker build --progress=plain --target  esc-backbone-node -t esc-backbone-node -f "$SCRIPT_LOCATION/Dockerfile" "$SCRIPT_LOCATION/.."
 docker tag esc-backbone-node ghcr.io/catenax-ng/esc-backbone-node:latest

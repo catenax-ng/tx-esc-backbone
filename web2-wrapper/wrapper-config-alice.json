@@ -1,0 +1,18 @@
+{
+ "address_prefix": "catenax",
+ "chain_id": "catenax-testnet-1",
+ "from": "alice",
+ "host_address": ":8080",
+ "node_address": "http://0.0.0.0:26657",
+ "node_address2": "https://validator2-tdmt-rpc.dev.demo.catena-x.net:443/",
+ "fees": "10000acax",
+ "gas": "100000",
+ "home": "~/.esc-backbone-dev",
+ "key_ring_backend": "test",
+ "start_block": 0,
+ "broker": {
+  "url": "nats://127.0.0.1:4222",
+  "clientname": "web2wrapper",
+  "topic": "updates"
+ }
+}
