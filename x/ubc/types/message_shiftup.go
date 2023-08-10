@@ -56,5 +56,5 @@ func (msg *MsgShiftup) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid operator address (%s)", err)
 	}
 
-	return validateCoin(msg.Voucherstoadd)
+	return validateVoucherCoin(msg.Voucherstoadd)
 }

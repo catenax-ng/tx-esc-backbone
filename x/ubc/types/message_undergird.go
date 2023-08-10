@@ -48,7 +48,7 @@ func (msg *MsgUndergird) ValidateBasic() error {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid operator address (%s)", err)
 	}
 
-	return validateCoin(msg.Voucherstoadd)
+	return validateVoucherCoin(msg.Voucherstoadd)
 }
 
 func validateVoucherCoin(value string) error {
