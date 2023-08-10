@@ -5,6 +5,11 @@
 // SPDX-License-Identifier: Apache-2.0
 package types
 
+import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+)
+
 const (
 	// SystemTokenMultiplier is the multiplier for cax tokens
 	SystemTokenMultiplier = 1e6
@@ -21,4 +26,18 @@ const (
 
 func isValidDenom(denom string) bool {
 	return denom == VoucherDenom || denom == SystemTokenDenom
+}
+
+func validateVoucherCoin(value string) error {
+	coin, err := sdk.ParseCoinNormalized(value)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
+	}
+	if coin.Denom == VoucherDenom {
+		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
+	}
+	if coin.Amount.IsZero() || coin.Amount.IsNegative() {
+		return sdkerrors.Wrapf(ErrInvalidArg, "amount should be a positive integer")
+	}
+	return nil
 }
