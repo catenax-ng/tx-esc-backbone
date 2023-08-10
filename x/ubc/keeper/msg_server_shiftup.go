@@ -11,7 +11,6 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/pkg/errors"
 )
 
 func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types.MsgShiftupResponse, error) {
@@ -27,28 +26,9 @@ func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types
 	}
 
 	// These will not err, as error has been checked in ValidateBasic.
-	operator, _ := sdk.AccAddressFromBech32(msg.Operator)
 	vouchersToAdd, _ := sdk.ParseCoinNormalized(msg.Voucherstoadd)
 
-	// CLARIFY: How should the number 1e8 be arrived at based on input parameters ???
-	// CLARIFY: PoC uses 1e10 * VoucherDenom. But looking at message processing code, this seems like an error ?
-	// Also, the module does not have so many vouchers, so exclude the multiplier.
-	vouchersFromOperator := sdk.NewCoin(types.VoucherDenom, sdk.NewInt(1e10))
-	err := k.bankKeeper.SendCoinsFromAccountToModule(
-		ctx,
-		operator,
-		types.ModuleName,
-		sdk.NewCoins(vouchersFromOperator))
-	if err != nil {
-		return nil, errors.Wrap(types.ErrFundHandling, "insufficient vouchers: "+err.Error())
-	}
-
-	if k.isModuleBalanceSufficient(ubc, ctx, vouchersToAdd.Amount) {
-		err = types.ErrFundHandling.Wrap("insufficient vouchers")
-		return &types.MsgShiftupResponse{}, err
-	}
-
-	err = ubc.ShiftUp(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)), msg.Degirdingfactor)
+	err := ubc.ShiftUp(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)), msg.Degirdingfactor)
 	if err != nil {
 		return &types.MsgShiftupResponse{}, err
 	}
