@@ -54,7 +54,7 @@ esc-backboned query bank balances $ubc_trader
 
 echo "\n# ubc sell - value in tokens\n\n"
 esc-backboned query bank balances $ubc_trader
-esc-backboned tx ubc selltokens "10000ucax" --from=$ubc_trader --yes
+esc-backboned tx ubc sell "10000ucax" --from=$ubc_trader --yes
 sleep 3
 esc-backboned query bank balances $ubc_trader
 

@@ -9,12 +9,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// SellExactTokens sells the given amount of tokens against the curve.
+// Sell sells the given amount of tokens against the curve.
 // It returns the amount of vouchers released.
 //
 // It assumes the value of tokens is greater than zero. This condition is
 // implemented in the ValidBasic function for the buy message.
-func (ubc *Ubcobject) SellExactTokens(tokens sdk.Dec) sdk.Dec {
+func (ubc *Ubcobject) Sell(tokens sdk.Dec) sdk.Dec {
 	xCurrent := ubc.CurrentSupply
 	xNew := ubc.CurrentSupply.Sub(tokens)
 

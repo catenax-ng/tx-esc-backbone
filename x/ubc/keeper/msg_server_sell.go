@@ -13,7 +13,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) Selltokens(goCtx context.Context, msg *types.MsgSelltokens) (*types.MsgSelltokensResponse, error) {
+func (k msgServer) Sell(goCtx context.Context, msg *types.MsgSell) (*types.MsgSellResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// These will not err, as error has been checked in ValidateBasic.
@@ -42,7 +42,7 @@ func (k msgServer) Selltokens(goCtx context.Context, msg *types.MsgSelltokens) (
 
 	k.SetUbcobject(ctx, ubc)
 
-	return &types.MsgSelltokensResponse{
+	return &types.MsgSellResponse{
 		Tokenssold:     tokensCoin.String(),
 		Vouchersearned: vouchersEarnedCoin.String(),
 	}, nil
@@ -51,7 +51,7 @@ func (k msgServer) Selltokens(goCtx context.Context, msg *types.MsgSelltokens) (
 
 func sellExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
 	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
-	vouchersOut := ubc.SellExactTokens(tokens)
+	vouchersOut := ubc.Sell(tokens)
 	vouchersEarned := subFeesDec(vouchersOut)
 	return ubc, sdk.NewCoin(types.VoucherDenom, vouchersEarned.MulInt64(types.VoucherMultiplier).TruncateInt())
 }
