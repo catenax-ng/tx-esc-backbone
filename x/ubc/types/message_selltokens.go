@@ -47,5 +47,5 @@ func (msg *MsgSelltokens) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid seller address (%s)", err)
 	}
-	return validateCoin(msg.Value)
+	return validateTokenCoin(msg.Value)
 }

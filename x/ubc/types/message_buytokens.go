@@ -47,19 +47,5 @@ func (msg *MsgBuytokens) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid buyer address (%s)", err)
 	}
-	return validateCoin(msg.Value)
-}
-
-func validateCoin(value string) error {
-	coin, err := sdk.ParseCoinNormalized(value)
-	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
-	}
-	if !isValidDenom(coin.Denom) {
-		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
-	}
-	if coin.Amount.IsZero() {
-		return sdkerrors.Wrapf(ErrInvalidArg, "amount is zero")
-	}
-	return nil
+	return validateTokenCoin(msg.Value)
 }

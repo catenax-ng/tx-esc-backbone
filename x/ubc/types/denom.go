@@ -24,8 +24,18 @@ const (
 	VoucherDenom = "uvoucher"
 )
 
-func isValidDenom(denom string) bool {
-	return denom == VoucherDenom || denom == SystemTokenDenom
+func validateTokenCoin(value string) error {
+	coin, err := sdk.ParseCoinNormalized(value)
+	if err != nil {
+		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
+	}
+	if !(coin.Denom == SystemTokenDenom) {
+		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
+	}
+	if coin.Amount.IsZero() {
+		return sdkerrors.Wrapf(ErrInvalidArg, "amount is zero")
+	}
+	return nil
 }
 
 func validateVoucherCoin(value string) error {
