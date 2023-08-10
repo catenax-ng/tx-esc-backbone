@@ -28,12 +28,9 @@ func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*t
 	// TODO: Consume gas from gas meter and make it a param that can be
 	// changed later using a param.
 
-	ubc, vouchersSpentCoin, tokensCoin, err := buyTokens(ctx, coin, ubc)
-	if err != nil {
-		return nil, err
-	}
+	ubc, vouchersSpentCoin := buyExactTokens(coin, ubc)
 
-	err = k.takeVouchersAndGiveTokens(ctx, buyer, vouchersSpentCoin, tokensCoin)
+	err := k.takeVouchersAndGiveTokens(ctx, buyer, vouchersSpentCoin, coin)
 	if err != nil {
 		return nil, types.ErrFundHandling.Wrap(err.Error())
 	}
@@ -41,27 +38,10 @@ func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*t
 	k.SetUbcobject(ctx, ubc)
 
 	return &types.MsgBuytokensResponse{
-		Tokensbought:  tokensCoin.String(),
+		Tokensbought:  coin.String(),
 		Vouchersspent: vouchersSpentCoin.String(),
 	}, nil
 
-}
-
-func buyTokens(ctx sdk.Context, coin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin, sdk.Coin, error) {
-	var vouchersSpentCoin, tokensCoin sdk.Coin
-	var err error
-
-	if coin.Denom == types.SystemTokenDenom {
-		tokensCoin = coin
-		ubc, vouchersSpentCoin = buyExactTokens(tokensCoin, ubc)
-	} else {
-		vouchersSpentCoin, tokensCoin, err = buyTokensFor(coin, ubc)
-		if err != nil {
-			return ubc, sdk.Coin{}, sdk.Coin{}, err
-		}
-	}
-
-	return ubc, vouchersSpentCoin, tokensCoin, nil
 }
 
 func buyExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
@@ -75,24 +55,6 @@ func buyExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, 
 	return ubc, sdk.NewCoin(types.VoucherDenom, vouchersSpent.Ceil().TruncateInt())
 }
 
-func buyTokensFor(vouchersInCoin sdk.Coin, ubc types.Ubcobject) (sdk.Coin, sdk.Coin, error) {
-	vouchersToSpendInt := subFeesInt(vouchersInCoin.Amount)
-	feeInt := vouchersInCoin.Amount.Sub(vouchersToSpendInt)
-	vouchersToSpend := sdk.NewDecFromInt(vouchersToSpendInt).QuoInt64(types.VoucherMultiplier)
-
-	tokens, vouchersSpent, err := ubc.BuyTokensFor(vouchersToSpend)
-	if err != nil {
-		return sdk.Coin{}, sdk.Coin{}, err
-	}
-
-	tokensInt := tokens.MulInt64(types.SystemTokenMultiplier).Ceil().TruncateInt()
-	tokensCoin := sdk.NewCoin(types.SystemTokenDenom, tokensInt)
-	vouchersSpentInt := vouchersSpent.MulInt64(types.VoucherMultiplier).Ceil().TruncateInt()
-	vouchersSpentInt = vouchersSpentInt.Add(feeInt)
-	vouchersSpentCoin := sdk.NewCoin(types.VoucherDenom, vouchersSpentInt)
-
-	return vouchersSpentCoin, tokensCoin, nil
-}
 func (k msgServer) takeVouchersAndGiveTokens(ctx sdk.Context, buyer sdk.AccAddress, vouchers, tokens sdk.Coin) error {
 	err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, buyer, types.ModuleName, sdk.NewCoins(vouchers))
 	if err != nil {
