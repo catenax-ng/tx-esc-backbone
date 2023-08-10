@@ -9,12 +9,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// BuyExactTokens buys the given amount of tokens against the curve. It
+// Buy buys the given amount of tokens against the curve. It
 // returns the amount of vouchers used.
 //
 // It assumes the value of tokens is greater than zero. This condition is
 // implemented in the ValidBasic function for the buy message.
-func (ubc *Ubcobject) BuyExactTokens(tokens sdk.Dec) sdk.Dec {
+func (ubc *Ubcobject) Buy(tokens sdk.Dec) sdk.Dec {
 	xCurrent := ubc.CurrentSupply
 	xNew := ubc.CurrentSupply.Add(tokens)
 

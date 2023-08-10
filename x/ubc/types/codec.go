@@ -14,8 +14,8 @@ import (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgInit{}, "ubc/Init", nil)
-	cdc.RegisterConcrete(&MsgBuytokens{}, "ubc/Buytokens", nil)
-	cdc.RegisterConcrete(&MsgSelltokens{}, "ubc/Selltokens", nil)
+	cdc.RegisterConcrete(&MsgBuy{}, "ubc/Buy", nil)
+	cdc.RegisterConcrete(&MsgSell{}, "ubc/Sell", nil)
 	cdc.RegisterConcrete(&MsgUndergird{}, "ubc/Undergird", nil)
 	cdc.RegisterConcrete(&MsgShiftup{}, "ubc/Shiftup", nil)
 	// this line is used by starport scaffolding # 2
@@ -26,10 +26,10 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgInit{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgBuytokens{},
+		&MsgBuy{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgSelltokens{},
+		&MsgSell{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgUndergird{},

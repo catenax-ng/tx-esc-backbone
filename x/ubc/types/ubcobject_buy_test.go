@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_UbcObject_BuyWithVouchers(t *testing.T) {
+func Test_UbcObject_Buy(t *testing.T) {
 	ubc := validUbcParams()
 	require.NoError(t, ubc.Fit())
 
@@ -22,7 +22,7 @@ func Test_UbcObject_BuyWithVouchers(t *testing.T) {
 	initialCurrentSupply := ubc.CurrentSupply
 
 	tokensToBuy := sdk.NewDecWithPrec(10000, 6)
-	vouchersUsed := ubc.BuyExactTokens(tokensToBuy)
+	vouchersUsed := ubc.Buy(tokensToBuy)
 
 	assert.Equal(t, ubc.BPoolUnder, initialBPoolUnder)
 	assert.Equal(t, ubc.BPool, initialBPool.Add(vouchersUsed))
@@ -35,6 +35,6 @@ func BenchmarkUbcBuyNTokensForVouchers(b *testing.B) {
 
 	tokens := sdk.NewDecWithPrec(10000, 6)
 	for i := 0; i < b.N; i++ {
-		ubc.BuyExactTokens(tokens)
+		ubc.Buy(tokens)
 	}
 }

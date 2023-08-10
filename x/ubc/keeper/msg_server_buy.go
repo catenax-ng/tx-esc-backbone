@@ -13,7 +13,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*types.MsgBuytokensResponse, error) {
+func (k msgServer) Buy(goCtx context.Context, msg *types.MsgBuy) (*types.MsgBuyResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// These will not err, as error has been checked in ValidateBasic.
@@ -28,7 +28,7 @@ func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*t
 	// TODO: Consume gas from gas meter and make it a param that can be
 	// changed later using a param.
 
-	ubc, vouchersSpentCoin := buyExactTokens(coin, ubc)
+	ubc, vouchersSpentCoin := buy(coin, ubc)
 
 	err := k.takeVouchersAndGiveTokens(ctx, buyer, vouchersSpentCoin, coin)
 	if err != nil {
@@ -37,16 +37,16 @@ func (k msgServer) Buytokens(goCtx context.Context, msg *types.MsgBuytokens) (*t
 
 	k.SetUbcobject(ctx, ubc)
 
-	return &types.MsgBuytokensResponse{
+	return &types.MsgBuyResponse{
 		Tokensbought:  coin.String(),
 		Vouchersspent: vouchersSpentCoin.String(),
 	}, nil
 
 }
 
-func buyExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
+func buy(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
 	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
-	vouchersSpent := ubc.BuyExactTokens(tokens)
+	vouchersSpent := ubc.Buy(tokens)
 
 	fee := vouchersSpent.Mul(feePercentageDec)
 

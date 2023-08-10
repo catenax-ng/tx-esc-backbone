@@ -15,7 +15,7 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 )
 
-func SimulateMsgBuytokens(
+func SimulateMsgBuy(
 	ak types.AccountKeeper,
 	bk types.BankKeeper,
 	k keeper.Keeper,
@@ -23,12 +23,12 @@ func SimulateMsgBuytokens(
 	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
 		simAccount, _ := simtypes.RandomAcc(r, accs)
-		msg := &types.MsgBuytokens{
+		msg := &types.MsgBuy{
 			Buyer: simAccount.Address.String(),
 		}
 
-		// TODO: Handling the Buytokens simulation
+		// TODO: Handling the Buy simulation
 
-		return simtypes.NoOpMsg(types.ModuleName, msg.Type(), "Buytokens simulation not implemented"), nil, nil
+		return simtypes.NoOpMsg(types.ModuleName, msg.Type(), "Buy simulation not implemented"), nil, nil
 	}
 }

@@ -32,9 +32,9 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgInit int = 100
 
-	opWeightMsgBuytokens = "op_weight_msg_buytokens"
+	opWeightMsgBuy = "op_weight_msg_buy"
 	// TODO: Determine the simulation weight value
-	defaultWeightMsgBuytokens int = 100
+	defaultWeightMsgBuy int = 100
 
 	opWeightMsgSelltokens = "op_weight_msg_selltokens"
 	// TODO: Determine the simulation weight value
@@ -87,15 +87,15 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		ubcsimulation.SimulateMsgInit(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
-	var weightMsgBuytokens int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBuytokens, &weightMsgBuytokens, nil,
+	var weightMsgBuy int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBuy, &weightMsgBuy, nil,
 		func(_ *rand.Rand) {
-			weightMsgBuytokens = defaultWeightMsgBuytokens
+			weightMsgBuy = defaultWeightMsgBuy
 		},
 	)
 	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgBuytokens,
-		ubcsimulation.SimulateMsgBuytokens(am.accountKeeper, am.bankKeeper, am.keeper),
+		weightMsgBuy,
+		ubcsimulation.SimulateMsgBuy(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	var weightMsgSelltokens int
@@ -148,10 +148,10 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			},
 		),
 		simulation.NewWeightedProposalMsg(
-			opWeightMsgBuytokens,
-			defaultWeightMsgBuytokens,
+			opWeightMsgBuy,
+			defaultWeightMsgBuy,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				ubcsimulation.SimulateMsgBuytokens(am.accountKeeper, am.bankKeeper, am.keeper)
+				ubcsimulation.SimulateMsgBuy(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

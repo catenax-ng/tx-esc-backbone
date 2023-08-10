@@ -13,50 +13,50 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestMsgBuytokens_ValidateBasic(t *testing.T) {
+func TestMsgBuy_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgBuytokens
+		msg  MsgBuy
 		err  error
 	}{
 		{
 			name: "valid",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: sample.AccAddress(),
 				Value: "10" + SystemTokenDenom,
 			},
 			err: nil,
 		}, {
 			name: "zero value",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: sample.AccAddress(),
 				Value: "0" + SystemTokenDenom,
 			},
 			err: ErrInvalidArg,
 		}, {
 			name: "negative value",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: sample.AccAddress(),
 				Value: "-5" + SystemTokenDenom,
 			},
 			err: sdkerrors.ErrInvalidCoins,
 		}, {
 			name: "invalid address",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: "invalid_address",
 				Value: "10" + SystemTokenDenom,
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "invalid value",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: sample.AccAddress(),
 				Value: "abcd",
 			},
 			err: sdkerrors.ErrInvalidCoins,
 		}, {
 			name: "invalid denom",
-			msg: MsgBuytokens{
+			msg: MsgBuy{
 				Buyer: sample.AccAddress(),
 				Value: "2" + SystemTokenDenom + "x",
 			},

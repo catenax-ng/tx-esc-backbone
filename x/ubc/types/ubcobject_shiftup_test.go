@@ -114,6 +114,6 @@ func setupUbcAndByToken(t *testing.T, tokensToBuy sdk.Dec) Ubcobject {
 	IsEqualDecimal(t, "100000000", ubc.BPool)
 	IsEqualDecimal(t, "100000000", ubc.BPoolUnder)
 	IsEqualDecimal(t, "3000000000", ubc.CurrentSupply)
-	ubc.BuyExactTokens(tokensToBuy)
+	ubc.Buy(tokensToBuy)
 	return ubc
 }

@@ -17,10 +17,10 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdBuytokens() *cobra.Command {
+func CmdBuy() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "buytokens [value]",
-		Short: "Broadcast message buytokens",
+		Use:   "buy [value]",
+		Short: "Broadcast message buy",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argValue := args[0]
@@ -30,7 +30,7 @@ func CmdBuytokens() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgBuytokens(
+			msg := types.NewMsgBuy(
 				clientCtx.GetFromAddress().String(),
 				argValue,
 			)
