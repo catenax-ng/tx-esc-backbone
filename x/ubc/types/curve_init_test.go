@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_UbcObject_Fit_Happy(t *testing.T) {
+func Test_Curve_Fit_Happy(t *testing.T) {
 	t.Run("primary set of valid params", func(t *testing.T) {
 		ubc := validUbcParams()
 		require.NoError(t, ubc.Fit())
@@ -79,7 +79,7 @@ func Test_UbcObject_Fit_Happy(t *testing.T) {
 	})
 }
 
-func Test_UbcObject_Fit_Error(t *testing.T) {
+func Test_Curve_Fit_Error(t *testing.T) {
 	type test struct {
 		name     string
 		modifier func(ubc *Curve)

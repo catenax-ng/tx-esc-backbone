@@ -21,7 +21,7 @@ import (
 func TestCurveQuery(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
-	item := createTestUbcobject(keeper, ctx)
+	item := createTestCurve(keeper, ctx)
 	tests := []struct {
 		desc     string
 		request  *types.QueryGetCurveRequest

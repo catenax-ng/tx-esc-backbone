@@ -14,9 +14,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Test_Ubcobject_ShiftUp tests if the values produced by shift up function
+// Test_Curve_ShiftUp tests if the values produced by shift up function
 // is same as the values produced by the prototype.
-func Test_Ubcobject_ShiftUp(t *testing.T) {
+func Test_Curve_ShiftUp(t *testing.T) {
 	type wants struct {
 		FS0        *Flatsegment
 		S0         *Segment

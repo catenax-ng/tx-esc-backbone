@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_UbcObject_Sell(t *testing.T) {
+func Test_Curve_Sell(t *testing.T) {
 	ubc := validUbcParams()
 	require.NoError(t, ubc.Fit())
 

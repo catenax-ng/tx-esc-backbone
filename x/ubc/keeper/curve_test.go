@@ -17,7 +17,7 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 )
 
-func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
+func createTestCurve(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
 	item := types.Curve{
 		RefTokenSupply:  sdk.ZeroDec(),
 		RefTokenPrice:   sdk.ZeroDec(),
@@ -35,9 +35,9 @@ func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
 	return item
 }
 
-func TestUbcobjectGet(t *testing.T) {
+func TestCurveGet(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
-	item := createTestUbcobject(keeper, ctx)
+	item := createTestCurve(keeper, ctx)
 	rst, found := keeper.GetCurve(ctx)
 	require.True(t, found)
 	require.Equal(t,
@@ -46,9 +46,9 @@ func TestUbcobjectGet(t *testing.T) {
 	)
 }
 
-func TestUbcobjectRemove(t *testing.T) {
+func TestCurveRemove(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
-	createTestUbcobject(keeper, ctx)
+	createTestCurve(keeper, ctx)
 	keeper.RemoveCurve(ctx)
 	_, found := keeper.GetCurve(ctx)
 	require.False(t, found)

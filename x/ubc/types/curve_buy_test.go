@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_UbcObject_Buy(t *testing.T) {
+func Test_Curve_Buy(t *testing.T) {
 	ubc := validUbcParams()
 	require.NoError(t, ubc.Fit())
 
@@ -29,7 +29,7 @@ func Test_UbcObject_Buy(t *testing.T) {
 	assert.Equal(t, ubc.CurrentSupply, initialCurrentSupply.Add(tokensToBuy))
 }
 
-func BenchmarkUbcBuyNTokensForVouchers(b *testing.B) {
+func BenchmarkCurveBuy(b *testing.B) {
 	ubc := validUbcParams()
 	ubc.Fit()
 

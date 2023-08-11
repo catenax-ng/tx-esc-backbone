@@ -56,7 +56,7 @@ func (msg *MsgInit) ValidateBasic() error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
-	ubc, err := msg.ParseUbcobject()
+	ubc, err := msg.ParseCurve()
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (msg *MsgInit) ValidateBasic() error {
 	return nil
 }
 
-func (msg *MsgInit) ParseUbcobject() (ubc *Curve, err error) {
+func (msg *MsgInit) ParseCurve() (ubc *Curve, err error) {
 	ubc = &Curve{}
 
 	if ubc.RefTokenSupply, err = sdk.NewDecFromStr(msg.RefTokenSupply); err != nil {

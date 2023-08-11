@@ -21,7 +21,7 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 	}
 
 	// This will not err, as error has been checked in ValidateBasic.
-	ubc, _ := msg.ParseUbcobject()
+	ubc, _ := msg.ParseCurve()
 	_ = ubc.Fit() // TODO: Consumer gas from gas meter and make it a param that can be changed later using a param.
 
 	k.SetCurve(ctx, *ubc)

@@ -43,9 +43,9 @@ func TestMsgInit_ValidateBasic(t *testing.T) {
 	}
 }
 
-func TestMsgInit_ParseUbcobject_Happy(t *testing.T) {
+func TestMsgInit_ParseCurve_Happy(t *testing.T) {
 	msg := validMsgInitUbc()
-	ubc, err := msg.ParseUbcobject()
+	ubc, err := msg.ParseCurve()
 	require.NoError(t, err)
 	IsEqualDecimal(t, "6000000000", ubc.RefTokenSupply)
 	IsEqualDecimal(t, "1", ubc.RefTokenPrice)
@@ -58,7 +58,7 @@ func TestMsgInit_ParseUbcobject_Happy(t *testing.T) {
 	IsEqualDecimal(t, "15832600001", ubc.FactorFxy)
 }
 
-func TestMsgInit_ParseUbcobject_Error(t *testing.T) {
+func TestMsgInit_ParseCurve_Error(t *testing.T) {
 	type test struct {
 		name     string
 		modifier func(msg *MsgInit)
@@ -87,7 +87,7 @@ func TestMsgInit_ParseUbcobject_Error(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			msg := validMsgInitUbc()
 			tc.modifier(msg)
-			_, err := msg.ParseUbcobject()
+			_, err := msg.ParseCurve()
 			require.Error(t, err)
 			require.True(t, errors.Is(err, ErrInvalidArg))
 			t.Logf("%v", err)
