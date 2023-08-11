@@ -11,7 +11,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "escbackbone/ubc/params.proto";
-import "escbackbone/ubc/ubcobject.proto";
+import "escbackbone/ubc/curve.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 

@@ -9,7 +9,7 @@ package escbackbone.ubc;
 
 import "gogoproto/gogo.proto";
 import "escbackbone/ubc/params.proto";
-import "escbackbone/ubc/ubcobject.proto";
+import "escbackbone/ubc/curve.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
