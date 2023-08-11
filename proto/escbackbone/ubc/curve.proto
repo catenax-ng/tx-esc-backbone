@@ -6,7 +6,7 @@
 syntax = "proto3";
 package escbackbone.ubc;
 
-import "escbackbone/ubc/segment.proto";
+import "escbackbone/ubc/beziersegment.proto";
 import "escbackbone/ubc/quadraticsegment.proto";
 import "escbackbone/ubc/flatsegment.proto";
 import "escbackbone/ubc/fixedsegment.proto";
@@ -17,8 +17,8 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 message Curve {
   
   Flatsegment fS0 = 1;
-  Segment s0 = 2;
-  Segment s1 = 3;
+  BezierSegment s0 = 2;
+  BezierSegment s1 = 3;
   Fixedsegment s2 = 4;
   Quadraticsegment qS3 = 5;
   string refProfitFactor = 6 [

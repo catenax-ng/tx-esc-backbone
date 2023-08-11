@@ -6,14 +6,14 @@
 syntax = "proto3";
 package escbackbone.ubc;
 
-import "escbackbone/ubc/segment.proto";
+import "escbackbone/ubc/beziersegment.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Fixedsegment {
   
-  Segment s = 1 [(gogoproto.embed) = true];
+  BezierSegment s = 1 [(gogoproto.embed) = true];
   string intervalP0X = 2 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false

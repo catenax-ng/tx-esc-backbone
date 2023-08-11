@@ -70910,6 +70910,23 @@ definitions:
     properties:
       pubkey:
         type: string
+  escbackbone.ubc.BezierSegment:
+    type: object
+    properties:
+      p0:
+        type: string
+      a:
+        type: string
+      b:
+        type: string
+      p1:
+        type: string
+      p0X:
+        type: string
+      p1X:
+        type: string
+      deltaX:
+        type: string
   escbackbone.ubc.Curve:
     type: object
     properties:
@@ -71193,23 +71210,6 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
-  escbackbone.ubc.Segment:
-    type: object
-    properties:
-      p0:
-        type: string
-      a:
-        type: string
-      b:
-        type: string
-      p1:
-        type: string
-      p0X:
-        type: string
-      p1X:
-        type: string
-      deltaX:
-        type: string
   ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse:
     type: object
     properties:
