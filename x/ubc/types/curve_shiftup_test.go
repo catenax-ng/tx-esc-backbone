@@ -19,8 +19,8 @@ import (
 func Test_Curve_ShiftUp(t *testing.T) {
 	type wants struct {
 		FS0        *Flatsegment
-		S0         *Segment
-		S1         *Segment
+		S0         *BezierSegment
+		S1         *BezierSegment
 		S2         *Fixedsegment
 		QS3        *Quadraticsegment
 		BPool      sdk.Dec
@@ -49,7 +49,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					X0: sdk.MustNewDecFromStr("46479149.746915109636077002"),
 					Y:  sdk.MustNewDecFromStr("0.020408732850910393"),
 				},
-				S0: &Segment{
+				S0: &BezierSegment{
 					P0:     sdk.MustNewDecFromStr("0.020408732850910393"),
 					A:      sdk.MustNewDecFromStr("0.020408732850910393"),
 					B:      sdk.MustNewDecFromStr("0.028367859565819354"),
@@ -58,7 +58,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					P1X:    sdk.MustNewDecFromStr("2038258170.761775649954248590"),
 					DeltaX: sdk.MustNewDecFromStr("1991779021.014860540318171588"),
 				},
-				S1: &Segment{
+				S1: &BezierSegment{
 					P0:     sdk.MustNewDecFromStr("0.036326986280728314"),
 					A:      sdk.MustNewDecFromStr("0.040355826048446913"),
 					B:      sdk.MustNewDecFromStr("0.066392634033828685"),
@@ -68,7 +68,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					DeltaX: sdk.MustNewDecFromStr("1008220978.985139459681828412"),
 				},
 				S2: &Fixedsegment{
-					Segment: &Segment{
+					BezierSegment: &BezierSegment{
 						P0:     sdk.MustNewDecFromStr("0.100000000000000000"),
 						A:      sdk.MustNewDecFromStr("0.200000000000000000"),
 						B:      sdk.MustNewDecFromStr("0.333333333000000001"),

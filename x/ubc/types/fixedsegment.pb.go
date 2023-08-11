@@ -30,8 +30,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Fixedsegment struct {
-	*Segment    `protobuf:"bytes,1,opt,name=s,proto3,embedded=s" json:"s,omitempty"`
-	IntervalP0X github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=intervalP0X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"intervalP0X"`
+	*BezierSegment `protobuf:"bytes,1,opt,name=s,proto3,embedded=s" json:"s,omitempty"`
+	IntervalP0X    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=intervalP0X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"intervalP0X"`
 }
 
 func (m *Fixedsegment) Reset()         { *m = Fixedsegment{} }
@@ -125,9 +125,9 @@ func (m *Fixedsegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	i--
 	dAtA[i] = 0x12
-	if m.Segment != nil {
+	if m.BezierSegment != nil {
 		{
-			size, err := m.Segment.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.BezierSegment.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -157,8 +157,8 @@ func (m *Fixedsegment) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Segment != nil {
-		l = m.Segment.Size()
+	if m.BezierSegment != nil {
+		l = m.BezierSegment.Size()
 		n += 1 + l + sovFixedsegment(uint64(l))
 	}
 	l = m.IntervalP0X.Size()
@@ -230,10 +230,10 @@ func (m *Fixedsegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Segment == nil {
-				m.Segment = &Segment{}
+			if m.BezierSegment == nil {
+				m.BezierSegment = &BezierSegment{}
 			}
-			if err := m.Segment.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.BezierSegment.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

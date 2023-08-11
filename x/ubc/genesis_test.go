@@ -18,8 +18,8 @@ import (
 
 func TestGenesis(t *testing.T) {
 
-	zeroSegment := func() *types.Segment {
-		return &types.Segment{
+	zeroBezierSegment := func() *types.BezierSegment {
+		return &types.BezierSegment{
 			P0:     sdk.ZeroDec(),
 			A:      sdk.ZeroDec(),
 			B:      sdk.ZeroDec(),
@@ -38,11 +38,11 @@ func TestGenesis(t *testing.T) {
 				Y:  sdk.ZeroDec(),
 				X0: sdk.ZeroDec(),
 			},
-			S0: zeroSegment(),
-			S1: zeroSegment(),
+			S0: zeroBezierSegment(),
+			S1: zeroBezierSegment(),
 			S2: &types.Fixedsegment{
-				Segment:     zeroSegment(),
-				IntervalP0X: sdk.ZeroDec(),
+				BezierSegment: zeroBezierSegment(),
+				IntervalP0X:   sdk.ZeroDec(),
 			},
 			QS3: &types.Quadraticsegment{
 				A:             sdk.ZeroDec(),

@@ -31,8 +31,8 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Curve struct {
 	FS0             *Flatsegment                           `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
-	S0              *Segment                               `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
-	S1              *Segment                               `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
+	S0              *BezierSegment                         `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
+	S1              *BezierSegment                         `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
 	S2              *Fixedsegment                          `protobuf:"bytes,4,opt,name=s2,proto3" json:"s2,omitempty"`
 	QS3             *Quadraticsegment                      `protobuf:"bytes,5,opt,name=qS3,proto3" json:"qS3,omitempty"`
 	RefProfitFactor github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=refProfitFactor,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refProfitFactor"`
@@ -88,14 +88,14 @@ func (m *Curve) GetFS0() *Flatsegment {
 	return nil
 }
 
-func (m *Curve) GetS0() *Segment {
+func (m *Curve) GetS0() *BezierSegment {
 	if m != nil {
 		return m.S0
 	}
 	return nil
 }
 
-func (m *Curve) GetS1() *Segment {
+func (m *Curve) GetS1() *BezierSegment {
 	if m != nil {
 		return m.S1
 	}
@@ -515,7 +515,7 @@ func (m *Curve) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.S0 == nil {
-				m.S0 = &Segment{}
+				m.S0 = &BezierSegment{}
 			}
 			if err := m.S0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -551,7 +551,7 @@ func (m *Curve) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.S1 == nil {
-				m.S1 = &Segment{}
+				m.S1 = &BezierSegment{}
 			}
 			if err := m.S1.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
