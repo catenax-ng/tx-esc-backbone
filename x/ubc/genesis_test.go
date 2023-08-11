@@ -33,7 +33,7 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
-		Ubcobject: &types.Curve{
+		Curve: &types.Curve{
 			FS0: &types.Flatsegment{
 				Y:  sdk.ZeroDec(),
 				X0: sdk.ZeroDec(),
@@ -75,6 +75,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
-	require.Equal(t, genesisState.Ubcobject, got.Ubcobject)
+	require.Equal(t, genesisState.Curve, got.Curve)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

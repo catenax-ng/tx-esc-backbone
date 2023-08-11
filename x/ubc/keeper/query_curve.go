@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) Ubcobject(goCtx context.Context, req *types.QueryGetUbcobjectRequest) (*types.QueryGetUbcobjectResponse, error) {
+func (k Keeper) Curve(goCtx context.Context, req *types.QueryGetCurveRequest) (*types.QueryGetCurveResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -25,5 +25,5 @@ func (k Keeper) Ubcobject(goCtx context.Context, req *types.QueryGetUbcobjectReq
 		return nil, status.Error(codes.NotFound, "not found")
 	}
 
-	return &types.QueryGetUbcobjectResponse{Ubcobject: val}, nil
+	return &types.QueryGetCurveResponse{Curve: val}, nil
 }

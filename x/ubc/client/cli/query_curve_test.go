@@ -39,11 +39,11 @@ func networkWithUbcobjectObjects(t *testing.T) (*network.Network, types.Curve) {
 		CurrentSupply:   sdk.ZeroDec(),
 	}
 	nullify.Fill(&ubcobject)
-	state.Ubcobject = ubcobject
+	state.Curve = ubcobject
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
-	return network.New(t, cfg), *state.Ubcobject
+	return network.New(t, cfg), *state.Curve
 }
 
 func TestShowUbcobject(t *testing.T) {
@@ -69,19 +69,19 @@ func TestShowUbcobject(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			var args []string
 			args = append(args, tc.args...)
-			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowUbcobject(), args)
+			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowCurve(), args)
 			if tc.err != nil {
 				stat, ok := status.FromError(tc.err)
 				require.True(t, ok)
 				require.ErrorIs(t, stat.Err(), tc.err)
 			} else {
 				require.NoError(t, err)
-				var resp types.QueryGetUbcobjectResponse
+				var resp types.QueryGetCurveResponse
 				require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-				require.NotNil(t, resp.Ubcobject)
+				require.NotNil(t, resp.Curve)
 				require.Equal(t,
 					nullify.Fill(&tc.obj),
-					nullify.Fill(&resp.Ubcobject),
+					nullify.Fill(&resp.Curve),
 				)
 			}
 		})

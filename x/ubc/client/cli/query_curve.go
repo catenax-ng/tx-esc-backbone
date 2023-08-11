@@ -13,7 +13,7 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 )
 
-func CmdShowUbcobject() *cobra.Command {
+func CmdShowCurve() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show-ubcobject",
 		Short: "shows ubcobject",
@@ -26,9 +26,9 @@ func CmdShowUbcobject() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryGetUbcobjectRequest{}
+			params := &types.QueryGetCurveRequest{}
 
-			res, err := queryClient.Ubcobject(cmd.Context(), params)
+			res, err := queryClient.Curve(cmd.Context(), params)
 			if err != nil {
 				return err
 			}

@@ -18,20 +18,20 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 )
 
-func TestUbcobjectQuery(t *testing.T) {
+func TestCurveQuery(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	item := createTestUbcobject(keeper, ctx)
 	tests := []struct {
 		desc     string
-		request  *types.QueryGetUbcobjectRequest
-		response *types.QueryGetUbcobjectResponse
+		request  *types.QueryGetCurveRequest
+		response *types.QueryGetCurveResponse
 		err      error
 	}{
 		{
 			desc:     "First",
-			request:  &types.QueryGetUbcobjectRequest{},
-			response: &types.QueryGetUbcobjectResponse{Ubcobject: item},
+			request:  &types.QueryGetCurveRequest{},
+			response: &types.QueryGetCurveResponse{Curve: item},
 		},
 		{
 			desc: "InvalidRequest",
@@ -40,7 +40,7 @@ func TestUbcobjectQuery(t *testing.T) {
 	}
 	for _, tc := range tests {
 		t.Run(tc.desc, func(t *testing.T) {
-			response, err := keeper.Ubcobject(wctx, tc.request)
+			response, err := keeper.Curve(wctx, tc.request)
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {

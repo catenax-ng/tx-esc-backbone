@@ -14,8 +14,8 @@ import (
 // InitGenesis initializes the module's state from a provided genesis state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
 	// Set if defined
-	if genState.Ubcobject != nil {
-		k.SetUbcobject(ctx, *genState.Ubcobject)
+	if genState.Curve != nil {
+		k.SetUbcobject(ctx, *genState.Curve)
 	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
@@ -29,7 +29,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	// Get all ubcobject
 	ubcobject, found := k.GetUbcobject(ctx)
 	if found {
-		genesis.Ubcobject = &ubcobject
+		genesis.Curve = &ubcobject
 	}
 	// this line is used by starport scaffolding # genesis/module/export
 

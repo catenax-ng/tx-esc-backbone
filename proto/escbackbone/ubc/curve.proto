@@ -14,7 +14,7 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
-message Ubcobject {
+message Curve {
   
   Flatsegment fS0 = 1;
   Segment s0 = 2;
