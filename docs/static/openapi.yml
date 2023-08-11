@@ -35173,53 +35173,17 @@ paths:
           type: string
       tags:
         - Query
-  /catenax/esc-backbone/ubc/params:
+  /catenax/esc-backbone/ubc/curve:
     get:
-      summary: Parameters queries the parameters of the module.
-      operationId: EscbackboneUbcParams
+      summary: Queries a Curve by index.
+      operationId: EscbackboneUbcCurve
       responses:
         '200':
           description: A successful response.
           schema:
             type: object
             properties:
-              params:
-                description: params holds all the parameters of this module.
-                type: object
-            description: >-
-              QueryParamsResponse is response type for the Query/Params RPC
-              method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
-  /catenax/esc-backbone/ubc/ubcobject:
-    get:
-      summary: Queries a Ubcobject by index.
-      operationId: EscbackboneUbcUbcobject
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              Ubcobject:
+              Curve:
                 type: object
                 properties:
                   fS0:
@@ -35322,6 +35286,42 @@ paths:
                     type: string
                   slopeP3:
                     type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /catenax/esc-backbone/ubc/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: EscbackboneUbcParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
         default:
           description: An unexpected error response.
           schema:
@@ -70910,6 +70910,109 @@ definitions:
     properties:
       pubkey:
         type: string
+  escbackbone.ubc.Curve:
+    type: object
+    properties:
+      fS0:
+        type: object
+        properties:
+          'y':
+            type: string
+          x0:
+            type: string
+      s0:
+        type: object
+        properties:
+          p0:
+            type: string
+          a:
+            type: string
+          b:
+            type: string
+          p1:
+            type: string
+          p0X:
+            type: string
+          p1X:
+            type: string
+          deltaX:
+            type: string
+      s1:
+        type: object
+        properties:
+          p0:
+            type: string
+          a:
+            type: string
+          b:
+            type: string
+          p1:
+            type: string
+          p0X:
+            type: string
+          p1X:
+            type: string
+          deltaX:
+            type: string
+      s2:
+        type: object
+        properties:
+          s:
+            type: object
+            properties:
+              p0:
+                type: string
+              a:
+                type: string
+              b:
+                type: string
+              p1:
+                type: string
+              p0X:
+                type: string
+              p1X:
+                type: string
+              deltaX:
+                type: string
+          intervalP0X:
+            type: string
+      qS3:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: string
+          c:
+            type: string
+          scalingFactor:
+            type: string
+          initialX0:
+            type: string
+          currentX0:
+            type: string
+      refProfitFactor:
+        type: string
+      refTokenSupply:
+        type: string
+      refTokenPrice:
+        type: string
+      bPool:
+        type: string
+      bPoolUnder:
+        type: string
+      factorFy:
+        type: string
+      factorFxy:
+        type: string
+      tradingPoint:
+        type: string
+      currentSupply:
+        type: string
+      slopeP2:
+        type: string
+      slopeP3:
+        type: string
   escbackbone.ubc.Fixedsegment:
     type: object
     properties:
@@ -70939,6 +71042,26 @@ definitions:
         type: string
       x0:
         type: string
+  escbackbone.ubc.MsgBuyResponse:
+    type: object
+    properties:
+      tokensbought:
+        type: string
+      vouchersspent:
+        type: string
+  escbackbone.ubc.MsgInitResponse:
+    type: object
+  escbackbone.ubc.MsgSellResponse:
+    type: object
+    properties:
+      tokenssold:
+        type: string
+      vouchersearned:
+        type: string
+  escbackbone.ubc.MsgShiftupResponse:
+    type: object
+  escbackbone.ubc.MsgUndergirdResponse:
+    type: object
   escbackbone.ubc.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -70957,10 +71080,10 @@ definitions:
         type: string
       currentX0:
         type: string
-  escbackbone.ubc.QueryGetUbcobjectResponse:
+  escbackbone.ubc.QueryGetCurveResponse:
     type: object
     properties:
-      Ubcobject:
+      Curve:
         type: object
         properties:
           fS0:
@@ -71086,109 +71209,6 @@ definitions:
       p1X:
         type: string
       deltaX:
-        type: string
-  escbackbone.ubc.Ubcobject:
-    type: object
-    properties:
-      fS0:
-        type: object
-        properties:
-          'y':
-            type: string
-          x0:
-            type: string
-      s0:
-        type: object
-        properties:
-          p0:
-            type: string
-          a:
-            type: string
-          b:
-            type: string
-          p1:
-            type: string
-          p0X:
-            type: string
-          p1X:
-            type: string
-          deltaX:
-            type: string
-      s1:
-        type: object
-        properties:
-          p0:
-            type: string
-          a:
-            type: string
-          b:
-            type: string
-          p1:
-            type: string
-          p0X:
-            type: string
-          p1X:
-            type: string
-          deltaX:
-            type: string
-      s2:
-        type: object
-        properties:
-          s:
-            type: object
-            properties:
-              p0:
-                type: string
-              a:
-                type: string
-              b:
-                type: string
-              p1:
-                type: string
-              p0X:
-                type: string
-              p1X:
-                type: string
-              deltaX:
-                type: string
-          intervalP0X:
-            type: string
-      qS3:
-        type: object
-        properties:
-          a:
-            type: string
-          b:
-            type: string
-          c:
-            type: string
-          scalingFactor:
-            type: string
-          initialX0:
-            type: string
-          currentX0:
-            type: string
-      refProfitFactor:
-        type: string
-      refTokenSupply:
-        type: string
-      refTokenPrice:
-        type: string
-      bPool:
-        type: string
-      bPoolUnder:
-        type: string
-      factorFy:
-        type: string
-      factorFxy:
-        type: string
-      tradingPoint:
-        type: string
-      currentSupply:
-        type: string
-      slopeP2:
-        type: string
-      slopeP3:
         type: string
   ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse:
     type: object
