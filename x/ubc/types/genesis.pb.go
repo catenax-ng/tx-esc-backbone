@@ -10,11 +10,12 @@ package types
 
 import (
 	fmt "fmt"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -30,8 +31,8 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // GenesisState defines the ubc module's genesis state.
 type GenesisState struct {
-	Params    Params     `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
-	Ubcobject *Ubcobject `protobuf:"bytes,2,opt,name=ubcobject,proto3" json:"ubcobject,omitempty"`
+	Params    Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
+	Ubcobject *Curve `protobuf:"bytes,2,opt,name=ubcobject,proto3" json:"ubcobject,omitempty"`
 }
 
 func (m *GenesisState) Reset()         { *m = GenesisState{} }
@@ -74,7 +75,7 @@ func (m *GenesisState) GetParams() Params {
 	return Params{}
 }
 
-func (m *GenesisState) GetUbcobject() *Ubcobject {
+func (m *GenesisState) GetUbcobject() *Curve {
 	if m != nil {
 		return m.Ubcobject
 	}
@@ -275,7 +276,7 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Ubcobject == nil {
-				m.Ubcobject = &Ubcobject{}
+				m.Ubcobject = &Curve{}
 			}
 			if err := m.Ubcobject.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

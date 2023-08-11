@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -29,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type Ubcobject struct {
+type Curve struct {
 	FS0             *Flatsegment                           `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
 	S0              *Segment                               `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
 	S1              *Segment                               `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
@@ -48,16 +49,16 @@ type Ubcobject struct {
 	SlopeP3         github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,16,opt,name=slopeP3,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"slopeP3"`
 }
 
-func (m *Ubcobject) Reset()         { *m = Ubcobject{} }
-func (m *Ubcobject) String() string { return proto.CompactTextString(m) }
-func (*Ubcobject) ProtoMessage()    {}
-func (*Ubcobject) Descriptor() ([]byte, []int) {
+func (m *Curve) Reset()         { *m = Curve{} }
+func (m *Curve) String() string { return proto.CompactTextString(m) }
+func (*Curve) ProtoMessage()    {}
+func (*Curve) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7c5281ef0eb0b3ff, []int{0}
 }
-func (m *Ubcobject) XXX_Unmarshal(b []byte) error {
+func (m *Curve) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Ubcobject) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Curve) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Ubcobject.Marshal(b, m, deterministic)
 	} else {
@@ -69,47 +70,47 @@ func (m *Ubcobject) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *Ubcobject) XXX_Merge(src proto.Message) {
+func (m *Curve) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Ubcobject.Merge(m, src)
 }
-func (m *Ubcobject) XXX_Size() int {
+func (m *Curve) XXX_Size() int {
 	return m.Size()
 }
-func (m *Ubcobject) XXX_DiscardUnknown() {
+func (m *Curve) XXX_DiscardUnknown() {
 	xxx_messageInfo_Ubcobject.DiscardUnknown(m)
 }
 
 var xxx_messageInfo_Ubcobject proto.InternalMessageInfo
 
-func (m *Ubcobject) GetFS0() *Flatsegment {
+func (m *Curve) GetFS0() *Flatsegment {
 	if m != nil {
 		return m.FS0
 	}
 	return nil
 }
 
-func (m *Ubcobject) GetS0() *Segment {
+func (m *Curve) GetS0() *Segment {
 	if m != nil {
 		return m.S0
 	}
 	return nil
 }
 
-func (m *Ubcobject) GetS1() *Segment {
+func (m *Curve) GetS1() *Segment {
 	if m != nil {
 		return m.S1
 	}
 	return nil
 }
 
-func (m *Ubcobject) GetS2() *Fixedsegment {
+func (m *Curve) GetS2() *Fixedsegment {
 	if m != nil {
 		return m.S2
 	}
 	return nil
 }
 
-func (m *Ubcobject) GetQS3() *Quadraticsegment {
+func (m *Curve) GetQS3() *Quadraticsegment {
 	if m != nil {
 		return m.QS3
 	}
@@ -117,7 +118,7 @@ func (m *Ubcobject) GetQS3() *Quadraticsegment {
 }
 
 func init() {
-	proto.RegisterType((*Ubcobject)(nil), "escbackbone.ubc.Ubcobject")
+	proto.RegisterType((*Curve)(nil), "escbackbone.ubc.Ubcobject")
 }
 
 func init() { proto.RegisterFile("escbackbone/ubc/curve.proto", fileDescriptor_7c5281ef0eb0b3ff) }
@@ -158,7 +159,7 @@ var fileDescriptor_7c5281ef0eb0b3ff = []byte{
 	0x00,
 }
 
-func (m *Ubcobject) Marshal() (dAtA []byte, err error) {
+func (m *Curve) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -168,12 +169,12 @@ func (m *Ubcobject) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Ubcobject) MarshalTo(dAtA []byte) (int, error) {
+func (m *Curve) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Ubcobject) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *Curve) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -364,7 +365,7 @@ func encodeVarintCurve(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *Ubcobject) Size() (n int) {
+func (m *Curve) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -421,7 +422,7 @@ func sovCurve(x uint64) (n int) {
 func sozCurve(x uint64) (n int) {
 	return sovCurve(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *Ubcobject) Unmarshal(dAtA []byte) error {
+func (m *Curve) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {

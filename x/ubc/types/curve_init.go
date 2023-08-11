@@ -15,7 +15,7 @@ import (
 //
 // It returns an error if any of the parameters was not set or if the resulting
 // curve fitted is invalid.
-func (ubc *Ubcobject) Fit() error {
+func (ubc *Curve) Fit() error {
 	if err := ubc.validateParameters(); err != nil {
 		return err
 	}
@@ -33,7 +33,7 @@ func (ubc *Ubcobject) Fit() error {
 	return ubc.validateCurvature()
 }
 
-func (ubc *Ubcobject) validateParameters() error {
+func (ubc *Curve) validateParameters() error {
 	if ubc.RefTokenSupply.IsNil() {
 		return errors.Errorf("RefTokenSupply is not set")
 	}
@@ -61,7 +61,7 @@ func (ubc *Ubcobject) validateParameters() error {
 	return nil
 }
 
-func (ubc *Ubcobject) initSegmentsToZero() {
+func (ubc *Curve) initSegmentsToZero() {
 	ubc.FS0 = &Flatsegment{
 		X0: sdk.ZeroDec(),
 		Y:  sdk.ZeroDec(),
@@ -87,7 +87,7 @@ func (ubc *Ubcobject) initSegmentsToZero() {
 	ubc.QS3 = &Quadraticsegment{}
 }
 
-func (ubc *Ubcobject) fitS2() {
+func (ubc *Curve) fitS2() {
 	ubc.setP3X(ubc.RefTokenSupply)
 	ubc.setP3(ubc.RefTokenPrice)
 	ubc.setP2X(ubc.RefTokenSupply.Quo(sdk.NewDec(2)))
@@ -96,20 +96,20 @@ func (ubc *Ubcobject) fitS2() {
 	ubc.calcS2AB()
 }
 
-func (ubc *Ubcobject) calcS2AB() {
+func (ubc *Curve) calcS2AB() {
 	factor := sdk.NewDec(1).Quo(sdk.NewDec(3))
 	ubc.S2.B = ubc.S2.P1.Sub(factor.Mul(ubc.SlopeP3.Mul(ubc.S2.DeltaX)))
 	ubc.S2.A = ubc.S2.P0.Add(factor.Mul(ubc.SlopeP2.Mul(ubc.S2.DeltaX)))
 }
 
-func (ubc *Ubcobject) fitS3() {
+func (ubc *Curve) fitS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
 	curvatureP3 := ubc.S2.curvatureAtEnd()
 	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
 }
 
-func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
+func (ubc *Curve) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 	x3Scaled := p3X.Quo(ubc.QS3.ScalingFactor)
 
 	ubc.QS3.A = curvatureP3.Mul(ubc.QS3.ScalingFactor).Quo(sdk.NewDec(2))
@@ -120,7 +120,7 @@ func (ubc *Ubcobject) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 
 // fitS0S1Repeatedly fits S0 and S1 repeatedly for given count of repititions,
 // for the sake of self consistency.
-func (ubc *Ubcobject) fitS0S1Repeatedly(repititions uint) {
+func (ubc *Curve) fitS0S1Repeatedly(repititions uint) {
 	for i := uint(0); i < repititions; i++ {
 		ubc.calcP1X()
 		g0 := ubc.calcG0()
@@ -137,24 +137,24 @@ func (ubc *Ubcobject) fitS0S1Repeatedly(repititions uint) {
 	}
 }
 
-func (ubc *Ubcobject) calcP1X() {
+func (ubc *Curve) calcP1X() {
 	factor := sdk.NewDec(1).Sub(ubc.FactorFy).Mul(ubc.FactorFxy)
 	deltaX1 := factor.Mul(ubc.p2().Sub(ubc.p0()))
 	ubc.setP1X(ubc.p2x().Sub(deltaX1))
 }
 
-func (ubc *Ubcobject) calcP1XMethod2() {
+func (ubc *Curve) calcP1XMethod2() {
 	x1 := ubc.p2x().Sub(ubc.FactorFxy.Mul(ubc.p2().Sub(ubc.p1())))
 	ubc.setP1X(x1)
 }
 
-func (ubc *Ubcobject) calcG0() sdk.Dec {
+func (ubc *Curve) calcG0() sdk.Dec {
 	part1 := sdk.NewDec(-3).Quo(sdk.NewDec(2)).Mul(ubc.S0.DeltaX)
 	part2 := sdk.NewDecWithPrec(5, 1).Mul(ubc.S1.DeltaX.Power(2).Quo(ubc.S0.DeltaX))
 	return (part1.Sub(part2)).Mul(ubc.FactorFy)
 }
 
-func (ubc *Ubcobject) calcG1(g0 sdk.Dec) sdk.Dec {
+func (ubc *Curve) calcG1(g0 sdk.Dec) sdk.Dec {
 	part1 := sdk.NewDec(4).Mul(ubc.S0.DeltaX)
 	factorPart2 := sdk.NewDec(2).Mul(ubc.S1.DeltaX)
 	part2 := factorPart2.Mul(sdk.NewDec(1).Sub(ubc.FactorFy))
@@ -163,13 +163,13 @@ func (ubc *Ubcobject) calcG1(g0 sdk.Dec) sdk.Dec {
 	//TODO: Implement the condition in GetFS0X0 from the prototype.
 }
 
-func (ubc *Ubcobject) calcS1B() sdk.Dec {
+func (ubc *Curve) calcS1B() sdk.Dec {
 	factorPart1 := ubc.S1.DeltaX.Quo(ubc.S2.DeltaX)
 	part1 := factorPart1.Mul(ubc.p2().Sub(ubc.S2.A))
 	return part1.Add(ubc.p2())
 }
 
-func (ubc *Ubcobject) calcP0(g0, g1 sdk.Dec) sdk.Dec {
+func (ubc *Curve) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 	factor := sdk.NewDec(1).Quo(g1)
 	part1 := sdk.NewDec(4).Mul(ubc.BPoolUnder)
 	part2 := ubc.p2().Mul(g0.
@@ -179,23 +179,23 @@ func (ubc *Ubcobject) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 	return factor.Mul(part1.Add(part2).Sub(part3))
 }
 
-func (ubc *Ubcobject) calcP1() sdk.Dec {
+func (ubc *Curve) calcP1() sdk.Dec {
 	part1 := ubc.FactorFy.Mul(ubc.p2())
 	part2 := (sdk.NewDec(1).Sub(ubc.FactorFy)).Mul(ubc.p0())
 	return part1.Add(part2)
 }
 
-func (ubc *Ubcobject) calcS0B() sdk.Dec {
+func (ubc *Curve) calcS0B() sdk.Dec {
 	return sdk.NewDecWithPrec(5, 1).Mul(ubc.p0().Add(ubc.p1()))
 }
 
-func (ubc *Ubcobject) calcS1A() sdk.Dec {
+func (ubc *Curve) calcS1A() sdk.Dec {
 	factorPart1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.S1.DeltaX.Quo(ubc.S0.DeltaX))
 	part1 := factorPart1.Mul(ubc.p1().Sub(ubc.p0()))
 	return part1.Add(ubc.p1())
 }
 
-func (ubc *Ubcobject) validateCurvature() error {
+func (ubc *Curve) validateCurvature() error {
 	factor := (ubc.S1.DeltaX.Quo(ubc.S2.DeltaX)).Mul(
 		ubc.S2.A.Sub(ubc.p2()))
 

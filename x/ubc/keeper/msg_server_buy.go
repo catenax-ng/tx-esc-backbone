@@ -44,7 +44,7 @@ func (k msgServer) Buy(goCtx context.Context, msg *types.MsgBuy) (*types.MsgBuyR
 
 }
 
-func buy(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
+func buy(tokensCoin sdk.Coin, ubc types.Curve) (types.Curve, sdk.Coin) {
 	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
 	vouchersSpent := ubc.Buy(tokens)
 

@@ -28,7 +28,7 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
-				Ubcobject: &types.Ubcobject{
+				Ubcobject: &types.Curve{
 					FS0:             new(types.Flatsegment),
 					S0:              new(types.Segment),
 					S1:              new(types.Segment),

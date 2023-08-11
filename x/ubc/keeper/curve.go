@@ -12,14 +12,14 @@ import (
 )
 
 // SetUbcobject set ubcobject in the store
-func (k Keeper) SetUbcobject(ctx sdk.Context, ubcobject types.Ubcobject) {
+func (k Keeper) SetUbcobject(ctx sdk.Context, ubcobject types.Curve) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.UbcobjectKey))
 	b := k.cdc.MustMarshal(&ubcobject)
 	store.Set([]byte{0}, b)
 }
 
 // GetUbcobject returns ubcobject
-func (k Keeper) GetUbcobject(ctx sdk.Context) (val types.Ubcobject, found bool) {
+func (k Keeper) GetUbcobject(ctx sdk.Context) (val types.Curve, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.UbcobjectKey))
 
 	b := store.Get([]byte{0})

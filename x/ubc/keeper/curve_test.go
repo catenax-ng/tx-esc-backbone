@@ -17,8 +17,8 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 )
 
-func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Ubcobject {
-	item := types.Ubcobject{
+func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
+	item := types.Curve{
 		RefTokenSupply:  sdk.ZeroDec(),
 		RefTokenPrice:   sdk.ZeroDec(),
 		RefProfitFactor: sdk.ZeroDec(),

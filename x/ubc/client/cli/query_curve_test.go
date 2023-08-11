@@ -21,11 +21,11 @@ import (
 	"github.com/catenax/esc-backbone/x/ubc/types"
 )
 
-func networkWithUbcobjectObjects(t *testing.T) (*network.Network, types.Ubcobject) {
+func networkWithUbcobjectObjects(t *testing.T) (*network.Network, types.Curve) {
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
-	ubcobject := &types.Ubcobject{
+	ubcobject := &types.Curve{
 		RefTokenSupply:  sdk.ZeroDec(),
 		RefTokenPrice:   sdk.ZeroDec(),
 		RefProfitFactor: sdk.ZeroDec(),
@@ -57,7 +57,7 @@ func TestShowUbcobject(t *testing.T) {
 		desc string
 		args []string
 		err  error
-		obj  types.Ubcobject
+		obj  types.Curve
 	}{
 		{
 			desc: "get",

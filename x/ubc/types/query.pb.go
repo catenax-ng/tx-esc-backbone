@@ -11,6 +11,10 @@ package types
 import (
 	context "context"
 	fmt "fmt"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+
 	_ "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
@@ -19,9 +23,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	io "io"
-	math "math"
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -155,7 +156,7 @@ func (m *QueryGetUbcobjectRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_QueryGetUbcobjectRequest proto.InternalMessageInfo
 
 type QueryGetUbcobjectResponse struct {
-	Ubcobject Ubcobject `protobuf:"bytes,1,opt,name=Ubcobject,proto3" json:"Ubcobject"`
+	Ubcobject Curve `protobuf:"bytes,1,opt,name=Ubcobject,proto3" json:"Ubcobject"`
 }
 
 func (m *QueryGetUbcobjectResponse) Reset()         { *m = QueryGetUbcobjectResponse{} }
@@ -191,11 +192,11 @@ func (m *QueryGetUbcobjectResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_QueryGetUbcobjectResponse proto.InternalMessageInfo
 
-func (m *QueryGetUbcobjectResponse) GetUbcobject() Ubcobject {
+func (m *QueryGetUbcobjectResponse) GetUbcobject() Curve {
 	if m != nil {
 		return m.Ubcobject
 	}
-	return Ubcobject{}
+	return Curve{}
 }
 
 func init() {

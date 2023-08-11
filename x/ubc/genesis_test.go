@@ -33,7 +33,7 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
-		Ubcobject: &types.Ubcobject{
+		Ubcobject: &types.Curve{
 			FS0: &types.Flatsegment{
 				Y:  sdk.ZeroDec(),
 				X0: sdk.ZeroDec(),

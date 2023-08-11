@@ -66,8 +66,8 @@ func (msg *MsgInit) ValidateBasic() error {
 	return nil
 }
 
-func (msg *MsgInit) ParseUbcobject() (ubc *Ubcobject, err error) {
-	ubc = &Ubcobject{}
+func (msg *MsgInit) ParseUbcobject() (ubc *Curve, err error) {
+	ubc = &Curve{}
 
 	if ubc.RefTokenSupply, err = sdk.NewDecFromStr(msg.RefTokenSupply); err != nil {
 		return nil, errors.Wrap(ErrInvalidArg, "RefTokenSupply")

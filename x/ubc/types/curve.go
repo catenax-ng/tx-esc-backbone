@@ -17,76 +17,76 @@ const (
 	QS3
 )
 
-func (ubc *Ubcobject) p0() sdk.Dec {
+func (ubc *Curve) p0() sdk.Dec {
 	return ubc.S0.P0
 }
 
-func (ubc *Ubcobject) p1() sdk.Dec {
+func (ubc *Curve) p1() sdk.Dec {
 	return ubc.S1.P0
 }
 
-func (ubc *Ubcobject) p2() sdk.Dec {
+func (ubc *Curve) p2() sdk.Dec {
 	return ubc.S2.P0
 }
 
-func (ubc *Ubcobject) p3() sdk.Dec {
+func (ubc *Curve) p3() sdk.Dec {
 	return ubc.S2.P1
 }
 
-func (ubc *Ubcobject) p0x() sdk.Dec {
+func (ubc *Curve) p0x() sdk.Dec {
 	return ubc.S0.P0X
 }
-func (ubc *Ubcobject) p1x() sdk.Dec {
+func (ubc *Curve) p1x() sdk.Dec {
 	return ubc.S1.P0X
 }
-func (ubc *Ubcobject) p2x() sdk.Dec {
+func (ubc *Curve) p2x() sdk.Dec {
 	return ubc.S2.IntervalP0X
 }
 
-func (ubc *Ubcobject) p3x() sdk.Dec {
+func (ubc *Curve) p3x() sdk.Dec {
 	return ubc.S2.P1X
 }
 
-func (ubc *Ubcobject) setP0(p0 sdk.Dec) {
+func (ubc *Curve) setP0(p0 sdk.Dec) {
 	ubc.FS0.Y = p0
 	ubc.S0.P0 = p0
 }
 
-func (ubc *Ubcobject) setP1(p1 sdk.Dec) {
+func (ubc *Curve) setP1(p1 sdk.Dec) {
 	ubc.S0.P1 = p1
 	ubc.S1.P0 = p1
 }
 
-func (ubc *Ubcobject) setP2(p2 sdk.Dec) {
+func (ubc *Curve) setP2(p2 sdk.Dec) {
 	ubc.S1.P1 = p2
 	ubc.S2.setP0(p2)
 }
 
-func (ubc *Ubcobject) setP3(p3 sdk.Dec) {
+func (ubc *Curve) setP3(p3 sdk.Dec) {
 	ubc.S2.P1 = p3
 }
 
-func (ubc *Ubcobject) setP0X(p0X sdk.Dec) {
+func (ubc *Curve) setP0X(p0X sdk.Dec) {
 	ubc.FS0.X0 = p0X
 	ubc.S0.setP0X(p0X)
 }
 
-func (ubc *Ubcobject) setP1X(p1X sdk.Dec) {
+func (ubc *Curve) setP1X(p1X sdk.Dec) {
 	ubc.S0.setP1X(p1X)
 	ubc.S1.setP0X(p1X)
 }
 
-func (ubc *Ubcobject) setP2X(p2X sdk.Dec) {
+func (ubc *Curve) setP2X(p2X sdk.Dec) {
 	ubc.S1.setP1X(p2X)
 	ubc.S2.setP0X(p2X)
 }
 
-func (ubc *Ubcobject) setP3X(p3X sdk.Dec) {
+func (ubc *Curve) setP3X(p3X sdk.Dec) {
 	ubc.S2.setP1X(p3X)
 }
 
 // segmentNum returns the segment number for the given point x.
-func (ubc *Ubcobject) segmentNum(x sdk.Dec) int {
+func (ubc *Curve) segmentNum(x sdk.Dec) int {
 	upperBoundsX := []sdk.Dec{ubc.p0x(), ubc.p1x(), ubc.p2x(), ubc.p3x()}
 	segments := []int{FS0, S0, S1, S2}
 
@@ -98,7 +98,7 @@ func (ubc *Ubcobject) segmentNum(x sdk.Dec) int {
 	return QS3
 }
 
-func (ubc *Ubcobject) a(segNum int) sdk.Dec {
+func (ubc *Curve) a(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.S0.A
@@ -111,7 +111,7 @@ func (ubc *Ubcobject) a(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) b(segNum int) sdk.Dec {
+func (ubc *Curve) b(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.S0.B
@@ -124,7 +124,7 @@ func (ubc *Ubcobject) b(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) upperBoundX(segNum int) sdk.Dec {
+func (ubc *Curve) upperBoundX(segNum int) sdk.Dec {
 	switch segNum {
 	case FS0:
 		return ubc.p0x()
@@ -139,7 +139,7 @@ func (ubc *Ubcobject) upperBoundX(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) lowerBoundX(segNum int) sdk.Dec {
+func (ubc *Curve) lowerBoundX(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.p0x()
@@ -154,7 +154,7 @@ func (ubc *Ubcobject) lowerBoundX(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) lowerBound(segNum int) sdk.Dec {
+func (ubc *Curve) lowerBound(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.p0()
@@ -167,7 +167,7 @@ func (ubc *Ubcobject) lowerBound(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) upperBound(segNum int) sdk.Dec {
+func (ubc *Curve) upperBound(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.p1()
@@ -180,7 +180,7 @@ func (ubc *Ubcobject) upperBound(segNum int) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) t(segNum int) func(x sdk.Dec) (t sdk.Dec) {
+func (ubc *Curve) t(segNum int) func(x sdk.Dec) (t sdk.Dec) {
 	switch segNum {
 	case S0:
 		return ubc.S0.t
@@ -193,7 +193,7 @@ func (ubc *Ubcobject) t(segNum int) func(x sdk.Dec) (t sdk.Dec) {
 	}
 }
 
-func (ubc *Ubcobject) deltaX(segNum int) sdk.Dec {
+func (ubc *Curve) deltaX(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
 		return ubc.S0.DeltaX
@@ -208,7 +208,7 @@ func (ubc *Ubcobject) deltaX(segNum int) sdk.Dec {
 
 // integralX12 returns the function for computing the integral for the given
 // segment.
-func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
+func (ubc *Curve) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	switch segNum {
 	case FS0:
 		return ubc.FS0.integralX12
@@ -225,7 +225,7 @@ func (ubc *Ubcobject) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec) {
+func (ubc *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec) {
 	segLowerBoundX := ubc.segmentNum(lowerBoundX)
 	segUpperBoundX := ubc.segmentNum(upperBoundX)
 
@@ -244,7 +244,7 @@ func (ubc *Ubcobject) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sd
 	return vouchers
 }
 
-func (ubc *Ubcobject) slopeX1(x1 sdk.Dec) sdk.Dec {
+func (ubc *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
 	switch ubc.segmentNum(x1) {
 	case FS0:
 		return sdk.ZeroDec()
@@ -261,7 +261,7 @@ func (ubc *Ubcobject) slopeX1(x1 sdk.Dec) sdk.Dec {
 	}
 }
 
-func (ubc *Ubcobject) y(x sdk.Dec) sdk.Dec {
+func (ubc *Curve) y(x sdk.Dec) sdk.Dec {
 	switch ubc.segmentNum(x) {
 	case FS0:
 		return ubc.FS0.y(x)
@@ -280,7 +280,7 @@ func (ubc *Ubcobject) y(x sdk.Dec) sdk.Dec {
 
 // integralT1 computes the integral of the curve segment with respect to the
 // bezier curve parameter "t", from the beginning of the curve until point t1.
-func (ubc *Ubcobject) integralT1(t1 sdk.Dec, seg int) sdk.Dec {
+func (ubc *Curve) integralT1(t1 sdk.Dec, seg int) sdk.Dec {
 	switch seg {
 	case S0:
 		return ubc.S0.integralT1(t1)

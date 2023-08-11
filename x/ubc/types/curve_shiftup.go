@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (ubc *Ubcobject) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
+func (ubc *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	if ubc.CurrentSupply.LT(ubc.p2x()) {
 		errMsg := "could not shiftup, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
@@ -46,7 +46,7 @@ func (ubc *Ubcobject) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	return nil
 }
 
-func (ubc *Ubcobject) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error) {
+func (ubc *Curve) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error) {
 	P2XNew := P2XOld.Add(dx)
 	if P2XNew.GTE(ubc.CurrentSupply) {
 		return sdk.ZeroDec(), sdk.ZeroDec(), errors.Errorf("P2X was shifted beyond the current supply")
@@ -55,7 +55,7 @@ func (ubc *Ubcobject) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error)
 	return P2XNew, ubc.y(P2XNew), nil
 }
 
-func (ubc *Ubcobject) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
+func (ubc *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 	slopeAtP2XOld := ubc.slopeX1(p2XOld)
 
 	part1 := slopeAtP2XOld.Mul(p2XOld).Add(ubc.p0()).Sub(ubc.p2()).Quo(slopeAtP2XOld)
@@ -71,7 +71,7 @@ func (ubc *Ubcobject) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, erro
 	return dx, nil
 }
 
-func (ubc *Ubcobject) shiftP0P1P2(dxsh, dP2 sdk.Dec) {
+func (ubc *Curve) shiftP0P1P2(dxsh, dP2 sdk.Dec) {
 	ubc.setP0X(ubc.p0x().Add(dxsh))
 	ubc.setP1X(ubc.p1x().Add(dxsh))
 	ubc.setP2X(ubc.p2x().Add(dxsh))

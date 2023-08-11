@@ -49,7 +49,7 @@ func (k msgServer) Sell(goCtx context.Context, msg *types.MsgSell) (*types.MsgSe
 
 }
 
-func sellExactTokens(tokensCoin sdk.Coin, ubc types.Ubcobject) (types.Ubcobject, sdk.Coin) {
+func sellExactTokens(tokensCoin sdk.Coin, ubc types.Curve) (types.Curve, sdk.Coin) {
 	tokens := sdk.NewDecFromInt(tokensCoin.Amount).QuoInt64(types.SystemTokenMultiplier)
 	vouchersOut := ubc.Sell(tokens)
 	vouchersEarned := subFeesDec(vouchersOut)

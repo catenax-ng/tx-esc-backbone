@@ -14,7 +14,7 @@ import (
 //
 // It assumes the value of tokens is greater than zero. This condition is
 // implemented in the ValidBasic function for the buy message.
-func (ubc *Ubcobject) Buy(tokens sdk.Dec) sdk.Dec {
+func (ubc *Curve) Buy(tokens sdk.Dec) sdk.Dec {
 	xCurrent := ubc.CurrentSupply
 	xNew := ubc.CurrentSupply.Add(tokens)
 

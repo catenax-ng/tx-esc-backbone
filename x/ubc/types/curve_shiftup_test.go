@@ -107,7 +107,7 @@ func Test_Ubcobject_ShiftUp(t *testing.T) {
 	}
 }
 
-func setupUbcAndByToken(t *testing.T, tokensToBuy sdk.Dec) Ubcobject {
+func setupUbcAndByToken(t *testing.T, tokensToBuy sdk.Dec) Curve {
 	t.Helper()
 	ubc := validUbcParams()
 	require.NoError(t, ubc.Fit())
