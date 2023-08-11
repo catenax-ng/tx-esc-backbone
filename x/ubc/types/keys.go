@@ -24,5 +24,5 @@ func KeyPrefix(p string) []byte {
 }
 
 const (
-	UbcobjectKey = "Ubcobject/value/"
+	CurveKey = "Curve/value/"
 )

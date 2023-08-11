@@ -20,7 +20,7 @@ func (k msgServer) Buy(goCtx context.Context, msg *types.MsgBuy) (*types.MsgBuyR
 	buyer, _ := sdk.AccAddressFromBech32(msg.Buyer)
 	coin, _ := sdk.ParseCoinNormalized(msg.Value)
 
-	ubc, found := k.GetUbcobject(ctx)
+	ubc, found := k.GetCurve(ctx)
 	if !found {
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "curve is not initialized")
 	}
@@ -35,7 +35,7 @@ func (k msgServer) Buy(goCtx context.Context, msg *types.MsgBuy) (*types.MsgBuyR
 		return nil, types.ErrFundHandling.Wrap(err.Error())
 	}
 
-	k.SetUbcobject(ctx, ubc)
+	k.SetCurve(ctx, ubc)
 
 	return &types.MsgBuyResponse{
 		Tokensbought:  coin.String(),

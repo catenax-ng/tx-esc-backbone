@@ -25,7 +25,7 @@ func (k msgServer) Sell(goCtx context.Context, msg *types.MsgSell) (*types.MsgSe
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, errMsg)
 	}
 
-	ubc, found := k.GetUbcobject(ctx)
+	ubc, found := k.GetCurve(ctx)
 	if !found {
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "curve is not initialized")
 	}
@@ -40,7 +40,7 @@ func (k msgServer) Sell(goCtx context.Context, msg *types.MsgSell) (*types.MsgSe
 		return nil, err
 	}
 
-	k.SetUbcobject(ctx, ubc)
+	k.SetCurve(ctx, ubc)
 
 	return &types.MsgSellResponse{
 		Tokenssold:     tokensCoin.String(),

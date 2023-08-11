@@ -20,7 +20,7 @@ func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types
 		return nil, err
 	}
 
-	ubc, found := k.GetUbcobject(ctx)
+	ubc, found := k.GetCurve(ctx)
 	if !found {
 		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidRequest, "curve is not initialized")
 	}
@@ -33,7 +33,7 @@ func (k msgServer) Shiftup(goCtx context.Context, msg *types.MsgShiftup) (*types
 		return &types.MsgShiftupResponse{}, err
 	}
 
-	k.SetUbcobject(ctx, ubc)
+	k.SetCurve(ctx, ubc)
 
 	return &types.MsgShiftupResponse{}, nil
 }

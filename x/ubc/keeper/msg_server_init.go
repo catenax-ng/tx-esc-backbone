@@ -24,7 +24,7 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 	ubc, _ := msg.ParseUbcobject()
 	_ = ubc.Fit() // TODO: Consumer gas from gas meter and make it a param that can be changed later using a param.
 
-	k.SetUbcobject(ctx, *ubc)
+	k.SetCurve(ctx, *ubc)
 
 	creatorAddress, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {

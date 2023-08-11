@@ -31,14 +31,14 @@ func createTestUbcobject(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
 		TradingPoint:    sdk.ZeroDec(),
 		CurrentSupply:   sdk.ZeroDec(),
 	}
-	keeper.SetUbcobject(ctx, item)
+	keeper.SetCurve(ctx, item)
 	return item
 }
 
 func TestUbcobjectGet(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
 	item := createTestUbcobject(keeper, ctx)
-	rst, found := keeper.GetUbcobject(ctx)
+	rst, found := keeper.GetCurve(ctx)
 	require.True(t, found)
 	require.Equal(t,
 		nullify.Fill(&item),
@@ -49,7 +49,7 @@ func TestUbcobjectGet(t *testing.T) {
 func TestUbcobjectRemove(t *testing.T) {
 	keeper, ctx := keepertest.UbcKeeper(t)
 	createTestUbcobject(keeper, ctx)
-	keeper.RemoveUbcobject(ctx)
-	_, found := keeper.GetUbcobject(ctx)
+	keeper.RemoveCurve(ctx)
+	_, found := keeper.GetCurve(ctx)
 	require.False(t, found)
 }

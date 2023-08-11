@@ -11,16 +11,16 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// SetUbcobject set ubcobject in the store
-func (k Keeper) SetUbcobject(ctx sdk.Context, ubcobject types.Curve) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.UbcobjectKey))
-	b := k.cdc.MustMarshal(&ubcobject)
+// SetCurve set curve in the store
+func (k Keeper) SetCurve(ctx sdk.Context, curve types.Curve) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.CurveKey))
+	b := k.cdc.MustMarshal(&curve)
 	store.Set([]byte{0}, b)
 }
 
-// GetUbcobject returns ubcobject
-func (k Keeper) GetUbcobject(ctx sdk.Context) (val types.Curve, found bool) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.UbcobjectKey))
+// GetCurve returns curve
+func (k Keeper) GetCurve(ctx sdk.Context) (val types.Curve, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.CurveKey))
 
 	b := store.Get([]byte{0})
 	if b == nil {
@@ -31,8 +31,8 @@ func (k Keeper) GetUbcobject(ctx sdk.Context) (val types.Curve, found bool) {
 	return val, true
 }
 
-// RemoveUbcobject removes ubcobject from the store
-func (k Keeper) RemoveUbcobject(ctx sdk.Context) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.UbcobjectKey))
+// RemoveCurve removes curve from the store
+func (k Keeper) RemoveCurve(ctx sdk.Context) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.CurveKey))
 	store.Delete([]byte{0})
 }

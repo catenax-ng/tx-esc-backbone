@@ -20,7 +20,7 @@ func (k Keeper) Curve(goCtx context.Context, req *types.QueryGetCurveRequest) (*
 	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	val, found := k.GetUbcobject(ctx)
+	val, found := k.GetCurve(ctx)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")
 	}
