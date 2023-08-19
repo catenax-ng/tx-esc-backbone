@@ -40,7 +40,7 @@ func TestGenesis(t *testing.T) {
 			},
 			S0: zeroBezierSegment(),
 			S1: zeroBezierSegment(),
-			S2: &types.Fixedsegment{
+			S2: &types.FixedBezierSegment{
 				BezierSegment: zeroBezierSegment(),
 				IntervalP0X:   sdk.ZeroDec(),
 			},

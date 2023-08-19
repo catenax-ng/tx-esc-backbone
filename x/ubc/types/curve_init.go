@@ -78,7 +78,7 @@ func (ubc *Curve) initSegmentsToZero() {
 		P0X: sdk.ZeroDec(),
 		P1X: sdk.ZeroDec(),
 	}
-	ubc.S2 = &Fixedsegment{
+	ubc.S2 = &FixedBezierSegment{
 		BezierSegment: &BezierSegment{
 			P0X: sdk.ZeroDec(),
 			P0:  sdk.ZeroDec(),

@@ -32,7 +32,7 @@ func TestGenesisState_Validate(t *testing.T) {
 					FS0:             new(types.Flatsegment),
 					S0:              new(types.BezierSegment),
 					S1:              new(types.BezierSegment),
-					S2:              new(types.Fixedsegment),
+					S2:              new(types.FixedBezierSegment),
 					QS3:             new(types.Quadraticsegment),
 					RefProfitFactor: sdk.ZeroDec(),
 					RefTokenSupply:  sdk.ZeroDec(),

@@ -21,7 +21,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 		FS0        *Flatsegment
 		S0         *BezierSegment
 		S1         *BezierSegment
-		S2         *Fixedsegment
+		S2         *FixedBezierSegment
 		QS3        *Quadraticsegment
 		BPool      sdk.Dec
 		BPoolUnder sdk.Dec
@@ -67,7 +67,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					P1X:    sdk.MustNewDecFromStr("3046479149.746915109636077002"),
 					DeltaX: sdk.MustNewDecFromStr("1008220978.985139459681828412"),
 				},
-				S2: &Fixedsegment{
+				S2: &FixedBezierSegment{
 					BezierSegment: &BezierSegment{
 						P0:     sdk.MustNewDecFromStr("0.100000000000000000"),
 						A:      sdk.MustNewDecFromStr("0.200000000000000000"),
