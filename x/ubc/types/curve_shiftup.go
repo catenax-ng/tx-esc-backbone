@@ -24,18 +24,18 @@ func (ubc *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	// DegiridingFactor [1...inf]
 	BPoolAddFactored := BPoolAdd.Mul(DegirdingFactor)
 
-	dxsh, err := ubc.computeDx(p2XOld, BPoolAddFactored)
+	dX, err := ubc.computeDx(p2XOld, BPoolAddFactored)
 	if err != nil {
 		return err
 	}
-	P2Xnew, p2YNew, err := ubc.computeP2New(p2XOld, dxsh)
+	P2XNew, p2YNew, err := ubc.computeP2New(p2XOld, dX)
 	if err != nil {
 		return err
 	}
 	dY := p2YNew.Sub(ubc.p2Y())
-	dBPool := ubc.integralX12(p2XOld, P2Xnew)
+	dBPool := ubc.integralX12(p2XOld, P2XNew)
 
-	ubc.shiftP0P1P2(dxsh, dY)
+	ubc.shiftP0P1P2(dX, dY)
 
 	// CLARIFY: The value of BPoolUnder is not rounded off to voucherMultiplier. How to do it ?
 	ubc.BPoolUnder = ubc.BPoolUnder.Add(BPoolAdd).Add(dBPool)
@@ -71,10 +71,10 @@ func (ubc *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 	return dx, nil
 }
 
-func (ubc *Curve) shiftP0P1P2(dxsh, dY sdk.Dec) {
-	ubc.setP0X(ubc.p0x().Add(dxsh))
-	ubc.setP1X(ubc.p1x().Add(dxsh))
-	ubc.setP2X(ubc.p2x().Add(dxsh))
+func (ubc *Curve) shiftP0P1P2(dX, dY sdk.Dec) {
+	ubc.setP0X(ubc.p0x().Add(dX))
+	ubc.setP1X(ubc.p1x().Add(dX))
+	ubc.setP2X(ubc.p2x().Add(dX))
 
 	ubc.setP0Y(ubc.p0Y().Add(dY))
 	ubc.setP1Y(ubc.p1Y().Add(dY))
