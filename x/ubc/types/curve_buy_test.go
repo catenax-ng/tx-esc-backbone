@@ -14,27 +14,27 @@ import (
 )
 
 func Test_Curve_Buy(t *testing.T) {
-	ubc := validUbcParams()
-	require.NoError(t, ubc.Fit())
+	c := validCurve()
+	require.NoError(t, c.Fit())
 
-	initialBPoolUnder := ubc.BPoolUnder
-	initialBPool := ubc.BPool
-	initialCurrentSupply := ubc.CurrentSupply
+	initialBPoolUnder := c.BPoolUnder
+	initialBPool := c.BPool
+	initialCurrentSupply := c.CurrentSupply
 
 	tokensToBuy := sdk.NewDecWithPrec(10000, 6)
-	vouchersUsed := ubc.Buy(tokensToBuy)
+	vouchersUsed := c.Buy(tokensToBuy)
 
-	assert.Equal(t, ubc.BPoolUnder, initialBPoolUnder)
-	assert.Equal(t, ubc.BPool, initialBPool.Add(vouchersUsed))
-	assert.Equal(t, ubc.CurrentSupply, initialCurrentSupply.Add(tokensToBuy))
+	assert.Equal(t, c.BPoolUnder, initialBPoolUnder)
+	assert.Equal(t, c.BPool, initialBPool.Add(vouchersUsed))
+	assert.Equal(t, c.CurrentSupply, initialCurrentSupply.Add(tokensToBuy))
 }
 
 func BenchmarkCurveBuy(b *testing.B) {
-	ubc := validUbcParams()
-	ubc.Fit()
+	c := validCurve()
+	c.Fit()
 
 	tokens := sdk.NewDecWithPrec(10000, 6)
 	for i := 0; i < b.N; i++ {
-		ubc.Buy(tokens)
+		c.Buy(tokens)
 	}
 }

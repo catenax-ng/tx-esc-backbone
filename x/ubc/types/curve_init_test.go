@@ -15,65 +15,65 @@ import (
 
 func Test_Curve_Fit_Happy(t *testing.T) {
 	t.Run("primary set of valid params", func(t *testing.T) {
-		ubc := validUbcParams()
-		require.NoError(t, ubc.Fit())
+		c := validCurve()
+		require.NoError(t, c.Fit())
 
-		IsEqualDecimal(t, "0.000000000000000000", ubc.FS0.X0)
-		IsEqualDecimal(t, "0.012826277713841738", ubc.FS0.Y)
+		IsEqualDecimal(t, "0.000000000000000000", c.FS0.X0)
+		IsEqualDecimal(t, "0.012826277713841738", c.FS0.Y)
 
-		IsEqualDecimal(t, "0.012826277713841738", ubc.S0.P0Y)
-		IsEqualDecimal(t, "0.012826277713841738", ubc.S0.A)
-		IsEqualDecimal(t, "0.021543649942457564", ubc.S0.B)
-		IsEqualDecimal(t, "0.030261022171073390", ubc.S0.P1Y)
-		IsEqualDecimal(t, "0.000000000000000000", ubc.S0.P0X)
-		IsEqualDecimal(t, "1891524601.156705919616317034", ubc.S0.P1X)
-		IsEqualDecimal(t, "1891524601.156705919616317034", ubc.S0.DeltaX)
+		IsEqualDecimal(t, "0.012826277713841738", c.S0.P0Y)
+		IsEqualDecimal(t, "0.012826277713841738", c.S0.A)
+		IsEqualDecimal(t, "0.021543649942457564", c.S0.B)
+		IsEqualDecimal(t, "0.030261022171073390", c.S0.P1Y)
+		IsEqualDecimal(t, "0.000000000000000000", c.S0.P0X)
+		IsEqualDecimal(t, "1891524601.156705919616317034", c.S0.P1X)
+		IsEqualDecimal(t, "1891524601.156705919616317034", c.S0.DeltaX)
 
-		IsEqualDecimal(t, "0.030261022171073390", ubc.S1.P0Y)
-		IsEqualDecimal(t, "0.035369595779934340", ubc.S1.A)
-		IsEqualDecimal(t, "0.063050820038556864", ubc.S1.B)
-		IsEqualDecimal(t, "0.100000000000000000", ubc.S1.P1Y)
-		IsEqualDecimal(t, "1891524601.156705919616317034", ubc.S1.P0X)
-		IsEqualDecimal(t, "3000000000.000000000000000000", ubc.S1.P1X)
-		IsEqualDecimal(t, "1108475398.843294080383682966", ubc.S1.DeltaX)
+		IsEqualDecimal(t, "0.030261022171073390", c.S1.P0Y)
+		IsEqualDecimal(t, "0.035369595779934340", c.S1.A)
+		IsEqualDecimal(t, "0.063050820038556864", c.S1.B)
+		IsEqualDecimal(t, "0.100000000000000000", c.S1.P1Y)
+		IsEqualDecimal(t, "1891524601.156705919616317034", c.S1.P0X)
+		IsEqualDecimal(t, "3000000000.000000000000000000", c.S1.P1X)
+		IsEqualDecimal(t, "1108475398.843294080383682966", c.S1.DeltaX)
 
-		IsEqualDecimal(t, "0.100000000000000000", ubc.S2.P0Y)
-		IsEqualDecimal(t, "0.200000000000000000", ubc.S2.A)
-		IsEqualDecimal(t, "0.333333333000000001", ubc.S2.B)
-		IsEqualDecimal(t, "1.000000000000000000", ubc.S2.P1Y)
-		IsEqualDecimal(t, "3000000000.000000000000000000", ubc.S2.P0X)
-		IsEqualDecimal(t, "6000000000.000000000000000000", ubc.S2.P1X)
-		IsEqualDecimal(t, "3000000000.000000000000000000", ubc.S2.DeltaX)
-		IsEqualDecimal(t, "3000000000.000000000000000000", ubc.S2.IntervalP0X)
+		IsEqualDecimal(t, "0.100000000000000000", c.S2.P0Y)
+		IsEqualDecimal(t, "0.200000000000000000", c.S2.A)
+		IsEqualDecimal(t, "0.333333333000000001", c.S2.B)
+		IsEqualDecimal(t, "1.000000000000000000", c.S2.P1Y)
+		IsEqualDecimal(t, "3000000000.000000000000000000", c.S2.P0X)
+		IsEqualDecimal(t, "6000000000.000000000000000000", c.S2.P1X)
+		IsEqualDecimal(t, "3000000000.000000000000000000", c.S2.DeltaX)
+		IsEqualDecimal(t, "3000000000.000000000000000000", c.S2.IntervalP0X)
 
-		IsEqualDecimal(t, "0.533333334000000000", ubc.QS3.A)
-		IsEqualDecimal(t, "-5.733333341000000000", ubc.QS3.B)
-		IsEqualDecimal(t, "16.200000022000000000", ubc.QS3.C)
-		IsEqualDecimal(t, "1000000000.000000000000000000", ubc.QS3.ScalingFactor)
-		assert.Zero(t, ubc.QS3.InitialX0)
-		assert.Zero(t, ubc.QS3.CurrentX0)
+		IsEqualDecimal(t, "0.533333334000000000", c.QS3.A)
+		IsEqualDecimal(t, "-5.733333341000000000", c.QS3.B)
+		IsEqualDecimal(t, "16.200000022000000000", c.QS3.C)
+		IsEqualDecimal(t, "1000000000.000000000000000000", c.QS3.ScalingFactor)
+		assert.Zero(t, c.QS3.InitialX0)
+		assert.Zero(t, c.QS3.CurrentX0)
 	})
 
 	t.Run("alternate set of valid params", func(t *testing.T) {
 		type test struct {
 			name     string
-			modifier func(ubc *Curve)
+			modifier func(c *Curve)
 		}
 
 		tests := []test{
 			{"BPoolUnder_alternate1",
-				func(ubc *Curve) { ubc.BPoolUnder = sdk.NewDec(150e6) }},
+				func(c *Curve) { c.BPoolUnder = sdk.NewDec(150e6) }},
 			{"BPoolUnder_alternate2",
-				func(ubc *Curve) { ubc.BPoolUnder = sdk.NewDec(90e6) }},
+				func(c *Curve) { c.BPoolUnder = sdk.NewDec(90e6) }},
 			{"BPool_notSet", // Because BPool is not used in Fit.
-				func(ubc *Curve) { ubc.BPool = sdk.Dec{} }},
+				func(c *Curve) { c.BPool = sdk.Dec{} }},
 		}
 
 		for _, tc := range tests {
 			t.Run(tc.name, func(t *testing.T) {
-				ubc := validUbcParams()
-				tc.modifier(&ubc)
-				assert.NoError(t, ubc.Fit())
+				c := validCurve()
+				tc.modifier(&c)
+				assert.NoError(t, c.Fit())
 			})
 		}
 	})
@@ -82,52 +82,52 @@ func Test_Curve_Fit_Happy(t *testing.T) {
 func Test_Curve_Fit_Error(t *testing.T) {
 	type test struct {
 		name     string
-		modifier func(ubc *Curve)
+		modifier func(c *Curve)
 	}
 
 	tests := []test{
 		{"RefTokenSupply_isNotSet",
-			func(ubc *Curve) { ubc.RefTokenSupply = sdk.Dec{} }},
+			func(c *Curve) { c.RefTokenSupply = sdk.Dec{} }},
 		{"RefTokenPrice_isNotSet",
-			func(ubc *Curve) { ubc.RefTokenPrice = sdk.Dec{} }},
+			func(c *Curve) { c.RefTokenPrice = sdk.Dec{} }},
 		{"RefProfitFactor_isNotSet",
-			func(ubc *Curve) { ubc.RefProfitFactor = sdk.Dec{} }},
+			func(c *Curve) { c.RefProfitFactor = sdk.Dec{} }},
 		{"BPoolUnder_isNotSet",
-			func(ubc *Curve) { ubc.BPoolUnder = sdk.Dec{} }},
+			func(c *Curve) { c.BPoolUnder = sdk.Dec{} }},
 		{"SlopeP2_isNotSet",
-			func(ubc *Curve) { ubc.SlopeP2 = sdk.Dec{} }},
+			func(c *Curve) { c.SlopeP2 = sdk.Dec{} }},
 		{"SlopeP3_isNotSet",
-			func(ubc *Curve) { ubc.SlopeP3 = sdk.Dec{} }},
+			func(c *Curve) { c.SlopeP3 = sdk.Dec{} }},
 		{"FactorFy_isNotSet",
-			func(ubc *Curve) { ubc.FactorFy = sdk.Dec{} }},
+			func(c *Curve) { c.FactorFy = sdk.Dec{} }},
 		{"FactorFxy_isNotSet",
-			func(ubc *Curve) { ubc.FactorFxy = sdk.Dec{} }},
+			func(c *Curve) { c.FactorFxy = sdk.Dec{} }},
 		{"RefTokenSupply_isTooLess",
-			func(ubc *Curve) { ubc.RefTokenSupply = sdk.NewDec(6e6) }},
+			func(c *Curve) { c.RefTokenSupply = sdk.NewDec(6e6) }},
 		{"RefTokenSupply_isTooHigh",
-			func(ubc *Curve) { ubc.RefTokenSupply = sdk.NewDec(6e10) }},
+			func(c *Curve) { c.RefTokenSupply = sdk.NewDec(6e10) }},
 		{"RefTokenTokenPrice_isTooLess",
-			func(ubc *Curve) { ubc.RefTokenPrice = sdk.NewDecWithPrec(1, 1) }},
+			func(c *Curve) { c.RefTokenPrice = sdk.NewDecWithPrec(1, 1) }},
 		{"RefTokenTokenPrice_isTooHigh",
-			func(ubc *Curve) { ubc.RefTokenPrice = sdk.NewDec(10) }},
+			func(c *Curve) { c.RefTokenPrice = sdk.NewDec(10) }},
 		{"BPoolUnder_isTooLess",
-			func(ubc *Curve) { ubc.BPoolUnder = sdk.NewDec(100e3) }},
+			func(c *Curve) { c.BPoolUnder = sdk.NewDec(100e3) }},
 		{"BPoolUnder_isTooHigh",
-			func(ubc *Curve) { ubc.BPoolUnder = sdk.NewDec(100e10) }},
+			func(c *Curve) { c.BPoolUnder = sdk.NewDec(100e10) }},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			ubc := validUbcParams()
-			tc.modifier(&ubc)
-			assert.Error(t, ubc.Fit())
+			c := validCurve()
+			tc.modifier(&c)
+			assert.Error(t, c.Fit())
 		})
 	}
 }
 func BenchmarkUbcFit(b *testing.B) {
-	ubc := validUbcParams()
+	c := validCurve()
 	for i := 0; i < b.N; i++ {
-		ubc.Fit()
+		c.Fit()
 	}
 }
 
@@ -138,7 +138,7 @@ func IsEqualDecimal(t *testing.T, expected string, actual sdk.Dec) {
 	assert.Equal(t, expectedDec, actual)
 }
 
-func validUbcParams() Curve {
+func validCurve() Curve {
 	return Curve{
 		RefTokenSupply:  sdk.NewDec(6e9),
 		RefTokenPrice:   sdk.NewDec(1),

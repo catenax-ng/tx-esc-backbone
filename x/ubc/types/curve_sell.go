@@ -14,15 +14,15 @@ import (
 //
 // It assumes the value of tokens is greater than zero. This condition is
 // implemented in the ValidBasic function for the buy message.
-func (ubc *Curve) Sell(tokens sdk.Dec) sdk.Dec {
-	xCurrent := ubc.CurrentSupply
-	xNew := ubc.CurrentSupply.Sub(tokens)
+func (c *Curve) Sell(tokens sdk.Dec) sdk.Dec {
+	xCurrent := c.CurrentSupply
+	xNew := c.CurrentSupply.Sub(tokens)
 
-	vouchersOut := ubc.integralX12(xNew, xCurrent)
+	vouchersOut := c.integralX12(xNew, xCurrent)
 	vouchersOut = roundOff(vouchersOut, VoucherMultiplier)
 
-	ubc.CurrentSupply = xNew
-	ubc.BPool = ubc.BPool.Sub(vouchersOut)
+	c.CurrentSupply = xNew
+	c.BPool = c.BPool.Sub(vouchersOut)
 	// CLARIFY: Should we change BPoolUnder
 	return vouchersOut
 }

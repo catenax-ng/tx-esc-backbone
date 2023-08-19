@@ -93,27 +93,27 @@ func Test_Curve_ShiftUp(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ubc := setupUbcAndByToken(t, tt.args.TokensToBuy)
-			tt.wantErr(t, ubc.ShiftUp(tt.args.BPoolAdd, tt.args.DegirdingFactor),
+			c := setupUbcAndByToken(t, tt.args.TokensToBuy)
+			tt.wantErr(t, c.ShiftUp(tt.args.BPoolAdd, tt.args.DegirdingFactor),
 				fmt.Sprintf("BuyToken(%v) then ShiftUp(%v, %v)", tt.args.TokensToBuy, tt.args.BPoolAdd, tt.args.DegirdingFactor))
-			assert.EqualValues(t, tt.wants.FS0, ubc.FS0)
-			assert.EqualValues(t, tt.wants.S0, ubc.S0)
-			assert.EqualValues(t, tt.wants.S1, ubc.S1)
-			assert.EqualValues(t, tt.wants.S2, ubc.S2)
-			assert.EqualValues(t, tt.wants.QS3, ubc.QS3)
-			assert.Equal(t, tt.wants.BPool, ubc.BPool)
-			assert.Equal(t, tt.wants.BPoolUnder, ubc.BPoolUnder)
+			assert.EqualValues(t, tt.wants.FS0, c.FS0)
+			assert.EqualValues(t, tt.wants.S0, c.S0)
+			assert.EqualValues(t, tt.wants.S1, c.S1)
+			assert.EqualValues(t, tt.wants.S2, c.S2)
+			assert.EqualValues(t, tt.wants.QS3, c.QS3)
+			assert.Equal(t, tt.wants.BPool, c.BPool)
+			assert.Equal(t, tt.wants.BPoolUnder, c.BPoolUnder)
 		})
 	}
 }
 
 func setupUbcAndByToken(t *testing.T, tokensToBuy sdk.Dec) Curve {
 	t.Helper()
-	ubc := validUbcParams()
-	require.NoError(t, ubc.Fit())
-	IsEqualDecimal(t, "100000000", ubc.BPool)
-	IsEqualDecimal(t, "100000000", ubc.BPoolUnder)
-	IsEqualDecimal(t, "3000000000", ubc.CurrentSupply)
-	ubc.Buy(tokensToBuy)
-	return ubc
+	c := validCurve()
+	require.NoError(t, c.Fit())
+	IsEqualDecimal(t, "100000000", c.BPool)
+	IsEqualDecimal(t, "100000000", c.BPoolUnder)
+	IsEqualDecimal(t, "3000000000", c.CurrentSupply)
+	c.Buy(tokensToBuy)
+	return c
 }

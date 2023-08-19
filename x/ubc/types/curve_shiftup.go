@@ -11,54 +11,54 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (ubc *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
-	if ubc.CurrentSupply.LT(ubc.p2x()) {
+func (c *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
+	if c.CurrentSupply.LT(c.p2x()) {
 		errMsg := "could not shiftup, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
 	}
 
-	p2XOld := ubc.p2x()
+	p2XOld := c.p2x()
 
 	// Calculate the factored BPool that should be added.
 	// This value is increased by the DegirdingFactor. In the end only the original amount is added.
 	// DegiridingFactor [1...inf]
 	BPoolAddFactored := BPoolAdd.Mul(DegirdingFactor)
 
-	dX, err := ubc.computeDx(p2XOld, BPoolAddFactored)
+	dX, err := c.computeDx(p2XOld, BPoolAddFactored)
 	if err != nil {
 		return err
 	}
-	P2XNew, p2YNew, err := ubc.computeP2New(p2XOld, dX)
+	P2XNew, p2YNew, err := c.computeP2New(p2XOld, dX)
 	if err != nil {
 		return err
 	}
-	dY := p2YNew.Sub(ubc.p2Y())
-	dBPool := ubc.integralX12(p2XOld, P2XNew)
+	dY := p2YNew.Sub(c.p2Y())
+	dBPool := c.integralX12(p2XOld, P2XNew)
 
-	ubc.shiftP0P1P2(dX, dY)
+	c.shiftP0P1P2(dX, dY)
 
 	// CLARIFY: The value of BPoolUnder is not rounded off to voucherMultiplier. How to do it ?
-	ubc.BPoolUnder = ubc.BPoolUnder.Add(BPoolAdd).Add(dBPool)
-	ubc.BPool = ubc.BPool.Add(BPoolAdd)
+	c.BPoolUnder = c.BPoolUnder.Add(BPoolAdd).Add(dBPool)
+	c.BPool = c.BPool.Add(BPoolAdd)
 
-	ubc.fitS0S1Repeatedly(4)
+	c.fitS0S1Repeatedly(4)
 
 	return nil
 }
 
-func (ubc *Curve) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error) {
+func (c *Curve) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error) {
 	P2XNew := P2XOld.Add(dx)
-	if P2XNew.GTE(ubc.CurrentSupply) {
+	if P2XNew.GTE(c.CurrentSupply) {
 		return sdk.ZeroDec(), sdk.ZeroDec(), errors.Errorf("P2X was shifted beyond the current supply")
 	}
 
-	return P2XNew, ubc.y(P2XNew), nil
+	return P2XNew, c.y(P2XNew), nil
 }
 
-func (ubc *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
-	slopeAtP2XOld := ubc.slopeX1(p2XOld)
+func (c *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
+	slopeAtP2XOld := c.slopeX1(p2XOld)
 
-	part1 := slopeAtP2XOld.Mul(p2XOld).Add(ubc.p0Y()).Sub(ubc.p2Y()).Quo(slopeAtP2XOld)
+	part1 := slopeAtP2XOld.Mul(p2XOld).Add(c.p0Y()).Sub(c.p2Y()).Quo(slopeAtP2XOld)
 
 	part2a := part1.Power(2)
 	part2b := sdk.NewDec(2).Mul(BPoolAddFactored).Quo(slopeAtP2XOld)
@@ -71,12 +71,12 @@ func (ubc *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 	return dx, nil
 }
 
-func (ubc *Curve) shiftP0P1P2(dX, dY sdk.Dec) {
-	ubc.setP0X(ubc.p0x().Add(dX))
-	ubc.setP1X(ubc.p1x().Add(dX))
-	ubc.setP2X(ubc.p2x().Add(dX))
+func (c *Curve) shiftP0P1P2(dX, dY sdk.Dec) {
+	c.setP0X(c.p0x().Add(dX))
+	c.setP1X(c.p1x().Add(dX))
+	c.setP2X(c.p2x().Add(dX))
 
-	ubc.setP0Y(ubc.p0Y().Add(dY))
-	ubc.setP1Y(ubc.p1Y().Add(dY))
-	ubc.setP2Y(ubc.p2Y().Add(dY))
+	c.setP0Y(c.p0Y().Add(dY))
+	c.setP1Y(c.p1Y().Add(dY))
+	c.setP2Y(c.p2Y().Add(dY))
 }

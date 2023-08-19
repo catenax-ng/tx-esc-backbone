@@ -14,17 +14,17 @@ import (
 )
 
 func Test_Curve_Sell(t *testing.T) {
-	ubc := validUbcParams()
-	require.NoError(t, ubc.Fit())
+	c := validCurve()
+	require.NoError(t, c.Fit())
 
-	initialBPoolUnder := ubc.BPoolUnder
-	initialBPool := ubc.BPool
-	initialCurrentSupply := ubc.CurrentSupply
+	initialBPoolUnder := c.BPoolUnder
+	initialBPool := c.BPool
+	initialCurrentSupply := c.CurrentSupply
 
 	tokensToSell := sdk.NewDecWithPrec(10000, 6)
-	vouchersOut := ubc.Sell(tokensToSell)
+	vouchersOut := c.Sell(tokensToSell)
 
-	assert.Equal(t, ubc.BPoolUnder, initialBPoolUnder)
-	assert.Equal(t, ubc.BPool, initialBPool.Sub(vouchersOut))
-	assert.Equal(t, ubc.CurrentSupply, initialCurrentSupply.Sub(tokensToSell))
+	assert.Equal(t, c.BPoolUnder, initialBPoolUnder)
+	assert.Equal(t, c.BPool, initialBPool.Sub(vouchersOut))
+	assert.Equal(t, c.CurrentSupply, initialCurrentSupply.Sub(tokensToSell))
 }
