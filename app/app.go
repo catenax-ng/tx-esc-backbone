@@ -119,9 +119,10 @@ import (
 	resourcesyncmodule "github.com/catenax/esc-backbone/x/resourcesync"
 	resourcesyncmodulekeeper "github.com/catenax/esc-backbone/x/resourcesync/keeper"
 	resourcesyncmoduletypes "github.com/catenax/esc-backbone/x/resourcesync/types"
-	ubcmodule "github.com/catenax/esc-backbone/x/ubcmm"
-	ubcmodulekeeper "github.com/catenax/esc-backbone/x/ubcmm/keeper"
-	ubcmoduletypes "github.com/catenax/esc-backbone/x/ubcmm/types"
+	ubcmmmodule "github.com/catenax/esc-backbone/x/ubcmm"
+	ubcmmmodulekeeper "github.com/catenax/esc-backbone/x/ubcmm/keeper"
+	ubcmmmoduletypes "github.com/catenax/esc-backbone/x/ubcmm/types"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "github.com/catenax/esc-backbone/app/params"
@@ -182,7 +183,7 @@ var (
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		consensus.AppModuleBasic{},
-		ubcmodule.AppModuleBasic{},
+		ubcmmmodule.AppModuleBasic{},
 		resourcesyncmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
@@ -198,7 +199,7 @@ var (
 		govtypes.ModuleName:                {authtypes.Burner},
 		ibctransfertypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 		resourcesyncmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
-		ubcmoduletypes.ModuleName:          {authtypes.Minter, authtypes.Burner},
+		ubcmmmoduletypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -261,7 +262,7 @@ type App struct {
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
-	UbcKeeper ubcmodulekeeper.Keeper
+	UbcKeeper ubcmmmodulekeeper.Keeper
 
 	ResourcesyncKeeper resourcesyncmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
@@ -310,7 +311,7 @@ func New(
 		govtypes.StoreKey, paramstypes.StoreKey, ibcexported.StoreKey, upgradetypes.StoreKey,
 		feegrant.StoreKey, evidencetypes.StoreKey, ibctransfertypes.StoreKey, icahosttypes.StoreKey,
 		capabilitytypes.StoreKey, group.StoreKey, icacontrollertypes.StoreKey, consensusparamtypes.StoreKey,
-		ubcmoduletypes.StoreKey,
+		ubcmmmoduletypes.StoreKey,
 		resourcesyncmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
@@ -534,15 +535,15 @@ func New(
 		),
 	)
 
-	app.UbcKeeper = *ubcmodulekeeper.NewKeeper(
+	app.UbcKeeper = *ubcmmmodulekeeper.NewKeeper(
 		appCodec,
-		keys[ubcmoduletypes.StoreKey],
-		keys[ubcmoduletypes.MemStoreKey],
-		app.GetSubspace(ubcmoduletypes.ModuleName),
+		keys[ubcmmmoduletypes.StoreKey],
+		keys[ubcmmmoduletypes.MemStoreKey],
+		app.GetSubspace(ubcmmmoduletypes.ModuleName),
 
 		app.BankKeeper,
 	)
-	ubcModule := ubcmodule.NewAppModule(appCodec, app.UbcKeeper, app.AccountKeeper, app.BankKeeper)
+	ubcmmModule := ubcmmmodule.NewAppModule(appCodec, app.UbcKeeper, app.AccountKeeper, app.BankKeeper)
 
 	app.ResourcesyncKeeper = *resourcesyncmodulekeeper.NewKeeper(
 		appCodec,
@@ -616,7 +617,7 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		icaModule,
-		ubcModule,
+		ubcmmModule,
 		resourcesyncModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 
@@ -650,7 +651,7 @@ func New(
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
-		ubcmoduletypes.ModuleName,
+		ubcmmmoduletypes.ModuleName,
 		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
@@ -677,7 +678,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
-		ubcmoduletypes.ModuleName,
+		ubcmmmoduletypes.ModuleName,
 		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
@@ -709,7 +710,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		consensusparamtypes.ModuleName,
-		ubcmoduletypes.ModuleName,
+		ubcmmmoduletypes.ModuleName,
 		resourcesyncmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
@@ -935,7 +936,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibcexported.ModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
-	paramsKeeper.Subspace(ubcmoduletypes.ModuleName)
+	paramsKeeper.Subspace(ubcmmmoduletypes.ModuleName)
 	paramsKeeper.Subspace(resourcesyncmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 

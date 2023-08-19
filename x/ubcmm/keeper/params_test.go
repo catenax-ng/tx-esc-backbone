@@ -14,7 +14,7 @@ import (
 )
 
 func TestGetParams(t *testing.T) {
-	k, ctx := testkeeper.UbcKeeper(t)
+	k, ctx := testkeeper.UbcmmKeeper(t)
 	params := types.DefaultParams()
 
 	k.SetParams(ctx, params)

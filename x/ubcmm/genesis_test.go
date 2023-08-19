@@ -67,9 +67,9 @@ func TestGenesis(t *testing.T) {
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
-	k, ctx := keepertest.UbcKeeper(t)
-	ubc.InitGenesis(ctx, *k, genesisState)
-	got := ubc.ExportGenesis(ctx, *k)
+	k, ctx := keepertest.UbcmmKeeper(t)
+	ubcmm.InitGenesis(ctx, *k, genesisState)
+	got := ubcmm.ExportGenesis(ctx, *k)
 	require.NotNil(t, got)
 
 	nullify.Fill(&genesisState)

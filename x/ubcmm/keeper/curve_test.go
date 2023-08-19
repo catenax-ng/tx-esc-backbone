@@ -36,7 +36,7 @@ func createTestCurve(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
 }
 
 func TestCurveGet(t *testing.T) {
-	keeper, ctx := keepertest.UbcKeeper(t)
+	keeper, ctx := keepertest.UbcmmKeeper(t)
 	item := createTestCurve(keeper, ctx)
 	rst, found := keeper.GetCurve(ctx)
 	require.True(t, found)
@@ -47,7 +47,7 @@ func TestCurveGet(t *testing.T) {
 }
 
 func TestCurveRemove(t *testing.T) {
-	keeper, ctx := keepertest.UbcKeeper(t)
+	keeper, ctx := keepertest.UbcmmKeeper(t)
 	createTestCurve(keeper, ctx)
 	keeper.RemoveCurve(ctx)
 	_, found := keeper.GetCurve(ctx)

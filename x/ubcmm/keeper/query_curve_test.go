@@ -19,7 +19,7 @@ import (
 )
 
 func TestCurveQuery(t *testing.T) {
-	keeper, ctx := keepertest.UbcKeeper(t)
+	keeper, ctx := keepertest.UbcmmKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	item := createTestCurve(keeper, ctx)
 	tests := []struct {
