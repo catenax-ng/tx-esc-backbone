@@ -12,7 +12,7 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message BezierSegment {
   
-  string p0 = 1 [
+  string p0Y = 1 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
@@ -24,7 +24,7 @@ message BezierSegment {
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string p1 = 4 [
+  string p1Y = 4 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];

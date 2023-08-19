@@ -35196,13 +35196,13 @@ paths:
                   s0:
                     type: object
                     properties:
-                      p0:
+                      p0Y:
                         type: string
                       a:
                         type: string
                       b:
                         type: string
-                      p1:
+                      p1Y:
                         type: string
                       p0X:
                         type: string
@@ -35213,13 +35213,13 @@ paths:
                   s1:
                     type: object
                     properties:
-                      p0:
+                      p0Y:
                         type: string
                       a:
                         type: string
                       b:
                         type: string
-                      p1:
+                      p1Y:
                         type: string
                       p0X:
                         type: string
@@ -35233,13 +35233,13 @@ paths:
                       s:
                         type: object
                         properties:
-                          p0:
+                          p0Y:
                             type: string
                           a:
                             type: string
                           b:
                             type: string
-                          p1:
+                          p1Y:
                             type: string
                           p0X:
                             type: string
@@ -70913,13 +70913,13 @@ definitions:
   escbackbone.ubc.BezierSegment:
     type: object
     properties:
-      p0:
+      p0Y:
         type: string
       a:
         type: string
       b:
         type: string
-      p1:
+      p1Y:
         type: string
       p0X:
         type: string
@@ -70940,13 +70940,13 @@ definitions:
       s0:
         type: object
         properties:
-          p0:
+          p0Y:
             type: string
           a:
             type: string
           b:
             type: string
-          p1:
+          p1Y:
             type: string
           p0X:
             type: string
@@ -70957,13 +70957,13 @@ definitions:
       s1:
         type: object
         properties:
-          p0:
+          p0Y:
             type: string
           a:
             type: string
           b:
             type: string
-          p1:
+          p1Y:
             type: string
           p0X:
             type: string
@@ -70977,13 +70977,13 @@ definitions:
           s:
             type: object
             properties:
-              p0:
+              p0Y:
                 type: string
               a:
                 type: string
               b:
                 type: string
-              p1:
+              p1Y:
                 type: string
               p0X:
                 type: string
@@ -71036,13 +71036,13 @@ definitions:
       s:
         type: object
         properties:
-          p0:
+          p0Y:
             type: string
           a:
             type: string
           b:
             type: string
-          p1:
+          p1Y:
             type: string
           p0X:
             type: string
@@ -71113,13 +71113,13 @@ definitions:
           s0:
             type: object
             properties:
-              p0:
+              p0Y:
                 type: string
               a:
                 type: string
               b:
                 type: string
-              p1:
+              p1Y:
                 type: string
               p0X:
                 type: string
@@ -71130,13 +71130,13 @@ definitions:
           s1:
             type: object
             properties:
-              p0:
+              p0Y:
                 type: string
               a:
                 type: string
               b:
                 type: string
-              p1:
+              p1Y:
                 type: string
               p0X:
                 type: string
@@ -71150,13 +71150,13 @@ definitions:
               s:
                 type: object
                 properties:
-                  p0:
+                  p0Y:
                     type: string
                   a:
                     type: string
                   b:
                     type: string
-                  p1:
+                  p1Y:
                     type: string
                   p0X:
                     type: string
