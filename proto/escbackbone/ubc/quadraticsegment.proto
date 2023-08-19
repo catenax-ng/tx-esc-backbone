@@ -10,7 +10,7 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
-message Quadraticsegment {
+message QuadraticSegment {
   
   string a = 1 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",

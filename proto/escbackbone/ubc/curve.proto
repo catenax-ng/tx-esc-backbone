@@ -20,7 +20,7 @@ message Curve {
   BezierSegment s0 = 2;
   BezierSegment s1 = 3;
   FixedBezierSegment s2 = 4;
-  Quadraticsegment qS3 = 5;
+  QuadraticSegment qS3 = 5;
   string refProfitFactor = 6 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false

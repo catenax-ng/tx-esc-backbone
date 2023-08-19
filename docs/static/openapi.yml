@@ -71082,7 +71082,7 @@ definitions:
   escbackbone.ubc.Params:
     type: object
     description: Params defines the parameters for the module.
-  escbackbone.ubc.Quadraticsegment:
+  escbackbone.ubc.QuadraticSegment:
     type: object
     properties:
       a:
