@@ -18,19 +18,19 @@ const (
 )
 
 func (ubc *Curve) p0() sdk.Dec {
-	return ubc.S0.P0
+	return ubc.S0.P0Y
 }
 
 func (ubc *Curve) p1() sdk.Dec {
-	return ubc.S1.P0
+	return ubc.S1.P0Y
 }
 
 func (ubc *Curve) p2() sdk.Dec {
-	return ubc.S2.P0
+	return ubc.S2.P0Y
 }
 
 func (ubc *Curve) p3() sdk.Dec {
-	return ubc.S2.P1
+	return ubc.S2.P1Y
 }
 
 func (ubc *Curve) p0x() sdk.Dec {
@@ -49,21 +49,21 @@ func (ubc *Curve) p3x() sdk.Dec {
 
 func (ubc *Curve) setP0(p0 sdk.Dec) {
 	ubc.FS0.Y = p0
-	ubc.S0.P0 = p0
+	ubc.S0.P0Y = p0
 }
 
 func (ubc *Curve) setP1(p1 sdk.Dec) {
-	ubc.S0.P1 = p1
-	ubc.S1.P0 = p1
+	ubc.S0.P1Y = p1
+	ubc.S1.P0Y = p1
 }
 
 func (ubc *Curve) setP2(p2 sdk.Dec) {
-	ubc.S1.P1 = p2
+	ubc.S1.P1Y = p2
 	ubc.S2.setP0(p2)
 }
 
 func (ubc *Curve) setP3(p3 sdk.Dec) {
-	ubc.S2.P1 = p3
+	ubc.S2.P1Y = p3
 }
 
 func (ubc *Curve) setP0X(p0X sdk.Dec) {

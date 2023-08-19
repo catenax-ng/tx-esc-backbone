@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -30,10 +31,10 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type BezierSegment struct {
-	P0     github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=p0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p0"`
+	P0Y    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=p0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p0"`
 	A      github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a"`
 	B      github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,3,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b"`
-	P1     github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=p1,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p1"`
+	P1Y    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=p1,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p1"`
 	P0X    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,5,opt,name=p0X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p0X"`
 	P1X    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=p1X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"p1X"`
 	DeltaX github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,7,opt,name=deltaX,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"deltaX"`
@@ -153,9 +154,9 @@ func (m *BezierSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i--
 	dAtA[i] = 0x2a
 	{
-		size := m.P1.Size()
+		size := m.P1Y.Size()
 		i -= size
-		if _, err := m.P1.MarshalTo(dAtA[i:]); err != nil {
+		if _, err := m.P1Y.MarshalTo(dAtA[i:]); err != nil {
 			return 0, err
 		}
 		i = encodeVarintBeziersegment(dAtA, i, uint64(size))
@@ -183,9 +184,9 @@ func (m *BezierSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i--
 	dAtA[i] = 0x12
 	{
-		size := m.P0.Size()
+		size := m.P0Y.Size()
 		i -= size
-		if _, err := m.P0.MarshalTo(dAtA[i:]); err != nil {
+		if _, err := m.P0Y.MarshalTo(dAtA[i:]); err != nil {
 			return 0, err
 		}
 		i = encodeVarintBeziersegment(dAtA, i, uint64(size))
@@ -212,13 +213,13 @@ func (m *BezierSegment) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = m.P0.Size()
+	l = m.P0Y.Size()
 	n += 1 + l + sovBeziersegment(uint64(l))
 	l = m.A.Size()
 	n += 1 + l + sovBeziersegment(uint64(l))
 	l = m.B.Size()
 	n += 1 + l + sovBeziersegment(uint64(l))
-	l = m.P1.Size()
+	l = m.P1Y.Size()
 	n += 1 + l + sovBeziersegment(uint64(l))
 	l = m.P0X.Size()
 	n += 1 + l + sovBeziersegment(uint64(l))
@@ -294,7 +295,7 @@ func (m *BezierSegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.P0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.P0Y.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -396,7 +397,7 @@ func (m *BezierSegment) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := m.P1.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.P1Y.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

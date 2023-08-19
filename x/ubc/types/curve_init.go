@@ -67,21 +67,21 @@ func (ubc *Curve) initSegmentsToZero() {
 		Y:  sdk.ZeroDec(),
 	}
 	ubc.S0 = &BezierSegment{
-		P0:  sdk.ZeroDec(),
-		P1:  sdk.ZeroDec(),
+		P0Y: sdk.ZeroDec(),
+		P1Y: sdk.ZeroDec(),
 		P0X: sdk.ZeroDec(),
 		P1X: sdk.ZeroDec(),
 	}
 	ubc.S1 = &BezierSegment{
-		P0:  sdk.ZeroDec(),
-		P1:  sdk.ZeroDec(),
+		P0Y: sdk.ZeroDec(),
+		P1Y: sdk.ZeroDec(),
 		P0X: sdk.ZeroDec(),
 		P1X: sdk.ZeroDec(),
 	}
 	ubc.S2 = &FixedBezierSegment{
 		BezierSegment: &BezierSegment{
 			P0X: sdk.ZeroDec(),
-			P0:  sdk.ZeroDec(),
+			P0Y: sdk.ZeroDec(),
 		},
 	}
 	ubc.QS3 = &QuadraticSegment{}
@@ -98,8 +98,8 @@ func (ubc *Curve) fitS2() {
 
 func (ubc *Curve) calcS2AB() {
 	factor := sdk.NewDec(1).Quo(sdk.NewDec(3))
-	ubc.S2.B = ubc.S2.P1.Sub(factor.Mul(ubc.SlopeP3.Mul(ubc.S2.DeltaX)))
-	ubc.S2.A = ubc.S2.P0.Add(factor.Mul(ubc.SlopeP2.Mul(ubc.S2.DeltaX)))
+	ubc.S2.B = ubc.S2.P1Y.Sub(factor.Mul(ubc.SlopeP3.Mul(ubc.S2.DeltaX)))
+	ubc.S2.A = ubc.S2.P0Y.Add(factor.Mul(ubc.SlopeP2.Mul(ubc.S2.DeltaX)))
 }
 
 func (ubc *Curve) fitS3() {

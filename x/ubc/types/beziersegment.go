@@ -38,10 +38,10 @@ func (bseg *BezierSegment) firstDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
 // firstDerivativeT1 computes the first derivate of the curve segment with respect to
 // the bezier curve parameter "t", at the point t1.
 func (bseg *BezierSegment) firstDerivativeT1(t1 sdk.Dec) sdk.Dec {
-	Pi := sdk.NewDec(-1).Mul(sdk.NewDec(1).Sub(t1).Power(2)).Mul(bseg.P0)
+	Pi := sdk.NewDec(-1).Mul(sdk.NewDec(1).Sub(t1).Power(2)).Mul(bseg.P0Y)
 	ai := sdk.NewDec(1).Sub(sdk.NewDec(3).Mul(t1)).Mul(sdk.NewDec(1).Sub(t1)).Mul(bseg.A)
 	bi := t1.Mul(sdk.NewDec(2).Sub(sdk.NewDec(3).Mul(t1))).Mul(bseg.B)
-	Pi1 := t1.Power(2).Mul(bseg.P1)
+	Pi1 := t1.Power(2).Mul(bseg.P1Y)
 	return sdk.NewDec(3).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
 }
 
@@ -50,13 +50,13 @@ func (bseg *BezierSegment) y(x sdk.Dec) sdk.Dec {
 	t := bseg.t(x)
 
 	// math.Pow((1-t), 3) * bseg.P0
-	Pi := sdk.NewDec(1).Sub(t).Power(3).Mul(bseg.P0)
+	Pi := sdk.NewDec(1).Sub(t).Power(3).Mul(bseg.P0Y)
 	// 3 * t * math.Pow((1-t), 2) * bseg.A
 	ai := sdk.NewDec(3).Mul(t).Mul(sdk.NewDec(1).Sub(t).Power(2)).Mul(bseg.A)
 	// 3 * math.Pow(t, 2) * (1 - t) * bseg.B
 	bi := sdk.NewDec(3).Mul(t.Power(2)).Mul(sdk.NewDec(1).Sub(t)).Mul(bseg.B)
 	// math.Pow(t, 3) * bseg.P1
-	Pi1 := t.Power(3).Mul(bseg.P1)
+	Pi1 := t.Power(3).Mul(bseg.P1Y)
 
 	return Pi.Add(ai).Add(bi).Add(Pi1)
 }
@@ -78,10 +78,10 @@ func (s *BezierSegment) t(x1 sdk.Dec) sdk.Dec {
 // integralT1 computes the integral of the curve segment with respect to the
 // bezier curve parameter "t", from the beginning of the curve until point t1.
 func (s *BezierSegment) integralT1(t1 sdk.Dec) sdk.Dec {
-	Pi := computePolyFor(t1, []term{{-1, 4}, {4, 3}, {-6, 2}, {4, 1}}).Mul(s.P0)
+	Pi := computePolyFor(t1, []term{{-1, 4}, {4, 3}, {-6, 2}, {4, 1}}).Mul(s.P0Y)
 	ai := computePolyFor(t1, []term{{3, 4}, {-8, 3}, {6, 2}}).Mul(s.A)
 	bi := computePolyFor(t1, []term{{3, 4}, {-4, 3}}).Mul(s.B)
-	Pi1 := t1.Power(4).Mul(s.P1)
+	Pi1 := t1.Power(4).Mul(s.P1Y)
 
 	return (Pi.Add(ai).Sub(bi).Add(Pi1))
 }

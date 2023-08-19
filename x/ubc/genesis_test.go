@@ -20,10 +20,10 @@ func TestGenesis(t *testing.T) {
 
 	zeroBezierSegment := func() *types.BezierSegment {
 		return &types.BezierSegment{
-			P0:     sdk.ZeroDec(),
+			P0Y:    sdk.ZeroDec(),
 			A:      sdk.ZeroDec(),
 			B:      sdk.ZeroDec(),
-			P1:     sdk.ZeroDec(),
+			P1Y:    sdk.ZeroDec(),
 			P0X:    sdk.ZeroDec(),
 			P1X:    sdk.ZeroDec(),
 			DeltaX: sdk.ZeroDec(),

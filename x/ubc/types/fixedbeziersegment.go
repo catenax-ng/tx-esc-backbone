@@ -23,8 +23,8 @@ func (fbseg *FixedBezierSegment) setP0X(P0X sdk.Dec) {
 // zero).
 func (fbseg *FixedBezierSegment) setP0(P0 sdk.Dec) {
 	// CLARIFY: Reasoning for this if condition.
-	if fbseg.P0.IsZero() {
-		fbseg.P0 = P0
+	if fbseg.P0Y.IsZero() {
+		fbseg.P0Y = P0
 	}
 }
 
@@ -32,10 +32,10 @@ func (fbseg *FixedBezierSegment) setP0(P0 sdk.Dec) {
 func (fbseg *FixedBezierSegment) curvatureAtEnd() sdk.Dec {
 
 	secondDerivativeT1 := func(fbseg *FixedBezierSegment, t sdk.Dec) (y sdk.Dec) {
-		Pi := sdk.NewDec(1).Sub(t).Mul(fbseg.P0)
+		Pi := sdk.NewDec(1).Sub(t).Mul(fbseg.P0Y)
 		ai := sdk.NewDec(3).Mul(t).Sub(sdk.NewDec(2)).Mul(fbseg.A)
 		bi := sdk.NewDec(1).Sub(sdk.NewDec(3).Mul(t)).Mul(fbseg.B)
-		Pi1 := t.Mul(fbseg.P1)
+		Pi1 := t.Mul(fbseg.P1Y)
 		return sdk.NewDec(6).Mul(Pi.Add(ai).Add(bi).Add(Pi1))
 	}
 
