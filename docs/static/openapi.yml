@@ -71030,7 +71030,7 @@ definitions:
         type: string
       slopeP3:
         type: string
-  escbackbone.ubc.Fixedsegment:
+  escbackbone.ubc.FixedBezierSegment:
     type: object
     properties:
       s:

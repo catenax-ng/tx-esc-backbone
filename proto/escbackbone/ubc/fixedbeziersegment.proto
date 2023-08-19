@@ -11,7 +11,7 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
-message Fixedsegment {
+message FixedBezierSegment {
   
   BezierSegment s = 1 [(gogoproto.embed) = true];
   string intervalP0X = 2 [

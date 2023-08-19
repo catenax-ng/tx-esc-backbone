@@ -9,7 +9,7 @@ package escbackbone.ubc;
 import "escbackbone/ubc/beziersegment.proto";
 import "escbackbone/ubc/quadraticsegment.proto";
 import "escbackbone/ubc/flatsegment.proto";
-import "escbackbone/ubc/fixedsegment.proto";
+import "escbackbone/ubc/fixedbeziersegment.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
@@ -19,7 +19,7 @@ message Curve {
   Flatsegment fS0 = 1;
   BezierSegment s0 = 2;
   BezierSegment s1 = 3;
-  Fixedsegment s2 = 4;
+  FixedBezierSegment s2 = 4;
   Quadraticsegment qS3 = 5;
   string refProfitFactor = 6 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
