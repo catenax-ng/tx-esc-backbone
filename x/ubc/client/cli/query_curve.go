@@ -15,8 +15,8 @@ import (
 
 func CmdShowCurve() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-ubcobject",
-		Short: "shows ubcobject",
+		Use:   "show-curve",
+		Short: "shows curve",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)

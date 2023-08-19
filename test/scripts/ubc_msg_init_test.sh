@@ -37,8 +37,8 @@ esc-backboned tx ubc init "6000000000" "1" "10" "100000000" "100000000" "0.00000
 
 sleep 3
 
-echo "\n ubc query object\n\n"
-esc-backboned query ubc show-ubcobject
+echo "\n ubc query curve\n\n"
+esc-backboned query ubc show-curve
 
 echo "\n balances after init\n\n"
 esc-backboned query bank balances $ubc_module
@@ -79,7 +79,7 @@ esc-backboned query bank balances $ubc_operator
 esc-backboned tx ubc undergird "10000000000000uvoucher" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
-esc-backboned query ubc show-ubcobject
+esc-backboned query ubc show-curve
 
 
 echo "\n# ubc shiftup - value in tokens\n\n"
@@ -91,4 +91,4 @@ esc-backboned query bank balances $ubc_operator
 esc-backboned tx ubc shiftup "10000000000000uvoucher" "1" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
-esc-backboned query ubc show-ubcobject
+esc-backboned query ubc show-curve
