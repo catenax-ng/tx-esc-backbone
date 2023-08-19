@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Tests for UBC module
-        run: go test -timeout 60s -v -count=1 ./x/ubc/...
+        run: go test -timeout 60s -v -count=1 ./x/ubcmm/...
 
       - name: Benchmarks for UBC module
-        run: go test -timeout 60s -v -count=1 ./x/ubc/... -bench=. -benchtime=2s -benchmem -run Bench
+        run: go test -timeout 60s -v -count=1 ./x/ubcmm/... -bench=. -benchtime=2s -benchmem -run Bench

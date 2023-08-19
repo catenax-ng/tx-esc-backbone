@@ -9,7 +9,7 @@ package escbackbone.ubc;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
 // Msg defines the Msg service.
 service Msg {

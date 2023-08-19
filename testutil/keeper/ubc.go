@@ -8,8 +8,8 @@ package keeper
 import (
 	"testing"
 
-	"github.com/catenax/esc-backbone/x/ubc/keeper"
-	"github.com/catenax/esc-backbone/x/ubc/types"
+	"github.com/catenax/esc-backbone/x/ubcmm/keeper"
+	"github.com/catenax/esc-backbone/x/ubcmm/types"
 	tmdb "github.com/cometbft/cometbft-db"
 	"github.com/cometbft/cometbft/libs/log"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"

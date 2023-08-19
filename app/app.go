@@ -119,9 +119,9 @@ import (
 	resourcesyncmodule "github.com/catenax/esc-backbone/x/resourcesync"
 	resourcesyncmodulekeeper "github.com/catenax/esc-backbone/x/resourcesync/keeper"
 	resourcesyncmoduletypes "github.com/catenax/esc-backbone/x/resourcesync/types"
-	ubcmodule "github.com/catenax/esc-backbone/x/ubc"
-	ubcmodulekeeper "github.com/catenax/esc-backbone/x/ubc/keeper"
-	ubcmoduletypes "github.com/catenax/esc-backbone/x/ubc/types"
+	ubcmodule "github.com/catenax/esc-backbone/x/ubcmm"
+	ubcmodulekeeper "github.com/catenax/esc-backbone/x/ubcmm/keeper"
+	ubcmoduletypes "github.com/catenax/esc-backbone/x/ubcmm/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "github.com/catenax/esc-backbone/app/params"

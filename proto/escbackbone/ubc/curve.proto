@@ -12,7 +12,7 @@ import "escbackbone/ubc/flatsegment.proto";
 import "escbackbone/ubc/fixedbeziersegment.proto";
 import "gogoproto/gogo.proto";
 
-option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
+option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
 message Curve {
   
