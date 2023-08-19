@@ -19,9 +19,9 @@ func (fbseg *FixedBezierSegment) setP0X(P0X sdk.Dec) {
 	fbseg.updateDeltaX()
 }
 
-// setP0 sets the value of parameter P0, only if it was not already set (it is
+// setP0Y sets the value of parameter P0, only if it was not already set (it is
 // zero).
-func (fbseg *FixedBezierSegment) setP0(P0 sdk.Dec) {
+func (fbseg *FixedBezierSegment) setP0Y(P0 sdk.Dec) {
 	// CLARIFY: Reasoning for this if condition.
 	if fbseg.P0Y.IsZero() {
 		fbseg.P0Y = P0

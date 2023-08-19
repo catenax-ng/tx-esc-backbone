@@ -17,19 +17,19 @@ const (
 	QS3
 )
 
-func (ubc *Curve) p0() sdk.Dec {
+func (ubc *Curve) p0Y() sdk.Dec {
 	return ubc.S0.P0Y
 }
 
-func (ubc *Curve) p1() sdk.Dec {
+func (ubc *Curve) p1Y() sdk.Dec {
 	return ubc.S1.P0Y
 }
 
-func (ubc *Curve) p2() sdk.Dec {
+func (ubc *Curve) p2Y() sdk.Dec {
 	return ubc.S2.P0Y
 }
 
-func (ubc *Curve) p3() sdk.Dec {
+func (ubc *Curve) p3Y() sdk.Dec {
 	return ubc.S2.P1Y
 }
 
@@ -47,23 +47,23 @@ func (ubc *Curve) p3x() sdk.Dec {
 	return ubc.S2.P1X
 }
 
-func (ubc *Curve) setP0(p0 sdk.Dec) {
-	ubc.FS0.Y = p0
-	ubc.S0.P0Y = p0
+func (ubc *Curve) setP0Y(p0Y sdk.Dec) {
+	ubc.FS0.Y = p0Y
+	ubc.S0.P0Y = p0Y
 }
 
-func (ubc *Curve) setP1(p1 sdk.Dec) {
-	ubc.S0.P1Y = p1
-	ubc.S1.P0Y = p1
+func (ubc *Curve) setP1Y(p1Y sdk.Dec) {
+	ubc.S0.P1Y = p1Y
+	ubc.S1.P0Y = p1Y
 }
 
-func (ubc *Curve) setP2(p2 sdk.Dec) {
-	ubc.S1.P1Y = p2
-	ubc.S2.setP0(p2)
+func (ubc *Curve) setP2Y(p2Y sdk.Dec) {
+	ubc.S1.P1Y = p2Y
+	ubc.S2.setP0Y(p2Y)
 }
 
-func (ubc *Curve) setP3(p3 sdk.Dec) {
-	ubc.S2.P1Y = p3
+func (ubc *Curve) setP3Y(p3Y sdk.Dec) {
+	ubc.S2.P1Y = p3Y
 }
 
 func (ubc *Curve) setP0X(p0X sdk.Dec) {
@@ -157,11 +157,11 @@ func (ubc *Curve) lowerBoundX(segNum int) sdk.Dec {
 func (ubc *Curve) lowerBound(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
-		return ubc.p0()
+		return ubc.p0Y()
 	case S1:
-		return ubc.p1()
+		return ubc.p1Y()
 	case S2:
-		return ubc.p2()
+		return ubc.p2Y()
 	default:
 		return sdk.ZeroDec()
 	}
@@ -170,11 +170,11 @@ func (ubc *Curve) lowerBound(segNum int) sdk.Dec {
 func (ubc *Curve) upperBound(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
-		return ubc.p1()
+		return ubc.p1Y()
 	case S1:
-		return ubc.p2()
+		return ubc.p2Y()
 	case S2:
-		return ubc.p3()
+		return ubc.p3Y()
 	default:
 		return sdk.ZeroDec()
 	}

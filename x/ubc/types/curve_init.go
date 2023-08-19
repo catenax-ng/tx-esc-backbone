@@ -89,9 +89,9 @@ func (ubc *Curve) initSegmentsToZero() {
 
 func (ubc *Curve) fitS2() {
 	ubc.setP3X(ubc.RefTokenSupply)
-	ubc.setP3(ubc.RefTokenPrice)
+	ubc.setP3Y(ubc.RefTokenPrice)
 	ubc.setP2X(ubc.RefTokenSupply.Quo(sdk.NewDec(2)))
-	ubc.setP2(ubc.RefTokenPrice.Quo(ubc.RefProfitFactor))
+	ubc.setP2Y(ubc.RefTokenPrice.Quo(ubc.RefProfitFactor))
 
 	ubc.calcS2AB()
 }
@@ -106,7 +106,7 @@ func (ubc *Curve) fitS3() {
 	ubc.QS3.ScalingFactor = sdk.NewDec(1e9)
 
 	curvatureP3 := ubc.S2.curvatureAtEnd()
-	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3(), ubc.p3x())
+	ubc.calcS3ABC(curvatureP3, ubc.SlopeP3, ubc.p3Y(), ubc.p3x())
 }
 
 func (ubc *Curve) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
@@ -127,10 +127,10 @@ func (ubc *Curve) fitS0S1Repeatedly(repititions uint) {
 		g1 := ubc.calcG1(g0)
 
 		ubc.S1.B = ubc.calcS1B()
-		ubc.setP0(ubc.calcP0(g0, g1))
-		ubc.setP1(ubc.calcP1())
+		ubc.setP0Y(ubc.calcP0(g0, g1))
+		ubc.setP1Y(ubc.calcP1())
 
-		ubc.S0.A = ubc.p0()
+		ubc.S0.A = ubc.p0Y()
 		ubc.S0.B = ubc.calcS0B()
 
 		ubc.S1.A = ubc.calcS1A()
@@ -139,12 +139,12 @@ func (ubc *Curve) fitS0S1Repeatedly(repititions uint) {
 
 func (ubc *Curve) calcP1X() {
 	factor := sdk.NewDec(1).Sub(ubc.FactorFy).Mul(ubc.FactorFxy)
-	deltaX1 := factor.Mul(ubc.p2().Sub(ubc.p0()))
+	deltaX1 := factor.Mul(ubc.p2Y().Sub(ubc.p0Y()))
 	ubc.setP1X(ubc.p2x().Sub(deltaX1))
 }
 
 func (ubc *Curve) calcP1XMethod2() {
-	x1 := ubc.p2x().Sub(ubc.FactorFxy.Mul(ubc.p2().Sub(ubc.p1())))
+	x1 := ubc.p2x().Sub(ubc.FactorFxy.Mul(ubc.p2Y().Sub(ubc.p1Y())))
 	ubc.setP1X(x1)
 }
 
@@ -165,14 +165,14 @@ func (ubc *Curve) calcG1(g0 sdk.Dec) sdk.Dec {
 
 func (ubc *Curve) calcS1B() sdk.Dec {
 	factorPart1 := ubc.S1.DeltaX.Quo(ubc.S2.DeltaX)
-	part1 := factorPart1.Mul(ubc.p2().Sub(ubc.S2.A))
-	return part1.Add(ubc.p2())
+	part1 := factorPart1.Mul(ubc.p2Y().Sub(ubc.S2.A))
+	return part1.Add(ubc.p2Y())
 }
 
 func (ubc *Curve) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 	factor := sdk.NewDec(1).Quo(g1)
 	part1 := sdk.NewDec(4).Mul(ubc.BPoolUnder)
-	part2 := ubc.p2().Mul(g0.
+	part2 := ubc.p2Y().Mul(g0.
 		Sub(sdk.NewDec(2).Mul(ubc.S1.DeltaX.Mul(ubc.FactorFy))).
 		Sub(ubc.S1.DeltaX))
 	part3 := ubc.S1.DeltaX.Mul(ubc.S1.B)
@@ -180,37 +180,37 @@ func (ubc *Curve) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 }
 
 func (ubc *Curve) calcP1() sdk.Dec {
-	part1 := ubc.FactorFy.Mul(ubc.p2())
-	part2 := (sdk.NewDec(1).Sub(ubc.FactorFy)).Mul(ubc.p0())
+	part1 := ubc.FactorFy.Mul(ubc.p2Y())
+	part2 := (sdk.NewDec(1).Sub(ubc.FactorFy)).Mul(ubc.p0Y())
 	return part1.Add(part2)
 }
 
 func (ubc *Curve) calcS0B() sdk.Dec {
-	return sdk.NewDecWithPrec(5, 1).Mul(ubc.p0().Add(ubc.p1()))
+	return sdk.NewDecWithPrec(5, 1).Mul(ubc.p0Y().Add(ubc.p1Y()))
 }
 
 func (ubc *Curve) calcS1A() sdk.Dec {
 	factorPart1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.S1.DeltaX.Quo(ubc.S0.DeltaX))
-	part1 := factorPart1.Mul(ubc.p1().Sub(ubc.p0()))
-	return part1.Add(ubc.p1())
+	part1 := factorPart1.Mul(ubc.p1Y().Sub(ubc.p0Y()))
+	return part1.Add(ubc.p1Y())
 }
 
 func (ubc *Curve) validateCurvature() error {
 	factor := (ubc.S1.DeltaX.Quo(ubc.S2.DeltaX)).Mul(
-		ubc.S2.A.Sub(ubc.p2()))
+		ubc.S2.A.Sub(ubc.p2Y()))
 
-	c1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p1().Sub(factor).Add(ubc.p2()))
+	c1 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p1Y().Sub(factor).Add(ubc.p2Y()))
 	if !c1.GT(ubc.S1.A) {
 		return errors.Errorf("curvature condition 1 failed")
 	}
 
-	c2 := sdk.NewDec(-2).Mul(factor).Add(ubc.p2())
+	c2 := sdk.NewDec(-2).Mul(factor).Add(ubc.p2Y())
 	if !c2.LT(ubc.S1.A) {
 		return errors.Errorf("curvature condition 2 failed")
 	}
 
-	c3 := ubc.p2().Sub(sdk.NewDec(3).Mul(factor))
-	if !ubc.p1().GT(c3) {
+	c3 := ubc.p2Y().Sub(sdk.NewDec(3).Mul(factor))
+	if !ubc.p1Y().GT(c3) {
 		return errors.Errorf("curvature condition 3 failed")
 	}
 
@@ -222,17 +222,17 @@ func (ubc *Curve) validateCurvature() error {
 	// In future, if b0 is computed using alternate methods and allowed to
 	// take values lesser than c4, then this Equals in this condition
 	// should be modified to less than or equals.
-	c4 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p0().Add(ubc.p1()))
-	if !ubc.S0.B.GT(ubc.p0()) && ubc.S0.B.Equal(c4) {
+	c4 := sdk.NewDecWithPrec(5, 1).Mul(ubc.p0Y().Add(ubc.p1Y()))
+	if !ubc.S0.B.GT(ubc.p0Y()) && ubc.S0.B.Equal(c4) {
 		return errors.Errorf("curvature condition 4 failed")
 	}
 
-	if !(ubc.p1().Sub(ubc.p0())).GTE(ubc.S0.firstDerivativeT1(sdk.ZeroDec())) {
+	if !(ubc.p1Y().Sub(ubc.p0Y())).GTE(ubc.S0.firstDerivativeT1(sdk.ZeroDec())) {
 		return errors.Errorf("curvature condition 5 failed")
 	}
 
-	if ubc.p0().LT(sdk.ZeroDec()) ||
-		ubc.p1().LT(sdk.ZeroDec()) ||
+	if ubc.p0Y().LT(sdk.ZeroDec()) ||
+		ubc.p1Y().LT(sdk.ZeroDec()) ||
 		ubc.S0.A.LT(sdk.ZeroDec()) ||
 		ubc.S0.B.LT(sdk.ZeroDec()) ||
 		ubc.S1.A.LT(sdk.ZeroDec()) ||
