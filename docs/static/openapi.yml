@@ -71052,7 +71052,7 @@ definitions:
             type: string
       intervalP0X:
         type: string
-  escbackbone.ubc.Flatsegment:
+  escbackbone.ubc.FlatSegment:
     type: object
     properties:
       'y':

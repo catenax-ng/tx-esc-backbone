@@ -16,7 +16,7 @@ option go_package = "github.com/catenax/esc-backbone/x/ubc/types";
 
 message Curve {
   
-  Flatsegment fS0 = 1;
+  FlatSegment fS0 = 1;
   BezierSegment s0 = 2;
   BezierSegment s1 = 3;
   FixedBezierSegment s2 = 4;
