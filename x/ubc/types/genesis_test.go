@@ -29,7 +29,7 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 
 				Curve: &types.Curve{
-					FS0:             new(types.Flatsegment),
+					FS0:             new(types.FlatSegment),
 					S0:              new(types.BezierSegment),
 					S1:              new(types.BezierSegment),
 					S2:              new(types.FixedBezierSegment),

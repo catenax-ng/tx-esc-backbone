@@ -62,7 +62,7 @@ func (ubc *Curve) validateParameters() error {
 }
 
 func (ubc *Curve) initSegmentsToZero() {
-	ubc.FS0 = &Flatsegment{
+	ubc.FS0 = &FlatSegment{
 		X0: sdk.ZeroDec(),
 		Y:  sdk.ZeroDec(),
 	}

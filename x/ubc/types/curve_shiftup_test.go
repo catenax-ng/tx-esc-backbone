@@ -18,7 +18,7 @@ import (
 // is same as the values produced by the prototype.
 func Test_Curve_ShiftUp(t *testing.T) {
 	type wants struct {
-		FS0        *Flatsegment
+		FS0        *FlatSegment
 		S0         *BezierSegment
 		S1         *BezierSegment
 		S2         *FixedBezierSegment
@@ -45,7 +45,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 				TokensToBuy:     sdk.NewDec(500e5),
 			},
 			wants: wants{
-				FS0: &Flatsegment{
+				FS0: &FlatSegment{
 					X0: sdk.MustNewDecFromStr("46479149.746915109636077002"),
 					Y:  sdk.MustNewDecFromStr("0.020408732850910393"),
 				},

@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -30,7 +31,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Curve struct {
-	FS0             *Flatsegment                           `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
+	FS0             *FlatSegment                           `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
 	S0              *BezierSegment                         `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
 	S1              *BezierSegment                         `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
 	S2              *FixedBezierSegment                    `protobuf:"bytes,4,opt,name=s2,proto3" json:"s2,omitempty"`
@@ -81,7 +82,7 @@ func (m *Curve) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Curve proto.InternalMessageInfo
 
-func (m *Curve) GetFS0() *Flatsegment {
+func (m *Curve) GetFS0() *FlatSegment {
 	if m != nil {
 		return m.FS0
 	}
@@ -480,7 +481,7 @@ func (m *Curve) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.FS0 == nil {
-				m.FS0 = &Flatsegment{}
+				m.FS0 = &FlatSegment{}
 			}
 			if err := m.FS0.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

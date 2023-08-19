@@ -34,7 +34,7 @@ func TestGenesis(t *testing.T) {
 		Params: types.DefaultParams(),
 
 		Curve: &types.Curve{
-			FS0: &types.Flatsegment{
+			FS0: &types.FlatSegment{
 				Y:  sdk.ZeroDec(),
 				X0: sdk.ZeroDec(),
 			},

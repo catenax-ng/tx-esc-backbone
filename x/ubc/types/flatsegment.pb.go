@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -29,21 +30,21 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type Flatsegment struct {
+type FlatSegment struct {
 	Y  github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=y,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"y"`
 	X0 github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=x0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"x0"`
 }
 
-func (m *Flatsegment) Reset()         { *m = Flatsegment{} }
-func (m *Flatsegment) String() string { return proto.CompactTextString(m) }
-func (*Flatsegment) ProtoMessage()    {}
-func (*Flatsegment) Descriptor() ([]byte, []int) {
+func (m *FlatSegment) Reset()         { *m = FlatSegment{} }
+func (m *FlatSegment) String() string { return proto.CompactTextString(m) }
+func (*FlatSegment) ProtoMessage()    {}
+func (*FlatSegment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b9595e93b126ca8b, []int{0}
 }
-func (m *Flatsegment) XXX_Unmarshal(b []byte) error {
+func (m *FlatSegment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Flatsegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *FlatSegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Flatsegment.Marshal(b, m, deterministic)
 	} else {
@@ -55,20 +56,20 @@ func (m *Flatsegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *Flatsegment) XXX_Merge(src proto.Message) {
+func (m *FlatSegment) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Flatsegment.Merge(m, src)
 }
-func (m *Flatsegment) XXX_Size() int {
+func (m *FlatSegment) XXX_Size() int {
 	return m.Size()
 }
-func (m *Flatsegment) XXX_DiscardUnknown() {
+func (m *FlatSegment) XXX_DiscardUnknown() {
 	xxx_messageInfo_Flatsegment.DiscardUnknown(m)
 }
 
 var xxx_messageInfo_Flatsegment proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*Flatsegment)(nil), "escbackbone.ubc.Flatsegment")
+	proto.RegisterType((*FlatSegment)(nil), "escbackbone.ubc.Flatsegment")
 }
 
 func init() { proto.RegisterFile("escbackbone/ubc/flatsegment.proto", fileDescriptor_b9595e93b126ca8b) }
@@ -91,7 +92,7 @@ var fileDescriptor_b9595e93b126ca8b = []byte{
 	0x69, 0x80, 0x27, 0x01, 0x00, 0x00,
 }
 
-func (m *Flatsegment) Marshal() (dAtA []byte, err error) {
+func (m *FlatSegment) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -101,12 +102,12 @@ func (m *Flatsegment) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Flatsegment) MarshalTo(dAtA []byte) (int, error) {
+func (m *FlatSegment) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Flatsegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FlatSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -145,7 +146,7 @@ func encodeVarintFlatsegment(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *Flatsegment) Size() (n int) {
+func (m *FlatSegment) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -164,7 +165,7 @@ func sovFlatsegment(x uint64) (n int) {
 func sozFlatsegment(x uint64) (n int) {
 	return sovFlatsegment(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *Flatsegment) Unmarshal(dAtA []byte) error {
+func (m *FlatSegment) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
