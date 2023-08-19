@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -29,7 +30,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type Quadraticsegment struct {
+type QuadraticSegment struct {
 	A             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a"`
 	B             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b"`
 	C             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,3,opt,name=c,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"c"`
@@ -38,16 +39,16 @@ type Quadraticsegment struct {
 	CurrentX0     github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=currentX0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"currentX0"`
 }
 
-func (m *Quadraticsegment) Reset()         { *m = Quadraticsegment{} }
-func (m *Quadraticsegment) String() string { return proto.CompactTextString(m) }
-func (*Quadraticsegment) ProtoMessage()    {}
-func (*Quadraticsegment) Descriptor() ([]byte, []int) {
+func (m *QuadraticSegment) Reset()         { *m = QuadraticSegment{} }
+func (m *QuadraticSegment) String() string { return proto.CompactTextString(m) }
+func (*QuadraticSegment) ProtoMessage()    {}
+func (*QuadraticSegment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_eeac9996564ed96c, []int{0}
 }
-func (m *Quadraticsegment) XXX_Unmarshal(b []byte) error {
+func (m *QuadraticSegment) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Quadraticsegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QuadraticSegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
 		return xxx_messageInfo_Quadraticsegment.Marshal(b, m, deterministic)
 	} else {
@@ -59,20 +60,20 @@ func (m *Quadraticsegment) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-func (m *Quadraticsegment) XXX_Merge(src proto.Message) {
+func (m *QuadraticSegment) XXX_Merge(src proto.Message) {
 	xxx_messageInfo_Quadraticsegment.Merge(m, src)
 }
-func (m *Quadraticsegment) XXX_Size() int {
+func (m *QuadraticSegment) XXX_Size() int {
 	return m.Size()
 }
-func (m *Quadraticsegment) XXX_DiscardUnknown() {
+func (m *QuadraticSegment) XXX_DiscardUnknown() {
 	xxx_messageInfo_Quadraticsegment.DiscardUnknown(m)
 }
 
 var xxx_messageInfo_Quadraticsegment proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*Quadraticsegment)(nil), "escbackbone.ubc.Quadraticsegment")
+	proto.RegisterType((*QuadraticSegment)(nil), "escbackbone.ubc.Quadraticsegment")
 }
 
 func init() {
@@ -101,7 +102,7 @@ var fileDescriptor_eeac9996564ed96c = []byte{
 	0xff, 0x4d, 0x8e, 0x88, 0x05, 0x5f, 0x02, 0x00, 0x00,
 }
 
-func (m *Quadraticsegment) Marshal() (dAtA []byte, err error) {
+func (m *QuadraticSegment) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -111,12 +112,12 @@ func (m *Quadraticsegment) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Quadraticsegment) MarshalTo(dAtA []byte) (int, error) {
+func (m *QuadraticSegment) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *Quadraticsegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QuadraticSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -195,7 +196,7 @@ func encodeVarintQuadraticsegment(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *Quadraticsegment) Size() (n int) {
+func (m *QuadraticSegment) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -222,7 +223,7 @@ func sovQuadraticsegment(x uint64) (n int) {
 func sozQuadraticsegment(x uint64) (n int) {
 	return sovQuadraticsegment(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *Quadraticsegment) Unmarshal(dAtA []byte) error {
+func (m *QuadraticSegment) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {

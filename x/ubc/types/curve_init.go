@@ -84,7 +84,7 @@ func (ubc *Curve) initSegmentsToZero() {
 			P0:  sdk.ZeroDec(),
 		},
 	}
-	ubc.QS3 = &Quadraticsegment{}
+	ubc.QS3 = &QuadraticSegment{}
 }
 
 func (ubc *Curve) fitS2() {

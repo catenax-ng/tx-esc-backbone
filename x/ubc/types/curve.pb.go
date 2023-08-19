@@ -10,12 +10,13 @@ package types
 
 import (
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
-	_ "github.com/cosmos/gogoproto/gogoproto"
-	proto "github.com/cosmos/gogoproto/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
+	proto "github.com/cosmos/gogoproto/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -34,7 +35,7 @@ type Curve struct {
 	S0              *BezierSegment                         `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`
 	S1              *BezierSegment                         `protobuf:"bytes,3,opt,name=s1,proto3" json:"s1,omitempty"`
 	S2              *FixedBezierSegment                    `protobuf:"bytes,4,opt,name=s2,proto3" json:"s2,omitempty"`
-	QS3             *Quadraticsegment                      `protobuf:"bytes,5,opt,name=qS3,proto3" json:"qS3,omitempty"`
+	QS3             *QuadraticSegment                      `protobuf:"bytes,5,opt,name=qS3,proto3" json:"qS3,omitempty"`
 	RefProfitFactor github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,6,opt,name=refProfitFactor,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refProfitFactor"`
 	RefTokenSupply  github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,7,opt,name=refTokenSupply,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refTokenSupply"`
 	RefTokenPrice   github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,8,opt,name=refTokenPrice,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"refTokenPrice"`
@@ -109,7 +110,7 @@ func (m *Curve) GetS2() *FixedBezierSegment {
 	return nil
 }
 
-func (m *Curve) GetQS3() *Quadraticsegment {
+func (m *Curve) GetQS3() *QuadraticSegment {
 	if m != nil {
 		return m.QS3
 	}
@@ -624,7 +625,7 @@ func (m *Curve) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.QS3 == nil {
-				m.QS3 = &Quadraticsegment{}
+				m.QS3 = &QuadraticSegment{}
 			}
 			if err := m.QS3.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

@@ -22,7 +22,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 		S0         *BezierSegment
 		S1         *BezierSegment
 		S2         *FixedBezierSegment
-		QS3        *Quadraticsegment
+		QS3        *QuadraticSegment
 		BPool      sdk.Dec
 		BPoolUnder sdk.Dec
 	}
@@ -79,7 +79,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					},
 					IntervalP0X: sdk.MustNewDecFromStr("3046479149.746915109636077002"),
 				},
-				QS3: &Quadraticsegment{
+				QS3: &QuadraticSegment{
 					A:             sdk.MustNewDecFromStr("0.533333334"),
 					B:             sdk.MustNewDecFromStr("-5.733333341"),
 					C:             sdk.MustNewDecFromStr("16.200000022"),

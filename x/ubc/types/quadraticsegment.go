@@ -9,7 +9,7 @@ import sdk "github.com/cosmos/cosmos-sdk/types"
 
 // integralX12 computes the integral of the curve segment with respect to "x",
 // between limits x1 and x2, in the scaled domain.
-func (qsg *Quadraticsegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
+func (qsg *QuadraticSegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
 	x1 = qsg.scaleX(x1)
 
 	part1 := x1.Power(3).Mul(qsg.A.Quo(sdk.NewDec(3)))
@@ -23,22 +23,22 @@ func (qsg *Quadraticsegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
 
 // firstDerivativeX1 computes the first derivate of the curve segment with respect to
 // the "x", at the point x1.
-func (qsg *Quadraticsegment) firstDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
+func (qsg *QuadraticSegment) firstDerivativeX1(x1 sdk.Dec) (y sdk.Dec) {
 	x1 = qsg.scaleX(x1)
 	firstDerivativeX1 := sdk.NewDec(2).Mul(qsg.A).Mul(x1).Add(qsg.B)
 	return qsg.deScaleX(firstDerivativeX1)
 }
 
 // y returns the y value for the given x.
-func (qsg *Quadraticsegment) y(x1 sdk.Dec) (y sdk.Dec) {
+func (qsg *QuadraticSegment) y(x1 sdk.Dec) (y sdk.Dec) {
 	x1 = qsg.scaleX(x1)
 	return qsg.A.Mul(x1.Power(2)).Add(qsg.B.Mul(x1)).Add(qsg.C)
 }
 
-func (qsg *Quadraticsegment) scaleX(x1 sdk.Dec) sdk.Dec {
+func (qsg *QuadraticSegment) scaleX(x1 sdk.Dec) sdk.Dec {
 	return x1.Quo(qsg.ScalingFactor)
 }
 
-func (qsg *Quadraticsegment) deScaleX(x1 sdk.Dec) sdk.Dec {
+func (qsg *QuadraticSegment) deScaleX(x1 sdk.Dec) sdk.Dec {
 	return x1.Mul(qsg.ScalingFactor)
 }
