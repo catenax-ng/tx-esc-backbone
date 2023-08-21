@@ -35176,7 +35176,7 @@ paths:
   /catenax/esc-backbone/ubc/curve:
     get:
       summary: Queries a Curve by index.
-      operationId: EscbackboneUbcCurve
+      operationId: EscbackboneUbcmmCurve
       responses:
         '200':
           description: A successful response.
@@ -35309,7 +35309,7 @@ paths:
   /catenax/esc-backbone/ubc/params:
     get:
       summary: Parameters queries the parameters of the module.
-      operationId: EscbackboneUbcParams
+      operationId: EscbackboneUbcmmParams
       responses:
         '200':
           description: A successful response.
@@ -70910,7 +70910,7 @@ definitions:
     properties:
       pubkey:
         type: string
-  escbackbone.ubc.BezierSegment:
+  escbackbone.ubcmm.BezierSegment:
     type: object
     properties:
       p0Y:
@@ -70927,7 +70927,7 @@ definitions:
         type: string
       deltaX:
         type: string
-  escbackbone.ubc.Curve:
+  escbackbone.ubcmm.Curve:
     type: object
     properties:
       fS0:
@@ -71030,7 +71030,7 @@ definitions:
         type: string
       slopeP3:
         type: string
-  escbackbone.ubc.FixedBezierSegment:
+  escbackbone.ubcmm.FixedBezierSegment:
     type: object
     properties:
       s:
@@ -71052,37 +71052,37 @@ definitions:
             type: string
       intervalP0X:
         type: string
-  escbackbone.ubc.FlatSegment:
+  escbackbone.ubcmm.FlatSegment:
     type: object
     properties:
       'y':
         type: string
       x0:
         type: string
-  escbackbone.ubc.MsgBuyResponse:
+  escbackbone.ubcmm.MsgBuyResponse:
     type: object
     properties:
       tokensbought:
         type: string
       vouchersspent:
         type: string
-  escbackbone.ubc.MsgInitResponse:
+  escbackbone.ubcmm.MsgInitResponse:
     type: object
-  escbackbone.ubc.MsgSellResponse:
+  escbackbone.ubcmm.MsgSellResponse:
     type: object
     properties:
       tokenssold:
         type: string
       vouchersearned:
         type: string
-  escbackbone.ubc.MsgShiftupResponse:
+  escbackbone.ubcmm.MsgShiftupResponse:
     type: object
-  escbackbone.ubc.MsgUndergirdResponse:
+  escbackbone.ubcmm.MsgUndergirdResponse:
     type: object
-  escbackbone.ubc.Params:
+  escbackbone.ubcmm.Params:
     type: object
     description: Params defines the parameters for the module.
-  escbackbone.ubc.QuadraticSegment:
+  escbackbone.ubcmm.QuadraticSegment:
     type: object
     properties:
       a:
@@ -71097,7 +71097,7 @@ definitions:
         type: string
       currentX0:
         type: string
-  escbackbone.ubc.QueryGetCurveResponse:
+  escbackbone.ubcmm.QueryGetCurveResponse:
     type: object
     properties:
       Curve:
@@ -71203,7 +71203,7 @@ definitions:
             type: string
           slopeP3:
             type: string
-  escbackbone.ubc.QueryParamsResponse:
+  escbackbone.ubcmm.QueryParamsResponse:
     type: object
     properties:
       params:

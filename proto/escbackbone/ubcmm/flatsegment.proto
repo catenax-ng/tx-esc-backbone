@@ -4,17 +4,19 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
-package escbackbone.ubc;
+package escbackbone.ubcmm;
 
-import "escbackbone/ubc/beziersegment.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
-message FixedBezierSegment {
+message FlatSegment {
   
-  BezierSegment s = 1 [(gogoproto.embed) = true];
-  string intervalP0X = 2 [
+  string y = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  string x0 = 2 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];

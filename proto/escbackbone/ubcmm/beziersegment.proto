@@ -4,64 +4,39 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
-package escbackbone.ubc;
+package escbackbone.ubcmm;
 
-import "escbackbone/ubc/beziersegment.proto";
-import "escbackbone/ubc/quadraticsegment.proto";
-import "escbackbone/ubc/flatsegment.proto";
-import "escbackbone/ubc/fixedbeziersegment.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
-message Curve {
+message BezierSegment {
   
-  FlatSegment fS0 = 1;
-  BezierSegment s0 = 2;
-  BezierSegment s1 = 3;
-  FixedBezierSegment s2 = 4;
-  QuadraticSegment qS3 = 5;
-  string refProfitFactor = 6 [
+  string p0Y = 1 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string refTokenSupply = 7 [
+  string a = 2 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string refTokenPrice = 8 [
+  string b = 3 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string bPool = 9 [
+  string p1Y = 4 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string bPoolUnder = 10 [
+  string p0X = 5 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string factorFy = 11 [
+  string p1X = 6 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string factorFxy = 12 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = false
-  ];
-  string tradingPoint = 13 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = false
-  ];
-  string currentSupply = 14 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = false
-  ];
-  string slopeP2 = 15 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = false
-  ];
-  string slopeP3 = 16 [
+  string deltaX = 7 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];

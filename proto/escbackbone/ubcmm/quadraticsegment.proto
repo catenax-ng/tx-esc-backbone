@@ -4,7 +4,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
-package escbackbone.ubc;
+package escbackbone.ubcmm;
 
 import "gogoproto/gogo.proto";
 

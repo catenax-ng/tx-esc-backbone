@@ -5,13 +5,13 @@
 // SPDX-License-Identifier: Apache-2.0
 syntax = "proto3";
 
-package escbackbone.ubc;
+package escbackbone.ubcmm;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
-import "escbackbone/ubc/params.proto";
-import "escbackbone/ubc/curve.proto";
+import "escbackbone/ubcmm/params.proto";
+import "escbackbone/ubcmm/curve.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
