@@ -7,7 +7,7 @@ package types
 
 const (
 	// ModuleName defines the module name
-	ModuleName = "ubc"
+	ModuleName = "ubcmm"
 
 	// StoreKey defines the primary module store key
 	StoreKey = ModuleName
@@ -16,7 +16,7 @@ const (
 	RouterKey = ModuleName
 
 	// MemStoreKey defines the in-memory store key
-	MemStoreKey = "mem_ubc"
+	MemStoreKey = "mem_ubcmm"
 )
 
 func KeyPrefix(p string) []byte {
