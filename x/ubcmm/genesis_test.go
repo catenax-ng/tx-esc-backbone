@@ -44,7 +44,7 @@ func TestGenesis(t *testing.T) {
 				BezierSegment: zeroBezierSegment(),
 				IntervalP0X:   sdk.ZeroDec(),
 			},
-			QS3: &types.QuadraticSegment{
+			QS3: &types.FixedQuadraticSegment{
 				A:             sdk.ZeroDec(),
 				B:             sdk.ZeroDec(),
 				C:             sdk.ZeroDec(),
