@@ -26,7 +26,7 @@ func (c *Curve) p1Y() sdk.Dec {
 }
 
 func (c *Curve) p2Y() sdk.Dec {
-	return c.S2.P0Y
+	return c.S2.y(c.S2.IntervalP0X)
 }
 
 func (c *Curve) p3Y() sdk.Dec {

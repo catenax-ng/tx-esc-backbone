@@ -47,25 +47,25 @@ func Test_Curve_ShiftUp(t *testing.T) {
 			wants: wants{
 				FS0: &FlatSegment{
 					X0: sdk.MustNewDecFromStr("46479149.746915109636077002"),
-					Y:  sdk.MustNewDecFromStr("0.020408732850910393"),
+					Y:  sdk.MustNewDecFromStr("0.017269768356181699"),
 				},
 				S0: &BezierSegment{
-					P0Y:    sdk.MustNewDecFromStr("0.020408732850910393"),
-					A:      sdk.MustNewDecFromStr("0.020408732850910393"),
-					B:      sdk.MustNewDecFromStr("0.028367859565819354"),
-					P1Y:    sdk.MustNewDecFromStr("0.036326986280728314"),
+					P0Y:    sdk.MustNewDecFromStr("0.017269768356181699"),
+					A:      sdk.MustNewDecFromStr("0.017269768356181699"),
+					B:      sdk.MustNewDecFromStr("0.026010169307364557"),
+					P1Y:    sdk.MustNewDecFromStr("0.034750570258547415"),
 					P0X:    sdk.MustNewDecFromStr("46479149.746915109636077002"),
-					P1X:    sdk.MustNewDecFromStr("2038258170.761775649954248590"),
-					DeltaX: sdk.MustNewDecFromStr("1991779021.014860540318171588"),
+					P1X:    sdk.MustNewDecFromStr("1939426924.228026090155793888"),
+					DeltaX: sdk.MustNewDecFromStr("1892947774.481110980519716886"),
 				},
 				S1: &BezierSegment{
-					P0Y:    sdk.MustNewDecFromStr("0.036326986280728314"),
-					A:      sdk.MustNewDecFromStr("0.040355826048446913"),
-					B:      sdk.MustNewDecFromStr("0.066392634033828685"),
-					P1Y:    sdk.MustNewDecFromStr("0.104673777868010282"),
-					P0X:    sdk.MustNewDecFromStr("2038258170.761775649954248590"),
+					P0Y:    sdk.MustNewDecFromStr("0.034750570258547415"),
+					A:      sdk.MustNewDecFromStr("0.039862217000934048"),
+					B:      sdk.MustNewDecFromStr("0.069496742414167885"),
+					P1Y:    sdk.MustNewDecFromStr("0.109347555736020564"),
+					P0X:    sdk.MustNewDecFromStr("1939426924.228026090155793888"),
 					P1X:    sdk.MustNewDecFromStr("3046479149.746915109636077002"),
-					DeltaX: sdk.MustNewDecFromStr("1008220978.985139459681828412"),
+					DeltaX: sdk.MustNewDecFromStr("1107052225.518889019480283114"),
 				},
 				S2: &FixedBezierSegment{
 					BezierSegment: &BezierSegment{
