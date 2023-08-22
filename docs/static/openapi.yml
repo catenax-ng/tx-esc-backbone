@@ -35348,8 +35348,8 @@ paths:
                       currentX0:
                         type: string
                     description: >-
-                      QuadraticSegment represents a quadratic curve defined by
-                      the equation 
+                      FixedQuadraticSegment represents a quadratic curve defined
+                      by the equation
 
                       ax^2 + bx + c with a fixed shape and left half bounded
                       interval.
@@ -71215,7 +71215,8 @@ definitions:
           currentX0:
             type: string
         description: >-
-          QuadraticSegment represents a quadratic curve defined by the equation 
+          FixedQuadraticSegment represents a quadratic curve defined by the
+          equation
 
           ax^2 + bx + c with a fixed shape and left half bounded interval.
 
@@ -71318,6 +71319,33 @@ definitions:
       the
 
       upper bound will remain fixed.
+  escbackbone.ubcmm.FixedQuadraticSegment:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: string
+      c:
+        type: string
+      scalingFactor:
+        type: string
+      initialX0:
+        type: string
+      currentX0:
+        type: string
+    description: |-
+      FixedQuadraticSegment represents a quadratic curve defined by the equation
+      ax^2 + bx + c with a fixed shape and left half bounded interval.
+
+      The curve parameters set during initialization will remain fixed. During
+      shift up and undergird operations, only the x-interval will be modified.
+
+      initialX0 is the lower bound during initialization and currentX0 is the
+      lower bound of modified x-interval.
+
+      The x-axis operates on a much larger values than y-axis. So, in order to
+      avoid extremly small slopes, a scaling factor is used for the x-values.
   escbackbone.ubcmm.FlatSegment:
     type: object
     properties:
@@ -71361,33 +71389,6 @@ definitions:
   escbackbone.ubcmm.Params:
     type: object
     description: Params defines the parameters for the module.
-  escbackbone.ubcmm.QuadraticSegment:
-    type: object
-    properties:
-      a:
-        type: string
-      b:
-        type: string
-      c:
-        type: string
-      scalingFactor:
-        type: string
-      initialX0:
-        type: string
-      currentX0:
-        type: string
-    description: |-
-      QuadraticSegment represents a quadratic curve defined by the equation 
-      ax^2 + bx + c with a fixed shape and left half bounded interval.
-
-      The curve parameters set during initialization will remain fixed. During
-      shift up and undergird operations, only the x-interval will be modified.
-
-      initialX0 is the lower bound during initialization and currentX0 is the
-      lower bound of modified x-interval.
-
-      The x-axis operates on a much larger values than y-axis. So, in order to
-      avoid extremly small slopes, a scaling factor is used for the x-values.
   escbackbone.ubcmm.QueryGetCurveResponse:
     type: object
     properties:
@@ -71556,8 +71557,8 @@ definitions:
               currentX0:
                 type: string
             description: >-
-              QuadraticSegment represents a quadratic curve defined by the
-              equation 
+              FixedQuadraticSegment represents a quadratic curve defined by the
+              equation
 
               ax^2 + bx + c with a fixed shape and left half bounded interval.
 

@@ -10,7 +10,7 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
-// QuadraticSegment represents a quadratic curve defined by the equation 
+// FixedQuadraticSegment represents a quadratic curve defined by the equation
 // ax^2 + bx + c with a fixed shape and left half bounded interval.
 //
 // The curve parameters set during initialization will remain fixed. During
@@ -21,7 +21,7 @@ option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 //
 // The x-axis operates on a much larger values than y-axis. So, in order to
 // avoid extremly small slopes, a scaling factor is used for the x-values.
-message QuadraticSegment {
+message FixedQuadraticSegment {
   
   string a = 1 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
