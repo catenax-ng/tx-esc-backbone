@@ -113,7 +113,7 @@ func (c *Curve) fitS3() {
 	c.QS3.ScalingFactor = sdk.NewDec(1e9)
 
 	curvatureP3 := c.S2.curvatureAtEnd()
-	c.calcS3ABC(curvatureP3, c.SlopeP3, c.p3Y(), c.p3x())
+	c.calcS3ABC(curvatureP3, c.SlopeP3, c.S2.endY(), c.S2.endX())
 }
 
 func (c *Curve) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
