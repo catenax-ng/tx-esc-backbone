@@ -112,3 +112,25 @@ func computePolyFor(x1 sdk.Dec, terms []term) sdk.Dec {
 	}
 	return sum
 }
+
+var _ view = (*BezierSegment)(nil)
+
+// startX returns the x-value of the start of the visible part of the curve.
+func (bseg *BezierSegment) startX() sdk.Dec {
+	return bseg.P0X
+}
+
+// endX returns the x-value of the end of the visible part of the curve.
+func (bseg *BezierSegment) endX() sdk.Dec {
+	return bseg.P1X
+}
+
+// startY returns the y-value of the start of the visible part of the line
+func (bseg *BezierSegment) startY() sdk.Dec {
+	return bseg.P0Y
+}
+
+// endY returns the y-value of the end of the visible part of the line.
+func (bseg *BezierSegment) endY() sdk.Dec {
+	return bseg.P1Y
+}

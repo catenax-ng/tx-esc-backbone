@@ -42,3 +42,25 @@ func (fqseg *FixedQuadraticSegment) scaleX(x1 sdk.Dec) sdk.Dec {
 func (fqseg *FixedQuadraticSegment) deScaleX(x1 sdk.Dec) sdk.Dec {
 	return x1.Mul(fqseg.ScalingFactor)
 }
+
+var _ view = (*FixedQuadraticSegment)(nil)
+
+// startX returns the x-value of the start of the visible part of the curve.
+func (fqseg *FixedQuadraticSegment) startX() sdk.Dec {
+	return fqseg.CurrentX0
+}
+
+// endX returns the x-value of the end of the visible part of the curve.
+func (fqseg *FixedQuadraticSegment) endX() sdk.Dec {
+	return sdk.NewDec(1e17)
+}
+
+// startY returns the y-value of the start of the visible part of the line
+func (fqseg *FixedQuadraticSegment) startY() sdk.Dec {
+	return fqseg.y(fqseg.CurrentX0)
+}
+
+// endY returns the y-value of the end of the visible part of the line.
+func (fqseg *FixedQuadraticSegment) endY() sdk.Dec {
+	return sdk.NewDec(1e17)
+}

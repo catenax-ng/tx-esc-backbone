@@ -18,33 +18,33 @@ const (
 )
 
 func (c *Curve) p0Y() sdk.Dec {
-	return c.S0.P0Y
+	return c.S0.startY()
 }
 
 func (c *Curve) p1Y() sdk.Dec {
-	return c.S1.P0Y
+	return c.S1.startY()
 }
 
 func (c *Curve) p2Y() sdk.Dec {
-	return c.S2.y(c.S2.IntervalP0X)
+	return c.S2.startY()
 }
 
 func (c *Curve) p3Y() sdk.Dec {
-	return c.S2.P1Y
+	return c.S2.endY()
 }
 
 func (c *Curve) p0x() sdk.Dec {
-	return c.S0.P0X
+	return c.S0.startX()
 }
 func (c *Curve) p1x() sdk.Dec {
-	return c.S1.P0X
+	return c.S1.startX()
 }
 func (c *Curve) p2x() sdk.Dec {
-	return c.S2.IntervalP0X
+	return c.S2.startX()
 }
 
 func (c *Curve) p3x() sdk.Dec {
-	return c.S2.P1X
+	return c.S2.endX()
 }
 
 func (c *Curve) setP0Y(p0Y sdk.Dec) {

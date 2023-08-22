@@ -23,3 +23,25 @@ func (fseg *FlatSegment) integralX1(x1 sdk.Dec) sdk.Dec {
 func (fseg *FlatSegment) y(x sdk.Dec) sdk.Dec {
 	return fseg.Y
 }
+
+var _ view = (*FlatSegment)(nil)
+
+// startX returns the x-value of the start of the visible part of the line
+func (fseg *FlatSegment) startX() sdk.Dec {
+	return sdk.ZeroDec() // TODO: Check if this is correct.
+}
+
+// endX returns the x-value of the end of the visible part of the line.
+func (fseg *FlatSegment) endX() sdk.Dec {
+	return fseg.X0
+}
+
+// startY returns the y-value of the start of the visible part of the line
+func (fseg *FlatSegment) startY() sdk.Dec {
+	return fseg.Y
+}
+
+// endY returns the y-value of the end of the visible part of the line.
+func (fseg *FlatSegment) endY() sdk.Dec {
+	return fseg.Y
+}

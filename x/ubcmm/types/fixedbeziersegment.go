@@ -43,3 +43,25 @@ func (fbseg *FixedBezierSegment) curvatureAtEnd() sdk.Dec {
 	// CLARIFY: Reference for this calculation.
 	return secondDerivativeT1(fbseg, t1).Quo(fbseg.DeltaX)
 }
+
+var _ view = (*FixedBezierSegment)(nil)
+
+// startX returns the x-value of the start of the visible part of the curve.
+func (fbseg *FixedBezierSegment) startX() sdk.Dec {
+	return fbseg.IntervalP0X
+}
+
+// endX returns the x-value of the end of the visible part of the curve.
+func (fbseg *FixedBezierSegment) endX() sdk.Dec {
+	return fbseg.P1X
+}
+
+// startY returns the y-value of the start of the visible part of the line
+func (fbseg *FixedBezierSegment) startY() sdk.Dec {
+	return fbseg.y(fbseg.IntervalP0X)
+}
+
+// endY returns the y-value of the end of the visible part of the line.
+func (fbseg *FixedBezierSegment) endY() sdk.Dec {
+	return fbseg.P1Y
+}
