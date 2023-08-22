@@ -84,7 +84,14 @@ func (c *Curve) initSegmentsToZero() {
 			P0Y: sdk.ZeroDec(),
 		},
 	}
-	c.QS3 = &FixedQuadraticSegment{}
+	c.QS3 = &FixedQuadraticSegment{
+		A:             sdk.ZeroDec(),
+		B:             sdk.ZeroDec(),
+		C:             sdk.ZeroDec(),
+		ScalingFactor: sdk.ZeroDec(),
+		InitialX0:     sdk.ZeroDec(),
+		CurrentX0:     sdk.ZeroDec(),
+	}
 }
 
 func (c *Curve) fitS2() {

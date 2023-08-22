@@ -83,6 +83,7 @@ func (c *Curve) setP2X(p2X sdk.Dec) {
 
 func (c *Curve) setP3X(p3X sdk.Dec) {
 	c.S2.setP1X(p3X)
+	c.QS3.setP0X(p3X)
 }
 
 // segmentNum returns the segment number for the given point x.

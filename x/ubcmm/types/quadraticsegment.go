@@ -43,6 +43,17 @@ func (fqseg *FixedQuadraticSegment) deScaleX(x1 sdk.Dec) sdk.Dec {
 	return x1.Mul(fqseg.ScalingFactor)
 }
 
+// setP0X sets the value of parameter InitalP0X and CurrentP0X. It always sets
+// the value of CurrentP0X and sets the value of InitalP0X, only if it was not
+// already set (it is zero).
+func (fqseg *FixedQuadraticSegment) setP0X(P0X sdk.Dec) {
+	fqseg.CurrentX0 = P0X
+	// If P0X is zero, then it was not set before, so set it.
+	if fqseg.InitialX0.IsZero() {
+		fqseg.InitialX0 = P0X
+	}
+}
+
 var _ view = (*FixedQuadraticSegment)(nil)
 
 // startX returns the x-value of the start of the visible part of the curve.

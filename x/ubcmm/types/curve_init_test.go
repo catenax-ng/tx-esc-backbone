@@ -50,8 +50,8 @@ func Test_Curve_Fit_Happy(t *testing.T) {
 		IsEqualDecimal(t, "-5.733333341000000000", c.QS3.B)
 		IsEqualDecimal(t, "16.200000022000000000", c.QS3.C)
 		IsEqualDecimal(t, "1000000000.000000000000000000", c.QS3.ScalingFactor)
-		assert.Zero(t, c.QS3.InitialX0)
-		assert.Zero(t, c.QS3.CurrentX0)
+		IsEqualDecimal(t, "6000000000.000000000000000000", c.QS3.InitialX0)
+		IsEqualDecimal(t, "6000000000.000000000000000000", c.QS3.CurrentX0)
 	})
 
 	t.Run("alternate set of valid params", func(t *testing.T) {
