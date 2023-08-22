@@ -10,6 +10,17 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
+// QuadraticSegment represents a quadratic curve defined by the equation 
+// ax^2 + bx + c with a fixed shape and left half bounded interval.
+//
+// The curve parameters set during initialization will remain fixed. During
+// shift up and undergird operations, only the x-interval will be modified.
+//
+// initialX0 is the lower bound during initialization and currentX0 is the
+// lower bound of modified x-interval.
+//
+// The x-axis operates on a much larger values than y-axis. So, in order to
+// avoid extremly small slopes, a scaling factor is used for the x-values.
 message QuadraticSegment {
   
   string a = 1 [

@@ -10,6 +10,13 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
+// FlatSegment represents a horizontal line with a dynamic shape and bounded
+// interval.
+//
+// The line has zero length during initialization and could be modified during
+// shift up and undergird operations.
+//
+// The line has a bounded interval [0, x0].
 message FlatSegment {
   
   string y = 1 [

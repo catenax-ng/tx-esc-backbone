@@ -29,6 +29,13 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// FlatSegment represents a horizontal line with a dynamic shape and bounded
+// interval.
+//
+// The line has zero length during initialization and could be modified during
+// shift up and undergird operations.
+//
+// The line has a bounded interval [0, x0].
 type FlatSegment struct {
 	Y  github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=y,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"y"`
 	X0 github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=x0,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"x0"`

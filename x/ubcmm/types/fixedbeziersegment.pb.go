@@ -29,6 +29,14 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// FixedBezierSegment represents a cubic bezier curve with a fixed shape and a
+// bounded interval.
+//
+// The curve parameters set during initialization will remain fixed. During
+// shift up and undergird operations, only the x-interval will be modified.
+//
+// intervalP0X represents the lower bound of the modified x-interval, while the
+// upper bound will remain fixed.
 type FixedBezierSegment struct {
 	*BezierSegment `protobuf:"bytes,1,opt,name=s,proto3,embedded=s" json:"s,omitempty"`
 	IntervalP0X    github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=intervalP0X,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"intervalP0X"`

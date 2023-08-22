@@ -29,6 +29,8 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// Curve represents the undergirding bonding curve (ubc), consisting of
+// multiple segments.
 type Curve struct {
 	FS0             *FlatSegment                           `protobuf:"bytes,1,opt,name=fS0,proto3" json:"fS0,omitempty"`
 	S0              *BezierSegment                         `protobuf:"bytes,2,opt,name=s0,proto3" json:"s0,omitempty"`

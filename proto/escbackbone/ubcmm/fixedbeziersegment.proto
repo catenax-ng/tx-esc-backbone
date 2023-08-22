@@ -11,6 +11,14 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 
+// FixedBezierSegment represents a cubic bezier curve with a fixed shape and a
+// bounded interval.
+//
+// The curve parameters set during initialization will remain fixed. During
+// shift up and undergird operations, only the x-interval will be modified.
+//
+// intervalP0X represents the lower bound of the modified x-interval, while the
+// upper bound will remain fixed.
 message FixedBezierSegment {
   
   BezierSegment s = 1 [(gogoproto.embed) = true];

@@ -29,6 +29,17 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// QuadraticSegment represents a quadratic curve defined by the equation
+// ax^2 + bx + c with a fixed shape and left half bounded interval.
+//
+// The curve parameters set during initialization will remain fixed. During
+// shift up and undergird operations, only the x-interval will be modified.
+//
+// initialX0 is the lower bound during initialization and currentX0 is the
+// lower bound of modified x-interval.
+//
+// The x-axis operates on a much larger values than y-axis. So, in order to
+// avoid extremly small slopes, a scaling factor is used for the x-values.
 type QuadraticSegment struct {
 	A             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=a,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"a"`
 	B             github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,2,opt,name=b,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"b"`

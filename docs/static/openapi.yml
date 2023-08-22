@@ -35193,62 +35193,145 @@ paths:
                         type: string
                       x0:
                         type: string
+                    description: >-
+                      FlatSegment represents a horizontal line with a dynamic
+                      shape and bounded
+
+                      interval.
+
+
+                      The line has zero length during initialization and could
+                      be modified during
+
+                      shift up and undergird operations.
+
+
+                      The line has a bounded interval [0, x0].
                   s0:
                     type: object
                     properties:
-                      p0Y:
-                        type: string
                       a:
                         type: string
                       b:
                         type: string
-                      p1Y:
-                        type: string
                       p0X:
+                        type: string
+                      p0Y:
                         type: string
                       p1X:
                         type: string
+                      p1Y:
+                        type: string
                       deltaX:
                         type: string
+                    description: >-
+                      BezierSegment represent a cubic bezier curve with a
+                      dynamic shape and a
+
+                      bounded interval.
+
+
+                      The curve parameters set during initialization could be
+                      modified during
+
+                      shift up and undergird operations.
+
+
+                      A and B are the two control points. P0 and P1 are the
+                      start and end points
+
+                      of the curve. DeltaX is the length of the x-interval.
                   s1:
                     type: object
                     properties:
-                      p0Y:
-                        type: string
                       a:
                         type: string
                       b:
                         type: string
-                      p1Y:
-                        type: string
                       p0X:
+                        type: string
+                      p0Y:
                         type: string
                       p1X:
                         type: string
+                      p1Y:
+                        type: string
                       deltaX:
                         type: string
+                    description: >-
+                      BezierSegment represent a cubic bezier curve with a
+                      dynamic shape and a
+
+                      bounded interval.
+
+
+                      The curve parameters set during initialization could be
+                      modified during
+
+                      shift up and undergird operations.
+
+
+                      A and B are the two control points. P0 and P1 are the
+                      start and end points
+
+                      of the curve. DeltaX is the length of the x-interval.
                   s2:
                     type: object
                     properties:
                       s:
                         type: object
                         properties:
-                          p0Y:
-                            type: string
                           a:
                             type: string
                           b:
                             type: string
-                          p1Y:
-                            type: string
                           p0X:
+                            type: string
+                          p0Y:
                             type: string
                           p1X:
                             type: string
+                          p1Y:
+                            type: string
                           deltaX:
                             type: string
+                        description: >-
+                          BezierSegment represent a cubic bezier curve with a
+                          dynamic shape and a
+
+                          bounded interval.
+
+
+                          The curve parameters set during initialization could
+                          be modified during
+
+                          shift up and undergird operations.
+
+
+                          A and B are the two control points. P0 and P1 are the
+                          start and end points
+
+                          of the curve. DeltaX is the length of the x-interval.
                       intervalP0X:
                         type: string
+                    description: >-
+                      FixedBezierSegment represents a cubic bezier curve with a
+                      fixed shape and a
+
+                      bounded interval.
+
+
+                      The curve parameters set during initialization will remain
+                      fixed. During
+
+                      shift up and undergird operations, only the x-interval
+                      will be modified.
+
+
+                      intervalP0X represents the lower bound of the modified
+                      x-interval, while the
+
+                      upper bound will remain fixed.
                   qS3:
                     type: object
                     properties:
@@ -35264,6 +35347,32 @@ paths:
                         type: string
                       currentX0:
                         type: string
+                    description: >-
+                      QuadraticSegment represents a quadratic curve defined by
+                      the equation 
+
+                      ax^2 + bx + c with a fixed shape and left half bounded
+                      interval.
+
+
+                      The curve parameters set during initialization will remain
+                      fixed. During
+
+                      shift up and undergird operations, only the x-interval
+                      will be modified.
+
+
+                      initialX0 is the lower bound during initialization and
+                      currentX0 is the
+
+                      lower bound of modified x-interval.
+
+
+                      The x-axis operates on a much larger values than y-axis.
+                      So, in order to
+
+                      avoid extremly small slopes, a scaling factor is used for
+                      the x-values.
                   refProfitFactor:
                     type: string
                   refTokenSupply:
@@ -35286,6 +35395,11 @@ paths:
                     type: string
                   slopeP3:
                     type: string
+                description: >-
+                  Curve represents the undergirding bonding curve (ubc),
+                  consisting of
+
+                  multiple segments.
         default:
           description: An unexpected error response.
           schema:
@@ -70913,20 +71027,29 @@ definitions:
   escbackbone.ubcmm.BezierSegment:
     type: object
     properties:
-      p0Y:
-        type: string
       a:
         type: string
       b:
         type: string
-      p1Y:
-        type: string
       p0X:
+        type: string
+      p0Y:
         type: string
       p1X:
         type: string
+      p1Y:
+        type: string
       deltaX:
         type: string
+    description: |-
+      BezierSegment represent a cubic bezier curve with a dynamic shape and a
+      bounded interval.
+
+      The curve parameters set during initialization could be modified during
+      shift up and undergird operations.
+
+      A and B are the two control points. P0 and P1 are the start and end points
+      of the curve. DeltaX is the length of the x-interval.
   escbackbone.ubcmm.Curve:
     type: object
     properties:
@@ -70937,62 +71060,145 @@ definitions:
             type: string
           x0:
             type: string
+        description: >-
+          FlatSegment represents a horizontal line with a dynamic shape and
+          bounded
+
+          interval.
+
+
+          The line has zero length during initialization and could be modified
+          during
+
+          shift up and undergird operations.
+
+
+          The line has a bounded interval [0, x0].
       s0:
         type: object
         properties:
-          p0Y:
-            type: string
           a:
             type: string
           b:
             type: string
-          p1Y:
-            type: string
           p0X:
+            type: string
+          p0Y:
             type: string
           p1X:
             type: string
+          p1Y:
+            type: string
           deltaX:
             type: string
+        description: >-
+          BezierSegment represent a cubic bezier curve with a dynamic shape and
+          a
+
+          bounded interval.
+
+
+          The curve parameters set during initialization could be modified
+          during
+
+          shift up and undergird operations.
+
+
+          A and B are the two control points. P0 and P1 are the start and end
+          points
+
+          of the curve. DeltaX is the length of the x-interval.
       s1:
         type: object
         properties:
-          p0Y:
-            type: string
           a:
             type: string
           b:
             type: string
-          p1Y:
-            type: string
           p0X:
+            type: string
+          p0Y:
             type: string
           p1X:
             type: string
+          p1Y:
+            type: string
           deltaX:
             type: string
+        description: >-
+          BezierSegment represent a cubic bezier curve with a dynamic shape and
+          a
+
+          bounded interval.
+
+
+          The curve parameters set during initialization could be modified
+          during
+
+          shift up and undergird operations.
+
+
+          A and B are the two control points. P0 and P1 are the start and end
+          points
+
+          of the curve. DeltaX is the length of the x-interval.
       s2:
         type: object
         properties:
           s:
             type: object
             properties:
-              p0Y:
-                type: string
               a:
                 type: string
               b:
                 type: string
-              p1Y:
-                type: string
               p0X:
+                type: string
+              p0Y:
                 type: string
               p1X:
                 type: string
+              p1Y:
+                type: string
               deltaX:
                 type: string
+            description: >-
+              BezierSegment represent a cubic bezier curve with a dynamic shape
+              and a
+
+              bounded interval.
+
+
+              The curve parameters set during initialization could be modified
+              during
+
+              shift up and undergird operations.
+
+
+              A and B are the two control points. P0 and P1 are the start and
+              end points
+
+              of the curve. DeltaX is the length of the x-interval.
           intervalP0X:
             type: string
+        description: >-
+          FixedBezierSegment represents a cubic bezier curve with a fixed shape
+          and a
+
+          bounded interval.
+
+
+          The curve parameters set during initialization will remain fixed.
+          During
+
+          shift up and undergird operations, only the x-interval will be
+          modified.
+
+
+          intervalP0X represents the lower bound of the modified x-interval,
+          while the
+
+          upper bound will remain fixed.
       qS3:
         type: object
         properties:
@@ -71008,6 +71214,30 @@ definitions:
             type: string
           currentX0:
             type: string
+        description: >-
+          QuadraticSegment represents a quadratic curve defined by the equation 
+
+          ax^2 + bx + c with a fixed shape and left half bounded interval.
+
+
+          The curve parameters set during initialization will remain fixed.
+          During
+
+          shift up and undergird operations, only the x-interval will be
+          modified.
+
+
+          initialX0 is the lower bound during initialization and currentX0 is
+          the
+
+          lower bound of modified x-interval.
+
+
+          The x-axis operates on a much larger values than y-axis. So, in order
+          to
+
+          avoid extremly small slopes, a scaling factor is used for the
+          x-values.
       refProfitFactor:
         type: string
       refTokenSupply:
@@ -71030,28 +71260,64 @@ definitions:
         type: string
       slopeP3:
         type: string
+    description: |-
+      Curve represents the undergirding bonding curve (ubc), consisting of
+      multiple segments.
   escbackbone.ubcmm.FixedBezierSegment:
     type: object
     properties:
       s:
         type: object
         properties:
-          p0Y:
-            type: string
           a:
             type: string
           b:
             type: string
-          p1Y:
-            type: string
           p0X:
+            type: string
+          p0Y:
             type: string
           p1X:
             type: string
+          p1Y:
+            type: string
           deltaX:
             type: string
+        description: >-
+          BezierSegment represent a cubic bezier curve with a dynamic shape and
+          a
+
+          bounded interval.
+
+
+          The curve parameters set during initialization could be modified
+          during
+
+          shift up and undergird operations.
+
+
+          A and B are the two control points. P0 and P1 are the start and end
+          points
+
+          of the curve. DeltaX is the length of the x-interval.
       intervalP0X:
         type: string
+    description: >-
+      FixedBezierSegment represents a cubic bezier curve with a fixed shape and
+      a
+
+      bounded interval.
+
+
+      The curve parameters set during initialization will remain fixed. During
+
+      shift up and undergird operations, only the x-interval will be modified.
+
+
+      intervalP0X represents the lower bound of the modified x-interval, while
+      the
+
+      upper bound will remain fixed.
   escbackbone.ubcmm.FlatSegment:
     type: object
     properties:
@@ -71059,6 +71325,19 @@ definitions:
         type: string
       x0:
         type: string
+    description: >-
+      FlatSegment represents a horizontal line with a dynamic shape and bounded
+
+      interval.
+
+
+      The line has zero length during initialization and could be modified
+      during
+
+      shift up and undergird operations.
+
+
+      The line has a bounded interval [0, x0].
   escbackbone.ubcmm.MsgBuyResponse:
     type: object
     properties:
@@ -71097,6 +71376,18 @@ definitions:
         type: string
       currentX0:
         type: string
+    description: |-
+      QuadraticSegment represents a quadratic curve defined by the equation 
+      ax^2 + bx + c with a fixed shape and left half bounded interval.
+
+      The curve parameters set during initialization will remain fixed. During
+      shift up and undergird operations, only the x-interval will be modified.
+
+      initialX0 is the lower bound during initialization and currentX0 is the
+      lower bound of modified x-interval.
+
+      The x-axis operates on a much larger values than y-axis. So, in order to
+      avoid extremly small slopes, a scaling factor is used for the x-values.
   escbackbone.ubcmm.QueryGetCurveResponse:
     type: object
     properties:
@@ -71110,62 +71401,145 @@ definitions:
                 type: string
               x0:
                 type: string
+            description: >-
+              FlatSegment represents a horizontal line with a dynamic shape and
+              bounded
+
+              interval.
+
+
+              The line has zero length during initialization and could be
+              modified during
+
+              shift up and undergird operations.
+
+
+              The line has a bounded interval [0, x0].
           s0:
             type: object
             properties:
-              p0Y:
-                type: string
               a:
                 type: string
               b:
                 type: string
-              p1Y:
-                type: string
               p0X:
+                type: string
+              p0Y:
                 type: string
               p1X:
                 type: string
+              p1Y:
+                type: string
               deltaX:
                 type: string
+            description: >-
+              BezierSegment represent a cubic bezier curve with a dynamic shape
+              and a
+
+              bounded interval.
+
+
+              The curve parameters set during initialization could be modified
+              during
+
+              shift up and undergird operations.
+
+
+              A and B are the two control points. P0 and P1 are the start and
+              end points
+
+              of the curve. DeltaX is the length of the x-interval.
           s1:
             type: object
             properties:
-              p0Y:
-                type: string
               a:
                 type: string
               b:
                 type: string
-              p1Y:
-                type: string
               p0X:
+                type: string
+              p0Y:
                 type: string
               p1X:
                 type: string
+              p1Y:
+                type: string
               deltaX:
                 type: string
+            description: >-
+              BezierSegment represent a cubic bezier curve with a dynamic shape
+              and a
+
+              bounded interval.
+
+
+              The curve parameters set during initialization could be modified
+              during
+
+              shift up and undergird operations.
+
+
+              A and B are the two control points. P0 and P1 are the start and
+              end points
+
+              of the curve. DeltaX is the length of the x-interval.
           s2:
             type: object
             properties:
               s:
                 type: object
                 properties:
-                  p0Y:
-                    type: string
                   a:
                     type: string
                   b:
                     type: string
-                  p1Y:
-                    type: string
                   p0X:
+                    type: string
+                  p0Y:
                     type: string
                   p1X:
                     type: string
+                  p1Y:
+                    type: string
                   deltaX:
                     type: string
+                description: >-
+                  BezierSegment represent a cubic bezier curve with a dynamic
+                  shape and a
+
+                  bounded interval.
+
+
+                  The curve parameters set during initialization could be
+                  modified during
+
+                  shift up and undergird operations.
+
+
+                  A and B are the two control points. P0 and P1 are the start
+                  and end points
+
+                  of the curve. DeltaX is the length of the x-interval.
               intervalP0X:
                 type: string
+            description: >-
+              FixedBezierSegment represents a cubic bezier curve with a fixed
+              shape and a
+
+              bounded interval.
+
+
+              The curve parameters set during initialization will remain fixed.
+              During
+
+              shift up and undergird operations, only the x-interval will be
+              modified.
+
+
+              intervalP0X represents the lower bound of the modified x-interval,
+              while the
+
+              upper bound will remain fixed.
           qS3:
             type: object
             properties:
@@ -71181,6 +71555,31 @@ definitions:
                 type: string
               currentX0:
                 type: string
+            description: >-
+              QuadraticSegment represents a quadratic curve defined by the
+              equation 
+
+              ax^2 + bx + c with a fixed shape and left half bounded interval.
+
+
+              The curve parameters set during initialization will remain fixed.
+              During
+
+              shift up and undergird operations, only the x-interval will be
+              modified.
+
+
+              initialX0 is the lower bound during initialization and currentX0
+              is the
+
+              lower bound of modified x-interval.
+
+
+              The x-axis operates on a much larger values than y-axis. So, in
+              order to
+
+              avoid extremly small slopes, a scaling factor is used for the
+              x-values.
           refProfitFactor:
             type: string
           refTokenSupply:
@@ -71203,6 +71602,9 @@ definitions:
             type: string
           slopeP3:
             type: string
+        description: |-
+          Curve represents the undergirding bonding curve (ubc), consisting of
+          multiple segments.
   escbackbone.ubcmm.QueryParamsResponse:
     type: object
     properties:
