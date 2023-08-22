@@ -30,7 +30,7 @@ func (c *Curve) p2Y() sdk.Dec {
 }
 
 func (c *Curve) p3Y() sdk.Dec {
-	return c.S2.endY()
+	return c.QS3.startY()
 }
 
 func (c *Curve) p0x() sdk.Dec {
@@ -44,7 +44,7 @@ func (c *Curve) p2x() sdk.Dec {
 }
 
 func (c *Curve) p3x() sdk.Dec {
-	return c.S2.endX()
+	return c.QS3.startX()
 }
 
 func (c *Curve) setP0Y(p0Y sdk.Dec) {
