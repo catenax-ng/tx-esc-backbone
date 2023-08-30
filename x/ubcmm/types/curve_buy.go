@@ -19,7 +19,7 @@ func (c *Curve) Buy(tokens sdk.Dec) sdk.Dec {
 	xNew := c.CurrentSupply.Add(tokens)
 
 	vouchersUsed := c.integralX12(xCurrent, xNew)
-	vouchersUsed = roundOff(vouchersUsed, VoucherMultiplier)
+	vouchersUsed = c.ubcRoundOff(vouchersUsed, VoucherMultiplier)
 
 	c.CurrentSupply = xNew
 	c.BPool = c.BPool.Add(vouchersUsed)
@@ -27,9 +27,15 @@ func (c *Curve) Buy(tokens sdk.Dec) sdk.Dec {
 	return vouchersUsed
 }
 
-func roundOff(t sdk.Dec, multiplier int64) sdk.Dec {
-	// CLARIFY: Is the rounding off strategy correct ?
-	return t.MulInt64(VoucherMultiplier).
-		TruncateDec().
-		QuoInt64(VoucherMultiplier)
+func (c *Curve) ubcRoundOff(n sdk.Dec, multiplier int64) sdk.Dec {
+	rounded := bankersRoundOff(n, multiplier)
+	difference := n.Sub(rounded)
+	c.NumericalErrorAccumulator = c.NumericalErrorAccumulator.Add(difference)
+	return rounded
+}
+
+func bankersRoundOff(n sdk.Dec, multiplier int64) sdk.Dec {
+	integer := n.MulInt64(multiplier)
+	roundedInteger := integer.RoundInt()
+	return sdk.NewDecFromInt(roundedInteger).QuoInt64(multiplier)
 }

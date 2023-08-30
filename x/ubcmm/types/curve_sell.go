@@ -19,7 +19,7 @@ func (c *Curve) Sell(tokens sdk.Dec) sdk.Dec {
 	xNew := c.CurrentSupply.Sub(tokens)
 
 	vouchersOut := c.integralX12(xNew, xCurrent)
-	vouchersOut = roundOff(vouchersOut, VoucherMultiplier)
+	vouchersOut = c.ubcRoundOff(vouchersOut, VoucherMultiplier)
 
 	c.CurrentSupply = xNew
 	c.BPool = c.BPool.Sub(vouchersOut)
