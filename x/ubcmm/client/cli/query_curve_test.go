@@ -26,17 +26,18 @@ func networkWithCurveObjects(t *testing.T) (*network.Network, types.Curve) {
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
 	curve := &types.Curve{
-		RefTokenSupply:  sdk.ZeroDec(),
-		RefTokenPrice:   sdk.ZeroDec(),
-		RefProfitFactor: sdk.ZeroDec(),
-		BPool:           sdk.ZeroDec(),
-		BPoolUnder:      sdk.ZeroDec(),
-		SlopeP2:         sdk.ZeroDec(),
-		SlopeP3:         sdk.ZeroDec(),
-		FactorFy:        sdk.ZeroDec(),
-		FactorFxy:       sdk.ZeroDec(),
-		TradingPoint:    sdk.ZeroDec(),
-		CurrentSupply:   sdk.ZeroDec(),
+		RefTokenSupply:            sdk.ZeroDec(),
+		RefTokenPrice:             sdk.ZeroDec(),
+		RefProfitFactor:           sdk.ZeroDec(),
+		BPool:                     sdk.ZeroDec(),
+		BPoolUnder:                sdk.ZeroDec(),
+		SlopeP2:                   sdk.ZeroDec(),
+		SlopeP3:                   sdk.ZeroDec(),
+		FactorFy:                  sdk.ZeroDec(),
+		FactorFxy:                 sdk.ZeroDec(),
+		TradingPoint:              sdk.ZeroDec(),
+		CurrentSupply:             sdk.ZeroDec(),
+		NumericalErrorAccumulator: sdk.ZeroDec(),
 	}
 	nullify.Fill(&curve)
 	state.Curve = curve

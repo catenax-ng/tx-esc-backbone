@@ -23,6 +23,8 @@ func (c *Curve) Fit() error {
 	c.CurrentSupply = c.RefTokenSupply.Quo(sdk.NewDec(2))
 
 	c.initSegmentsToZero()
+	c.NumericalErrorAccumulator = sdk.ZeroDec()
+
 	c.fitS2()
 	c.fitS3()
 	c.fitS0S1Repeatedly(1)

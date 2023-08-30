@@ -19,17 +19,18 @@ import (
 
 func createTestCurve(keeper *keeper.Keeper, ctx sdk.Context) types.Curve {
 	item := types.Curve{
-		RefTokenSupply:  sdk.ZeroDec(),
-		RefTokenPrice:   sdk.ZeroDec(),
-		RefProfitFactor: sdk.ZeroDec(),
-		BPool:           sdk.ZeroDec(),
-		BPoolUnder:      sdk.ZeroDec(),
-		SlopeP2:         sdk.ZeroDec(),
-		SlopeP3:         sdk.ZeroDec(),
-		FactorFy:        sdk.ZeroDec(),
-		FactorFxy:       sdk.ZeroDec(),
-		TradingPoint:    sdk.ZeroDec(),
-		CurrentSupply:   sdk.ZeroDec(),
+		RefTokenSupply:            sdk.ZeroDec(),
+		RefTokenPrice:             sdk.ZeroDec(),
+		RefProfitFactor:           sdk.ZeroDec(),
+		BPool:                     sdk.ZeroDec(),
+		BPoolUnder:                sdk.ZeroDec(),
+		SlopeP2:                   sdk.ZeroDec(),
+		SlopeP3:                   sdk.ZeroDec(),
+		FactorFy:                  sdk.ZeroDec(),
+		FactorFxy:                 sdk.ZeroDec(),
+		TradingPoint:              sdk.ZeroDec(),
+		CurrentSupply:             sdk.ZeroDec(),
+		NumericalErrorAccumulator: sdk.ZeroDec(),
 	}
 	keeper.SetCurve(ctx, item)
 	return item

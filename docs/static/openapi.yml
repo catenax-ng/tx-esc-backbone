@@ -35395,6 +35395,8 @@ paths:
                     type: string
                   slopeP3:
                     type: string
+                  numericalErrorAccumulator:
+                    type: string
                 description: >-
                   Curve represents the undergirding bonding curve (ubc),
                   consisting of
@@ -71261,6 +71263,8 @@ definitions:
         type: string
       slopeP3:
         type: string
+      numericalErrorAccumulator:
+        type: string
     description: |-
       Curve represents the undergirding bonding curve (ubc), consisting of
       multiple segments.
@@ -71602,6 +71606,8 @@ definitions:
           slopeP2:
             type: string
           slopeP3:
+            type: string
+          numericalErrorAccumulator:
             type: string
         description: |-
           Curve represents the undergirding bonding curve (ubc), consisting of
