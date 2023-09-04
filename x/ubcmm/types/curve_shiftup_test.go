@@ -87,7 +87,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					InitialX0:     sdk.MustNewDecFromStr("6000000000.000000000000000000"),
 					CurrentX0:     sdk.MustNewDecFromStr("6000000000.000000000000000000"),
 				},
-				BPool:      sdk.MustNewDecFromStr("115125491.898143000000000000"),
+				BPool:      sdk.MustNewDecFromStr("115125491.898144000000000000"),
 				BPoolUnder: sdk.MustNewDecFromStr("114756324.035772563000000000"),
 			},
 			wantErr: assert.NoError,
