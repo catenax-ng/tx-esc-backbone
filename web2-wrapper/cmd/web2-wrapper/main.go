@@ -22,7 +22,7 @@ func main() {
 		}
 		broker, err := web2wrapper.NewNatsBrokerFor(cfg)
 		if err != nil {
-			logger.Error("Cannot connect to nats %v", err)
+			logger.Error(fmt.Sprintf("Cannot connect to nats %v", err))
 			os.Exit(1)
 		}
 		web2wrapper.NewDucttape(broker, client, logger).Forward(ctx, cfg.StartBlock)
