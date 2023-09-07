@@ -28,6 +28,7 @@ type Config struct {
 	Fees           string                       `json:"fees"`
 	Gas            string                       `json:"gas"`
 	Home           string                       `json:"home"`
+	LogLevel       string                       `json:"log_level"`
 	KeyRingBackend cosmosaccount.KeyringBackend `json:"key_ring_backend"`
 	StartBlock     int64                        `json:"start_block"`
 	Broker         BrokerCfg                    `json:"broker"`

@@ -21,7 +21,12 @@ func NewRootCmd(entryFn ConfigConsumer) *cobra.Command {
 				fmt.Printf("Cannot read config %v", err)
 				os.Exit(1)
 			}
-			logger := log.NewLogger(os.Stderr, log.LevelOption(zerolog.NoLevel))
+			logLevel, err := zerolog.ParseLevel(cfg.LogLevel)
+			if err != nil {
+				fmt.Printf("Cannot read config %v", err)
+				os.Exit(1)
+			}
+			logger := log.NewLogger(os.Stderr, log.LevelOption(logLevel))
 			ctx, cancel := context.WithCancel(context.Background())
 			signals := make(chan os.Signal, 1)
 			defer func() {

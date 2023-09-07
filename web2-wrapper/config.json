@@ -8,5 +8,11 @@
  "gas": "100000",
  "home": "/wrapper/config/",
  "key_ring_backend": "test",
- "start_block": 1618830
+ "start_block": 1,
+ "log_level": "INFO",
+ "broker": {
+  "url": "nats://127.0.0.1:4222",
+  "clientname": "web2wrapper",
+  "topic": "updates"
+ }
 }

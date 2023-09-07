@@ -10,6 +10,7 @@
  "home": "~/.esc-backbone-dev",
  "key_ring_backend": "test",
  "start_block": 0,
+ "log_level": "INFO",
  "broker": {
   "url": "nats://127.0.0.1:4223",
   "clientname": "web2wrapper",
