@@ -18,11 +18,11 @@ type LegacyDec struct {
 
 const (
 	// number of decimal places
-	LegacyPrecision = 18
+	LegacyPrecision = 36
 
 	// bits required to represent the above precision
 	// Ceiling[Log2[10^Precision - 1]]
-	LegacyDecimalPrecisionBits = 60
+	LegacyDecimalPrecisionBits = 120
 
 	// decimalTruncateBits is the minimum number of bits removed
 	// by a truncate operation. It is equal to
