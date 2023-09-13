@@ -226,6 +226,17 @@ func (c *Curve) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
 	}
 }
 
+// IsIntegralEqualToBPool checks if BPool is equal to the integral
+// under the curve from zero to current supply.
+func (c *Curve) IsIntegralEqualToBPool() bool {
+	integral := c.integralX12(sdk.ZeroDec(), c.CurrentSupply)
+	integral = bankersRoundOff(integral, VoucherMultiplier)
+
+	bPool := bankersRoundOff(c.BPool, VoucherMultiplier)
+
+	return integral.Equal(bPool)
+}
+
 func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec) {
 	segLowerBoundX := c.segmentNum(lowerBoundX)
 	segUpperBoundX := c.segmentNum(upperBoundX)
