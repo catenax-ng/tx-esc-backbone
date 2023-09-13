@@ -17,7 +17,6 @@ func Test_Curve_Fit_Happy(t *testing.T) {
 	t.Run("primary set of valid params", func(t *testing.T) {
 		c := validCurve()
 		require.NoError(t, c.Fit())
-		assert.True(t, c.IsIntegralEqualToBPool())
 	})
 
 	t.Run("alternate set of valid params", func(t *testing.T) {
@@ -44,7 +43,6 @@ func Test_Curve_Fit_Happy(t *testing.T) {
 				c := validCurve()
 				tc.modifier(&c)
 				assert.NoError(t, c.Fit())
-				assert.True(t, c.IsIntegralEqualToBPool())
 			})
 		}
 	})

@@ -27,10 +27,14 @@ func (c *Curve) Fit() error {
 
 	c.fitS2()
 	c.fitS3()
-	c.fitS0S1Repeatedly(1)
 
-	// Self-consistency to fit P0 better.
-	c.fitS0S1Repeatedly(2)
+	const maxIterations = 10
+	for i := 0; i < maxIterations; i++ {
+		c.fitS0S1()
+		if c.IsIntegralEqualToBPool() {
+			break
+		}
+	}
 
 	return c.validateCurvature()
 }
@@ -125,6 +129,11 @@ func (c *Curve) calcS3ABC(curvatureP3, slopeP3, p3, p3X sdk.Dec) {
 	c.QS3.B = c.SlopeP3.Mul(c.QS3.ScalingFactor).
 		Sub(sdk.NewDec(2).Mul(c.QS3.A).Mul(x3Scaled))
 	c.QS3.C = p3.Sub(c.QS3.A.Mul(x3Scaled.Power(2))).Sub(c.QS3.B.Mul(x3Scaled))
+}
+
+// fitS0S1 fits S0 and S1.
+func (c *Curve) fitS0S1() {
+	c.fitS0S1Repeatedly(1)
 }
 
 // fitS0S1Repeatedly fits S0 and S1 repeatedly for given count of repititions,
