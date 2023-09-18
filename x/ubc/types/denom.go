@@ -33,7 +33,7 @@ func validateVoucherCoin(value string) error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
 	}
-	if !(coin.Denom == VoucherDenom) {
+	if coin.Denom != VoucherDenom {
 		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
 	}
 	if coin.Amount.IsZero() || coin.Amount.IsNegative() {
