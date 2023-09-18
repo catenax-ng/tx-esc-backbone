@@ -85,3 +85,30 @@ func (s *Segment) integralT1(t1 sdk.Dec) sdk.Dec {
 
 	return (Pi.Add(ai).Sub(bi).Add(Pi1))
 }
+
+// term is a term in a polynomial equation.
+type term struct {
+	coefficient int64
+	exponent    uint64
+}
+
+// computePolyFor returns the value of polynomial p(x) constructed using the given
+// terms for the point x1.
+//
+// Eg: "computePolyFor(2, []term{{36, 2}, {-48, 1}, {12, 0}})" returns the value of
+// "36(x^2) - 48x + 12" at x=2.
+func computePolyFor(x1 sdk.Dec, terms []term) sdk.Dec {
+	// We don't use powers > 4. If we do in future, this will err and we can fix it.
+	const maxPow = 4
+	x1Pows := [maxPow + 1]sdk.Dec{}
+	x1Pows[0] = sdk.OneDec()
+	for i := 1; i <= maxPow; i++ {
+		x1Pows[i] = x1Pows[i-1].Mul(x1)
+	}
+
+	sum := sdk.ZeroDec()
+	for _, term := range terms {
+		sum = sum.Add(sdk.NewDec(term.coefficient).Mul(x1Pows[term.exponent]))
+	}
+	return sum
+}
