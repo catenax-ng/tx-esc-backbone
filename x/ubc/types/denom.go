@@ -29,7 +29,7 @@ func validateTokenCoin(value string) error {
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidCoins, "(%s)", err)
 	}
-	if !(coin.Denom == SystemTokenDenom) {
+	if coin.Denom != SystemTokenDenom {
 		return sdkerrors.Wrapf(ErrInvalidArg, "invalid denom")
 	}
 	if coin.Amount.IsZero() {
