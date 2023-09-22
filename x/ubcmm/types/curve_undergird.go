@@ -19,14 +19,13 @@ func (c *Curve) UndergirdS01(BPoolAdd sdk.Dec) error {
 	c.BPoolUnder = c.BPoolUnder.Add(BPoolAdd)
 	c.BPool = c.BPool.Add(BPoolAdd)
 
-	// CLARIFY: If it is fine to use the formula in calcP1X (used
-	// internally by fitS1S0, instead of calcP1XMethod2 ?
-	c.fitS0S1Repeatedly(10)
-
-	// CLARIFY: Fit S1 along with the condition "isA1WithinLimits"
-	// is full parameter sweep. And this condition takes several
-	// thousand steps to evaluate to true. In tests, this never
-	// converged in 10 cycles. So, is it okay that this is ignored ?
+	const maxIterations = 10
+	for i := 0; i < maxIterations; i++ {
+		c.fitS0S1()
+		if c.IsIntegralEqualToBPool() {
+			break
+		}
+	}
 
 	err := c.validateCurvature()
 	if err != nil {
