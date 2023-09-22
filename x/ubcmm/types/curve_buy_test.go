@@ -78,8 +78,8 @@ func TestRoundOff(t *testing.T) {
 				NumericalErrorAccumulator: sdk.ZeroDec(),
 			}
 			rounded := c.ubcRoundOff(inputDec, tc.multiplier)
-			assert.True(t, rounded.Equal(expectedDec))
-			assert.True(t, c.NumericalErrorAccumulator.Equal(differenceDec))
+			assert.Equal(t, rounded, expectedDec)
+			assert.Equal(t, c.NumericalErrorAccumulator, differenceDec)
 		})
 
 	}
