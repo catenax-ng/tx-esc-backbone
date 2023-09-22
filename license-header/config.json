@@ -18,7 +18,8 @@
     "**/.dockerignore",
     "artifacts/cw_nameservice.wasm",
     "build/mnemonic",
-    "NOTICE"
+    "NOTICE",
+    "external"
   ],
   "license": "license-header/license-header",
   "regexIdentifier": "_!##",
