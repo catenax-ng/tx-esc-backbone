@@ -8,6 +8,7 @@ FROM ghcr.io/catenax-ng/esc-backbone-build-base:latest as build
 
 WORKDIR /build/esc-backbone
 COPY go.mod go.sum ./
+COPY external ./external
 RUN go mod download
 
 COPY cmd ./cmd
