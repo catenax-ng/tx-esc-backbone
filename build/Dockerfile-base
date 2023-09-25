@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # syntax=docker/dockerfile:1.4
 FROM golang:1.19.1-bullseye as esc-backbone-build-base
-ENV PACKAGES bash curl
+ENV PACKAGES bash curl sed
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y $PACKAGES && \
