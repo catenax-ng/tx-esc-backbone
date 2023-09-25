@@ -1,6 +1,10 @@
+<!--
+ Copyright (c) 2022-2023 - for information on the respective copyright owner
+ see the NOTICE file and/or the repository at
+ https://github.com/catenax-ng/product-esc-backbone-code
 
-TODO
-rework documentation to reflect the queue interface and drop the rest interface
+ SPDX-License-Identifier: Apache-2.0
+-->
 
 ## Login to ghcr.io
 
