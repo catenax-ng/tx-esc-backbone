@@ -28,15 +28,28 @@ func (c *Curve) Fit() error {
 	c.fitS2()
 	c.fitS3()
 
+	return c.FitUntilConvergence()
+}
+
+func (c *Curve) FitUntilConvergence() error {
 	const maxIterations = 10
-	for i := 0; i < maxIterations; i++ {
+	i := 0
+	for ; i < maxIterations; i++ {
 		c.fitS0S1()
 		if c.IsIntegralEqualToBPool() {
 			break
 		}
 	}
+	if i == maxIterations {
+		return ErrCurveFitting.Wrapf("no convergence in %d iterations", i)
+	}
 
-	return c.validateCurvature()
+	err := c.validateCurvature()
+	if err != nil {
+		return ErrCurveFitting.Wrap(err.Error())
+	}
+	return nil
+
 }
 
 func (c *Curve) validateParameters() error {

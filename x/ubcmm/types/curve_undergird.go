@@ -19,17 +19,5 @@ func (c *Curve) UndergirdS01(BPoolAdd sdk.Dec) error {
 	c.BPoolUnder = c.BPoolUnder.Add(BPoolAdd)
 	c.BPool = c.BPool.Add(BPoolAdd)
 
-	const maxIterations = 10
-	for i := 0; i < maxIterations; i++ {
-		c.fitS0S1()
-		if c.IsIntegralEqualToBPool() {
-			break
-		}
-	}
-
-	err := c.validateCurvature()
-	if err != nil {
-		return ErrCurveFitting.Wrap("curvature conditions failed after undergirding: " + err.Error())
-	}
-	return nil
+	return c.FitUntilConvergence()
 }
