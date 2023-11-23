@@ -39,6 +39,7 @@ COPY web2-wrapper ./web2-wrapper
 WORKDIR /build/esc-backbone/web2-wrapper/
 
 RUN sed -i -E 's!^(replace github.com/catenax/esc-backbone =>).*!\1 ../!' go.mod && \
+    go mod tidy && \
     go build github.com/catenax/web2-wrapper/cmd/web2-wrapper
 WORKDIR /build/esc-backbone/
 
