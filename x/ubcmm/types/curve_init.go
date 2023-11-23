@@ -19,12 +19,8 @@ func (c *Curve) Fit() error {
 	if err := c.validateParameters(); err != nil {
 		return err
 	}
-	// Trading starts at 50% of reference supply.
-	c.CurrentSupply = c.RefTokenSupply.Quo(sdk.NewDec(2))
-
+	c.initParameters()
 	c.initSegmentsToZero()
-	c.NumericalErrorAccumulator = sdk.ZeroDec()
-
 	c.fitS2()
 	c.fitS3()
 
@@ -78,6 +74,13 @@ func (c *Curve) validateParameters() error {
 		return errors.Errorf("FactorFxy is not set")
 	}
 	return nil
+}
+
+func (c *Curve) initParameters() {
+	c.NumericalErrorAccumulator = sdk.ZeroDec()
+
+	// Trading starts at 50% of reference supply.
+	c.CurrentSupply = c.RefTokenSupply.Quo(sdk.NewDec(2))
 }
 
 func (c *Curve) initSegmentsToZero() {
