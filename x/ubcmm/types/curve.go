@@ -43,26 +43,26 @@ func (c *Curve) pY(pN pointN) sdk.Dec {
 }
 
 func (c *Curve) setP0Y(p0Y sdk.Dec) {
-	c.S0.Y = p0Y
-	c.S1.P0Y = p0Y
+	c.S0.setP1Y(p0Y)
+	c.S1.setP0Y(p0Y)
 }
 
 func (c *Curve) setP1Y(p1Y sdk.Dec) {
-	c.S1.P1Y = p1Y
-	c.S2.P0Y = p1Y
+	c.S1.setP1Y(p1Y)
+	c.S2.setP0Y(p1Y)
 }
 
 func (c *Curve) setP2Y(p2Y sdk.Dec) {
-	c.S2.P1Y = p2Y
+	c.S2.setP1Y(p2Y)
 	c.S3.setP0Y(p2Y)
 }
 
 func (c *Curve) setP3Y(p3Y sdk.Dec) {
-	c.S3.P1Y = p3Y
+	c.S3.setP1Y(p3Y)
 }
 
 func (c *Curve) setP0X(p0X sdk.Dec) {
-	c.S0.P1X = p0X
+	c.S0.setP1X(p0X)
 	c.S1.setP0X(p0X)
 }
 

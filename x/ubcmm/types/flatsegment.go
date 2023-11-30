@@ -7,6 +7,16 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
+// setP0X sets the value of parameter p1Y.
+func (fseg *FlatSegment) setP1Y(p1Y sdk.Dec) {
+	fseg.Y = p1Y
+}
+
+// setP1X sets the value of parameter p1X.
+func (fseg *FlatSegment) setP1X(p1X sdk.Dec) {
+	fseg.P1X = p1X
+}
+
 // integralX12 computes the integral of the curve segment with respect to "x",
 // between limits x1 and x2.
 func (fseg *FlatSegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {

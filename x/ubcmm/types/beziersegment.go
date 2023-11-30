@@ -15,10 +15,20 @@ func (bseg *BezierSegment) setP0X(P0X sdk.Dec) {
 	bseg.updateDeltaX()
 }
 
+// setP0Y sets the value of parameter P0Y.
+func (bseg *BezierSegment) setP0Y(P0Y sdk.Dec) {
+	bseg.P0Y = P0Y
+}
+
 // setP1X sets the value of parameter P1X.
 func (bseg *BezierSegment) setP1X(P1X sdk.Dec) {
 	bseg.P1X = P1X
 	bseg.updateDeltaX()
+}
+
+// setP1Y sets the value of parameter P1Y.
+func (bseg *BezierSegment) setP1Y(P1Y sdk.Dec) {
+	bseg.P1Y = P1Y
 }
 
 // updateDeltaX updates the value of parameter "DeltaX", based on the newer
