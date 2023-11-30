@@ -35186,7 +35186,7 @@ paths:
               Curve:
                 type: object
                 properties:
-                  fS0:
+                  s0:
                     type: object
                     properties:
                       'y':
@@ -35207,40 +35207,6 @@ paths:
 
 
                       The line has a bounded interval [0, x0].
-                  s0:
-                    type: object
-                    properties:
-                      a:
-                        type: string
-                      b:
-                        type: string
-                      p0X:
-                        type: string
-                      p0Y:
-                        type: string
-                      p1X:
-                        type: string
-                      p1Y:
-                        type: string
-                      deltaX:
-                        type: string
-                    description: >-
-                      BezierSegment represent a cubic bezier curve with a
-                      dynamic shape and a
-
-                      bounded interval.
-
-
-                      The curve parameters set during initialization could be
-                      modified during
-
-                      shift up and undergird operations.
-
-
-                      A and B are the two control points. P0 and P1 are the
-                      start and end points
-
-                      of the curve. DeltaX is the length of the x-interval.
                   s1:
                     type: object
                     properties:
@@ -35276,6 +35242,40 @@ paths:
 
                       of the curve. DeltaX is the length of the x-interval.
                   s2:
+                    type: object
+                    properties:
+                      a:
+                        type: string
+                      b:
+                        type: string
+                      p0X:
+                        type: string
+                      p0Y:
+                        type: string
+                      p1X:
+                        type: string
+                      p1Y:
+                        type: string
+                      deltaX:
+                        type: string
+                    description: >-
+                      BezierSegment represent a cubic bezier curve with a
+                      dynamic shape and a
+
+                      bounded interval.
+
+
+                      The curve parameters set during initialization could be
+                      modified during
+
+                      shift up and undergird operations.
+
+
+                      A and B are the two control points. P0 and P1 are the
+                      start and end points
+
+                      of the curve. DeltaX is the length of the x-interval.
+                  s3:
                     type: object
                     properties:
                       s:
@@ -35332,7 +35332,7 @@ paths:
                       x-interval, while the
 
                       upper bound will remain fixed.
-                  qS3:
+                  s4:
                     type: object
                     properties:
                       a:
@@ -71055,7 +71055,7 @@ definitions:
   escbackbone.ubcmm.Curve:
     type: object
     properties:
-      fS0:
+      s0:
         type: object
         properties:
           'y':
@@ -71076,40 +71076,6 @@ definitions:
 
 
           The line has a bounded interval [0, x0].
-      s0:
-        type: object
-        properties:
-          a:
-            type: string
-          b:
-            type: string
-          p0X:
-            type: string
-          p0Y:
-            type: string
-          p1X:
-            type: string
-          p1Y:
-            type: string
-          deltaX:
-            type: string
-        description: >-
-          BezierSegment represent a cubic bezier curve with a dynamic shape and
-          a
-
-          bounded interval.
-
-
-          The curve parameters set during initialization could be modified
-          during
-
-          shift up and undergird operations.
-
-
-          A and B are the two control points. P0 and P1 are the start and end
-          points
-
-          of the curve. DeltaX is the length of the x-interval.
       s1:
         type: object
         properties:
@@ -71145,6 +71111,40 @@ definitions:
 
           of the curve. DeltaX is the length of the x-interval.
       s2:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: string
+          p0X:
+            type: string
+          p0Y:
+            type: string
+          p1X:
+            type: string
+          p1Y:
+            type: string
+          deltaX:
+            type: string
+        description: >-
+          BezierSegment represent a cubic bezier curve with a dynamic shape and
+          a
+
+          bounded interval.
+
+
+          The curve parameters set during initialization could be modified
+          during
+
+          shift up and undergird operations.
+
+
+          A and B are the two control points. P0 and P1 are the start and end
+          points
+
+          of the curve. DeltaX is the length of the x-interval.
+      s3:
         type: object
         properties:
           s:
@@ -71201,7 +71201,7 @@ definitions:
           while the
 
           upper bound will remain fixed.
-      qS3:
+      s4:
         type: object
         properties:
           a:
@@ -71399,7 +71399,7 @@ definitions:
       Curve:
         type: object
         properties:
-          fS0:
+          s0:
             type: object
             properties:
               'y':
@@ -71420,40 +71420,6 @@ definitions:
 
 
               The line has a bounded interval [0, x0].
-          s0:
-            type: object
-            properties:
-              a:
-                type: string
-              b:
-                type: string
-              p0X:
-                type: string
-              p0Y:
-                type: string
-              p1X:
-                type: string
-              p1Y:
-                type: string
-              deltaX:
-                type: string
-            description: >-
-              BezierSegment represent a cubic bezier curve with a dynamic shape
-              and a
-
-              bounded interval.
-
-
-              The curve parameters set during initialization could be modified
-              during
-
-              shift up and undergird operations.
-
-
-              A and B are the two control points. P0 and P1 are the start and
-              end points
-
-              of the curve. DeltaX is the length of the x-interval.
           s1:
             type: object
             properties:
@@ -71489,6 +71455,40 @@ definitions:
 
               of the curve. DeltaX is the length of the x-interval.
           s2:
+            type: object
+            properties:
+              a:
+                type: string
+              b:
+                type: string
+              p0X:
+                type: string
+              p0Y:
+                type: string
+              p1X:
+                type: string
+              p1Y:
+                type: string
+              deltaX:
+                type: string
+            description: >-
+              BezierSegment represent a cubic bezier curve with a dynamic shape
+              and a
+
+              bounded interval.
+
+
+              The curve parameters set during initialization could be modified
+              during
+
+              shift up and undergird operations.
+
+
+              A and B are the two control points. P0 and P1 are the start and
+              end points
+
+              of the curve. DeltaX is the length of the x-interval.
+          s3:
             type: object
             properties:
               s:
@@ -71545,7 +71545,7 @@ definitions:
               while the
 
               upper bound will remain fixed.
-          qS3:
+          s4:
             type: object
             properties:
               a:

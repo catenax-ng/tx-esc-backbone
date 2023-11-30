@@ -41,7 +41,7 @@ func (c *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	c.BPoolUnder = c.BPoolUnder.Add(BPoolAdd).Add(dBPool)
 	c.BPool = c.BPool.Add(BPoolAdd)
 
-	c.fitS0S1Repeatedly(4)
+	c.fitS1S2Repeatedly(4)
 
 	return nil
 }

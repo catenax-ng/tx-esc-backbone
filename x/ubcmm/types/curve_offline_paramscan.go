@@ -17,20 +17,20 @@ func (c *Curve) OfflineParamScan(factorFx2yAdjustment, allowedDiff sdk.Dec) erro
 	}
 	c.initParameters()
 	c.initSegmentsToZero()
-	c.fitS2()
 	c.fitS3()
+	c.fitS4()
 
 	dx1 := sdk.NewDec(0)
 	var midA1 sdk.Dec
 
 	for dx1.LT(c.p3x()) {
-		c.fitS0S1()
+		c.fitS1S2()
 
 		if c.validateCurvature() == nil {
 			midA1 = c.lowerBoundA1().Add(c.upperBoundA1()).Quo(sdk.NewDec(2))
 
-			if midA1.Mul(sdk.NewDec(1).Sub(allowedDiff)).LT(c.S1.A) &&
-				midA1.Mul(sdk.NewDec(1).Add(allowedDiff)).GT(c.S1.A) {
+			if midA1.Mul(sdk.NewDec(1).Sub(allowedDiff)).LT(c.S2.A) &&
+				midA1.Mul(sdk.NewDec(1).Add(allowedDiff)).GT(c.S2.A) {
 				return nil
 			}
 
@@ -43,18 +43,18 @@ func (c *Curve) OfflineParamScan(factorFx2yAdjustment, allowedDiff sdk.Dec) erro
 
 func (c *Curve) lowerBoundA1() sdk.Dec {
 	return sdk.NewDec(-2).Quo(sdk.NewDec(3)).
-		Mul(c.S1.DeltaX).
-		Mul(c.S2.firstDerivativeT1(sdk.NewDec(0)).
-			Quo(c.S2.DeltaX)).Add(c.p2Y())
+		Mul(c.S2.DeltaX).
+		Mul(c.S3.firstDerivativeT1(sdk.NewDec(0)).
+			Quo(c.S3.DeltaX)).Add(c.p2Y())
 }
 func (c *Curve) upperBoundA1() sdk.Dec {
 	return sdk.NewDecWithPrec(5, 1).
 		Mul(c.p1Y()).
 		Sub(
 			sdk.NewDec(1).Quo(sdk.NewDec(6)).
-				Mul(c.S1.DeltaX).
-				Mul(c.S2.firstDerivativeT1(sdk.NewDec(0)).
-					Quo(c.S2.DeltaX))).
+				Mul(c.S2.DeltaX).
+				Mul(c.S3.firstDerivativeT1(sdk.NewDec(0)).
+					Quo(c.S3.DeltaX))).
 		Add(sdk.NewDecWithPrec(5, 1).Mul(c.p2Y()))
 }
 

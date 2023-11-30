@@ -18,11 +18,11 @@ import (
 // is same as the values produced by the prototype.
 func Test_Curve_ShiftUp(t *testing.T) {
 	type wants struct {
-		FS0        *FlatSegment
-		S0         *BezierSegment
+		S0         *FlatSegment
 		S1         *BezierSegment
-		S2         *FixedBezierSegment
-		QS3        *FixedQuadraticSegment
+		S2         *BezierSegment
+		S3         *FixedBezierSegment
+		S4         *FixedQuadraticSegment
 		BPool      sdk.Dec
 		BPoolUnder sdk.Dec
 	}
@@ -45,11 +45,11 @@ func Test_Curve_ShiftUp(t *testing.T) {
 				TokensToBuy:     sdk.NewDec(500e5),
 			},
 			wants: wants{
-				FS0: &FlatSegment{
+				S0: &FlatSegment{
 					X0: sdk.MustNewDecFromStr("46966373.186190389801025890861822048267737788"),
 					Y:  sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),
 				},
-				S0: &BezierSegment{
+				S1: &BezierSegment{
 					P0Y:    sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),
 					A:      sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),
 					B:      sdk.MustNewDecFromStr("0.026001798814231522750795441811313855"),
@@ -58,7 +58,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					P1X:    sdk.MustNewDecFromStr("1938969127.118076932874869224554139114130514462"),
 					DeltaX: sdk.MustNewDecFromStr("1892002753.931886543073843333692317065862776674"),
 				},
-				S1: &BezierSegment{
+				S2: &BezierSegment{
 					P0Y:    sdk.MustNewDecFromStr("0.034748606188053722269136377787067345"),
 					A:      sdk.MustNewDecFromStr("0.039870923511293814967035871232711658"),
 					B:      sdk.MustNewDecFromStr("0.069534204713335437568568770228105743"),
@@ -67,7 +67,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					P1X:    sdk.MustNewDecFromStr("3046966373.186190389801025890861822048267737788"),
 					DeltaX: sdk.MustNewDecFromStr("1107997246.068113456926156666307682934137223326"),
 				},
-				S2: &FixedBezierSegment{
+				S3: &FixedBezierSegment{
 					BezierSegment: &BezierSegment{
 						P0Y:    sdk.MustNewDecFromStr("0.1"),
 						A:      sdk.MustNewDecFromStr("0.2"),
@@ -79,7 +79,7 @@ func Test_Curve_ShiftUp(t *testing.T) {
 					},
 					IntervalP0X: sdk.MustNewDecFromStr("3046966373.186190389801025890861822048267737788"),
 				},
-				QS3: &FixedQuadraticSegment{
+				S4: &FixedQuadraticSegment{
 					A:             sdk.MustNewDecFromStr("0.533333333333333333333333334"),
 					B:             sdk.MustNewDecFromStr("-5.733333333333333333333333341"),
 					C:             sdk.MustNewDecFromStr("16.200000000000000000000000022"),
@@ -98,11 +98,11 @@ func Test_Curve_ShiftUp(t *testing.T) {
 			c := setupUbcAndByToken(t, tt.args.TokensToBuy)
 			tt.wantErr(t, c.ShiftUp(tt.args.BPoolAdd, tt.args.DegirdingFactor),
 				fmt.Sprintf("BuyToken(%v) then ShiftUp(%v, %v)", tt.args.TokensToBuy, tt.args.BPoolAdd, tt.args.DegirdingFactor))
-			assert.EqualValues(t, tt.wants.FS0, c.FS0)
 			assert.EqualValues(t, tt.wants.S0, c.S0)
 			assert.EqualValues(t, tt.wants.S1, c.S1)
 			assert.EqualValues(t, tt.wants.S2, c.S2)
-			assert.EqualValues(t, tt.wants.QS3, c.QS3)
+			assert.EqualValues(t, tt.wants.S3, c.S3)
+			assert.EqualValues(t, tt.wants.S4, c.S4)
 			assert.Equal(t, tt.wants.BPool, c.BPool)
 			assert.Equal(t, tt.wants.BPoolUnder, c.BPoolUnder)
 		})

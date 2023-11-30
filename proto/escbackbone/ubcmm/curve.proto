@@ -18,11 +18,11 @@ option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 // multiple segments.
 message Curve {
   
-  FlatSegment fS0 = 1;
-  BezierSegment s0 = 2;
-  BezierSegment s1 = 3;
-  FixedBezierSegment s2 = 4;
-  FixedQuadraticSegment qS3 = 5;
+  FlatSegment s0 = 1;
+  BezierSegment s1 = 2;
+  BezierSegment s2 = 3;
+  FixedBezierSegment s3 = 4;
+  FixedQuadraticSegment s4 = 5;
   string refProfitFactor = 6 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false

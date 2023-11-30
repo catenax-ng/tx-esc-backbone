@@ -29,11 +29,11 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 
 				Curve: &types.Curve{
-					FS0:                       new(types.FlatSegment),
-					S0:                        new(types.BezierSegment),
+					S0:                        new(types.FlatSegment),
 					S1:                        new(types.BezierSegment),
-					S2:                        new(types.FixedBezierSegment),
-					QS3:                       new(types.FixedQuadraticSegment),
+					S2:                        new(types.BezierSegment),
+					S3:                        new(types.FixedBezierSegment),
+					S4:                        new(types.FixedQuadraticSegment),
 					RefProfitFactor:           sdk.ZeroDec(),
 					RefTokenSupply:            sdk.ZeroDec(),
 					RefTokenPrice:             sdk.ZeroDec(),

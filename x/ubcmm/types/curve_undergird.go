@@ -10,7 +10,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (c *Curve) UndergirdS01(BPoolAdd sdk.Dec) error {
+func (c *Curve) UndergirdS02(BPoolAdd sdk.Dec) error {
 	if c.CurrentSupply.LT(c.p2x()) {
 		errMsg := "could not undergird, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)

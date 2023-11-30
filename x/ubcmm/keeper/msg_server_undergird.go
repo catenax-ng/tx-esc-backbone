@@ -28,7 +28,7 @@ func (k msgServer) Undergird(goCtx context.Context, msg *types.MsgUndergird) (*t
 	// These will not err, as error has been checked in ValidateBasic.
 	vouchersToAdd, _ := sdk.ParseCoinNormalized(msg.Voucherstoadd)
 
-	err := ubc.UndergirdS01(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)))
+	err := ubc.UndergirdS02(sdk.NewDecFromInt(vouchersToAdd.Amount.QuoRaw(types.VoucherMultiplier)))
 	if err != nil {
 		return &types.MsgUndergirdResponse{}, err
 	}

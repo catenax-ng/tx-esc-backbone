@@ -34,17 +34,17 @@ func TestGenesis(t *testing.T) {
 		Params: types.DefaultParams(),
 
 		Curve: &types.Curve{
-			FS0: &types.FlatSegment{
+			S0: &types.FlatSegment{
 				Y:  sdk.ZeroDec(),
 				X0: sdk.ZeroDec(),
 			},
-			S0: zeroBezierSegment(),
 			S1: zeroBezierSegment(),
-			S2: &types.FixedBezierSegment{
+			S2: zeroBezierSegment(),
+			S3: &types.FixedBezierSegment{
 				BezierSegment: zeroBezierSegment(),
 				IntervalP0X:   sdk.ZeroDec(),
 			},
-			QS3: &types.FixedQuadraticSegment{
+			S4: &types.FixedQuadraticSegment{
 				A:             sdk.ZeroDec(),
 				B:             sdk.ZeroDec(),
 				C:             sdk.ZeroDec(),

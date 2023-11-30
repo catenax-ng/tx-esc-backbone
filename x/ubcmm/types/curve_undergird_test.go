@@ -16,6 +16,6 @@ import (
 func Test_Curve_Undergird(t *testing.T) {
 	c := validCurve()
 	require.NoError(t, c.Fit())
-	require.NoError(t, c.UndergirdS01(sdk.NewDec(100e5)))
+	require.NoError(t, c.UndergirdS02(sdk.NewDec(100e5)))
 	assert.True(t, c.IsIntegralEqualToBPool())
 }
