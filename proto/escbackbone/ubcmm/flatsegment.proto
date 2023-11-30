@@ -16,14 +16,14 @@ option go_package = "github.com/catenax/esc-backbone/x/ubcmm/types";
 // The line has zero length during initialization and could be modified during
 // shift up and undergird operations.
 //
-// The line has a bounded interval [0, x0].
+// The line has a bounded interval [0, p1X].
 message FlatSegment {
   
   string y = 1 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];
-  string x0 = 2 [
+  string p1X = 2 [
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
     (gogoproto.nullable) = false
   ];

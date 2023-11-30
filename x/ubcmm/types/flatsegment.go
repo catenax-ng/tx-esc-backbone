@@ -33,7 +33,7 @@ func (fseg *FlatSegment) startX() sdk.Dec {
 
 // endX returns the x-value of the end of the visible part of the line.
 func (fseg *FlatSegment) endX() sdk.Dec {
-	return fseg.X0
+	return fseg.P1X
 }
 
 // startY returns the y-value of the start of the visible part of the line

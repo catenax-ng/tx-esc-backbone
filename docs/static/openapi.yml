@@ -35191,7 +35191,7 @@ paths:
                     properties:
                       'y':
                         type: string
-                      x0:
+                      p1X:
                         type: string
                     description: >-
                       FlatSegment represents a horizontal line with a dynamic
@@ -35206,7 +35206,7 @@ paths:
                       shift up and undergird operations.
 
 
-                      The line has a bounded interval [0, x0].
+                      The line has a bounded interval [0, p1X].
                   s1:
                     type: object
                     properties:
@@ -71060,7 +71060,7 @@ definitions:
         properties:
           'y':
             type: string
-          x0:
+          p1X:
             type: string
         description: >-
           FlatSegment represents a horizontal line with a dynamic shape and
@@ -71075,7 +71075,7 @@ definitions:
           shift up and undergird operations.
 
 
-          The line has a bounded interval [0, x0].
+          The line has a bounded interval [0, p1X].
       s1:
         type: object
         properties:
@@ -71355,7 +71355,7 @@ definitions:
     properties:
       'y':
         type: string
-      x0:
+      p1X:
         type: string
     description: >-
       FlatSegment represents a horizontal line with a dynamic shape and bounded
@@ -71369,7 +71369,7 @@ definitions:
       shift up and undergird operations.
 
 
-      The line has a bounded interval [0, x0].
+      The line has a bounded interval [0, p1X].
   escbackbone.ubcmm.MsgBuyResponse:
     type: object
     properties:
@@ -71404,7 +71404,7 @@ definitions:
             properties:
               'y':
                 type: string
-              x0:
+              p1X:
                 type: string
             description: >-
               FlatSegment represents a horizontal line with a dynamic shape and
@@ -71419,7 +71419,7 @@ definitions:
               shift up and undergird operations.
 
 
-              The line has a bounded interval [0, x0].
+              The line has a bounded interval [0, p1X].
           s1:
             type: object
             properties:

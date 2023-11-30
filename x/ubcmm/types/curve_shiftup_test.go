@@ -46,8 +46,8 @@ func Test_Curve_ShiftUp(t *testing.T) {
 			},
 			wants: wants{
 				S0: &FlatSegment{
-					X0: sdk.MustNewDecFromStr("46966373.186190389801025890861822048267737788"),
-					Y:  sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),
+					P1X: sdk.MustNewDecFromStr("46966373.186190389801025890861822048267737788"),
+					Y:   sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),
 				},
 				S1: &BezierSegment{
 					P0Y:    sdk.MustNewDecFromStr("0.017254991440409323232454505835560365"),

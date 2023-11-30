@@ -67,7 +67,7 @@ func (c *Curve) setP3Y(p3Y sdk.Dec) {
 }
 
 func (c *Curve) setP0X(p0X sdk.Dec) {
-	c.S0.X0 = p0X
+	c.S0.P1X = p0X
 	c.S1.setP0X(p0X)
 }
 

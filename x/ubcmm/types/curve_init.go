@@ -85,8 +85,8 @@ func (c *Curve) initParameters() {
 
 func (c *Curve) initSegmentsToZero() {
 	c.S0 = &FlatSegment{
-		X0: sdk.ZeroDec(),
-		Y:  sdk.ZeroDec(),
+		P1X: sdk.ZeroDec(),
+		Y:   sdk.ZeroDec(),
 	}
 	c.S1 = &BezierSegment{
 		P0Y: sdk.ZeroDec(),
@@ -191,7 +191,7 @@ func (c *Curve) calcG1(g0 sdk.Dec) sdk.Dec {
 	part1 := sdk.NewDec(4).Mul(c.S1.DeltaX)
 	factorPart2 := sdk.NewDec(2).Mul(c.S2.DeltaX)
 	part2 := factorPart2.Mul(sdk.NewDec(1).Sub(c.FactorFy))
-	part3 := sdk.NewDec(4).Mul(c.S0.X0)
+	part3 := sdk.NewDec(4).Mul(c.S0.P1X)
 	return g0.Add(part1).Add(part2).Add(part3)
 	//TODO: Implement the condition in GetFS0X0 from the prototype.
 }
