@@ -37,6 +37,11 @@ func (fseg *FlatSegment) integralX1(x1 sdk.Dec) sdk.Dec {
 	return fseg.Y.Mul(x1)
 }
 
+// firstDerivativeX1 returns 0, since the segment is a horizontal line.
+func (fseg *FlatSegment) firstDerivativeX1(_ sdk.Dec) (_ sdk.Dec) {
+	return sdk.ZeroDec()
+}
+
 // y returns the y value for the given x.
 func (fseg *FlatSegment) y(x sdk.Dec) sdk.Dec {
 	return fseg.Y

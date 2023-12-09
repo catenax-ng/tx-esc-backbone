@@ -21,6 +21,7 @@ type (
 
 		y(x sdk.Dec) sdk.Dec
 		integralX12(x1, x2 sdk.Dec) sdk.Dec
+		firstDerivativeX1(x1 sdk.Dec) sdk.Dec
 	}
 )
 
@@ -144,20 +145,7 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 }
 
 func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
-	switch c.segmentNum(x1) {
-	case s0:
-		return sdk.ZeroDec()
-	case s1:
-		return c.S1.firstDerivativeX1(x1)
-	case s2:
-		return c.S2.firstDerivativeX1(x1)
-	case s3:
-		return c.S3.firstDerivativeX1(x1)
-	case s4:
-		return c.S4.firstDerivativeX1(x1)
-	default:
-		return sdk.ZeroDec()
-	}
+	return c.segments(c.segmentNum(x1)).firstDerivativeX1(x1)
 }
 
 func (c *Curve) y(x sdk.Dec) sdk.Dec {
