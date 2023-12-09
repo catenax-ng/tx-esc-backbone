@@ -22,6 +22,8 @@ type (
 		y(x sdk.Dec) sdk.Dec
 		integralX12(x1, x2 sdk.Dec) sdk.Dec
 		firstDerivativeX1(x1 sdk.Dec) sdk.Dec
+
+		view
 	}
 )
 
@@ -69,18 +71,14 @@ func (c *Curve) segments(segNum segN) segment {
 	return s[segNum]
 }
 
-func (c *Curve) view() []view {
-	return []view{c.S1, c.S2, c.S3, c.S4}
-}
-
 // pX returns the x co-ordinate for the point of the curve.
 func (c *Curve) pX(pN pointN) sdk.Dec {
-	return c.view()[pN].startX()
+	return c.segments(startPointOf[pN]).startX()
 }
 
 // pY returns the x co-ordinate for the point of the curve.
 func (c *Curve) pY(pN pointN) sdk.Dec {
-	return c.view()[pN].startY()
+	return c.segments(startPointOf[pN]).startY()
 }
 
 func (c *Curve) setPX(point pointN, value sdk.Dec) {
