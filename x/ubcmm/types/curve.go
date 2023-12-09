@@ -57,6 +57,9 @@ const (
 	s2
 	s3
 	s4
+
+	firstSegment = s0
+	lastSegment  = s4
 )
 
 const (
@@ -91,17 +94,13 @@ func (c *Curve) setPY(point pointN, value sdk.Dec) {
 	c.segments(startPointOf[point]).setP0Y(value)
 }
 
-// segmentNum returns the segment number for the given point x.
 func (c *Curve) segmentNum(x sdk.Dec) segN {
-	upperBoundsX := []sdk.Dec{c.pX(p0), c.pX(p1), c.pX(p2), c.pX(p3)}
-	segments := []segN{s0, s1, s2, s3}
-
-	for i, upperBound := range upperBoundsX {
-		if x.LT(upperBound) {
-			return segments[i]
+	for i := firstSegment; i < lastSegment; i++ {
+		if x.LT(c.pX(endPoint[i])) {
+			return i
 		}
 	}
-	return s4
+	return lastSegment
 }
 
 func (c *Curve) upperBoundX(segNum segN) sdk.Dec {
