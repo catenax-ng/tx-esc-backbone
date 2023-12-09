@@ -20,6 +20,7 @@ type (
 		setP1Y(sdk.Dec)
 
 		y(x sdk.Dec) sdk.Dec
+		integralX12(x1, x2 sdk.Dec) sdk.Dec
 	}
 )
 
@@ -112,25 +113,6 @@ func (c *Curve) upperBoundX(segN segN) sdk.Dec {
 	}
 }
 
-// integralX12 returns the function for computing the integral for the given
-// segment.
-func (c *Curve) integralXFn(segN segN) func(x1, x2 sdk.Dec) sdk.Dec {
-	switch segN {
-	case s0:
-		return c.S0.integralX12
-	case s1:
-		return c.S1.integralX12
-	case s2:
-		return c.S2.integralX12
-	case s3:
-		return c.S3.integralX12
-	case s4:
-		return c.S4.integralX12
-	default:
-		return func(sdk.Dec, sdk.Dec) sdk.Dec { return sdk.ZeroDec() }
-	}
-}
-
 // IsIntegralEqualToBPool checks if BPool is equal to the integral
 // under the curve from zero to current supply.
 func (c *Curve) IsIntegralEqualToBPool() bool {
@@ -153,7 +135,7 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 		if segLowerBoundX == segUpperBoundX {
 			x2 = upperBoundX
 		}
-		additionalVouchers := c.integralXFn(segLowerBoundX)(x1, x2)
+		additionalVouchers := c.segments(segLowerBoundX).integralX12(x1, x2)
 		vouchers = vouchers.Add(additionalVouchers)
 
 		lowerBoundX = c.upperBoundX(segLowerBoundX)
