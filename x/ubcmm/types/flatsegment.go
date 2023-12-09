@@ -7,7 +7,15 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
-// setP0X sets the value of parameter p1Y.
+// setP0X is a noop, as the P0 is always 0,0 and hence not stored.
+func (fseg *FlatSegment) setP0X(_ sdk.Dec) {
+}
+
+// setP0Y is a noop, as the P0 is always 0,0 and hence not stored.
+func (fseg *FlatSegment) setP0Y(_ sdk.Dec) {
+}
+
+// setP1X sets the value of parameter p1Y.
 func (fseg *FlatSegment) setP1Y(p1Y sdk.Dec) {
 	fseg.Y = p1Y
 }

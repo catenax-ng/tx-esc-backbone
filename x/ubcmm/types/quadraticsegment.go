@@ -7,6 +7,18 @@ package types
 
 import sdk "github.com/cosmos/cosmos-sdk/types"
 
+// setP1X is a noop, as the P1 does not exist for this segment.
+func (fqseg *FixedQuadraticSegment) setP1X(_ sdk.Dec) {
+}
+
+// setP1Y is a noop, as the P1 does not exist for this segment.
+func (fqseg *FixedQuadraticSegment) setP1Y(_ sdk.Dec) {
+}
+
+// setP0Y is a noop, as the point is determined from the equation and hence not stored.
+func (fqseg *FixedQuadraticSegment) setP0Y(_ sdk.Dec) {
+}
+
 // setP0X sets the value of parameter InitalP0X and CurrentP0X. It always sets
 // the value of CurrentP0X and sets the value of InitalP0X, only if it was not
 // already set (it is zero).

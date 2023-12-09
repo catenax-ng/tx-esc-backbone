@@ -72,11 +72,11 @@ func (c *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 }
 
 func (c *Curve) shiftP0P1P2(dX, dY sdk.Dec) {
-	c.setP0X(c.pX(p0).Add(dX))
-	c.setP1X(c.pX(p1).Add(dX))
-	c.setP2X(c.pX(p2).Add(dX))
+	c.setPX(p0, c.pX(p0).Add(dX))
+	c.setPX(p1, c.pX(p1).Add(dX))
+	c.setPX(p2, c.pX(p2).Add(dX))
 
-	c.setP0Y(c.pY(p0).Add(dY))
-	c.setP1Y(c.pY(p1).Add(dY))
-	c.setP2Y(c.pY(p2).Add(dY))
+	c.setPY(p0, c.pY(p0).Add(dY))
+	c.setPY(p1, c.pY(p1).Add(dY))
+	c.setPY(p2, c.pY(p2).Add(dY))
 }

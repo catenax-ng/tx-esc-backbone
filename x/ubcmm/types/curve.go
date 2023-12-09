@@ -12,6 +12,30 @@ import (
 type (
 	pointN int
 	segN   int
+
+	segment interface {
+		setP0X(sdk.Dec)
+		setP1X(sdk.Dec)
+		setP0Y(sdk.Dec)
+		setP1Y(sdk.Dec)
+	}
+)
+
+var (
+	// endPointOf maps the end point of a segment to the segment.
+	endPointOf = map[pointN]segN{
+		p0: s0,
+		p1: s1,
+		p2: s2,
+		p3: s3,
+	}
+	// startPointOf maps the start point of a segment to the segment.
+	startPointOf = map[pointN]segN{
+		p0: s1,
+		p1: s2,
+		p2: s3,
+		p3: s4,
+	}
 )
 
 const (
@@ -29,6 +53,11 @@ const (
 	p3
 )
 
+func (c *Curve) segments(segNum segN) segment {
+	s := []segment{c.S0, c.S1, c.S2, c.S3, c.S4}
+	return s[segNum]
+}
+
 func (c *Curve) view() []view {
 	return []view{c.S1, c.S2, c.S3, c.S4}
 }
@@ -43,43 +72,14 @@ func (c *Curve) pY(pN pointN) sdk.Dec {
 	return c.view()[pN].startY()
 }
 
-func (c *Curve) setP0Y(p0Y sdk.Dec) {
-	c.S0.setP1Y(p0Y)
-	c.S1.setP0Y(p0Y)
+func (c *Curve) setPX(point pointN, value sdk.Dec) {
+	c.segments(endPointOf[point]).setP1X(value)
+	c.segments(startPointOf[point]).setP0X(value)
 }
 
-func (c *Curve) setP1Y(p1Y sdk.Dec) {
-	c.S1.setP1Y(p1Y)
-	c.S2.setP0Y(p1Y)
-}
-
-func (c *Curve) setP2Y(p2Y sdk.Dec) {
-	c.S2.setP1Y(p2Y)
-	c.S3.setP0Y(p2Y)
-}
-
-func (c *Curve) setP3Y(p3Y sdk.Dec) {
-	c.S3.setP1Y(p3Y)
-}
-
-func (c *Curve) setP0X(p0X sdk.Dec) {
-	c.S0.setP1X(p0X)
-	c.S1.setP0X(p0X)
-}
-
-func (c *Curve) setP1X(p1X sdk.Dec) {
-	c.S1.setP1X(p1X)
-	c.S2.setP0X(p1X)
-}
-
-func (c *Curve) setP2X(p2X sdk.Dec) {
-	c.S2.setP1X(p2X)
-	c.S3.setP0X(p2X)
-}
-
-func (c *Curve) setP3X(p3X sdk.Dec) {
-	c.S3.setP1X(p3X)
-	c.S4.setP0X(p3X)
+func (c *Curve) setPY(point pointN, value sdk.Dec) {
+	c.segments(endPointOf[point]).setP1Y(value)
+	c.segments(startPointOf[point]).setP0Y(value)
 }
 
 // segmentNum returns the segment number for the given point x.

@@ -117,10 +117,10 @@ func (c *Curve) initSegmentsToZero() {
 }
 
 func (c *Curve) fitS3() {
-	c.setP3X(c.RefTokenSupply)
-	c.setP3Y(c.RefTokenPrice)
-	c.setP2X(c.RefTokenSupply.Quo(sdk.NewDec(2)))
-	c.setP2Y(c.RefTokenPrice.Quo(c.RefProfitFactor))
+	c.setPX(p3, c.RefTokenSupply)
+	c.setPY(p3, c.RefTokenPrice)
+	c.setPX(p2, c.RefTokenSupply.Quo(sdk.NewDec(2)))
+	c.setPY(p2, c.RefTokenPrice.Quo(c.RefProfitFactor))
 
 	c.calcS3AB()
 }
@@ -160,8 +160,8 @@ func (c *Curve) fitS1S2Repeatedly(repititions uint) {
 		g1 := c.calcG1(g0)
 
 		c.S2.B = c.calcS2B()
-		c.setP0Y(c.calcP0(g0, g1))
-		c.setP1Y(c.calcP1())
+		c.setPY(p0, c.calcP0(g0, g1))
+		c.setPY(p1, c.calcP1())
 
 		c.S1.A = c.pY(p0)
 		c.S1.B = c.calcS1B()
@@ -173,12 +173,12 @@ func (c *Curve) fitS1S2Repeatedly(repititions uint) {
 func (c *Curve) calcP1X() {
 	factor := sdk.NewDec(1).Sub(c.FactorFy).Mul(c.FactorFxy)
 	deltaX1 := factor.Mul(c.pY(p2).Sub(c.pY(p0)))
-	c.setP1X(c.pX(p2).Sub(deltaX1))
+	c.setPX(p1, c.pX(p2).Sub(deltaX1))
 }
 
 func (c *Curve) calcP1XMethod2() {
 	x1 := c.pX(p2).Sub(c.FactorFxy.Mul(c.pY(p2).Sub(c.pY(p1))))
-	c.setP1X(x1)
+	c.setPX(p1, x1)
 }
 
 func (c *Curve) calcG0() sdk.Dec {
