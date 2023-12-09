@@ -11,14 +11,15 @@ import (
 
 type (
 	pointN int
+	segN   int
 )
 
 const (
-	S0 = iota
-	S1
-	S2
-	S3
-	S4
+	s0 segN = iota
+	s1
+	s2
+	s3
+	s4
 )
 
 const (
@@ -82,27 +83,27 @@ func (c *Curve) setP3X(p3X sdk.Dec) {
 }
 
 // segmentNum returns the segment number for the given point x.
-func (c *Curve) segmentNum(x sdk.Dec) int {
+func (c *Curve) segmentNum(x sdk.Dec) segN {
 	upperBoundsX := []sdk.Dec{c.pX(p0), c.pX(p1), c.pX(p2), c.pX(p3)}
-	segments := []int{S0, S1, S2, S3}
+	segments := []segN{s0, s1, s2, s3}
 
 	for i, upperBound := range upperBoundsX {
 		if x.LT(upperBound) {
 			return segments[i]
 		}
 	}
-	return S4
+	return s4
 }
 
-func (c *Curve) upperBoundX(segNum int) sdk.Dec {
-	switch segNum {
-	case S0:
+func (c *Curve) upperBoundX(segN segN) sdk.Dec {
+	switch segN {
+	case s0:
 		return c.pX(p0)
-	case S1:
+	case s1:
 		return c.pX(p1)
-	case S2:
+	case s2:
 		return c.pX(p2)
-	case S3:
+	case s3:
 		return c.pX(p3)
 	default:
 		return sdk.ZeroDec()
@@ -111,17 +112,17 @@ func (c *Curve) upperBoundX(segNum int) sdk.Dec {
 
 // integralX12 returns the function for computing the integral for the given
 // segment.
-func (c *Curve) integralXFn(segNum int) func(x1, x2 sdk.Dec) sdk.Dec {
-	switch segNum {
-	case S0:
+func (c *Curve) integralXFn(segN segN) func(x1, x2 sdk.Dec) sdk.Dec {
+	switch segN {
+	case s0:
 		return c.S0.integralX12
-	case S1:
+	case s1:
 		return c.S1.integralX12
-	case S2:
+	case s2:
 		return c.S2.integralX12
-	case S3:
+	case s3:
 		return c.S3.integralX12
-	case S4:
+	case s4:
 		return c.S4.integralX12
 	default:
 		return func(sdk.Dec, sdk.Dec) sdk.Dec { return sdk.ZeroDec() }
@@ -160,15 +161,15 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 
 func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
 	switch c.segmentNum(x1) {
-	case S0:
+	case s0:
 		return sdk.ZeroDec()
-	case S1:
+	case s1:
 		return c.S1.firstDerivativeX1(x1)
-	case S2:
+	case s2:
 		return c.S2.firstDerivativeX1(x1)
-	case S3:
+	case s3:
 		return c.S3.firstDerivativeX1(x1)
-	case S4:
+	case s4:
 		return c.S4.firstDerivativeX1(x1)
 	default:
 		return sdk.ZeroDec()
@@ -177,15 +178,15 @@ func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
 
 func (c *Curve) y(x sdk.Dec) sdk.Dec {
 	switch c.segmentNum(x) {
-	case S0:
+	case s0:
 		return c.S0.y(x)
-	case S1:
+	case s1:
 		return c.S1.y(x)
-	case S2:
+	case s2:
 		return c.S2.y(x)
-	case S3:
+	case s3:
 		return c.S3.y(x)
-	case S4:
+	case s4:
 		return c.S4.y(x)
 	default:
 		return sdk.ZeroDec()
