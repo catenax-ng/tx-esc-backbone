@@ -18,6 +18,8 @@ type (
 		setP1X(sdk.Dec)
 		setP0Y(sdk.Dec)
 		setP1Y(sdk.Dec)
+
+		y(x sdk.Dec) sdk.Dec
 	}
 )
 
@@ -177,18 +179,5 @@ func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
 }
 
 func (c *Curve) y(x sdk.Dec) sdk.Dec {
-	switch c.segmentNum(x) {
-	case s0:
-		return c.S0.y(x)
-	case s1:
-		return c.S1.y(x)
-	case s2:
-		return c.S2.y(x)
-	case s3:
-		return c.S3.y(x)
-	case s4:
-		return c.S4.y(x)
-	default:
-		return sdk.ZeroDec()
-	}
+	return c.segments(c.segmentNum(x)).y(x)
 }
