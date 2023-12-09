@@ -94,7 +94,7 @@ func (c *Curve) setPY(point pointN, value sdk.Dec) {
 	c.segments(startPointOf[point]).setP0Y(value)
 }
 
-func (c *Curve) segmentNum(x sdk.Dec) segN {
+func (c *Curve) segN(x sdk.Dec) segN {
 	for i := firstSegment; i < lastSegment; i++ {
 		if x.LT(c.pX(endPoint[i])) {
 			return i
@@ -122,8 +122,8 @@ func (c *Curve) IsIntegralEqualToBPool() bool {
 }
 
 func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec) {
-	segLowerBoundX := c.segmentNum(lowerBoundX)
-	segUpperBoundX := c.segmentNum(upperBoundX)
+	segLowerBoundX := c.segN(lowerBoundX)
+	segUpperBoundX := c.segN(upperBoundX)
 
 	vouchers = sdk.NewDec(0)
 	for ; segLowerBoundX <= segUpperBoundX; segLowerBoundX = segLowerBoundX + 1 {
@@ -141,9 +141,9 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 }
 
 func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
-	return c.segments(c.segmentNum(x1)).firstDerivativeX1(x1)
+	return c.segments(c.segN(x1)).firstDerivativeX1(x1)
 }
 
 func (c *Curve) y(x sdk.Dec) sdk.Dec {
-	return c.segments(c.segmentNum(x)).y(x)
+	return c.segments(c.segN(x)).y(x)
 }
