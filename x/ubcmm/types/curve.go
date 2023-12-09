@@ -26,6 +26,13 @@ type (
 )
 
 var (
+	// endPoint maps the segment to the end point of a segment.
+	endPoint = map[segN]pointN{
+		s0: p0,
+		s1: p1,
+		s2: p2,
+		s3: p3,
+	}
 	// endPointOf maps the end point of a segment to the segment.
 	endPointOf = map[pointN]segN{
 		p0: s0,
@@ -99,19 +106,11 @@ func (c *Curve) segmentNum(x sdk.Dec) segN {
 	return s4
 }
 
-func (c *Curve) upperBoundX(segN segN) sdk.Dec {
-	switch segN {
-	case s0:
-		return c.pX(p0)
-	case s1:
-		return c.pX(p1)
-	case s2:
-		return c.pX(p2)
-	case s3:
-		return c.pX(p3)
-	default:
-		return sdk.ZeroDec()
+func (c *Curve) upperBoundX(segNum segN) sdk.Dec {
+	if segNum >= 4 {
+		return sdk.NewDec(-1)
 	}
+	return c.pX(endPoint[segNum])
 }
 
 // IsIntegralEqualToBPool checks if BPool is equal to the integral
