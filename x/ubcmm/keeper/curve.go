@@ -28,6 +28,7 @@ func (k Keeper) GetCurve(ctx sdk.Context) (val types.Curve, found bool) {
 	}
 
 	k.cdc.MustUnmarshal(b, &val)
+	val.PopulateSegments()
 	return val, true
 }
 

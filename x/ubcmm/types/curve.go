@@ -12,19 +12,6 @@ import (
 type (
 	pointN int
 	segN   int
-
-	segment interface {
-		setP0X(sdk.Dec)
-		setP1X(sdk.Dec)
-		setP0Y(sdk.Dec)
-		setP1Y(sdk.Dec)
-
-		y(x sdk.Dec) sdk.Dec
-		integralX12(x1, x2 sdk.Dec) sdk.Dec
-		firstDerivativeX1(x1 sdk.Dec) sdk.Dec
-
-		view
-	}
 )
 
 var (
@@ -69,29 +56,31 @@ const (
 	p3
 )
 
-func (c *Curve) segments(segNum segN) segment {
-	s := []segment{c.S0, c.S1, c.S2, c.S3, c.S4}
-	return s[segNum]
+// PopulateSegments populates the segment array, which can be used to access common properties of a segment using its index.
+//
+// Since, this is not stored on the blockchain, to prevent unnecessary storage.
+func (c *Curve) PopulateSegments() {
+	c.Segments = Segments([]Segment{c.S0, c.S1, c.S2, c.S3, c.S4})
 }
 
 // pX returns the x co-ordinate for the point of the curve.
 func (c *Curve) pX(pN pointN) sdk.Dec {
-	return c.segments(startPointOf[pN]).startX()
+	return c.Segments[startPointOf[pN]].startX()
 }
 
 // pY returns the x co-ordinate for the point of the curve.
 func (c *Curve) pY(pN pointN) sdk.Dec {
-	return c.segments(startPointOf[pN]).startY()
+	return c.Segments[startPointOf[pN]].startY()
 }
 
 func (c *Curve) setPX(point pointN, value sdk.Dec) {
-	c.segments(endPointOf[point]).setP1X(value)
-	c.segments(startPointOf[point]).setP0X(value)
+	c.Segments[endPointOf[point]].setP1X(value)
+	c.Segments[startPointOf[point]].setP0X(value)
 }
 
 func (c *Curve) setPY(point pointN, value sdk.Dec) {
-	c.segments(endPointOf[point]).setP1Y(value)
-	c.segments(startPointOf[point]).setP0Y(value)
+	c.Segments[endPointOf[point]].setP1Y(value)
+	c.Segments[startPointOf[point]].setP0Y(value)
 }
 
 func (c *Curve) segN(x sdk.Dec) segN {
@@ -132,7 +121,7 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 		if segLowerBoundX == segUpperBoundX {
 			x2 = upperBoundX
 		}
-		additionalVouchers := c.segments(segLowerBoundX).integralX12(x1, x2)
+		additionalVouchers := c.Segments[segLowerBoundX].integralX12(x1, x2)
 		vouchers = vouchers.Add(additionalVouchers)
 
 		lowerBoundX = c.upperBoundX(segLowerBoundX)
@@ -141,9 +130,9 @@ func (c *Curve) integralX12(lowerBoundX, upperBoundX sdk.Dec) (vouchers sdk.Dec)
 }
 
 func (c *Curve) slopeX1(x1 sdk.Dec) sdk.Dec {
-	return c.segments(c.segN(x1)).firstDerivativeX1(x1)
+	return c.Segments[c.segN(x1)].firstDerivativeX1(x1)
 }
 
 func (c *Curve) y(x sdk.Dec) sdk.Dec {
-	return c.segments(c.segN(x)).y(x)
+	return c.Segments[c.segN(x)].y(x)
 }

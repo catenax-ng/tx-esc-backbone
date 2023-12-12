@@ -114,6 +114,7 @@ func (c *Curve) initSegmentsToZero() {
 		InitialX0:     sdk.ZeroDec(),
 		CurrentX0:     sdk.ZeroDec(),
 	}
+	c.PopulateSegments()
 }
 
 func (c *Curve) fitS3() {

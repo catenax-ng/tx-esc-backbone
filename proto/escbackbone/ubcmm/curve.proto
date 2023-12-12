@@ -72,4 +72,8 @@ message Curve {
     (gogoproto.nullable) = false
   ];
 
+  string segments = 18 [
+    (gogoproto.customtype) = "Segments",
+    (gogoproto.nullable) = false
+  ];
 }
