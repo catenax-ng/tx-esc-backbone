@@ -99,32 +99,6 @@ func (c *Curve) segmentNum(x sdk.Dec) int {
 	return S4
 }
 
-func (c *Curve) a(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.S1.A
-	case S2:
-		return c.S2.A
-	case S3:
-		return c.S3.A
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-func (c *Curve) b(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.S1.B
-	case S2:
-		return c.S2.B
-	case S3:
-		return c.S3.B
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
 func (c *Curve) upperBoundX(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
@@ -135,73 +109,6 @@ func (c *Curve) upperBoundX(segNum int) sdk.Dec {
 		return c.p2x()
 	case S3:
 		return c.p3x()
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-func (c *Curve) lowerBoundX(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.p0x()
-	case S2:
-		return c.p1x()
-	case S3:
-		return c.p2x()
-	case S4:
-		return c.p3x()
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-func (c *Curve) lowerBound(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.p0Y()
-	case S2:
-		return c.p1Y()
-	case S3:
-		return c.p2Y()
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-func (c *Curve) upperBound(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.p1Y()
-	case S2:
-		return c.p2Y()
-	case S3:
-		return c.p3Y()
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-func (c *Curve) t(segNum int) func(x sdk.Dec) (t sdk.Dec) {
-	switch segNum {
-	case S1:
-		return c.S1.t
-	case S2:
-		return c.S2.t
-	case S3:
-		return c.S3.t
-	default:
-		return func(x sdk.Dec) sdk.Dec { return sdk.ZeroDec() }
-	}
-}
-
-func (c *Curve) deltaX(segNum int) sdk.Dec {
-	switch segNum {
-	case S1:
-		return c.S1.DeltaX
-	case S2:
-		return c.S2.DeltaX
-	case S3:
-		return c.S3.DeltaX
 	default:
 		return sdk.ZeroDec()
 	}
@@ -285,21 +192,6 @@ func (c *Curve) y(x sdk.Dec) sdk.Dec {
 		return c.S3.y(x)
 	case S4:
 		return c.S4.y(x)
-	default:
-		return sdk.ZeroDec()
-	}
-}
-
-// integralT1 computes the integral of the curve segment with respect to the
-// bezier curve parameter "t", from the beginning of the curve until point t1.
-func (c *Curve) integralT1(t1 sdk.Dec, seg int) sdk.Dec {
-	switch seg {
-	case S1:
-		return c.S1.integralT1(t1)
-	case S2:
-		return c.S2.integralT1(t1)
-	case S3:
-		return c.S3.integralT1(t1)
 	default:
 		return sdk.ZeroDec()
 	}
