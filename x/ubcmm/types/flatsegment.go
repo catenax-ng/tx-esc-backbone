@@ -28,13 +28,7 @@ func (fseg *FlatSegment) setP1X(p1X sdk.Dec) {
 // integralX12 computes the integral of the curve segment with respect to "x",
 // between limits x1 and x2.
 func (fseg *FlatSegment) integralX12(x1, x2 sdk.Dec) sdk.Dec {
-	return fseg.integralX1(x2).Sub(fseg.integralX1(x1))
-}
-
-// integralX1 computes the integral of the curve segment with respect to "x",
-// from the beginning of the curve until point x1.
-func (fseg *FlatSegment) integralX1(x1 sdk.Dec) sdk.Dec {
-	return fseg.Y.Mul(x1)
+	return fseg.Y.Mul(x2.Sub(x1))
 }
 
 // firstDerivativeX1 returns 0, since the segment is a horizontal line.
