@@ -11,7 +11,7 @@ import (
 )
 
 func (c *Curve) UndergirdS02(BPoolAdd sdk.Dec) error {
-	if c.CurrentSupply.LT(c.p2x()) {
+	if c.CurrentSupply.LT(c.pX(p2)) {
 		errMsg := "could not undergird, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
 	}

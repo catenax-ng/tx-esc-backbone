@@ -12,12 +12,12 @@ import (
 )
 
 func (c *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
-	if c.CurrentSupply.LT(c.p2x()) {
+	if c.CurrentSupply.LT(c.pX(p2)) {
 		errMsg := "could not shiftup, since the currentSupply is not beyond P2"
 		return sdkerrors.ErrInvalidRequest.Wrap(errMsg)
 	}
 
-	p2XOld := c.p2x()
+	p2XOld := c.pX(p2)
 
 	// Calculate the factored BPool that should be added.
 	// This value is increased by the DegirdingFactor. In the end only the original amount is added.
@@ -32,7 +32,7 @@ func (c *Curve) ShiftUp(BPoolAdd, DegirdingFactor sdk.Dec) error {
 	if err != nil {
 		return err
 	}
-	dY := p2YNew.Sub(c.p2Y())
+	dY := p2YNew.Sub(c.pY(p2))
 	dBPool := c.integralX12(p2XOld, P2XNew)
 
 	c.shiftP0P1P2(dX, dY)
@@ -58,7 +58,7 @@ func (c *Curve) computeP2New(P2XOld, dx sdk.Dec) (sdk.Dec, sdk.Dec, error) {
 func (c *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 	slopeAtP2XOld := c.slopeX1(p2XOld)
 
-	part1 := slopeAtP2XOld.Mul(p2XOld).Add(c.p0Y()).Sub(c.p2Y()).Quo(slopeAtP2XOld)
+	part1 := slopeAtP2XOld.Mul(p2XOld).Add(c.pY(p0)).Sub(c.pY(p2)).Quo(slopeAtP2XOld)
 
 	part2a := part1.Power(2)
 	part2b := sdk.NewDec(2).Mul(BPoolAddFactored).Quo(slopeAtP2XOld)
@@ -72,11 +72,11 @@ func (c *Curve) computeDx(p2XOld, BPoolAddFactored sdk.Dec) (sdk.Dec, error) {
 }
 
 func (c *Curve) shiftP0P1P2(dX, dY sdk.Dec) {
-	c.setP0X(c.p0x().Add(dX))
-	c.setP1X(c.p1x().Add(dX))
-	c.setP2X(c.p2x().Add(dX))
+	c.setP0X(c.pX(p0).Add(dX))
+	c.setP1X(c.pX(p1).Add(dX))
+	c.setP2X(c.pX(p2).Add(dX))
 
-	c.setP0Y(c.p0Y().Add(dY))
-	c.setP1Y(c.p1Y().Add(dY))
-	c.setP2Y(c.p2Y().Add(dY))
+	c.setP0Y(c.pY(p0).Add(dY))
+	c.setP1Y(c.pY(p1).Add(dY))
+	c.setP2Y(c.pY(p2).Add(dY))
 }

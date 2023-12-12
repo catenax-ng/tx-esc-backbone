@@ -163,7 +163,7 @@ func (c *Curve) fitS1S2Repeatedly(repititions uint) {
 		c.setP0Y(c.calcP0(g0, g1))
 		c.setP1Y(c.calcP1())
 
-		c.S1.A = c.p0Y()
+		c.S1.A = c.pY(p0)
 		c.S1.B = c.calcS1B()
 
 		c.S2.A = c.calcS1A()
@@ -172,12 +172,12 @@ func (c *Curve) fitS1S2Repeatedly(repititions uint) {
 
 func (c *Curve) calcP1X() {
 	factor := sdk.NewDec(1).Sub(c.FactorFy).Mul(c.FactorFxy)
-	deltaX1 := factor.Mul(c.p2Y().Sub(c.p0Y()))
-	c.setP1X(c.p2x().Sub(deltaX1))
+	deltaX1 := factor.Mul(c.pY(p2).Sub(c.pY(p0)))
+	c.setP1X(c.pX(p2).Sub(deltaX1))
 }
 
 func (c *Curve) calcP1XMethod2() {
-	x1 := c.p2x().Sub(c.FactorFxy.Mul(c.p2Y().Sub(c.p1Y())))
+	x1 := c.pX(p2).Sub(c.FactorFxy.Mul(c.pY(p2).Sub(c.pY(p1))))
 	c.setP1X(x1)
 }
 
@@ -198,14 +198,14 @@ func (c *Curve) calcG1(g0 sdk.Dec) sdk.Dec {
 
 func (c *Curve) calcS2B() sdk.Dec {
 	factorPart1 := c.S2.DeltaX.Quo(c.S3.DeltaX)
-	part1 := factorPart1.Mul(c.p2Y().Sub(c.S3.A))
-	return part1.Add(c.p2Y())
+	part1 := factorPart1.Mul(c.pY(p2).Sub(c.S3.A))
+	return part1.Add(c.pY(p2))
 }
 
 func (c *Curve) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 	factor := sdk.NewDec(1).Quo(g1)
 	part1 := sdk.NewDec(4).Mul(c.BPoolUnder)
-	part2 := c.p2Y().Mul(g0.
+	part2 := c.pY(p2).Mul(g0.
 		Sub(sdk.NewDec(2).Mul(c.S2.DeltaX.Mul(c.FactorFy))).
 		Sub(c.S2.DeltaX))
 	part3 := c.S2.DeltaX.Mul(c.S2.B)
@@ -213,37 +213,37 @@ func (c *Curve) calcP0(g0, g1 sdk.Dec) sdk.Dec {
 }
 
 func (c *Curve) calcP1() sdk.Dec {
-	part1 := c.FactorFy.Mul(c.p2Y())
-	part2 := (sdk.NewDec(1).Sub(c.FactorFy)).Mul(c.p0Y())
+	part1 := c.FactorFy.Mul(c.pY(p2))
+	part2 := (sdk.NewDec(1).Sub(c.FactorFy)).Mul(c.pY(p0))
 	return part1.Add(part2)
 }
 
 func (c *Curve) calcS1B() sdk.Dec {
-	return sdk.NewDecWithPrec(5, 1).Mul(c.p0Y().Add(c.p1Y()))
+	return sdk.NewDecWithPrec(5, 1).Mul(c.pY(p0).Add(c.pY(p1)))
 }
 
 func (c *Curve) calcS1A() sdk.Dec {
 	factorPart1 := sdk.NewDecWithPrec(5, 1).Mul(c.S2.DeltaX.Quo(c.S1.DeltaX))
-	part1 := factorPart1.Mul(c.p1Y().Sub(c.p0Y()))
-	return part1.Add(c.p1Y())
+	part1 := factorPart1.Mul(c.pY(p1).Sub(c.pY(p0)))
+	return part1.Add(c.pY(p1))
 }
 
 func (c *Curve) validateCurvature() error {
 	factor := (c.S2.DeltaX.Quo(c.S3.DeltaX)).Mul(
-		c.S3.A.Sub(c.p2Y()))
+		c.S3.A.Sub(c.pY(p2)))
 
-	c1 := sdk.NewDecWithPrec(5, 1).Mul(c.p1Y().Sub(factor).Add(c.p2Y()))
+	c1 := sdk.NewDecWithPrec(5, 1).Mul(c.pY(p1).Sub(factor).Add(c.pY(p2)))
 	if !c1.GT(c.S2.A) {
 		return errors.Errorf("curvature condition 1 failed")
 	}
 
-	c2 := sdk.NewDec(-2).Mul(factor).Add(c.p2Y())
+	c2 := sdk.NewDec(-2).Mul(factor).Add(c.pY(p2))
 	if !c2.LT(c.S2.A) {
 		return errors.Errorf("curvature condition 2 failed")
 	}
 
-	c3 := c.p2Y().Sub(sdk.NewDec(3).Mul(factor))
-	if !c.p1Y().GT(c3) {
+	c3 := c.pY(p2).Sub(sdk.NewDec(3).Mul(factor))
+	if !c.pY(p1).GT(c3) {
 		return errors.Errorf("curvature condition 3 failed")
 	}
 
@@ -255,17 +255,17 @@ func (c *Curve) validateCurvature() error {
 	// In future, if b0 is computed using alternate methods and allowed to
 	// take values lesser than c4, then this Equals in this condition
 	// should be modified to less than or equals.
-	c4 := sdk.NewDecWithPrec(5, 1).Mul(c.p0Y().Add(c.p1Y()))
-	if !c.S1.B.GT(c.p0Y()) && c.S1.B.Equal(c4) {
+	c4 := sdk.NewDecWithPrec(5, 1).Mul(c.pY(p0).Add(c.pY(p1)))
+	if !c.S1.B.GT(c.pY(p0)) && c.S1.B.Equal(c4) {
 		return errors.Errorf("curvature condition 4 failed")
 	}
 
-	if !(c.p1Y().Sub(c.p0Y())).GTE(c.S1.firstDerivativeT1(sdk.ZeroDec())) {
+	if !(c.pY(p1).Sub(c.pY(p0))).GTE(c.S1.firstDerivativeT1(sdk.ZeroDec())) {
 		return errors.Errorf("curvature condition 5 failed")
 	}
 
-	if c.p0Y().LT(sdk.ZeroDec()) ||
-		c.p1Y().LT(sdk.ZeroDec()) ||
+	if c.pY(p0).LT(sdk.ZeroDec()) ||
+		c.pY(p1).LT(sdk.ZeroDec()) ||
 		c.S1.A.LT(sdk.ZeroDec()) ||
 		c.S1.B.LT(sdk.ZeroDec()) ||
 		c.S2.A.LT(sdk.ZeroDec()) ||

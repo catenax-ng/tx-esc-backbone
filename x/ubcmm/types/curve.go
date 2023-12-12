@@ -9,6 +9,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+type (
+	pointN int
+)
+
 const (
 	S0 = iota
 	S1
@@ -17,34 +21,25 @@ const (
 	S4
 )
 
-func (c *Curve) p0Y() sdk.Dec {
-	return c.S1.startY()
+const (
+	p0 pointN = iota
+	p1
+	p2
+	p3
+)
+
+func (c *Curve) view() []view {
+	return []view{c.S1, c.S2, c.S3, c.S4}
 }
 
-func (c *Curve) p1Y() sdk.Dec {
-	return c.S2.startY()
+// pX returns the x co-ordinate for the point of the curve.
+func (c *Curve) pX(pN pointN) sdk.Dec {
+	return c.view()[pN].startX()
 }
 
-func (c *Curve) p2Y() sdk.Dec {
-	return c.S3.startY()
-}
-
-func (c *Curve) p3Y() sdk.Dec {
-	return c.S4.startY()
-}
-
-func (c *Curve) p0x() sdk.Dec {
-	return c.S1.startX()
-}
-func (c *Curve) p1x() sdk.Dec {
-	return c.S2.startX()
-}
-func (c *Curve) p2x() sdk.Dec {
-	return c.S3.startX()
-}
-
-func (c *Curve) p3x() sdk.Dec {
-	return c.S4.startX()
+// pY returns the x co-ordinate for the point of the curve.
+func (c *Curve) pY(pN pointN) sdk.Dec {
+	return c.view()[pN].startY()
 }
 
 func (c *Curve) setP0Y(p0Y sdk.Dec) {
@@ -88,7 +83,7 @@ func (c *Curve) setP3X(p3X sdk.Dec) {
 
 // segmentNum returns the segment number for the given point x.
 func (c *Curve) segmentNum(x sdk.Dec) int {
-	upperBoundsX := []sdk.Dec{c.p0x(), c.p1x(), c.p2x(), c.p3x()}
+	upperBoundsX := []sdk.Dec{c.pX(p0), c.pX(p1), c.pX(p2), c.pX(p3)}
 	segments := []int{S0, S1, S2, S3}
 
 	for i, upperBound := range upperBoundsX {
@@ -102,13 +97,13 @@ func (c *Curve) segmentNum(x sdk.Dec) int {
 func (c *Curve) upperBoundX(segNum int) sdk.Dec {
 	switch segNum {
 	case S0:
-		return c.p0x()
+		return c.pX(p0)
 	case S1:
-		return c.p1x()
+		return c.pX(p1)
 	case S2:
-		return c.p2x()
+		return c.pX(p2)
 	case S3:
-		return c.p3x()
+		return c.pX(p3)
 	default:
 		return sdk.ZeroDec()
 	}
