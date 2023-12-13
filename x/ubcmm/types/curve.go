@@ -91,10 +91,12 @@ func (c *Curve) y(x sdk.Dec) sdk.Dec {
 }
 
 func (c *Curve) segN(x sdk.Dec) int {
-	for i := len(c.Segments) - 1; i > 0; i-- {
-		if x.GT(c.Segments[i].startX()) {
+	for i, segment := range c.Segments {
+		if x.LTE(segment.endX()) {
 			return i
 		}
 	}
-	return 0
+	// Since last segment is unbounded, it is possible that the condition
+	// inside for loop never succeeds for very very large x.
+	return len(c.Segments) - 1
 }
