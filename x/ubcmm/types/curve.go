@@ -16,7 +16,7 @@ func (c *Curve) PopulateSegments() {
 	c.Segments = Segments([]Segment{c.S0, c.S1, c.S2, c.S3, c.S4})
 }
 
-// pX returns the x co-ordinate for the point of the curve.
+// pX returns the x ordinate for the point of the curve.
 func (c *Curve) pX(point int) sdk.Dec {
 	if !c.isValidPoint(point) {
 		return sdk.NewDec(-1)
@@ -24,7 +24,7 @@ func (c *Curve) pX(point int) sdk.Dec {
 	return c.Segments[point+1].startX()
 }
 
-// pY returns the x co-ordinate for the point of the curve.
+// pY returns the y ordinate for the point of the curve.
 func (c *Curve) pY(point int) sdk.Dec {
 	if !c.isValidPoint(point) {
 		return sdk.NewDec(-1)
