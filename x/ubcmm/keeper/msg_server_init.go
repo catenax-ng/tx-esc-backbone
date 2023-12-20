@@ -54,21 +54,21 @@ func (k msgServer) Init(goCtx context.Context, msg *types.MsgInit) (*types.MsgIn
 		return nil, errors.Wrap(types.ErrFundHandling, "insufficient cvoucher: "+err.Error())
 	}
 
-	acaxToMint := sdk.NewCoin(
+	tokensToMint := sdk.NewCoin(
 		types.SystemTokenDenom,
 		ubc.BPool.RoundInt().MulRaw(types.SystemTokenMultiplier))
-	err = k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(acaxToMint))
+	err = k.bankKeeper.MintCoins(ctx, types.ModuleName, sdk.NewCoins(tokensToMint))
 	if err != nil {
-		return nil, errors.Wrap(types.ErrFundHandling, "minting acax: "+err.Error())
+		return nil, errors.Wrap(types.ErrFundHandling, "minting tokens: "+err.Error())
 	}
 
 	err = k.bankKeeper.SendCoinsFromModuleToAccount(
 		ctx,
 		types.ModuleName,
 		creatorAddress,
-		sdk.NewCoins(acaxToMint))
+		sdk.NewCoins(tokensToMint))
 	if err != nil {
-		return nil, errors.Wrap(types.ErrFundHandling, "transfering minted acax: "+err.Error())
+		return nil, errors.Wrap(types.ErrFundHandling, "transfering minted tokens: "+err.Error())
 	}
 
 	k.bankKeeper.SetSendEnabled(ctx, types.VoucherDenom, false)

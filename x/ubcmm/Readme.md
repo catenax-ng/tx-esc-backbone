@@ -43,11 +43,11 @@ See [here](https://github.com/cosmos/cosmos-sdk/blob/main/math/dec.go#L15) for m
 
 In ubcmm module, we have three difference precision to be considered:
 
-##### 1. Precision for system token (value is 6)
+##### 1. Precision for system token (value is 9)
 
 This is the accuracy with which we specify the fractional part of token value.
 This is same as the smallest of base denomination of the token. Currently the
-base denomination is "ucax" and hence this value is 6.
+base denomination is "ncax" and hence this value is 9.
 
 All token values such as amount of tokens to buy/sell/undergird/upshift and
 BPool should use this precision.

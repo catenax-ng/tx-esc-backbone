@@ -32,7 +32,7 @@ func Test_Curve_Buy(t *testing.T) {
 	initialBPool := c.BPool
 	initialCurrentSupply := c.CurrentSupply
 
-	tokensToBuy := sdk.NewDecWithPrec(10000, 6)
+	tokensToBuy := sdk.NewDecWithPrec(10000000, 9)
 	vouchersUsed := c.Buy(tokensToBuy)
 
 	assert.Equal(t, c.BPoolUnder, initialBPoolUnder)
@@ -44,7 +44,7 @@ func BenchmarkCurveBuy(b *testing.B) {
 	c := validCurve()
 	c.Fit()
 
-	tokens := sdk.NewDecWithPrec(10000, 6)
+	tokens := sdk.NewDecWithPrec(10000000, 9)
 	for i := 0; i < b.N; i++ {
 		c.Buy(tokens)
 	}

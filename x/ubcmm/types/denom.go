@@ -23,16 +23,16 @@ import (
 
 const (
 	// SystemTokenMultiplier is the multiplier for cax tokens
-	SystemTokenMultiplier = 1e6
+	SystemTokenMultiplier = 1e9
 
 	// VoucherMultiplier is the multiplier for voucher
-	VoucherMultiplier = 1e6
+	VoucherMultiplier = 1e2
 
 	// SystemTokenDenom is the denominator for cax tokens
-	SystemTokenDenom = "ucax"
+	SystemTokenDenom = "ncax"
 
 	// VoucherDenom is the denominator for voucher
-	VoucherDenom = "uvoucher"
+	VoucherDenom = "cvoucher"
 )
 
 func validateTokenCoin(value string) error {

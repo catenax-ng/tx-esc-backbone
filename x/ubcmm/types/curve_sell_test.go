@@ -32,7 +32,7 @@ func Test_Curve_Sell(t *testing.T) {
 	initialBPool := c.BPool
 	initialCurrentSupply := c.CurrentSupply
 
-	tokensToSell := sdk.NewDecWithPrec(10000, 6)
+	tokensToSell := sdk.NewDecWithPrec(10000000, 9)
 	vouchersOut := c.Sell(tokensToSell)
 
 	assert.Equal(t, c.BPoolUnder, initialBPoolUnder)

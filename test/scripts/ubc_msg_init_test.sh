@@ -58,36 +58,36 @@ esc-backboned query bank balances $ubc_initiator
 
 echo "\n# ubc buy - value in tokens\n\n"
 esc-backboned query bank balances $ubc_trader
-esc-backboned tx ubcmm buy "10000ucax" --from $ubc_trader --yes
+esc-backboned tx ubcmm buy "10000000ncax" --from $ubc_trader --yes
 sleep 3
 esc-backboned query bank balances $ubc_trader
 
 
 echo "\n# ubc sell - value in tokens\n\n"
 esc-backboned query bank balances $ubc_trader
-esc-backboned tx ubcmm sell "10000ucax" --from=$ubc_trader --yes
+esc-backboned tx ubcmm sell "10000000ncax" --from=$ubc_trader --yes
 sleep 3
 esc-backboned query bank balances $ubc_trader
 
 echo "\n# ubc send tokens from one address to another \n\n"
-esc-backboned query bank balances $ubc_trader --denom=ucax
-esc-backboned query bank balances $ubc_initiator --denom=ucax
-esc-backboned tx bank send $ubc_trader $ubc_initiator 10ucax --yes
+esc-backboned query bank balances $ubc_trader --denom=ncax
+esc-backboned query bank balances $ubc_initiator --denom=ncax
+esc-backboned tx bank send $ubc_trader $ubc_initiator 10000ncax --yes
 sleep 3
-esc-backboned query bank balances $ubc_trader --denom=ucax
-esc-backboned query bank balances $ubc_initiator --denom=ucax
+esc-backboned query bank balances $ubc_trader --denom=ncax
+esc-backboned query bank balances $ubc_initiator --denom=ncax
 
 echo "\n# ubc send vouchers from one address to another (should fail) \n\n"
-esc-backboned query bank balances $ubc_trader --denom=uvoucher
-esc-backboned query bank balances $ubc_initiator --denom=uvoucher
-esc-backboned tx bank send $ubc_trader $ubc_initiator 10uvoucher --yes
+esc-backboned query bank balances $ubc_trader --denom=cvoucher
+esc-backboned query bank balances $ubc_initiator --denom=cvoucher
+esc-backboned tx bank send $ubc_trader $ubc_initiator 10cvoucher --yes
 sleep 3
-esc-backboned query bank balances $ubc_trader --denom=uvoucher
-esc-backboned query bank balances $ubc_initiator --denom=uvoucher
+esc-backboned query bank balances $ubc_trader --denom=cvoucher
+esc-backboned query bank balances $ubc_initiator --denom=cvoucher
 
 echo "\n# ubc undergird \n\n"
 esc-backboned query bank balances $ubc_operator
-esc-backboned tx ubcmm undergird "10000000000000uvoucher" --from=$ubc_operator --yes
+esc-backboned tx ubcmm undergird "1000000000cvoucher" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
 esc-backboned query ubcmm show-curve
@@ -96,10 +96,10 @@ esc-backboned query ubcmm show-curve
 echo "\n# ubc shiftup - value in tokens\n\n"
 esc-backboned query bank balances $ubc_operator
 echo "\n# buy large amount of tokens (500e5 CAX) to shift current supply significanly beyond P2.\n\n"
-esc-backboned tx ubcmm buy "50000000000000ucax" --from=$ubc_operator --yes
+esc-backboned tx ubcmm buy "50000000000000000ncax" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
-esc-backboned tx ubcmm shiftup "10000000000000uvoucher" "1" --from=$ubc_operator --yes
+esc-backboned tx ubcmm shiftup "1000000000cvoucher" "1" --from=$ubc_operator --yes
 sleep 3
 esc-backboned query bank balances $ubc_operator
 esc-backboned query ubcmm show-curve
