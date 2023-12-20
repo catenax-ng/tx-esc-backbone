@@ -19,7 +19,10 @@
     "artifacts/cw_nameservice.wasm",
     "build/mnemonic",
     "NOTICE",
-    "external"
+    "external",
+    "DEPENDENCIES",
+    "DEPENDENCIES_WEB",
+    "./license-header/org.eclipse.dash.licenses-*.jar"
   ],
   "license": "license-header/license-header",
   "regexIdentifier": "_!##",
