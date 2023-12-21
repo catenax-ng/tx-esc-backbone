@@ -1,7 +1,18 @@
 <!--
- Copyright (c) 2022-2023 - for information on the respective copyright owner
- see the NOTICE file and/or the repository at
- https://github.com/catenax-ng/product-esc-backbone-code
+ Copyright (c) 2022-2023 Contributors to the Eclipse Foundation
+
+ See the NOTICE file(s) distributed with this work for additional
+ information regarding copyright ownership.
+
+ This program and the accompanying materials are made available under the
+ terms of the Apache License, Version 2.0 which is available at
+ https://www.apache.org/licenses/LICENSE-2.0.
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ License for the specific language governing permissions and limitations
+ under the License.
 
  SPDX-License-Identifier: Apache-2.0
 -->
@@ -75,7 +86,7 @@ This repository is not released yet.
 
 #### TRG 7 Open Source Governance
 - [x] [TRG 7.01](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-01) Legal Documentation
-- [ ] [TRG 7.02](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-02) License and copyright header <!-- must be present in every file if possible and update the year in the copyright section at the beginning of each new year. -->
+- [x] [TRG 7.02](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-02) License and copyright header <!-- must be present in every file if possible and update the year in the copyright section at the beginning of each new year. -->
 - [ ] [TRG 7.03](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-03) IP checks for project content <!-- for each PR containing more than 1000 relevant lines there **must** be an approved [IP review for Code Contributions](/docs/oss/issues#eclipse-gitlab-ip-issue-tracker) before the contribution can be pushed/merged -->
 - [ ] [TRG 7.04](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-04) IP checks for 3rd party content
 - [ ] [TRG 7.05](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-05) Legal information for distributions
