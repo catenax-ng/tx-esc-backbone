@@ -1,0 +1,49 @@
+# Copyright (c) 2022-2023 - for information on the respective copyright owner
+# see the NOTICE file and/or the repository at
+# https://github.com/catenax-ng/product-esc-backbone-code
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: Run dash tool
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  check-3rd-party-licences:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run dash for go project
+        id: run-dash
+        uses: eclipse-tractusx/sig-infra/.github/actions/run-dash@main
+        with:
+          dependencies_file: "DEPENDENCIES"
+          dash_input: "./go.sum"
+          dash_version: "1.1.0"
+          fail_on_out_of_date: "false"
+          fail_on_rejected: "true"
+          fail_on_restricted: "false"
+
+      - name: Run dash for web project
+        id: run-dash-web
+        uses: eclipse-tractusx/sig-infra/.github/actions/run-dash@main
+        with:
+          dependencies_file: "DEPENDENCIES_WEB"
+          dash_input: "./web/package-lock.json"
+          dash_version: "1.1.0"
+          fail_on_out_of_date: "false"
+          fail_on_rejected: "true"
+          fail_on_restricted: "false"
+
