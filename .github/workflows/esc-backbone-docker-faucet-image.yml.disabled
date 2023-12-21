@@ -23,6 +23,10 @@ jobs:
       run_job: ${{ steps.check_files.outputs.docker_file_changed }}
     runs-on: ubuntu-latest
     steps:
+      - name: Fail-on-purpose
+        run: |
+          echo "Don't execute this. It's not compliant with https://eclipse-tractusx.github.io/docs/release regarding containers"
+          exit 1
       - name: Checkout code
         uses: actions/checkout@v3
         with:

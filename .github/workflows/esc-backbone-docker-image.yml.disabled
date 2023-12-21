@@ -21,6 +21,10 @@ jobs:
     name: Build ESC-Backbone build output
     runs-on: ubuntu-latest
     steps:
+      - name: Fail-on-purpose
+        run: |
+          echo "Don't execute this. It's not compliant with https://eclipse-tractusx.github.io/docs/release regarding containers"
+          exit 1
       - uses: actions/checkout@v3
       - name: Set up Docker Buildx
         id: buildx
@@ -65,6 +69,10 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Fail-on-purpose
+        run: |
+          echo "Don't execute this. It's not compliant with https://eclipse-tractusx.github.io/docs/release regarding containers"
+          exit 1
       - uses: actions/checkout@v3
       - name: Set up Docker Buildx
         id: buildx
