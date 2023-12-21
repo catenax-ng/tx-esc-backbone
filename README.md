@@ -29,14 +29,14 @@ This repository is not released yet.
 - [ ] [TRG 2.03](https://eclipse-tractusx.github.io/docs/release/trg-2/trg-2-3) repository structure
   - [x] /docs
   - [ ] /charts
-  - [ ] AUTHORS.md
-  - [ ] CODE_OF_CONDUCT.md
-  - [ ] CONTRIBUTING.md
+  - [x] AUTHORS.md
+  - [x] CODE_OF_CONDUCT.md
+  - [x] CONTRIBUTING.md
   - [x] LICENSE
-  - [ ] NOTICE.md
-  - [ ] README.md
+  - [x] NOTICE.md
+  - [x] README.md
   - [ ] INSTALL.md
-  - [ ] SECURITY.md
+  - [x] SECURITY.md
 - [ ] [TRG 2.04](https://eclipse-tractusx.github.io/docs/release/trg-2/trg-2-4) leading product repository
   - [x] README.md: contains the urls for the backend and frontend applications
   - [ ] contains the release of the product
@@ -74,7 +74,7 @@ This repository is not released yet.
 - [ ] [TRG 6.01](https://eclipse-tractusx.github.io/docs/release/trg-6/trg-6-1) Released Helm Chart <!-- A released Helm chart for each Tractus-X sub-product is expected to be available in corresponding GitHub repository. -->
 
 #### TRG 7 Open Source Governance
-- [ ] [TRG 7.01](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-01) Legal Documentation
+- [x] [TRG 7.01](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-01) Legal Documentation
 - [ ] [TRG 7.02](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-02) License and copyright header <!-- must be present in every file if possible and update the year in the copyright section at the beginning of each new year. -->
 - [ ] [TRG 7.03](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-03) IP checks for project content <!-- for each PR containing more than 1000 relevant lines there **must** be an approved [IP review for Code Contributions](/docs/oss/issues#eclipse-gitlab-ip-issue-tracker) before the contribution can be pushed/merged -->
 - [ ] [TRG 7.04](https://eclipse-tractusx.github.io/docs/release/trg-7/trg-7-04) IP checks for 3rd party content
