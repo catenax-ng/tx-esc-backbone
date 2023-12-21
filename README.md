@@ -41,9 +41,9 @@ This repository is not released yet.
   - [x] README.md: contains the urls for the backend and frontend applications
   - [ ] contains the release of the product
   - [ ] contains the product helm chart
-- [ ] [TRG 2.05](https://eclipse-tractusx.github.io/docs/release/trg-2/trg-2-5) `.tractusx` metafile in a proper format
-  - [ ] `.tractusx` file added
-  - [ ] not published docker images listed
+- [x] [TRG 2.05](https://eclipse-tractusx.github.io/docs/release/trg-2/trg-2-5) `.tractusx` metafile in a proper format
+  - [x] `.tractusx` file added
+  - [x] not published docker images listed
 
 #### TRG 3 Kubernetes
 

@@ -1,0 +1,17 @@
+# Will be used on release checks dashboard etc. to refer to your product; only mandatory in the leading repo
+product: "esc-backbone"
+# mandatory info in every repo
+leadingRepository: "https://github.com/eclipse-tractusx/esc-backbone"
+# default: available options: "special", "support"; optional field. will be treated as regular product repo without entry
+repoCategory: "special"
+# optional section to refer to all of your teams repositories
+repositories:
+  - name: "esc-backbone"
+    usage: "Main documentation and release repo for esc-backbone"
+    url: "https://github.com/eclipse-tractusx/esc-backbone"
+# section to explicitly skip certain release guideline checks
+skipReleaseChecks:
+  alignedBaseImage:
+    - "build/Dockerfile"
+    - "build/Dockerfile-base"
+    - "build/Dockerfile-faucet"
